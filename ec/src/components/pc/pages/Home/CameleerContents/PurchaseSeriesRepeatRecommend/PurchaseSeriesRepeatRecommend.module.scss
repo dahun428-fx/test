@@ -1,0 +1,116 @@
+@use 'src/styles/pc/icon';
+
+.recommendContent {
+	margin-top: 80px;
+}
+
+.wrapper {
+	position: relative;
+	padding: 32px 64px 0;
+}
+
+.seriesPanelList {
+	display: flex;
+	justify-content: left;
+	min-height: 304px;
+
+	&[data-page-size='3'] {
+		width: 630px;
+		// (950 - 630) / 2 - 64
+		margin: 0 96px;
+	}
+
+	&[data-page-size='5'] {
+		width: 1050px;
+		// (1200 - 1050) / 2 - 64
+		margin: 0 11px;
+	}
+
+	&[data-page-size='6'] {
+		width: 1250px;
+		// (1400 - 1250) / 2 - 64
+		margin: 0 11px;
+	}
+}
+
+.link {
+	display: inline-block;
+	margin-top: 10px;
+	color: #004098;
+	text-decoration: none;
+
+	&:visited {
+		color: #004098;
+	}
+}
+
+.seriesPanel {
+	width: 209px;
+	padding: 0 12px;
+	font-size: 0.8125rem;
+	word-wrap: break-word;
+	cursor: pointer;
+
+	&:hover {
+		// NOTE: 詳細度を上げることは原則禁止だが、やむを得ないのでつける。
+		.link {
+			text-decoration: underline;
+		}
+	}
+}
+
+.imageContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	width: 190px;
+	height: 190px;
+	padding: 10px;
+	border: solid 1px #999;
+}
+
+.image {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.brandName {
+	margin-top: 10px;
+	color: #999;
+}
+
+.sameDayShipOut {
+	margin-top: 10px;
+}
+
+%pager {
+	position: absolute;
+	top: 25%;
+	width: 43px;
+	height: 43px;
+	cursor: pointer;
+	opacity: 1;
+}
+
+.previous {
+	@extend %pager;
+
+	left: 0;
+	background-image: url('#{icon.get-icon-path(circle-left-arrow, light)}');
+
+	&:hover {
+		background-image: url('#{icon.get-icon-path(circle-left-arrow, dark)}');
+	}
+}
+
+.next {
+	@extend %pager;
+
+	right: 0;
+	background-image: url('#{icon.get-icon-path(circle-right-arrow, light)}');
+
+	&:hover {
+		background-image: url('#{icon.get-icon-path(circle-right-arrow, dark)}');
+	}
+}

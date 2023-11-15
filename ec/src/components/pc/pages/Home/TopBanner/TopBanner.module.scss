@@ -1,0 +1,19 @@
+.bannerListContainer {
+	position: relative;
+	width: 100%;
+	height: 350px;
+	overflow: hidden;
+}
+
+.bannerList {
+	position: absolute;
+}
+
+.pagerContainer {
+	position: absolute;
+	top: calc(50% - 24px); // pager size / 2
+}
+
+.stopTransition {
+	transition: unset;
+}

@@ -1,0 +1,62 @@
+.container {
+	text-align: left;
+}
+
+.title {
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.content {
+	box-sizing: border-box;
+	max-width: 508px;
+	max-height: 242px;
+	margin: 16px 0;
+	padding: 16px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	font-size: 0.8125rem;
+	border: 1px solid #ccc;
+}
+
+.buttonGroup {
+	display: flex;
+	justify-content: center;
+	margin-top: 48px;
+}
+
+.buttonAgree {
+	margin-right: 4px;
+}
+
+.buttonDisagree {
+	margin-left: 4px;
+}
+
+.checkBoxWrapper {
+	display: flex;
+	justify-content: center;
+}
+
+.checkBoxContent {
+	font-size: 0.8125rem;
+}
+
+.policyItem {
+	margin: 0.25rem 0 0.25rem 1.5rem;
+	text-indent: 0;
+	list-style-type: disc;
+}
+
+.policyItemLink {
+	margin-right: 0.25rem;
+	padding-right: 1.25rem;
+	background: {
+		image: url(./assets/images/new-tag.svg);
+		repeat: no-repeat;
+		position: right 0;
+	}
+}

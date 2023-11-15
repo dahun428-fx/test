@@ -1,0 +1,68 @@
+.main {
+	max-width: 1420px;
+	margin: 0 auto;
+}
+
+.introduction {
+	display: flex;
+	margin-top: 16px;
+}
+
+.attributesColumn {
+	width: 100%;
+	margin-left: 25px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+}
+
+.activeConfigureTable {
+	visibility: hidden;
+}
+
+.brandWrap {
+	display: flex;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.economy {
+	margin-left: 8px;
+}
+
+.heading {
+	margin-top: 1rem;
+}
+
+.attributes {
+	margin-top: 32px;
+}
+
+.actionsPanelContainer {
+	margin-top: 32px;
+	margin-left: 290px;
+}
+
+.specContainer {
+	display: flex;
+}
+
+.productSpecs {
+	flex: 1 0 calc((100% - 32px) * 1 / 2);
+	margin-top: 16px;
+}
+
+.closePanel {
+	padding-left: 290px;
+}
+
+.openPanel {
+	margin-left: calc(50% + 16px);
+}
+
+.filter {
+	margin-top: 16px;
+}
+
+.partNumberList {
+	margin-top: 40px;
+}

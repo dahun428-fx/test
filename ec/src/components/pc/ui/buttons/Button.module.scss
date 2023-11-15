@@ -1,0 +1,245 @@
+@use 'src/styles/pc/icon';
+@use 'src/styles/pc/variables';
+
+// ボタンのサイズ（幅）
+$buttonSizes: (
+	s: 145px,
+	m: 168px,
+	max: 100%,
+);
+
+@each $key, $size in $buttonSizes {
+	.size-#{$key} {
+		width: $size;
+	}
+}
+
+// ボタンのテーマ毎のスタイル定義
+$buttonStylesThemes: (
+	default: (
+		padding: 7px 12px,
+		text-color: #004098,
+		font-weight: bold,
+		background-color: #fff,
+		border: 1px solid #ccc,
+		box-shadow: 'inset 0 -2px 0 #b3b3b3',
+		hover-opacity: 0.9,
+		disabled-background-color: #e5e5e5,
+	),
+	default-sub: (
+		padding: 8px 12px,
+		text-color: #004098,
+		font-weight: bold,
+		background-color: transparent,
+		border: none,
+		box-shadow: none,
+		hover-opacity: 0.8,
+		hover-background-color: #ecf3fc,
+		disabled-background-color: transparent,
+	),
+	default-sub-tiny: (
+		padding: 4px 8px,
+		text-color: #004098,
+		font-weight: normal,
+		font-size: 0.6875rem,
+		background-color: transparent,
+		border: none,
+		box-shadow: none,
+		hover-opacity: 0.8,
+		hover-background-color: #ecf3fc,
+		disabled-background-color: transparent,
+	),
+	strong: (
+		padding: 8px 12px,
+		text-color: #fff,
+		font-weight: bold,
+		background-color: #004098,
+		border: none,
+		box-shadow: 'inset 0 -2px 0 rgb(0 0 0 / 0.3)',
+		hover-opacity: 0.9,
+		disabled-background-color: #e5e5e5,
+	),
+	conversion: (
+		padding: 8px 12px,
+		text-color: #333,
+		font-weight: bold,
+		background-color: #fc0,
+		border: none,
+		box-shadow: 'inset 0 -2px 0 rgb(0 0 0 / 0.3)',
+		hover-opacity: 0.9,
+		disabled-background-color: #e5e5e5,
+	),
+);
+
+// style mixin
+@mixin style($styles) {
+	padding: map-get($styles, padding);
+	color: map-get($styles, text-color);
+	font-weight: #{map-get($styles, font-weight)};
+	font-size: #{map-get($styles, font-size)};
+	background-color: map-get($styles, background-color);
+	border: map-get($styles, border);
+	box-shadow: #{map-get($styles, box-shadow)};
+
+	&:hover {
+		background-color: map-get($styles, hover-background-color);
+		opacity: map-get($styles, hover-opacity);
+	}
+}
+
+@mixin disabledStyle($styles) {
+	background-color: map-get($styles, disabled-background-color);
+
+	&:hover {
+		background-color: map-get($styles, disabled-background-color);
+	}
+}
+
+.button {
+	@each $property, $styles in $buttonStylesThemes {
+		&[data-theme='#{$property}'] {
+			@include style($styles);
+		}
+	}
+
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	text-align: center;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:disabled,
+	&[aria-disabled='true'] {
+		@each $property, $styles in $buttonStylesThemes {
+			&[data-theme='#{$property}'] {
+				@include disabledStyle($styles);
+			}
+		}
+
+		color: #999;
+		box-shadow: none;
+
+		// FIXME: 一瞬 cursor: pointer がチラッと見える瞬間があるので防ぎたい
+		&:hover {
+			cursor: default;
+			opacity: 1;
+		}
+	}
+}
+
+// NOTE: 基本的には詳細度をつけることは禁止されています。
+// TODO: LinkButtonにおいて、以前のアイコンを呼び出す _icon.scss の icon.get-icon-path が影響し、aria-disabled で表示がバグっているので要修正。
+a.button {
+	text-decoration: none;
+
+	// TODO: new-tab icon の見た目を正にする(というより表示要否が要確認)
+	&[data-asideIcon='new-tab'] {
+		&::after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 15px;
+			height: 100%;
+			content: '';
+			background: {
+				position: top 4px right 4px;
+				repeat: no-repeat;
+				image: url('#{icon.get-icon-path(small-new-tab, dark)}');
+			}
+		}
+
+		&[aria-disabled='true'] {
+			&::after {
+				background-image: url('#{icon.get-icon-path(small-new-tab, light)}');
+			}
+		}
+
+		&[data-theme='strong'] {
+			&::after {
+				background-image: url('#{icon.get-icon-path(small-new-tab, light)}');
+			}
+		}
+
+		&[data-theme='conversion'] {
+			&::after {
+				background-image: url('#{icon.get-icon-path(small-new-tab, light)}');
+			}
+		}
+	}
+}
+
+// ボタンの前方に配置するアイコンです。
+// 必要あらば追加してください。
+$prefixIcons: (
+	up-arrow,
+	down-arrow,
+	left-arrow,
+	order-now,
+	cart,
+	download,
+	price-check,
+	apply-sample,
+	add-my-component,
+	similar-search,
+	wos-quote,
+	plus,
+	minus
+);
+
+// ボタンの前方に配置する、かつ色が変わらないアイコンです。
+// 必要あらば追加してください。
+$staticPrefixIcons: (pdf);
+
+.prefixIcon {
+	// テーマにより、アイコンの色がテキストの色に合わせる場合
+	@each $icon in $prefixIcons {
+		&[data-icon='#{$icon}'] {
+			@each $property, $styles in $buttonStylesThemes {
+				&[data-theme='#{$property}'] {
+					&::before {
+						background-color: map-get($styles, text-color);
+						// stylelint-disable-next-line
+						-webkit-mask: url('#{variables.$iconsPath}/#{$icon}.svg')
+							no-repeat
+							center;
+						mask: url('#{variables.$iconsPath}/#{$icon}.svg') no-repeat center;
+					}
+
+					&:disabled,
+					&[aria-disabled='true'] {
+						&::before {
+							background-color: #999;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// テーマや disabled にも関わらず、アイコンをそのままに表示する場合
+	@each $icon in $staticPrefixIcons {
+		&[data-icon='#{$icon}'] {
+			&::before {
+				background-image: url('#{variables.$iconsPath}/#{$icon}.svg');
+			}
+		}
+	}
+
+	&[data-icon] {
+		&::before {
+			content: '';
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			margin-right: 8px;
+			vertical-align: -4px;
+			background: {
+				position: center;
+				repeat: no-repeat;
+			}
+		}
+	}
+}

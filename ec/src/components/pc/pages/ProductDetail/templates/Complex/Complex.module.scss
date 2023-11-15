@@ -1,0 +1,81 @@
+@use 'src/styles/pc/variables';
+
+.main {
+	max-width: 1420px;
+	margin: 0 auto;
+}
+
+.product {
+	display: flex;
+	margin-top: 16px;
+}
+
+.specPanel {
+	flex-shrink: 0;
+	width: 260px;
+}
+
+.attributesPanel {
+	flex-grow: 1;
+	width: calc(100% - 260px);
+	margin-top: 16px;
+	padding-left: 40px;
+	// NOTE: adding this line to prevent children from growing horizontally beyond its parent
+	// TODO: Confirm UI in product attribute break layout
+	//       https://tickets.tools.misumi.jp/confluence/pages/viewpage.action?pageId=141652581
+	// overflow: hidden;
+}
+
+.introduction {
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
+.introductionSub {
+	@media only screen and (max-width: variables.$mediaMdMaxWidth) {
+		clear: both;
+		padding: 16px 0;
+	}
+
+	padding-bottom: 15px;
+	padding-left: 15px;
+	overflow: hidden;
+}
+
+.imageColumn {
+	float: left;
+	width: 250px;
+	min-height: 250px;
+	margin-right: 25px;
+}
+
+.attributesColumn {
+	margin-bottom: -15px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+	overflow: hidden;
+}
+
+.brandWrap {
+	display: flex;
+	align-items: center;
+}
+
+.economy {
+	margin-left: 8px;
+}
+
+.heading {
+	margin-top: 1rem;
+}
+
+.attributes {
+	margin-top: 32px;
+}
+
+.actionsPanelWrap {
+	margin-top: 48px;
+}

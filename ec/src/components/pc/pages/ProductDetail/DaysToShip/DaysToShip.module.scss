@@ -1,0 +1,31 @@
+.preWrap {
+	white-space: pre-wrap;
+}
+
+.textBold {
+	margin: 0 3px;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.sameDayShipOrDeliver {
+	margin-top: 5px;
+	padding: 7px 10px;
+	font-size: 10px;
+	background-color: #e6e6e6;
+	border-radius: 2px;
+}
+
+.sameDayShipOrDeliverAnchor {
+	color: #004bb1;
+
+	&:hover {
+		color: #ff730a;
+	}
+}
+
+.highlightSameDay {
+	color: #333;
+	font-weight: bold;
+	font-size: 16px;
+}

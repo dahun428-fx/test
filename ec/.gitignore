@@ -1,0 +1,5 @@
+.next
+/out
+.env.local
+/config/dist
+/src/utils/$path.ts

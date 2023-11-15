@@ -1,0 +1,26 @@
+.main {
+	max-width: 1220px;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+.container {
+	display: flex;
+}
+
+.breadcrumbWrapper {
+	margin-bottom: 32px;
+}
+
+.title {
+	margin-bottom: 16px;
+	color: #333;
+	font-weight: normal;
+	font-size: 1.4375rem;
+	line-height: 1.3;
+}
+
+.caption {
+	color: #333;
+	font-size: 0.8125rem;
+}

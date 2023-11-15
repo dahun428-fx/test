@@ -1,0 +1,89 @@
+.categoryTitle {
+	margin: 20px 0 10px;
+	font-size: 14px;
+}
+
+.categoryLabel {
+	font-weight: bold;
+}
+
+.specListWrap {
+	margin-top: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+
+.specList {
+	display: flex;
+	flex-direction: column;
+	height: 272px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.anchor {
+	display: block;
+	color: currentcolor;
+	text-decoration: none;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.specItem {
+	padding: 0 10px;
+	font-size: 14px;
+
+	// NOTE: Specificity is basically prohibited.
+	&:last-child > .anchor {
+		border-bottom: none;
+	}
+
+	&[aria-selected='true'] {
+		color: #fff;
+		background-color: #749dcf;
+		background-image: url(./assets/images/checkedBox.png);
+		background-repeat: no-repeat;
+		background-position: 10px 14px;
+	}
+
+	&[aria-selected='false'] {
+		color: #004bb1;
+		background-image: url(./assets/images/checkBox.png);
+		background-repeat: no-repeat;
+		background-position: 10px 14px;
+	}
+}
+
+.spec {
+	display: flex;
+}
+
+.specColumnTitle {
+	flex-basis: 45%;
+	padding: 10px 10px 10px 25px;
+	font-weight: bold;
+}
+
+.specColumn {
+	flex-basis: 55%;
+	padding: 10px;
+}
+
+.bottom {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin: 20px auto 0;
+}
+
+.bottomButtonLeft {
+	flex-basis: 50%;
+}
+
+.bottomButtonRight {
+	flex-basis: 50%;
+	margin-left: 10px;
+}
+
+.modalWidth {
+	display: block;
+}

@@ -1,0 +1,137 @@
+.modalWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100vh - 54px);
+}
+
+.header {
+	display: block;
+	padding: 5px;
+	color: #333;
+	line-height: 1.6;
+
+	&::before {
+		display: table;
+		content: '';
+	}
+
+	&::after {
+		display: table;
+		clear: both;
+		content: '';
+	}
+}
+
+.headerTitle {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.subtitle {
+	padding: 0 15px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+}
+
+.closeButton {
+	position: absolute;
+	top: -17px;
+	right: -15px;
+	display: block;
+	width: 35px;
+	height: 37px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-indent: 100%;
+	background: url(./assets/close-button.png);
+	background-color: #f2f2f2;
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: 1px solid #bfbfbf;
+	border-radius: 2px;
+	box-shadow: inset 0 1px 0 0 #fff, 0 2px 0 0 rgb(0 0 0 / 0.1);
+
+	&:hover,
+	&:active {
+		outline: 0;
+		opacity: 0.75;
+	}
+}
+
+.imageWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	object-fit: cover;
+}
+
+.imageContent {
+	width: 100%;
+}
+
+.imageList {
+	display: flex;
+	align-items: center;
+	margin-right: 5px;
+	padding-bottom: 5px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.image {
+	display: block;
+}
+
+.thumbnail {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: content-box;
+	width: 48px;
+	height: 48px;
+	margin-right: 10px;
+	border: 1px solid #ccc;
+
+	&:hover {
+		border: 1px solid #005fe0;
+	}
+}
+
+.selectedThumbnail {
+	border: 1px solid #005fe0;
+}
+
+%slideIndex {
+	position: absolute;
+	top: 50%;
+	display: inline-block;
+	width: 30px;
+	height: 41px;
+	overflow: hidden;
+	text-indent: 200%;
+	border-radius: 2px;
+	cursor: pointer;
+
+	&:hover {
+		opacity: 1;
+	}
+	// NOTE: The right-arrow background image is not centered, so we add a border here to accomadate.
+	&::before {
+		border-right: 6px solid #f2f2f2;
+	}
+}
+
+.previousIndex {
+	@extend %slideIndex;
+
+	left: -16px;
+}
+
+.nextIndex {
+	@extend %slideIndex;
+
+	right: -16px;
+}

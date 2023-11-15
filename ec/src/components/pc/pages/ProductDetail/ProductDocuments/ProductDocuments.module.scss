@@ -1,0 +1,36 @@
+@use 'src/styles/pc/icon';
+
+.pdfLinkList {
+	margin-top: 16px;
+	padding-top: 16px;
+	text-align: center;
+	border-top: solid 1px #ccc;
+}
+
+.pdfLink {
+	&:not(:first-child) {
+		margin-top: 6px;
+	}
+}
+
+.pdfLinkText {
+	text-decoration: none;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: underline;
+	}
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-bottom: -3px;
+		margin-left: calc(-16px - 0.5rem);
+		padding-left: 1.5rem;
+		vertical-align: baseline;
+		background-image: url('#{icon.get-path('pdf')}');
+		background-repeat: no-repeat;
+		content: '';
+	}
+}

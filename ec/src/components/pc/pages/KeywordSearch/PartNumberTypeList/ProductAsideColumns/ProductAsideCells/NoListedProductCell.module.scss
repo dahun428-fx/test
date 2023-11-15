@@ -1,0 +1,29 @@
+@use '../../PartNumberTypeList.shared';
+
+.dataCell {
+	@extend .dataCellBase;
+
+	width: 100%;
+	border-right: none;
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.quantityLabel {
+	font-weight: bold;
+}
+
+.quantityForm {
+	width: 52px;
+	height: 37px;
+	margin-left: 8px;
+}
+
+.button {
+	width: 110px;
+	margin-left: 8px;
+}

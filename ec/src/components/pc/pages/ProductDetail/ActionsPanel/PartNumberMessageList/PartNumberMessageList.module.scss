@@ -1,0 +1,67 @@
+@use 'src/styles/pc/icon';
+
+.messageItem {
+	margin-top: 0.25rem;
+}
+
+.messageList {
+	padding-bottom: 8px;
+}
+
+.alterationSpecExplain {
+	margin-top: 8px;
+}
+
+.defaultSpecList {
+	margin-top: 8px;
+}
+
+.defaultSpecToggleBox {
+	margin-top: 4px;
+}
+
+%defaultsExpand {
+	padding-left: 24px;
+	color: #004098;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-bottom: -3px;
+		margin-left: calc(-16px - 0.5rem);
+		padding-left: 1.5rem;
+		vertical-align: baseline;
+		background-repeat: no-repeat;
+		content: '';
+	}
+}
+
+.defaultsOpenable {
+	@extend %defaultsExpand;
+
+	&::before {
+		background-image: url(#{icon.get-path('plus')});
+	}
+}
+
+.defaultsClosable {
+	@extend %defaultsExpand;
+
+	&::before {
+		background-image: url(#{icon.get-path('minus')});
+	}
+}
+
+.none {
+	display: none;
+}
+
+.defaultSpecValueDisp {
+	margin-left: 8px;
+}

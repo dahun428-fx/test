@@ -1,0 +1,75 @@
+.item {
+	width: calc(50% - 4px);
+	min-height: 300px;
+	margin-top: 8px;
+	padding: 8px;
+	padding-bottom: 20px;
+	background-color: #fff;
+	border: none;
+}
+
+.labelIconList {
+	height: 20px;
+	margin-bottom: 3px;
+}
+
+.panelIconList {
+	height: 30px;
+	margin-bottom: 5px;
+}
+
+.imageWrapper {
+	position: relative;
+	height: 120px;
+	text-align: center;
+}
+
+.imageBottomIconList {
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.campaignDate {
+	width: calc(100% - 45px);
+	margin-left: 6px;
+}
+
+.saleBadgeContainer {
+	vertical-align: bottom;
+}
+
+.link {
+	width: 100%;
+
+	&:hover,
+	&:visited {
+		text-decoration: none;
+	}
+}
+
+.seriesName {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	width: 100%;
+	min-height: 73px;
+	max-height: 73px;
+	margin-top: 5px;
+	overflow: hidden;
+	color: #000;
+	font-weight: bold;
+	font-size: 15px;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+
+.brandName {
+	min-height: 40px;
+	color: #aaa;
+	font-size: 12px;
+}

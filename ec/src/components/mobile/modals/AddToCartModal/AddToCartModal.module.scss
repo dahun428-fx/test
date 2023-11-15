@@ -1,0 +1,84 @@
+// NOTE: Specificity is basically prohibited.
+.modal[class] {
+	padding: 15px;
+}
+
+.title {
+	font-size: 12px;
+}
+
+.cartModal {
+	display: flex;
+	flex-direction: column;
+	box-sizing: content-box;
+	min-height: 251px;
+	font-size: 12px;
+}
+
+.productImage {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 8px;
+}
+
+.productMain {
+	display: flex;
+	flex-direction: column;
+}
+
+.productName {
+	font-weight: bold;
+}
+
+.cartInfo {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 4px;
+}
+
+.mainContent {
+	width: 100%;
+}
+
+.infoList {
+	position: relative;
+	margin-bottom: 15px;
+}
+
+.infoItem {
+	margin: 8px 0;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.infoRow {
+	display: table;
+	width: 100%;
+	margin-bottom: 4px;
+}
+
+.infoLabel {
+	display: table-cell;
+	font-weight: bold;
+}
+
+.infoValue {
+	display: table-cell;
+	text-align: right;
+}
+
+.asideTitle {
+	font-weight: bold;
+}
+
+.highLightText {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.buttonWrapper {
+	margin-top: 10px;
+}
+
+.buttonLabel {
+	font-size: 14px;
+}

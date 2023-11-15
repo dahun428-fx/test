@@ -1,0 +1,95 @@
+.searchResultTitle {
+	margin-bottom: 16px;
+	font-weight: normal;
+	font-size: 23px;
+	overflow-wrap: break-word;
+}
+
+.keyword {
+	font-weight: bold;
+}
+
+.form {
+	display: flex;
+	align-items: center;
+}
+
+.input {
+	@media (max-width: 1200px) {
+		max-width: 100%;
+	}
+
+	width: 100%;
+	max-width: 800px;
+	height: 35px;
+	margin-right: 1rem;
+	padding: 7px 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.section {
+	margin-top: 80px;
+}
+
+.control {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px 0;
+	font-size: 0.8125rem;
+}
+
+.totalCount {
+	min-width: 60px;
+}
+
+.totalCountLabel {
+	margin-right: 0.5rem;
+	font-weight: bold;
+	font-size: 1.0625rem;
+}
+
+.item {
+	font-size: 0.8125rem;
+	border-bottom: 1px solid #ccc;
+
+	&:first-child {
+		border-top: 1px solid #ccc;
+	}
+}
+
+// NOTE: Specificity is not allowed, but it is used here to handle
+// underlining of the title on hover of the Link component.
+.link[class] {
+	width: 100%;
+	padding: 16px;
+
+	&:hover {
+		text-decoration: none;
+		cursor: pointer;
+		opacity: 0.8;
+
+		// NOTE: Specificity is not allowed, but it is used here to handle
+		// underlining of the title on hover of the Link component.
+		& > .title {
+			text-decoration: underline;
+		}
+	}
+}
+
+.text {
+	color: #333;
+}
+
+.footer {
+	margin-top: 8px;
+	text-align: right;
+}
+
+.notice {
+	margin: 8px 0;
+	font-size: 13px;
+}

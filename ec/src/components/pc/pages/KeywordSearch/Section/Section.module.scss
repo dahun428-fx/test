@@ -1,0 +1,57 @@
+@use 'src/styles/pc/icon';
+@use 'src/styles/pc/variables';
+
+.headingWrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 32px 12px 0;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: right;
+	border-bottom: 2px solid #ccc;
+
+	&[aria-expanded='true'] {
+		background-image: url('#{icon.get-path('triangle-up')}');
+	}
+
+	&[aria-expanded='false'] {
+		background-image: url('#{icon.get-path('triangle-down')}');
+	}
+
+	&[aria-expanded] {
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: auto;
+		}
+	}
+}
+
+.heading {
+	font-weight: normal;
+	font-size: 1.3125rem;
+	line-height: 1.3;
+	white-space: nowrap;
+}
+
+.aside {
+	&[aria-hidden='true'] {
+		display: none;
+	}
+}
+
+.contentsContainer {
+	margin-top: 16px;
+	transition: max-height 400ms;
+}
+
+.collapsed {
+	overflow: hidden;
+}
+
+.sticky {
+	position: sticky;
+	top: 0;
+	z-index: variables.$standardStickyZIndex;
+}

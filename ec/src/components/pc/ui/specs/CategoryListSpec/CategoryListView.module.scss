@@ -1,0 +1,24 @@
+.categoryList {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tripleColumn {
+	width: 120px;
+	overflow-wrap: break-word;
+}
+
+.refineText {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 228px;
+	height: 37px;
+	margin-bottom: 0.5rem;
+	padding: 7px 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.noCandidate {
+	color: #c00;
+}

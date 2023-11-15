@@ -1,0 +1,1 @@
+export { SaleLabel } from './SaleLabel';

@@ -1,0 +1,43 @@
+@charset "utf-8";
+@use 'src/styles/mobile/variables';
+
+.chat :global {
+	#chatplusview {
+		bottom: 52px;
+		z-index: variables.$chatZIndex !important;
+		width: 100% !important;
+		transform: translate3d(
+			0,
+			0,
+			0
+		); // For Safari: z-index is not working correctly
+
+		&[aria-expanded='true'] {
+			top: 50px !important;
+			height: calc(100% - 102px);
+		}
+	}
+
+	#chatplusview #outline {
+		height: 100% !important;
+	}
+
+	#chatplusview #outline #chatpluscontent {
+		display: flex;
+		flex-direction: column;
+		height: 100% !important;
+	}
+
+	#chatplusview #outline #chatpluscontent #body {
+		flex: 1;
+	}
+
+	#chatplusview
+	#outline
+	#chatpluscontent
+	#chatplusheader
+	.operate
+	> a.button-remove {
+		display: none;
+	}
+}

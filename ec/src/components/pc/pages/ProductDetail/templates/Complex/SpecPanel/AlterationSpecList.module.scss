@@ -1,0 +1,35 @@
+@use 'src/styles/pc/icon';
+
+.container {
+	background-color: #f8fbff;
+}
+
+.heading {
+	padding: 12px 8px;
+	color: #fff;
+	font-size: 0.9375rem;
+	background-color: #666;
+}
+
+.noticeWrap {
+	padding: 8px;
+	background-color: #fffaeb;
+}
+
+.notice {
+	padding-left: 1.5rem;
+	color: #c00;
+
+	background: {
+		image: url('#{icon.get-path('warning')}');
+		repeat: no-repeat;
+	}
+}
+
+.specItem {
+	font-size: 0.8125rem;
+
+	&:not(:first-child) {
+		border-top: 1px solid #ccc;
+	}
+}

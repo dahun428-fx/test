@@ -1,0 +1,1 @@
+export { UserRegistrationPanel } from './UserRegistrationPanel';

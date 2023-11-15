@@ -1,0 +1,64 @@
+@use 'src/styles/mobile/variables';
+
+.pagerArea {
+	position: absolute;
+	top: 0;
+	width: 40px;
+	height: 100%;
+	cursor: default;
+
+	&:hover button {
+		opacity: 1;
+	}
+}
+
+.pagerAreaLeft {
+	@extend .pagerArea;
+
+	left: 0;
+}
+
+.pagerAreaRight {
+	@extend .pagerArea;
+
+	right: 0;
+}
+
+.buttonWrap {
+	position: relative;
+	top: 0;
+}
+
+.button {
+	display: block;
+	width: 40px;
+	height: 41px;
+	background-color: #f2f2f2;
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: 1px solid #bfbfbf;
+	border-radius: 2px;
+	box-shadow: inset 0 1px 0 0 #fff, 0 2px 0 0 rgb(0 0 0 / 0.1);
+	opacity: 0;
+	transition: all 0.2s;
+}
+
+.buttonLeft {
+	@extend .button;
+
+	left: 0;
+	background-image: url('#{variables.$commonPath}/arrow-left.svg');
+	border-left: none;
+}
+
+.buttonRight {
+	@extend .button;
+
+	right: 0;
+	background-image: url('#{variables.$commonPath}/arrow-right.svg');
+	border-right: none;
+}
+
+.animation {
+	opacity: 0.5;
+}

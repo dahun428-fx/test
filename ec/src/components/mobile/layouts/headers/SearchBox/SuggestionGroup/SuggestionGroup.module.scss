@@ -1,0 +1,32 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	font-size: 15px;
+}
+
+.title {
+	margin: 5px 10px 0;
+	font-weight: bold;
+}
+
+.listWrapper {
+	padding: 3px 0 5px;
+}
+
+.linkItem {
+	display: block;
+	padding: 3px 10px;
+	color: #004bb1;
+	text-decoration: none;
+
+	&:visited {
+		color: #851f99;
+	}
+}
+
+.loading {
+	height: 200px;
+	font-size: 0;
+	background: url('#{variables.$commonPath}/loading.gif') center center
+		no-repeat;
+}

@@ -1,0 +1,69 @@
+.container {
+	flex-grow: 0;
+	flex-shrink: 0;
+	// マージン14pxを除いた全体の30% (IE だとバグるため flex-basis ではなく width にしています)
+	width: calc((100% - 14px) * 3 / 10);
+	padding: 20px;
+	background-color: #fff;
+}
+
+.titleBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+	background-color: #fff;
+}
+
+.title {
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+// NOTE: Specificity is basically prohibited.
+.link[class] {
+	&:hover,
+	&:visited {
+		color: #004098;
+	}
+}
+
+.main {
+	margin-top: 20px;
+	padding-top: 32px;
+	border-top: 1px solid #ccc;
+}
+
+.item {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-top: 10px;
+	padding-top: 10px;
+	text-align: center;
+	border-top: 1px dotted #ccc;
+
+	&:first-child {
+		margin-top: 0;
+		padding-top: 0;
+		border-top: none;
+	}
+}
+
+.count {
+	@media screen and (max-width: 1399px) {
+		font-size: 0.9375rem;
+	}
+
+	@media screen and (max-width: 1199px) {
+		font-size: 1.0625rem;
+	}
+
+	font-weight: bold;
+	font-size: 1.0625rem;
+}
+
+.disabled {
+	color: #999;
+}

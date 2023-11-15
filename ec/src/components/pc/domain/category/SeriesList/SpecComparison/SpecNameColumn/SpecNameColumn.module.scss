@@ -1,0 +1,28 @@
+@use '../SpecComparison.shared';
+@use 'src/styles/pc/variables';
+
+.specNameColumn {
+	z-index: variables.$fixedListHeaderZIndex;
+}
+
+.tableCell {
+	@extend %cell;
+
+	width: 100%;
+}
+
+.fixedSpecName {
+	@extend %baseTable;
+}
+
+.specNameCell {
+	width: 100px;
+	text-align: left;
+	vertical-align: middle;
+	word-break: break-word;
+	background-color: #f5f5f5;
+}
+
+.tableBottom {
+	@extend %tableBottom;
+}

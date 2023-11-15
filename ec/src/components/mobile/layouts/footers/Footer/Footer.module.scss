@@ -1,0 +1,60 @@
+.footerWrapper {
+	padding-top: 7px;
+}
+
+.linkList {
+	font-size: 14px;
+}
+
+.footerBottom {
+	padding-bottom: 30px;
+}
+
+.globalListWrapper {
+	padding: 30px 0;
+}
+
+.globalList {
+	text-align: center;
+}
+
+.switchToPC {
+	@extend .globalList;
+
+	margin: 15px auto;
+	color: #000;
+	font-size: 14px;
+}
+
+.switchToPCLink {
+	color: #004098;
+	text-decoration: none;
+
+	&:link {
+		color: #004098;
+		text-decoration: none;
+	}
+
+	&:hover,
+	&:active {
+		color: #025fae;
+		text-decoration: underline;
+	}
+}
+
+.worldWideWrapper {
+	display: inline-block;
+	padding: 5px 5px 5px 35px;
+	font-size: 15px;
+	background: url(./assets/images/world-wide-web.png) left center no-repeat;
+	background-size: 24px auto;
+}
+
+.copyright {
+	margin: 15px auto;
+	padding: 0 15px;
+	color: #000;
+	font-size: 11px;
+	line-height: 1;
+	text-align: center;
+}

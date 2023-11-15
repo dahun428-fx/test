@@ -1,0 +1,93 @@
+/* stylelint-disable selector-class-pattern */
+
+// NOTE: Specificity is basically prohibited.
+
+@use 'src/styles/pc/mixins';
+@use 'sass:math';
+
+$handleSize: 19;
+$railHeight: 5;
+$railOffsetTop: math.div($handleSize - $railHeight, 2);
+
+.slider {
+	display: flex;
+	justify-content: center;
+}
+
+.slider :global {
+	.misumi-slider {
+		position: relative;
+		width: calc(100% - #{$handleSize + 1}px);
+		height: #{$handleSize}px;
+		padding: #{$railOffsetTop}px 0;
+		border-radius: #{math.div($handleSize, 2)}px;
+	}
+
+	.misumi-slider-rail {
+		position: absolute;
+		width: 100%;
+		height: 5px;
+		background-color: #999;
+		border-radius: 2px;
+		box-shadow: inset 0 1px 1px 0 rgb(4 0 0 / 0.3);
+	}
+
+	.misumi-slider-handle {
+		position: relative;
+		top: -#{$railOffsetTop}px;
+		width: #{$handleSize}px;
+		height: #{$handleSize}px;
+		background-color: #e8e8e8;
+		border: 1px solid #999;
+		border-radius: 50%;
+		box-shadow: 0 2px 0 0 rgb(0 0 0 / 0.1), inset 0 2px 0 0 rgb(255 255 255 / 0);
+	}
+}
+
+.tooltip {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	box-sizing: border-box;
+	visibility: visible;
+
+	& * {
+		box-sizing: border-box;
+	}
+}
+
+.tooltip :global {
+	.misumi-tooltip-hidden {
+		display: none;
+	}
+
+	.misumi-tooltip-placement-top {
+		padding: 4px 0 12px;
+	}
+
+	.misumi-tooltip-inner {
+		min-width: 24px;
+		max-width: 185px;
+		margin-bottom: 3px;
+		padding: 8px;
+		color: #333;
+		font-size: 12px;
+		line-height: 1.5;
+		text-align: center;
+		text-decoration: none;
+		background-color: #e5e5e5;
+		border-radius: 4px;
+		box-shadow: 0 0 3px rgb(0 0 0 / 0.2);
+	}
+
+	.misumi-tooltip-arrow {
+		position: absolute;
+		bottom: -5px;
+		left: 50%;
+		margin-left: -6px;
+		border-width: 10px 6px 0;
+		border-style: solid;
+		border-color: transparent;
+		border-top-color: #e5e5e5;
+	}
+}

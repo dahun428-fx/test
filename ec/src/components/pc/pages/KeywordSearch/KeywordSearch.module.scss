@@ -1,0 +1,14 @@
+.main {
+	max-width: 1420px;
+	margin: 0 auto;
+}
+
+.breadcrumbs {
+	margin-bottom: 16px;
+}
+
+.section {
+	&:nth-child(n + 2) {
+		margin-top: 32px;
+	}
+}

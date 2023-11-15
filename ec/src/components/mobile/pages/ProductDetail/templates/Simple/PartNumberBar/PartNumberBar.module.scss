@@ -1,0 +1,53 @@
+.container {
+	padding: 0 15px;
+}
+
+.item {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	height: auto;
+	min-height: 52px;
+	font-size: 16px;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.value {
+	display: flex;
+	align-items: center;
+	max-width: 100%;
+}
+
+.partNumber {
+	max-width: calc(100% - 28px); // 28px = width of iconConfig
+	overflow-wrap: break-word;
+}
+
+.buttonConfig {
+	padding: 3px 10px;
+	color: #fff;
+	font-size: 16px;
+	background: #039;
+	border-radius: 20px;
+}
+
+.iconConfig {
+	padding: 0 5px 0 15px;
+
+	&::after {
+		display: block;
+		width: 8px;
+		height: 16px;
+		background-image: url(./assets/images/select.png);
+		background-repeat: no-repeat;
+		background-size: 8px 16px;
+		content: '';
+	}
+}
+
+.alertWrap {
+	width: 100%;
+	font-size: 14px;
+}

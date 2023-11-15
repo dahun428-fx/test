@@ -1,0 +1,41 @@
+//=============================================================================
+// path
+
+// common image のルートパス
+$commonPath: '~src/assets/mobile/images/common';
+
+// icon image のルートパス
+$iconsPath: '~src/assets/mobile/images/icons';
+
+//=============================================================================
+// z-index
+
+// Category list
+$categoryListZIndex: 50;
+
+//Chat
+$chatZIndex: 80;
+
+// Popover
+$popoverZIndex: 100;
+
+// Drawer
+$drawerZIndex: 200;
+
+// Contents Header
+$contentsHeaderZIndex: 300;
+
+// Header
+$headerZIndex: 400;
+
+// loader
+$loaderZIndex: 400;
+
+// Part Number List
+$partNumberListZIndex: 400;
+
+// Bottom Navigation
+$bottomNavZIndex: 400;
+
+// Modal
+$modalZIndex: 500;

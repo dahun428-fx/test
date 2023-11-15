@@ -1,0 +1,15 @@
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 350px;
+	transition: transform 0.45s ease-in-out;
+
+	&[data-banner-size='larger'] {
+		left: calc(-100% + 420px);
+	}
+
+	&[data-banner-size='small'] {
+		left: 0;
+	}
+}

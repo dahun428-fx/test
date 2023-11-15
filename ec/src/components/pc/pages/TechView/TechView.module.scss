@@ -1,0 +1,19 @@
+.page {
+	@media (max-width: 1200px) {
+		width: 950px;
+	}
+
+	width: 1420px;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+.breadcrumbWrapper {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.technicalInformationWrapper {
+	margin-top: 32px;
+}

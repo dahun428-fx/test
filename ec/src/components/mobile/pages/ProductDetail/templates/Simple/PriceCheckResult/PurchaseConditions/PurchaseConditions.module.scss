@@ -1,0 +1,73 @@
+@use 'src/styles/mobile/variables';
+
+.volumeDiscountTable {
+	width: 100%;
+	margin: 10px 0;
+	font-size: 16px;
+}
+
+.volumeDiscountButton {
+	position: relative;
+	width: 128px;
+	margin-bottom: 8px;
+	padding: 6px 0 6px 15px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 10px;
+	background-color: #039;
+	border-radius: 20px;
+}
+
+.arrow {
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 100%;
+}
+
+.arrowUp {
+	@extend .arrow;
+
+	background-image: url('#{variables.$commonPath}/arrow-up-big.png');
+}
+
+.arrowDown {
+	@extend .arrow;
+
+	background-image: url('#{variables.$commonPath}/arrow-down-big.png');
+}
+
+.container {
+	margin-bottom: 10px;
+	padding: 0 15px;
+}
+
+.item {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	height: auto;
+	min-height: 52px;
+	font-size: 16px;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.value {
+	display: flex;
+	align-items: center;
+}
+
+.price {
+	text-align: right;
+}
+
+.orderLimit {
+	margin-top: 10px;
+}

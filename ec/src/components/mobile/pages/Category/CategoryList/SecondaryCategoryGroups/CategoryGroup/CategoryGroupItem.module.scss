@@ -1,0 +1,22 @@
+.link {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #333;
+	line-height: 1.35;
+	text-decoration: none;
+}
+
+.image {
+	width: 60px;
+	height: 60px;
+}
+
+.categoryName {
+	display: inline-block;
+	padding: 2px 4px;
+	font-size: 12px;
+	white-space: break-spaces;
+	text-align: center;
+	word-break: break-word;
+}

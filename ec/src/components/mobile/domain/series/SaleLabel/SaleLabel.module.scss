@@ -1,0 +1,33 @@
+.sale {
+	position: relative;
+	display: block;
+	padding-left: 12px;
+	color: #fff;
+	font-size: 10px;
+	text-align: left;
+	word-wrap: break-word;
+	background-color: #d00;
+
+	&::before {
+		position: absolute;
+		bottom: 0;
+		left: -10px;
+		width: 19px;
+		height: 22px;
+		background-image: url(./assets/hot-sale.svg);
+		background-repeat: no-repeat;
+		content: '';
+	}
+
+	&::after {
+		position: absolute;
+		top: -1px;
+		right: -1px;
+		bottom: 0;
+		width: 0;
+		height: 0;
+		border-top: 18px solid #fff;
+		border-left: 14px solid transparent;
+		content: '';
+	}
+}

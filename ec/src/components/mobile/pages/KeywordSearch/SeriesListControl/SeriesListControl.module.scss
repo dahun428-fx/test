@@ -1,0 +1,40 @@
+@use 'src/styles/mobile/variables';
+
+.seriesListControl {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 38px;
+	background-color: #fff;
+}
+
+.buttonGroup {
+	display: flex;
+	align-items: flex-end;
+}
+
+.totalResult {
+	padding: 8px 0 8px 10px;
+}
+
+.totalResultNum {
+	color: #fc0;
+}
+
+.filterButton {
+	width: 34px;
+	height: 30px;
+	margin-left: 4px;
+	border: none;
+	background: {
+		position: 10px;
+		color: #fc0;
+		image: url(./assets/icon-filter.png);
+		repeat: no-repeat;
+		size: 16px;
+	}
+}
+
+.sticky {
+	z-index: variables.$categoryListZIndex;
+}

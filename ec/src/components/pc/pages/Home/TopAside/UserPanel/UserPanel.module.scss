@@ -1,0 +1,39 @@
+.userBox {
+	padding: 20px;
+	border: 1px solid #a7a7a7;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.pendingAction {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.item {
+	flex: 1 0 calc(50% - 2.5px);
+	margin-bottom: 10px;
+
+	&:nth-child(2n) {
+		margin-left: 5px;
+	}
+}
+
+.link {
+	color: #333;
+	font-weight: bold;
+	text-decoration: none;
+
+	&:hover {
+		color: #004098;
+		text-decoration: underline;
+	}
+}
+
+.disabledLink {
+	color: #999;
+	font-weight: bold;
+}

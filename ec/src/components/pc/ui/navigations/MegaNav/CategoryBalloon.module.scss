@@ -1,0 +1,50 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/icon';
+
+$categoryImageHeight: 224px;
+
+//  左メニューとの隙間に pointer を置いても非表示にならないため
+.wrapper {
+	padding-left: 30px;
+}
+
+.balloon {
+	z-index: variables.$popoverZIndex;
+	width: 600px;
+	min-height: 614px;
+	padding: 15px 20px;
+	background-color: #fff;
+	border: 1px solid #a7a7a7;
+	box-shadow: 0 1px 5px 0 rgba(0 0 0 / 0.3);
+}
+
+.categoryList {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-bottom: $categoryImageHeight;
+}
+
+.categoryItem {
+	width: calc(50% - 20px);
+	list-style: none;
+
+	// １列目と２列目の間に間隔を設ける
+	&:nth-child(even) {
+		margin-left: 40px;
+	}
+}
+
+// バルーンの最下部にカテゴリグループイメージを設定
+// background-image は hover したカテゴリによって変わるので js 側で設定
+.categoryImage {
+	position: absolute;
+	bottom: 0;
+	left: 15px;
+	width: 100%;
+	height: $categoryImageHeight;
+	background: {
+		position: center top;
+		repeat: no-repeat;
+	}
+}

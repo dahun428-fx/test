@@ -1,0 +1,32 @@
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+.item {
+	display: flex;
+}
+
+.tile {
+	justify-content: center;
+	width: 100%;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.typeCode {
+	@media (max-width: 375px) {
+		min-width: 19%;
+	}
+
+	min-width: 16%;
+}
+
+.triple {
+	width: 31.6%;
+}
+
+.double {
+	width: 48.3%;
+}

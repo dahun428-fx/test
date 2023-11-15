@@ -1,0 +1,16 @@
+.text {
+	padding-left: 2px;
+	color: #636363;
+	font-weight: bold;
+	font-size: 10px;
+	letter-spacing: -0.4px;
+}
+
+.daysToShip {
+	display: flex;
+	align-items: center;
+}
+
+.daysToShipBottom {
+	align-items: flex-end;
+}

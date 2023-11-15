@@ -1,0 +1,20 @@
+.textField {
+	height: 37px;
+}
+
+.range {
+	margin-top: 4px;
+	font-size: 0.8125rem;
+}
+
+.inline {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+
+	& > .range {
+		margin-top: 0;
+		margin-left: 8px;
+		padding: 8px 0;
+	}
+}

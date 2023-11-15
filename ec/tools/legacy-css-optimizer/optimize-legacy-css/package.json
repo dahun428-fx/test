@@ -1,0 +1,17 @@
+{
+	"name": "optimize-legacy-css",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"optimize": "ts-node optimize.ts"
+	},
+	"dependencies": {
+		"@types/node": "^20.1.7",
+		"@types/yargs": "^17.0.24",
+		"postcss": "^8.4.23",
+		"postcss-selector-parser": "^6.0.13",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.4",
+		"yargs": "^17.7.2"
+	}
+}

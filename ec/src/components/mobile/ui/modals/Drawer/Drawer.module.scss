@@ -1,0 +1,39 @@
+@use 'src/styles/mobile/variables';
+
+.drawer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: variables.$drawerZIndex;
+	width: 100%;
+}
+
+.slideFromLeft {
+	left: 0;
+}
+
+.slideFromRight {
+	right: 0;
+}
+
+.enterSlideFromRight {
+	right: -100%;
+}
+
+.enterSlideFromLeft {
+	left: -100%;
+}
+
+.enterActiveSlideFromRight {
+	right: 0;
+	transition: all 0.3s;
+}
+
+.enterActiveSlideFromLeft {
+	left: 0;
+	transition: all 0.3s;
+}
+
+.exit {
+	display: none;
+}

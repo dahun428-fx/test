@@ -1,0 +1,1 @@
+export { SearchSimilarProductModal } from './SearchSimilarProductModal';

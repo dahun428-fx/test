@@ -1,0 +1,15 @@
+@use './Loader';
+@use 'src/styles/pc/variables';
+
+.overlay {
+	@extend .overlay;
+
+	position: fixed;
+	z-index: variables.$modalZIndex;
+}
+
+.loader {
+	@extend .loader;
+
+	color: #e5e5e5;
+}

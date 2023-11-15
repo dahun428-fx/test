@@ -1,0 +1,1 @@
+export { CategoryDescription } from './CategoryDescription';

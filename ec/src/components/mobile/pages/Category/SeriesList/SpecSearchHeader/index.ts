@@ -1,0 +1,1 @@
+export { SpecSearchHeader } from './SpecSearchHeader';

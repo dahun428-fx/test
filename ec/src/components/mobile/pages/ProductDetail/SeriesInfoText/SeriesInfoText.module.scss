@@ -1,0 +1,28 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	margin-top: 15px;
+}
+
+.caution {
+	padding: 10px;
+	background-color: #fff2bf;
+	border-radius: 2px;
+}
+
+.cautionTitle {
+	padding-left: 17px;
+	font-weight: bold;
+	background: url('#{variables.$commonPath}/information.png') left no-repeat;
+}
+
+.infoTextList {
+	margin-top: 5px;
+}
+
+.infoText {
+	margin: 3px 0 3px 18px;
+	font-size: 14px;
+	text-indent: 2.4px;
+	list-style-type: disc;
+}

@@ -1,0 +1,50 @@
+//=============================================================================
+// path
+
+// common image のルートパス
+$commonPath: '~src/assets/pc/images/common';
+
+// icon image のルートパス
+$iconsPath: '~src/assets/pc/images/icons';
+
+//=============================================================================
+// z-index
+
+// TODO: z-indexをマイナスな値を使わなくても良いようにリファクタリングする
+//       現状[2023/05] ProductDetailページのPartNumberListのスクロールバーの両側部分で使用
+$scrollSideSpaceIndex: -1;
+
+$fixedListHeaderZIndex: 1;
+
+// scroll bar series list
+$seriesListScrollbarZIndex: 2;
+
+// floating (sticky)
+$standardStickyZIndex: 100;
+
+// メガナビの吹き出しなど、吹き出しやプルダウンの表示部
+$popoverZIndex: 200;
+$popoverTailZIndex: 201;
+
+// loader
+$loaderZIndex: 300;
+
+// header
+$headerZIndex: 400;
+$suggestOverlayZIndex: ($headerZIndex - 1);
+
+// toast
+$toastZIndex: 500;
+
+// modal
+$modalZIndex: 600;
+
+// tooltip
+$tooltipZIndex: 700;
+
+// floating banner
+$floatingBannerZIndex: 800;
+
+//=============================================================================
+// responsive
+$mediaMdMaxWidth: 1200px;

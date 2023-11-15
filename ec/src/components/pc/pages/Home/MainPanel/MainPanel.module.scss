@@ -1,0 +1,46 @@
+.container {
+	@media screen and (max-width: 1199px) {
+		display: block;
+	}
+
+	display: flex;
+	align-items: flex-start;
+	margin-top: 20px;
+}
+
+.main {
+	flex: 1 1 auto;
+	justify-content: center;
+	align-items: center;
+}
+
+.aside {
+	@media screen and (max-width: 1199px) {
+		flex-direction: row;
+		margin-top: 20px;
+		margin-left: 0;
+
+		// NOTE: Specificity is basically prohibited.
+		& > div {
+			flex-basis: 50%;
+
+			&:last-child {
+				margin-top: 0;
+				margin-left: 20px;
+			}
+		}
+	}
+
+	display: flex;
+	flex: 0 0 470px;
+	flex-direction: column;
+	margin-left: 30px;
+
+	& > :last-child {
+		margin-top: 20px;
+	}
+}
+
+.bottom {
+	margin-top: 80px;
+}

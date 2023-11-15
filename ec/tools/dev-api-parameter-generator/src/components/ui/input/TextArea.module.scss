@@ -1,0 +1,21 @@
+.textArea {
+	border: 1px solid #ccc;
+	padding: 8px;
+	border-radius: 4px;
+
+	&:hover {
+		border: 1px solid #777;
+	}
+
+	&:focus {
+		outline-color: #004098;
+	}
+
+	&[aria-disabled='true'] {
+		background: #eee;
+	}
+
+	&[aria-readonly='true'] {
+		background: #eee;
+	}
+}

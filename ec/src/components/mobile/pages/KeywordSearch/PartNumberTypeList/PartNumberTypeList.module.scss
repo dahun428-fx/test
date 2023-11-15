@@ -1,0 +1,78 @@
+.tile {
+	box-sizing: border-box;
+	padding: 15px 0;
+	border-bottom: 1px dotted #bfbfbf;
+
+	&:first-child {
+		border-top: 1px dotted #bfbfbf;
+	}
+}
+
+.main {
+	display: flex;
+}
+
+.imageSide {
+	flex: 0 0 64px;
+}
+
+.image {
+	overflow: hidden;
+}
+
+.mainSide {
+	margin-left: 8px;
+}
+
+.textSide {
+	overflow: hidden;
+	vertical-align: top;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.seriesName {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	max-width: 496px;
+	overflow: hidden;
+	color: #000;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 1.8;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+
+.brandName {
+	margin: 3px 0;
+	margin-top: 8px;
+	color: #ccc;
+	font-size: 12px;
+}
+
+.labelWrapper {
+	display: flex;
+	align-items: flex-start;
+}
+
+.label {
+	display: flex;
+	flex: 1;
+	align-items: center;
+}
+
+.partNumberTypeList {
+	padding: 15px;
+}
+
+.horizontalList {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+	padding-bottom: 8px;
+	background-color: #eee;
+}

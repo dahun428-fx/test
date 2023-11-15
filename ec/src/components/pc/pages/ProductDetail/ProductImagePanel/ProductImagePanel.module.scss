@@ -1,0 +1,16 @@
+@use 'src/styles/pc/variables';
+
+// NOTE: Specificity is basically prohibited.
+[aria-haspopup='false'] > .image {
+	cursor: default;
+}
+
+.cursorPointer {
+	cursor: pointer;
+}
+
+.caption {
+	color: #666;
+	font-size: 0.6875rem;
+	text-align: center;
+}

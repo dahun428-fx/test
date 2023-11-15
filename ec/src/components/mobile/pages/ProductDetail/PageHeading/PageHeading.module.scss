@@ -1,0 +1,79 @@
+@use 'src/styles/mobile/variables';
+
+.wrap {
+	white-space: pre-wrap;
+}
+
+.heading {
+	color: #333;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.1765;
+}
+
+.pageHeadingBox {
+	position: relative;
+	width: 100%;
+	max-height: 45px;
+	overflow: hidden;
+}
+
+.readMorePageHeading {
+	max-height: none;
+}
+
+.readMoreButton {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: inline-block;
+	color: #004098;
+	text-decoration: none;
+	background: #fff;
+
+	&::after {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		padding-left: 20px;
+		vertical-align: middle;
+		content: '';
+		background: {
+			image: url('#{variables.$commonPath}/arrow-down-big.png');
+			repeat: no-repeat;
+			position: right 8px center;
+		}
+	}
+}
+
+.readHiddenButton {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: inline-block;
+	color: #004098;
+	text-decoration: none;
+	background: #fff;
+
+	&::after {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		padding-left: 20px;
+		vertical-align: middle;
+		content: '';
+		background: {
+			image: url('#{variables.$commonPath}/arrow-up-big.png');
+			repeat: no-repeat;
+			position: right 8px center;
+		}
+	}
+}
+
+.omittedText {
+	padding-left: 3px;
+	color: #333;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.1765;
+}

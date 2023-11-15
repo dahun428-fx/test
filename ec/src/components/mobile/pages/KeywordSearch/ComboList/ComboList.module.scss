@@ -1,0 +1,46 @@
+.comboText {
+	padding: 0 15px;
+	font-size: 15px;
+}
+
+.list {
+	display: flex;
+	gap: 15px;
+	padding: 0 15px 5px;
+	overflow-x: auto;
+}
+
+.item {
+	display: flex;
+	width: 220px;
+	min-width: 220px;
+	margin-bottom: 15px;
+}
+
+.productImage {
+	margin-right: 10px;
+}
+
+.seriesName {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.brandName {
+	margin: 3px 0;
+	font-size: 12px;
+}
+
+.partNumberList {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.partNumberLink {
+	color: #004bb1;
+	text-decoration: none;
+
+	&:visited {
+		color: #004bb1;
+	}
+}

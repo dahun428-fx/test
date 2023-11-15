@@ -1,0 +1,171 @@
+@use 'src/styles/pc/variables';
+
+.interestRecommendWrapper {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tableWrapper {
+	width: 1299px;
+}
+
+.table {
+	position: relative;
+	margin-top: 20px;
+	font-size: 0.8125rem;
+	line-height: 1.3;
+	border-collapse: collapse;
+}
+
+@media screen and (max-width: 980px) {
+	.table {
+		margin: 0 auto;
+	}
+}
+
+.tableHeaderCell {
+	display: table-cell;
+	box-sizing: border-box;
+	min-height: 150px;
+	padding: 24px 7px;
+	text-align: center;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+
+.tableHeaderCellWithRelative {
+	@extend .tableHeaderCell;
+
+	position: relative;
+}
+
+.lookingNowItem {
+	position: absolute;
+	top: -12px;
+	right: 10px;
+	left: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	height: 37px;
+	padding: 8px 5px;
+	color: #333;
+	font-weight: bold;
+	background-color: #fc0;
+	border-radius: 4px;
+
+	&::after {
+		position: absolute;
+		top: 100%;
+		display: block;
+		border-top: solid 7px #fc0;
+		border-right: solid 5px transparent;
+		border-left: solid 5px transparent;
+		content: '';
+	}
+}
+
+.lookingNowItemCell {
+	background-color: #f5f5f5;
+}
+
+.lookingNowItemName {
+	@extend .itemName;
+
+	color: #333;
+}
+
+.tableHeader {
+	box-sizing: border-box;
+	padding: 8px 7px;
+	font-weight: normal;
+	text-align: center;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.item {
+	box-sizing: border-box;
+	padding: 8px 7px;
+	color: #333;
+	text-align: center;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+
+.itemLink {
+	position: absolute;
+	top: 0;
+	display: block;
+	height: 100%;
+	margin-left: calc(-7px - 1px);
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.isHover {
+	background-color: #ecf3fc;
+}
+
+.itemImageBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.itemImage {
+	max-width: 150px;
+	max-height: 100px;
+}
+
+.itemName {
+	display: block;
+	height: 60px;
+	margin-top: 10px;
+	color: #004098;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+}
+
+.itemNameHover {
+	color: #3366ac;
+	text-decoration: underline;
+	text-decoration-color: #3366ac;
+}
+
+.button {
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 44px auto;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:hover {
+		color: hsl(215deg 54% 44%);
+		opacity: 0.75;
+	}
+}
+
+.buttonLeft {
+	background-image: url('#{variables.$commonPath}/arrow-left.svg');
+}
+
+.buttonRight {
+	background-image: url('#{variables.$commonPath}/arrow-right.svg');
+}

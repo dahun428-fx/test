@@ -1,0 +1,42 @@
+@use 'src/styles/pc/variables';
+
+.draggableZone {
+	position: absolute;
+}
+
+.container {
+	position: relative;
+	overflow: auto;
+	border: 1px solid #bfbfbf;
+	cursor: pointer;
+
+	&[data-viewer='small'] {
+		height: 930px;
+
+		.draggableZone {
+			top: -790px;
+			left: -550px;
+			width: 1750px;
+			height: 2480px;
+		}
+	}
+
+	&[data-viewer='large'] {
+		height: 1290px;
+
+		.draggableZone {
+			top: -430px;
+			left: -300px;
+			width: 1500px;
+			height: 2130px;
+		}
+	}
+
+	&[data-draggable='true'] {
+		overflow: hidden;
+	}
+}
+
+.fullWidthImage {
+	width: 100%;
+}

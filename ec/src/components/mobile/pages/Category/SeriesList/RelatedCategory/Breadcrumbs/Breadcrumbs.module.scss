@@ -1,0 +1,25 @@
+@use 'src/styles/mobile/variables';
+
+.linkListContainer {
+	box-sizing: border-box;
+	padding: 15px 0;
+	overflow-x: scroll;
+	font-size: 0;
+	white-space: nowrap;
+}
+
+.item {
+	display: inline-block;
+	font-size: 14px;
+
+	&:not(:first-child) {
+		margin-left: 5px;
+		padding-left: 25px;
+		background: url('#{variables.$commonPath}/arrow-right-small.png') 7px 0.55em
+			no-repeat;
+	}
+}
+
+.link {
+	text-decoration: none;
+}

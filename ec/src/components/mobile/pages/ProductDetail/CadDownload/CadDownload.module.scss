@@ -1,0 +1,78 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	position: absolute;
+	top: auto;
+}
+
+.top {
+	right: 0;
+	bottom: 100%;
+	left: -240px;
+	margin-top: 0;
+	margin-bottom: 10px;
+	padding-top: 2px;
+
+	&::after {
+		position: absolute;
+		top: auto;
+		right: 96px;
+		bottom: -10px;
+		content: ' ';
+		width: 0;
+		height: 0;
+		border: 10px solid transparent;
+		border-top-color: #fff;
+		border-bottom-color: #fff;
+		pointer-events: none;
+	}
+}
+
+.bottom {
+	left: 6px;
+	z-index: variables.$fixedListHeaderZIndex;
+	margin-top: 16px;
+	padding-top: 2px;
+
+	&::before,
+	&::after {
+		position: absolute;
+		top: -17px;
+		right: 50%;
+		width: 0;
+		height: 0;
+		margin-right: -10px;
+		border: solid transparent;
+		border-width: 10px;
+		border-bottom-color: #67a5dd;
+		pointer-events: none;
+		content: ' ';
+	}
+
+	&::after {
+		top: -14px;
+		border-bottom-color: #fff;
+	}
+}
+
+.content {
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	// set 16px spacing on each of the left and right sides
+	width: calc(100vw - 32px);
+	padding: 15px;
+	overflow-y: auto;
+	text-align: left;
+	background: #fff;
+	border: 1px solid #67a5dd;
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.2);
+}
+
+.alert {
+	color: #d00;
+}
+
+.loader {
+	margin: 57px 0;
+}

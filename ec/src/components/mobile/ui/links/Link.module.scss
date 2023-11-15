@@ -1,0 +1,27 @@
+%default {
+	display: inline-block;
+	color: #004bb1;
+	cursor: pointer;
+
+	&:visited {
+		color: #851f99;
+	}
+
+	&:hover {
+		color: #ff730a;
+	}
+}
+
+.primary {
+	@extend %default;
+
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.secondary {
+	@extend %default;
+}

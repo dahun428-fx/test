@@ -1,0 +1,39 @@
+@use 'src/styles/pc/variables';
+
+// TODO: 共通化にする make this as common ui
+.header {
+	display: flex;
+	margin: 32px 0 16px;
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.infoBox {
+	margin-top: 32px;
+}
+
+// TODO: 共通化にする make this as common ui
+.link {
+	display: inline-block;
+	padding-left: 1.5rem;
+	color: #004098;
+	text-decoration: none;
+	background: url('#{variables.$iconsPath}/pdf.svg') 0 2px no-repeat;
+	cursor: pointer;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: underline;
+	}
+
+	&:visited {
+		color: #681da8;
+	}
+}
+
+.catchCopy {
+	font-size: 0.8125rem;
+}

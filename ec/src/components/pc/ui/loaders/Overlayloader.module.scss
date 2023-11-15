@@ -1,0 +1,32 @@
+@use './Loader';
+@use 'src/styles/pc/variables';
+
+.loader {
+	@extend .loader;
+
+	color: #e5e5e5;
+}
+
+.overlay {
+	@extend .overlay;
+
+	z-index: variables.$loaderZIndex;
+}
+
+.enter {
+	opacity: 0;
+}
+
+.enterActive {
+	opacity: 1;
+	transition: opacity 300ms;
+}
+
+.exit {
+	opacity: 1;
+}
+
+.exitActive {
+	opacity: 0;
+	transition: opacity 300ms;
+}

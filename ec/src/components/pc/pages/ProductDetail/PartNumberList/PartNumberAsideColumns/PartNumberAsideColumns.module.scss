@@ -1,0 +1,73 @@
+@use '../PartNumberList.shared';
+
+.headerTable {
+	@extend .headerTableBase;
+
+	border-left: 1px solid #ccc;
+
+	&::after {
+		right: -100vw;
+	}
+}
+
+.scrollSideSpace {
+	@extend .scrollSideSpaceBase;
+
+	&::before {
+		left: -1px;
+		width: 100%;
+	}
+}
+
+.table {
+	@extend .tableBase;
+
+	position: relative;
+	border-left: 1px solid #ccc;
+}
+
+.unitPriceHeader {
+	@extend .headerCellBase;
+
+	min-width: 160px;
+}
+
+.leadTimeHeader {
+	@extend .headerCellBase;
+
+	min-width: 130px;
+	border-right: none;
+}
+
+.headerContents {
+	display: flex;
+	align-items: center;
+
+	&::before {
+		content: '--';
+		width: 22px;
+	}
+
+	&[data-sort-direction='ASC']::before {
+		content: '↑';
+	}
+
+	&[data-sort-direction='DESC']::before {
+		content: '↓';
+	}
+}
+
+.title {
+	flex-grow: 1;
+}
+
+.daysToShipDataCell {
+	@extend .dataCellBase;
+
+	border-right: none;
+}
+
+.data {
+	display: flex;
+	justify-content: center;
+}

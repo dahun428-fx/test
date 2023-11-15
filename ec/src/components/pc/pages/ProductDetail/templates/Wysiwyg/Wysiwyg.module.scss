@@ -1,0 +1,74 @@
+.main {
+	max-width: 1420px;
+	margin: 0 auto;
+}
+
+.attributesPanel {
+	flex-grow: 1;
+	width: 100%;
+	margin-top: 16px;
+}
+
+.introduction {
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
+.imageColumn {
+	float: left;
+	width: 250px;
+	min-height: 250px;
+	margin-right: 25px;
+}
+
+.attributesColumn {
+	padding-left: 15px;
+	overflow: hidden;
+}
+
+.brandWrap {
+	display: flex;
+	align-items: center;
+	margin: 1rem 0;
+}
+
+.economy {
+	margin-left: 8px;
+}
+
+.heading {
+	margin-bottom: 16px;
+}
+
+.attributes {
+	margin-top: 32px;
+	padding-bottom: 15px;
+}
+
+.partNumberHeaderArea {
+	margin-top: 32px;
+	background-color: #ddd;
+}
+
+.faqs {
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	background-color: #ddd;
+}
+
+.tab {
+	margin-top: 8px;
+}
+
+.relatedProduct {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 300px;
+	margin-top: 32px;
+	background-color: #ddd;
+}

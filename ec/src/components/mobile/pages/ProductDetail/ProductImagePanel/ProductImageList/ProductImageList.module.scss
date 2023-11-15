@@ -1,0 +1,30 @@
+.container {
+	width: 46px;
+	overflow-y: auto;
+}
+
+.imageList {
+	height: 232px;
+
+	[data-selected='true'] {
+		border: 1px solid #005fe0;
+	}
+}
+
+.thumbnail {
+	display: inline-block;
+	border: 1px solid #bfbfbf;
+
+	&:hover {
+		cursor: pointer;
+		opacity: 0.75;
+	}
+}
+
+.hiddenThumbnail {
+	display: none;
+}
+
+.image {
+	display: block;
+}

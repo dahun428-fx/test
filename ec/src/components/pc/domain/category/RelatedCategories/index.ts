@@ -1,0 +1,1 @@
+export { RelatedCategories } from './RelatedCategories';

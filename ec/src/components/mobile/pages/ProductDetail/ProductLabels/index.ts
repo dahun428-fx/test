@@ -1,0 +1,1 @@
+export { ProductLabels } from './ProductLabels';

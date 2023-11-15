@@ -1,0 +1,1 @@
+export { ProductDetailsDownloadSinus } from './ProductDetailsDownloadSinus';

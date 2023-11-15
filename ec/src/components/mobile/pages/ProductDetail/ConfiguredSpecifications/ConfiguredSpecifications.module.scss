@@ -1,0 +1,56 @@
+@use 'src/styles/mobile/variables';
+
+.heading {
+	padding: 15px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.35;
+	background-color: #0098d8;
+}
+
+.specTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.specName {
+	padding: 10px 15px;
+	font-weight: bold;
+	text-align: left;
+	word-wrap: break-word;
+	background-color: #e6e6e6;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.specValue {
+	padding: 10px 15px;
+	word-wrap: break-word;
+	border-top: 1px solid #bfbfbf;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.accordionWrapper {
+	padding: 10px 15px;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+%accordionButton {
+	padding: 5px 0 5px 32px;
+	color: #004bb1;
+	// background-position: 0 3px;
+	background-repeat: no-repeat;
+}
+
+.expanded {
+	@extend %accordionButton;
+
+	background-image: url('#{variables.$commonPath}/minus.png');
+}
+
+.collapsed {
+	@extend %accordionButton;
+
+	background-image: url('#{variables.$commonPath}/plus.png');
+}

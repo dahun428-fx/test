@@ -1,0 +1,20 @@
+.title {
+	display: inline;
+	font-weight: bold;
+}
+
+.keywordListBox {
+	display: inline-block;
+}
+
+.keyword {
+	display: inline-block;
+
+	&:first-child {
+		margin-left: 6px;
+	}
+
+	&:not(:first-child) {
+		margin-left: 20px;
+	}
+}

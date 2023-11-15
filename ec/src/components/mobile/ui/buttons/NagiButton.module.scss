@@ -1,0 +1,62 @@
+/* color mixin */
+@mixin color($colors) {
+	color: map-get($colors, text);
+	background-color: map-get($colors, background);
+	box-shadow: 0 1px 3px 0 rgb(0 0 0/0.3);
+
+	&:hover {
+		color: #fff;
+		background-color: #025fae;
+	}
+}
+
+// ボタンの色テーマ毎の色定義
+$buttonColorThemes: (
+	primary: (
+		text: #fff,
+		background: #004098,
+	),
+	secondary: (
+		text: #000,
+		background: #ffcd00,
+	),
+	tertiary: (
+		text: #000,
+		background: #fff,
+	),
+);
+
+.nagiButton {
+	@each $property, $colors in $buttonColorThemes {
+		&[data-theme='#{$property}'] {
+			@include color($colors);
+		}
+	}
+
+	display: inline-block;
+	padding: 7px 2px 6px;
+	font-size: 15px;
+	text-align: center;
+	border: none;
+	cursor: pointer;
+
+	&:disabled,
+	&[aria-disabled='true'] {
+		color: #fff;
+		background: #a7a7a7;
+		box-shadow: none;
+
+		// FIXME: 一瞬 cursor: pointer がチラッと見える瞬間があるので防ぎたい
+		&:hover {
+			color: #fff;
+			background: #a7a7a7;
+			cursor: default;
+			opacity: 1;
+		}
+	}
+}
+
+// NOTE: 基本的には詳細度をつけることは禁止されています。
+a.nagiButton {
+	text-decoration: none;
+}

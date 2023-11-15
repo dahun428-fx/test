@@ -1,0 +1,39 @@
+.userPanelWrapper {
+	font-size: 14px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgb(0 0 0 / 0.4);
+}
+
+.heading {
+	padding: 10px 15px 9px;
+	color: #333;
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: 0.75px;
+	background-color: #e6e6e6;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.customerCode {
+	display: block;
+	padding: 15px;
+	font-size: 14px;
+	text-decoration: none;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.logoutButtonWrapper {
+	padding: 25px 15px;
+}
+
+.coupon {
+	margin-left: 8px;
+}
+
+.count {
+	color: #ea0000;
+}
+
+.countDisable {
+	color: #868686;
+}

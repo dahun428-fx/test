@@ -1,0 +1,83 @@
+@use 'src/styles/pc/variables';
+
+.loadingTitle {
+	margin: 20px 0;
+	padding-bottom: 10px;
+	font-size: 15px;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.loadingMessage {
+	white-space: pre-wrap;
+}
+
+.resolve {
+	// DO NOT use "display: none" in others. This is for CADENAS functions.
+	display: none;
+}
+
+.selectList {
+	display: table;
+}
+
+.selectItem {
+	display: table-row;
+}
+
+.selectWrapper {
+	display: table-cell;
+	width: 90px;
+	padding-bottom: 10px;
+}
+
+.buttonWrapper {
+	margin-top: 15px;
+	text-align: center;
+
+	& > li:not(:first-child) {
+		margin-top: 10px;
+	}
+}
+
+.linkWrapper {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 8px;
+}
+
+.seeAllLink {
+	position: relative;
+	padding-left: 10px;
+	color: #004098;
+	font-size: 0.8125rem;
+	text-decoration: none;
+
+	&::before {
+		position: absolute;
+		top: 3px;
+		left: 0;
+		width: 4px;
+		height: 7px;
+		padding-left: 8px;
+		content: '';
+		background: {
+			position: center;
+			image: url('#{variables.$commonPath}/arrow-right.svg');
+			repeat: no-repeat;
+			size: auto;
+		}
+	}
+
+	&:link {
+		color: #004098;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+.progressWrapper {
+	margin: 20px 0;
+}

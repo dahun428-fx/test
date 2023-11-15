@@ -1,0 +1,51 @@
+.container {
+	background-color: #ffedb5;
+}
+
+.inner {
+	padding: 4px 10px;
+}
+
+.labels {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	padding: 2px 0;
+
+	// NOTE: Specificity is basically prohibited.
+	& > li {
+		margin-right: 8px;
+	}
+}
+
+.quantityTotalPrice {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+
+	// NOTE: Specificity is basically prohibited.
+	& > :first-child {
+		margin-right: 8px;
+	}
+}
+
+.label {
+	font-size: 14px;
+}
+
+.actions {
+	display: flex;
+
+	// NOTE: Specificity is basically prohibited.
+	& > li {
+		flex-basis: 50%;
+
+		&:nth-child(2) {
+			margin-left: 2px;
+		}
+	}
+}
+
+.totalPrice {
+	color: #f00;
+}

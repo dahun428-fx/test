@@ -1,0 +1,51 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 3px;
+	background-color: #fff;
+}
+
+.pdfWrap {
+	margin-left: 12px;
+}
+
+.pdf {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	padding: 12px;
+	border: 1px solid #bfbfbf;
+	border-radius: 2px;
+	background: {
+		position: center;
+		color: #f2f2f2;
+		repeat: no-repeat;
+		image: url('#{variables.$commonPath}/pdf.png');
+	}
+}
+
+.configure {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(40% + 42px);
+	min-width: 100px;
+	margin-right: 15px;
+	padding: 9px 24px;
+	color: #fff;
+	text-decoration: none;
+	background-color: #039;
+	border-radius: 20px;
+
+	&::after {
+		width: 17px;
+		height: 17px;
+		background-image: url(./assets/images/arrow-right.png);
+		background-size: 17px 17px;
+		content: '';
+	}
+}

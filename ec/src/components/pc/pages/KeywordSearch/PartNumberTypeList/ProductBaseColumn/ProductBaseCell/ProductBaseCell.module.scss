@@ -1,0 +1,23 @@
+@use '../../PartNumberTypeList.shared';
+
+.dataCell {
+	@extend .dataCellBase;
+
+	border-left: none;
+}
+
+.inner {
+	display: flex;
+	align-items: center;
+}
+
+.attributes {
+	display: flex;
+	flex-direction: column;
+	margin-left: 1rem;
+}
+
+.partNumber {
+	font-weight: bold;
+	font-size: 0.9375rem;
+}

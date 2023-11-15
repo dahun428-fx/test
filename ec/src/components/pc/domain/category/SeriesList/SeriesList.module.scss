@@ -1,0 +1,22 @@
+@use 'src/styles/pc/variables';
+
+.seriesListWrapper {
+	margin-bottom: 1rem;
+}
+
+.horizontalList {
+	display: flex;
+	flex-wrap: wrap;
+	border-top: 1px solid #ccc;
+}
+
+.paginationWrapper {
+	display: flex;
+	justify-content: flex-end;
+	margin: 8px 0;
+}
+
+.section {
+	position: relative;
+	z-index: variables.$standardStickyZIndex;
+}

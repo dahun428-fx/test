@@ -1,0 +1,24 @@
+.bulletNav {
+	display: flex;
+	justify-content: center;
+	padding: 20px 0;
+}
+
+.bulletItem {
+	&:not(:first-child) {
+		margin-left: 22px;
+	}
+}
+
+.bullet {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	background-color: #ddd;
+	border-radius: 50%;
+	cursor: pointer;
+
+	&[data-active='true'] {
+		background-color: #004098;
+	}
+}

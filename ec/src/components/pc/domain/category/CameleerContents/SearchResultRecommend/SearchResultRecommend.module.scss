@@ -1,0 +1,31 @@
+.container {
+	margin-top: 40px;
+	padding-top: 80px;
+	border-top: solid 1px #ccc;
+}
+
+.item {
+	display: flex;
+	gap: 10px;
+	box-sizing: border-box;
+	width: 350px;
+	max-height: 150px;
+	cursor: pointer;
+
+	.itemName {
+		color: #004bb1;
+		font-weight: bold;
+
+		:visited {
+			color: #851f99;
+		}
+	}
+
+	&:hover {
+		outline: 2px solid #acc4e2;
+
+		.itemName {
+			text-decoration: underline;
+		}
+	}
+}

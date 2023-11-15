@@ -1,0 +1,72 @@
+@use 'src/styles/pc/mixins';
+@use 'src/styles/pc/variables';
+@use 'sass:map';
+
+// color mixin
+@mixin color($colors) {
+	color: map-get($colors, text);
+	background-color: map-get($colors, background);
+}
+
+$tooltipColorThemes: (
+	dark: (
+		background: #333,
+		color: #fff,
+		lineHeight: 1.1,
+		width: 10px,
+		height: 5px,
+		maxWidth: 200px,
+		padding: 7px,
+	),
+	light: (
+		background: #e5e5e5,
+		color: #333,
+		shadow: 0 0 8px rgb(0 0 0 / 0.2),
+		textAlign: center,
+		lineHeight: 1.5,
+		width: 12px,
+		height: 10px,
+		maxWidth: 185px,
+		padding: 8px,
+	),
+);
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+.tooltip {
+	@each $direction in (top, right, bottom, left) {
+		@each $property, $currentTheme in $tooltipColorThemes {
+			&[data-theme='#{$property}'] {
+				max-width: map-get($currentTheme, 'maxWidth');
+				padding: map-get($currentTheme, 'padding');
+				color: map-get($currentTheme, 'color');
+				line-height: map-get($currentTheme, 'lineHeight');
+				text-align: map-get($currentTheme, 'textAlign');
+				background-color: map-get($currentTheme, 'background');
+				box-shadow: map-get($currentTheme, 'shadow');
+			}
+
+			&[data-direction='#{$direction}'][data-theme='#{$property}'] {
+				@include mixins.balloon-tail(
+					$direction,
+					$color: map-get($currentTheme, 'background'),
+					$width: map-get($currentTheme, 'width'),
+					$height: map-get($currentTheme, 'height')
+				);
+			}
+		}
+	}
+
+	position: fixed;
+	z-index: variables.$tooltipZIndex;
+	border-radius: 4px;
+	animation: fade-in 0.2s;
+}

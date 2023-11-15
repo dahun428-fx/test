@@ -1,0 +1,77 @@
+@use 'src/styles/pc/variables';
+
+.listItem {
+	position: relative;
+}
+
+.link {
+	display: block;
+	padding: 8px 8px 8px 24px;
+	color: #333;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	text-decoration: none;
+
+	&:hover {
+		background: #ecf3fc;
+	}
+}
+
+.submenu {
+	position: absolute;
+	top: -1px;
+	left: calc(100% + 4px);
+	z-index: variables.$popoverZIndex;
+	display: none;
+	width: 228px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.2);
+}
+
+.submenuVisible {
+	display: block;
+}
+
+.root {
+	padding: 8px 16px;
+	font-weight: bold;
+	background: #ecf3fc;
+}
+
+.self {
+	padding: 8px 8px 8px 16px;
+	font-weight: bold;
+	background: #ecf3fc;
+}
+
+.child {
+	padding: 8px 8px 8px 24px;
+}
+
+.submenuItem {
+	padding: 8px 16px;
+}
+
+.sibling {
+	padding: 8px 8px 8px 16px;
+}
+
+.parent {
+	padding: 8px 8px 8px 24px;
+	text-indent: -20px;
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+		vertical-align: -4px;
+		content: '';
+		background: {
+			image: url('#{variables.$commonPath}/arrow-left.svg');
+			repeat: no-repeat;
+			position: center;
+		}
+	}
+}

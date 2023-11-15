@@ -1,0 +1,40 @@
+@use 'src/styles/mobile/variables';
+
+.wrapper {
+	z-index: variables.$modalZIndex;
+	max-width: calc(100% - 30px);
+	opacity: 0;
+}
+
+.fullWidthWrapper {
+	max-width: 100%;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: variables.$modalZIndex;
+	background-color: rgba(0 0 0 / 0.8);
+}
+
+.modal {
+	width: 100%;
+	padding: 10px;
+	color: #444;
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 10px 25px rgba(0 0 0 / 0.5);
+}
+
+.title {
+	padding: 15px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 1.35;
+	text-indent: 0;
+	background-color: #777;
+}

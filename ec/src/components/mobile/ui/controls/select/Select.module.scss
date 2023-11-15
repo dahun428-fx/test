@@ -1,0 +1,9 @@
+.select {
+	height: 28px;
+	padding-left: 0.5em;
+	border: 1px solid #bfbfbf;
+
+	&:focus {
+		outline: 0;
+	}
+}

@@ -1,0 +1,29 @@
+@use 'src/styles/mobile/variables';
+
+.errorMessage {
+	color: #d00;
+}
+
+.errorGuide {
+	margin: 0.25em 0;
+	padding-left: 1em;
+	text-indent: -1em;
+}
+
+.incompleteMessage {
+	margin-top: 0.5em;
+	padding-left: 17px;
+	font-weight: bold;
+	font-size: 15px;
+
+	&::before {
+		display: inline;
+		margin-right: 4px;
+		margin-left: -17px;
+		padding: 0.2em 1px 1px 13px;
+		vertical-align: top;
+		background: url('#{variables.$commonPath}/information.png') left 0.34em
+			no-repeat;
+		content: '';
+	}
+}

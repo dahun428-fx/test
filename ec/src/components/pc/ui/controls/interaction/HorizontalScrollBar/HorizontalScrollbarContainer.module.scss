@@ -1,0 +1,42 @@
+.container {
+	position: relative;
+	overflow-x: clip;
+}
+
+.scrollable {
+	margin-top: -11px;
+}
+
+.inner {
+	overflow-x: hidden;
+}
+
+.contentsWrap {
+	position: relative;
+	min-width: 100%;
+}
+
+.stickyBar {
+	position: relative;
+}
+
+.barFallback {
+	position: absolute;
+	left: -1px;
+	width: 100%;
+	height: 11px;
+	background-color: transparent;
+}
+
+/**
+	* HorizontalScrollbar と Sticky部分（or ブラウザの上辺）との間に1pxの隙間が空けないためスタイル。
+	* （現状[2023年4月]のtrue対象：ProductDetail ページ 複雑系などの PartNumberSpecColumnsでの使用）
+	*/
+.barFallbackBetweenSticky {
+	position: absolute;
+	top: 0;
+	left: -1px;
+	width: 100%;
+	height: 12px;
+	background-color: #fff;
+}

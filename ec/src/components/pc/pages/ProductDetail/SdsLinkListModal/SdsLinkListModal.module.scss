@@ -1,0 +1,24 @@
+.modal {
+	width: 565px;
+}
+
+.headerTitle {
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.listBox {
+	width: 565px;
+	max-height: 255px;
+	margin: 16px 0 1rem;
+	overflow-y: auto;
+	word-break: break-all;
+}
+
+.buttonBox {
+	margin-top: 3rem;
+	text-align: center;
+}

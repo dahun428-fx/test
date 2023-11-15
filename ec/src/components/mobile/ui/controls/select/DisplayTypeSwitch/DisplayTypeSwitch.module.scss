@@ -1,0 +1,22 @@
+.button {
+	@each $icon in ('dispList', 'dispPhoto') {
+		&[data-icon='#{$icon}'] {
+			&::before {
+				background-image: url('./assets/images/#{$icon}.png');
+			}
+		}
+	}
+
+	display: flex;
+	align-items: center;
+	font-size: 0.8125rem;
+	cursor: pointer;
+
+	&::before {
+		width: 24px;
+		height: 24px;
+		background-repeat: no-repeat;
+		background-size: cover;
+		content: '';
+	}
+}

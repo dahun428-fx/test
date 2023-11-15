@@ -1,0 +1,22 @@
+@use '../../PartNumberTypeList.shared';
+@use 'src/styles/pc/icon';
+
+.discontinuedDataCell {
+	@extend .dataCellBase;
+
+	width: 100%;
+	border-right: none;
+}
+
+.discontinueMessageBox {
+	width: 100%;
+	padding: 7px 7px 7px 28px;
+	text-align: left;
+	background-color: #fffaeb;
+	border: 1px solid #ccc;
+	background: {
+		position: 7px 7px;
+		image: url('#{icon.get-path('information')}');
+		repeat: no-repeat;
+	}
+}

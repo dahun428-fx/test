@@ -1,0 +1,20 @@
+@use '../../PartNumberList.shared';
+
+.dataCell {
+	@extend .dataCellBase;
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.data {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	max-height: 100%;
+	overflow: hidden;
+	text-align: center;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	word-break: break-all;
+}

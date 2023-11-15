@@ -1,0 +1,1 @@
+export { ProductSpecColumns } from './ProductSpecColumns';

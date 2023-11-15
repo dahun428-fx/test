@@ -1,0 +1,42 @@
+@use 'src/styles/mobile/variables';
+
+.messageToast {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: variables.$drawerZIndex;
+}
+
+.messageBox {
+	display: block;
+	width: 60px;
+	height: 50px;
+	background-color: #fff;
+	border: 2px solid #0098d8;
+	border-radius: 2px;
+	background: {
+		position: center;
+		color: #fff;
+		size: 36px;
+		image: url(./assets/mail.png);
+		repeat: no-repeat;
+	}
+}
+
+.slideFromRight {
+	right: -60px;
+}
+
+.enterSlideFromRight {
+	right: -100%;
+}
+
+.enterActiveSlideFromRight {
+	right: 0;
+	transition: all 0.3s;
+}
+
+.exitActive {
+	right: -100%;
+	transition: all 0.3s;
+}

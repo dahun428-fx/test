@@ -1,0 +1,1 @@
+export { MakerInfo } from './MakerInfo';

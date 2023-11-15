@@ -1,0 +1,56 @@
+.brand {
+	display: inline-block;
+	margin-top: 37px;
+	color: #999;
+}
+
+.standardPrice {
+	display: inline-block;
+	width: 100%;
+	margin-top: 10px;
+	padding-top: 10px;
+	color: #333;
+	border-top: dotted 1px #ccc;
+}
+
+.daysToShip {
+	display: inline-block;
+	color: #333;
+}
+
+.recommendItem {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.imageContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 100px;
+	margin: auto auto 8px;
+}
+
+.panelItem {
+	padding: 16px;
+	font-size: 0.8125rem;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}
+
+.itemLink {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	margin-top: 10px;
+	overflow: hidden;
+	color: #004098;
+	text-decoration: none;
+	word-break: break-word;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}

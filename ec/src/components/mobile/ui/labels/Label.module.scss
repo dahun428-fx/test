@@ -1,0 +1,37 @@
+@mixin color($text, $background, $border: $background) {
+	color: $text;
+	background-color: $background;
+	border: 1px solid $border;
+}
+
+// アイコンラベルのテーマ毎の定義
+.strong {
+	@include color(#fff, #d00);
+}
+
+.standard {
+	@include color(#fff, #4d96d7);
+}
+
+.disabled {
+	@include color(#fff, #676767);
+}
+
+.pict {
+	@include color(#0169c6, #fff, #0169c6);
+}
+
+.grade {
+	@include color(#d00, #fff, #d00);
+}
+
+// ラベル内文字列
+.caption {
+	display: inline-block;
+	min-width: 50px;
+	padding: 2px 6px;
+	font-size: 12px;
+	line-height: 1;
+	text-align: center;
+	text-indent: 0;
+}

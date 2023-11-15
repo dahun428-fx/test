@@ -1,0 +1,27 @@
+.container {
+	margin-bottom: 8px;
+}
+
+.heading {
+	padding: 10px 15px 15px;
+	color: #333;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.176;
+}
+
+.topLink {
+	margin-bottom: 18px;
+}
+
+.link[class] {
+	display: inline;
+	padding: 0 22px;
+	color: #004bb1;
+	text-decoration: none;
+	background: url(./assets/images/right.png) no-repeat 10px center;
+
+	:visited {
+		color: #004bb1;
+	}
+}

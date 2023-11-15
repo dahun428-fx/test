@@ -1,0 +1,1119 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/icon';
+
+//=============================================================================
+// - WARN: legacy css の移植です。詳細度などルール違反のオンパレードです。
+//         絶対に真似しないでください。
+//=============================================================================
+// トップページの SSI コンテンツで利用する global css を定義します。
+
+.home :global {
+	// 仮置き
+	ul,
+	ol,
+	li,
+	dl,
+	dt,
+	dd {
+		list-style: none outside none;
+	}
+
+	// Featured Contents
+	.c-allCategory__title {
+		margin-bottom: 20px;
+		margin-left: 18px;
+		font-size: 20px;
+	}
+
+	.c-allCategory__content {
+		display: grid;
+		grid-template-columns: 258fr 940fr;
+		min-width: 1200px;
+		margin-bottom: 40px;
+		border: 1px solid #bfbfbf;
+		border-top: 0;
+	}
+
+	.page1 .c-allCategory__content {
+		// ヘッダー画像（.c-allCategory__header）
+		// 	: 画像リスト（c-allCategory__list）
+		// の横幅の比
+		grid-template-columns: 258fr 690fr;
+		min-width: 950px;
+	}
+
+	.c-allCategory__header,
+	.c-allCategory__list {
+		display: table-cell;
+		vertical-align: top;
+	}
+
+	.c-allCategory__header {
+		min-width: 258px;
+		border-top: 1px solid #bfbfbf;
+
+		a,
+		img {
+			display: block;
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	.page1 .c-allCategory__list {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+		min-width: 690px;
+	}
+
+	.c-allCategory__list {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		min-width: 940px;
+		overflow: hidden;
+
+		> li {
+			position: relative;
+			float: left;
+			text-align: center;
+			border-top: 1px solid #bfbfbf;
+
+			&::after {
+				position: absolute;
+				top: -100%;
+				right: -1px;
+				bottom: -100%;
+				width: 1px;
+				background-color: #bfbfbf;
+				content: '';
+			}
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.c-allCategory__list__photo {
+		display: inline-block;
+		margin: 10px 0;
+		line-height: 0;
+
+		img {
+			display: block;
+			width: 105px;
+			height: 105px;
+		}
+	}
+
+	.c-allCategory__list__detail {
+		display: block;
+		min-height: 40px;
+		margin: 0 4px 5px;
+
+		a {
+			color: #004098;
+			font-weight: bold;
+			font-size: 13px;
+		}
+
+		.c-allCategory__list > li {
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		.c-allCategory__list > li.is-ignoreHover {
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.c-allCategory__list__logo {
+		line-height: 1.3;
+
+		a {
+			display: inline-block;
+			color: #000;
+			font-weight: bold;
+			font-size: 12px;
+		}
+
+		img {
+			max-width: 100%;
+			line-height: 0;
+		}
+	}
+
+	.c-allCategory__brand {
+		position: relative;
+		margin-bottom: 60px;
+		padding-left: 100px;
+		font-size: 0;
+		background: unquote(
+			'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAABCAMAAACsYRHQAAAABlBMVEW/v7////+Zw/90AAAADUlEQVQI12NgYBweEAAn2QBl6ST5mgAAAABJRU5ErkJggg==)'
+		)
+			repeat-x 0 0;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background: unquote(
+				'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAABCAMAAACsYRHQAAAABlBMVEW/v7////+Zw/90AAAADUlEQVQI12NgYBweEAAn2QBl6ST5mgAAAABJRU5ErkJggg==)'
+			)
+				repeat-x 0 bottom;
+		}
+
+		> li {
+			display: table-cell;
+			width: 200px;
+			height: 62px;
+			text-align: center;
+			vertical-align: middle;
+
+			> a {
+				color: #000;
+				font-weight: bold;
+				font-size: 14px;
+
+				> img {
+					width: 173px;
+					height: 40px;
+				}
+			}
+		}
+	}
+
+	.page1 .c-allCategory__brand > li {
+		width: 158px;
+
+		&:first-child {
+			width: 159px;
+		}
+
+		> a > img {
+			width: 137px;
+			height: 32px;
+		}
+	}
+
+	.c-allCategory__banner {
+		&::after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+	}
+
+	.c-allCategory__banner > li {
+		float: left;
+		width: 200px;
+
+		a,
+		img {
+			display: block;
+		}
+	}
+
+	.page2 {
+		.is-page1 {
+			display: none;
+		}
+	}
+
+	.page1 .c-allCategory__content {
+		width: 948px;
+		margin-bottom: 60px;
+	}
+
+	.page1 .c-allCategory__header {
+		width: 258px;
+	}
+
+	.page1 .c-allCategory__list {
+		position: relative;
+		width: 690px;
+
+		&::after {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 50%;
+			width: 1px;
+			background-color: #bfbfbf;
+			content: '';
+		}
+
+		> li {
+			display: table;
+			width: 345px;
+			height: 84px;
+			table-layout: fixed;
+
+			&::after {
+				display: none;
+			}
+		}
+	}
+
+	.page1 .c-allCategory__list__photo,
+	.page1 .c-allCategory__list__detail,
+	.page1 .c-allCategory__list__logo {
+		display: table-cell;
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	.page1 .c-allCategory__list__photo {
+		width: 63px;
+		padding: 10px;
+
+		img {
+			width: 63px;
+			height: 63px;
+		}
+	}
+
+	.page1 .c-allCategory__list__detail {
+		width: 152px;
+		padding-right: 10px;
+	}
+
+	.page1 .c-allCategory__list__logo {
+		width: 90px;
+		padding-right: 10px;
+		text-align: center;
+
+		a {
+			display: inline;
+		}
+
+		img {
+			max-width: 90px;
+		}
+	}
+
+	.page1 .c-allCategory__banner > li {
+		width: 158px;
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+	}
+
+	// こちらにトップページ専用の global css を追加してください。
+
+	//-------------------------------------------------------------------------
+	// mini banner
+	// NOTE: https://tickets.tools.misumi.jp/jira/browse/NEW_FE-3117
+	// stg1-jp の入稿内容を見る限り HTML 内に style も入っているのだが、
+	// これらの外部からのスタイルがある前提の style 定義しかないためそのまま
+	// dangerouslySetInnerHTML で挿入するだけではバナー内容が縦に並んでしまうため残すしかない
+
+	.l-topBanner {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 80px;
+		margin-left: -26.67px;
+
+		.lc-box {
+			.lc-title {
+				color: #333;
+				font-weight: bold;
+			}
+
+			.lc-text {
+				color: #333;
+			}
+		}
+
+		.l-top__bannerBox {
+			flex-grow: 0;
+			flex-shrink: 0;
+			box-sizing: border-box;
+			width: 25%;
+			padding-left: 26.67px;
+
+			a {
+				position: relative;
+				display: block;
+				box-sizing: border-box;
+				width: 100%;
+				height: 100px;
+				border: solid 1px #999;
+
+				&:hover {
+					text-decoration: none;
+					background-color: #ecf3fc;
+				}
+
+				&:link {
+					color: #004098;
+					text-decoration: none;
+				}
+			}
+		}
+
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: auto;
+			max-width: 100%;
+			height: auto;
+			max-height: 100%;
+			vertical-align: top;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	//-------------------------------------------------------------------------
+	// CRM: Reduce Work Time with One-Stop Variations at MISUMI
+	// - TODO: CRM が JSON 化したら削除
+
+	%common_top_category_useful {
+		margin: 10px 0 30px;
+		padding: 16px 14px;
+		font-size: 14px;
+		border: 1px solid #a7a7a7;
+
+		ul {
+			height: auto;
+			margin-top: 0;
+			padding: 2px 0;
+			font-size: 0;
+			letter-spacing: 0;
+
+			li {
+				width: 166px;
+				min-height: 151px;
+				font-size: 14px;
+				vertical-align: top;
+
+				.image {
+					width: 156px;
+					height: 156px;
+					padding: 0;
+					text-align: center;
+					vertical-align: middle;
+					background-color: #fff;
+					border: 1px solid #a7a7a7;
+					box-shadow: 0 1px 3px 0 rgba(0 0 0 / 0.3);
+
+					img {
+						max-width: 156px;
+						max-height: 156px;
+					}
+				}
+
+				> div {
+					margin: 0 5px;
+
+					> .title {
+						display: inline-block;
+						margin: 7px 10px 0;
+					}
+
+					.category__box__text {
+						margin: 7px 10px 0;
+					}
+
+					&:hover {
+						cursor: pointer;
+
+						a,
+						.category__box__text {
+							color: #025fae;
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+
+		img {
+			max-width: 100%;
+		}
+	}
+
+	.page1 .common_top_category_useful ul li {
+		width: 182px;
+
+		.image {
+			width: 172px;
+		}
+	}
+
+	.crmCategoryList_box {
+		@extend %common_top_category_useful;
+
+		padding: 16px 18px;
+
+		.item__box__image {
+			width: 156px;
+			height: 156px;
+			text-align: center;
+			vertical-align: middle;
+			border: 1px solid #a7a7a7;
+			box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+
+			img {
+				max-width: 156px;
+				max-height: 156px;
+				vertical-align: bottom;
+			}
+		}
+
+		.item a {
+			position: static;
+			display: inline-block;
+			min-height: auto;
+			padding: 0;
+			color: #000;
+			border: none;
+
+			&:hover {
+				padding: 0;
+				border: none;
+			}
+
+			span.tit {
+				display: inline;
+				margin-left: 0;
+				padding: 0;
+				background: none;
+			}
+		}
+	}
+
+	.page1 .crmCategoryList_box .item__box__image {
+		width: 172px;
+	}
+
+	// -------------------
+	// h2 old
+	// -------------------
+	.titleBlock {
+		margin: 30px 0 10px;
+		color: #000;
+		border-bottom: none;
+
+		.titleBlock__container {
+			padding: 0;
+
+			.titleBlock__main strong {
+				font-size: 26px;
+				line-height: 1.5;
+			}
+		}
+
+		&.title--crm:first-child {
+			margin-top: 30px;
+		}
+
+		&__h3 {
+			margin-bottom: 0;
+			padding: 9px 20px;
+			color: #fff;
+			font-weight: bold;
+			font-size: 18px;
+			background-color: #0098d8;
+			border-left: none;
+		}
+	}
+
+	.titleBlock.title--crm .titleBlock__container .titleBlock__main,
+	#repeat_purchaseSeries_placeholder .titleBlock__main,
+	#historySimulPurchase_placeholder .titleBlock__main,
+	#history_placeholder .titleBlock .titleBlock__main {
+		margin: 0 22px;
+		padding: 0;
+		border-left: none;
+	}
+
+	.crmCaution {
+		margin: -42px 0 20px;
+		padding-right: 22px;
+		color: #000;
+		font-size: 14px;
+		text-align: right;
+	}
+
+	[class^='l-content'] .titleBlock:first-child {
+		margin-top: 30px;
+	}
+
+	// -------------------
+	// radarChartRecommend
+	// ミスミでまとめて効率化！こんなカテゴリもご用意しています
+	// -------------------
+
+	.radarChartRecommend .crmCategoryList_box {
+		position: relative;
+		margin: 10px 0 30px;
+		padding: 18px 13px;
+		font-size: 14px;
+		border: 1px solid #a7a7a7;
+
+		.crmCategoryList_cts {
+			display: flex;
+			box-sizing: content-box;
+			width: auto;
+			height: auto;
+			margin: 0;
+
+			li {
+				flex-shrink: 0;
+				width: 195px;
+				margin-bottom: 0;
+
+				.category__box .title {
+					display: table-footer-group;
+
+					a {
+						min-height: 0;
+						margin: 7px 10px 0;
+						font-weight: bold;
+						text-decoration: none;
+					}
+				}
+
+				.item__contents:hover .category__box .title a,
+				.item__contents:hover .category__box .category__box__text {
+					color: #025fae;
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.item a span.tit {
+			padding: 0;
+			font-size: 14px;
+			background: none;
+		}
+	}
+
+	.page1 .radarChartRecommend .crmCategoryList_box .crmCategoryList_cts {
+		width: 920px;
+		margin: 0;
+
+		li {
+			width: 230px;
+		}
+	}
+
+	.radarChartRecommend.crmCategoryList .item__contents,
+	.radarChartRecommend
+	.crmCategoryList_box
+	.crmCategoryList_cts
+	li
+	.category__box,
+	.radarChartRecommend
+	.crmCategoryList_box
+	.crmCategoryList_cts
+	li
+	.item__contents:hover
+	.category__box {
+		border: none;
+	}
+
+	.radarChartRecommend
+	.crmCategoryList_box
+	.crmCategoryList_cts
+	li
+	.category__box {
+		display: block;
+	}
+
+	.radarChartRecommend .category__box .item__box__image {
+		display: table-cell;
+		width: 185px;
+		height: 185px;
+		text-align: center;
+		vertical-align: middle;
+		border: none;
+		box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+	}
+
+	.radarChartRecommend.crmCategoryList .category__box__text {
+		position: static;
+		z-index: auto;
+		height: auto;
+		padding: 0;
+		overflow: visible;
+	}
+
+	.page1 .radarChartRecommend .category__box .item__box__image {
+		width: 220px;
+
+		img {
+			max-width: 200px;
+			max-height: 200px;
+		}
+	}
+
+	// slider button
+	.crmTemplateBlock a.btn,
+	.radarChartRecommend .crmTemplateBlock a.btn {
+		position: absolute;
+		top: 90px;
+		width: 43px;
+		height: 43px;
+		padding: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-align: left;
+		text-indent: 100%;
+
+		&:hover {
+			background-color: transparent;
+		}
+	}
+
+	.crmTemplateBlock a.crmTemplateBlock_left {
+		left: -14px;
+		background: {
+			position: center;
+			image: url('#{icon.get-icon-path(circle-left-arrow, light)}');
+			size: contain;
+			repeat: no-repeat;
+		}
+
+		&:hover {
+			background-image: url('#{icon.get-icon-path(circle-left-arrow, dark)}');
+		}
+	}
+
+	.crmTemplateBlock a.crmTemplateBlock_right {
+		right: -14px;
+		background: {
+			position: 0;
+			image: url('#{icon.get-icon-path(circle-right-arrow, light)}');
+			size: contain;
+			repeat: no-repeat;
+		}
+
+		&:hover {
+			background-image: url('#{icon.get-icon-path(circle-right-arrow, dark)}');
+		}
+	}
+
+	// -------------------
+	// history_placeholder
+	// 最近見た商品
+	// -------------------
+	%common_top_category {
+		margin: 10px 0 30px;
+		padding: 16px 14px;
+		font-size: 14px;
+		border: 1px solid #a7a7a7;
+
+		ul {
+			height: auto;
+			margin-top: 0;
+			padding: 2px 0;
+			font-size: 0;
+			letter-spacing: 0;
+
+			li {
+				width: 195px;
+				min-height: 180px;
+				font-size: 14px;
+				vertical-align: top;
+
+				.image {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 185px;
+					height: 185px;
+					padding: 0;
+					text-align: center;
+					vertical-align: middle;
+					background-color: #fff;
+					border: none;
+					box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+
+					img {
+						max-width: 170px;
+						max-height: 170px;
+					}
+				}
+
+				> div {
+					margin: 0 5px;
+
+					> .title {
+						display: inline-block;
+						margin: 7px 10px 0;
+					}
+
+					.category__box__text {
+						margin: 7px 10px 0;
+					}
+
+					&:hover {
+						cursor: pointer;
+
+						a,
+						.category__box__text {
+							color: #025fae;
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+
+		img {
+			max-width: 100%;
+		}
+	}
+
+	.crmDefaultList_box {
+		@extend %common_top_category;
+
+		padding-left: 18px;
+		overflow-x: auto;
+
+		ul {
+			display: block;
+			box-sizing: content-box;
+			width: auto;
+
+			li {
+				display: inline-block;
+				flex-shrink: 0;
+			}
+		}
+
+		ul li a {
+			padding: 0;
+			color: #000;
+			text-decoration: none;
+
+			&:hover {
+				color: #025fae;
+				text-decoration: underline;
+
+				p.txt {
+					color: #025fae;
+				}
+			}
+		}
+
+		ul li span.pname {
+			display: block;
+			width: auto;
+			margin: 7px 10px 0;
+			font-weight: bold;
+			letter-spacing: 0;
+			text-decoration: none;
+			word-wrap: break-word;
+		}
+
+		ul li p.txt {
+			margin: 7px 10px 0;
+			color: #000;
+			letter-spacing: 0;
+
+			span {
+				display: inline;
+			}
+
+			.maker {
+				word-wrap: break-word;
+			}
+
+			.price {
+				display: block;
+				width: auto;
+				margin-top: 0;
+				padding: 0;
+				text-align: left;
+				background: none;
+			}
+
+			.delivery {
+				display: block;
+				width: auto;
+				margin-top: 0;
+				padding: 0;
+				text-align: left;
+				background: none;
+
+				.num {
+					font-weight: normal;
+				}
+			}
+		}
+
+		ul li .reviewScore__star {
+			margin: 7px 10px 0;
+		}
+	}
+
+	.crmTemplateBlock ul.listwrap {
+		z-index: 1;
+		margin: 0 auto;
+		letter-spacing: -0.4em;
+	}
+
+	#view_history .crmTemplateBlock ul.listwrap {
+		width: 975px;
+		margin: 0 auto;
+
+		a {
+			margin: 0;
+		}
+	}
+
+	// viewHistorySimuPurchase
+	// 最近見た商品からのおすすめ商品
+	// -------------------
+	.crmRecentlyViewCoBuyList {
+		display: flex;
+		margin-bottom: 30px;
+		font-size: 0;
+
+		&__box.recentView,
+		&__box.recommendView {
+			position: relative;
+			display: inline-block;
+			box-sizing: border-box;
+			font-size: 14px;
+			border: 1px solid #a7a7a7;
+			border-top: none;
+
+			h3 {
+				width: auto;
+				margin-right: -1px;
+				margin-left: -1px;
+			}
+		}
+
+		&__box.recentView {
+			width: 225px;
+		}
+
+		&__box.recommendView {
+			width: 965px;
+			margin-left: 10px;
+
+			.crmTemplateBlock {
+				position: static;
+
+				a.btn {
+					top: 134px;
+				}
+			}
+		}
+
+		&__box ul {
+			display: flex;
+			box-sizing: border-box;
+			min-height: 308px;
+			padding: 17px 13px 0;
+			overflow: hidden;
+
+			li {
+				flex-shrink: 0;
+				width: 195px;
+
+				.image {
+					display: table-cell;
+					width: 185px;
+					height: 185px;
+					text-align: center;
+					vertical-align: middle;
+					border: none;
+					box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+
+					img {
+						max-width: 170px;
+						max-height: 170px;
+					}
+				}
+
+				span.pname {
+					display: block;
+					width: auto;
+					margin: 7px 10px 0;
+					color: #000;
+					font-weight: bold;
+					letter-spacing: 0;
+					text-decoration: none;
+					word-wrap: break-word;
+				}
+
+				p.txt {
+					margin: 4px 15px 0;
+					color: #000;
+					letter-spacing: normal;
+
+					.maker {
+						display: block;
+					}
+
+					.delivery .num {
+						font-weight: normal;
+					}
+
+					span {
+						display: inline;
+					}
+				}
+
+				.reviewScore__star {
+					margin: 7px 10px 0;
+				}
+
+				a {
+					padding: 0 5px;
+					text-decoration: none;
+
+					&:hover {
+						text-decoration: underline;
+
+						span.pname,
+						p.txt {
+							color: #025fae;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// -------------------
+	// Recently Viewed Categories
+	// おすすめカテゴリ
+	// -------------------
+	.contentsBlockCategory.underTop {
+		width: 100%;
+		margin-top: 10px;
+
+		.contentsBlockCategory__main {
+			margin-top: 0;
+			padding: 9px;
+			background-color: #eee;
+			border: 1px solid #a7a7a7;
+		}
+
+		.contentsBlockCategory__title {
+			margin: 0;
+			padding: 6px 20px 4px;
+			color: #fff;
+			font-weight: bold;
+			font-size: 16px;
+			background-color: #a7a7a7;
+		}
+	}
+
+	.crmCategoryHistoryList_box {
+		position: relative;
+
+		.btn.crmTemplateBlock_left {
+			left: -24px;
+		}
+
+		.btn.crmTemplateBlock_right {
+			right: -24px;
+		}
+
+		.btn.crmTemplateBlock_left,
+		.btn.crmTemplateBlock_right {
+			top: 50%;
+			margin-top: -30px;
+		}
+
+		ul {
+			min-height: 454px;
+			margin-top: 0;
+			padding: 2px 0;
+			overflow: hidden;
+			letter-spacing: 0;
+
+			li {
+				width: 140px;
+				padding-bottom: 10px;
+				letter-spacing: normal;
+				text-align: left;
+				vertical-align: top;
+			}
+		}
+	}
+
+	.item a {
+		display: block;
+		margin: 0 5px;
+		color: #000;
+		font-size: 14px;
+		text-decoration: none;
+		border: none;
+
+		&:hover {
+			color: #025fae;
+			text-decoration: underline;
+		}
+
+		span.tit {
+			display: block;
+			margin: 7px 10px 0;
+			font-weight: bold;
+		}
+
+		.image {
+			display: table-cell;
+			width: 130px;
+			height: 130px;
+			padding: 5px;
+			text-align: center;
+			vertical-align: middle;
+			background-color: #fff;
+			border: none;
+			box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+
+			img {
+				width: 100%;
+				max-width: 100%;
+				max-height: 100%;
+				vertical-align: bottom;
+			}
+		}
+	}
+}
+
+.home .squareRecommendCategories :global {
+	width: 580px;
+}
+
+.home .horizontalRecommendCategories :global {
+	.listwrap {
+		width: 1120px;
+	}
+}
+
+.home .purchaseHistoryRecommend :global {
+	ul.listwrap {
+		margin: 0;
+	}
+
+	.crmDefaultList {
+		position: relative;
+	}
+
+	.crmDefaultList_box {
+		margin: 10px 0 30px;
+		padding: 18px 13px;
+	}
+}

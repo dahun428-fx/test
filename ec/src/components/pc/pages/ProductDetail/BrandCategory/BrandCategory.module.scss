@@ -1,0 +1,72 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	position: relative;
+	display: inline-block;
+	min-height: 20px;
+	font-size: 13px;
+}
+
+.popover {
+	position: absolute;
+	top: -6px;
+	left: -10px;
+	z-index: variables.$popoverZIndex;
+	padding: 6px 10px;
+	background-color: #fff;
+	border-radius: 2px;
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.2);
+}
+
+.brand {
+	margin-bottom: 6px;
+	padding-bottom: 5px;
+	border-bottom: 1px dotted #ccc;
+}
+
+.brandLink {
+	color: #004098;
+	text-decoration: none;
+
+	&:visited {
+		color: #681da8;
+	}
+
+	&[data-hoverable='true'] {
+		padding-right: 32px;
+		background: url(./assets/arrow-down.svg) no-repeat;
+		background-position: right 8px top 2px;
+	}
+}
+
+.popoverBrandLink {
+	padding-right: 32px;
+	color: #004098;
+	background: url(./assets/arrow-up.svg) no-repeat;
+	background-position: right 8px top 2px;
+
+	&:hover {
+		color: #004098;
+	}
+
+	&:visited {
+		color: #681da8;
+	}
+}
+
+.item {
+	margin-bottom: 4px;
+}
+
+.link {
+	color: #004098;
+	white-space: nowrap;
+
+	&:hover {
+		color: #004098;
+	}
+
+	&:visited {
+		color: #681da8;
+	}
+}

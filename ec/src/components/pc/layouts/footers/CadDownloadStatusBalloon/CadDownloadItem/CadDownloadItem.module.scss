@@ -1,0 +1,12 @@
+@use 'src/styles/pc/mixins';
+
+.downloadFileLink {
+	color: #004bb1;
+	text-decoration: none;
+	overflow-wrap: break-word;
+
+	&:hover {
+		color: #ff730a;
+		text-decoration: underline;
+	}
+}

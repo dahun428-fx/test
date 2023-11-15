@@ -1,0 +1,43 @@
+.checkResult {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
+
+.checkResultItem {
+	padding: 10px 0;
+	border-top: 1px solid #bfbfbf;
+
+	&:last-child {
+		border-bottom: 1px solid #bfbfbf;
+	}
+}
+
+.orderLimit {
+	margin-top: 10px;
+}
+
+.priceDetail {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.priceLabel {
+	font-weight: bold;
+}
+
+.priceValue {
+	padding-right: 10px;
+	text-align: right;
+}
+
+.sameDayShipping {
+	margin-top: 10px;
+	white-space: pre-wrap;
+	text-align: right;
+}
+
+.table {
+	margin-top: 10px;
+}

@@ -1,0 +1,61 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	display: inline-block;
+	font-size: 0;
+	white-space: nowrap;
+}
+
+.item {
+	display: inline-block;
+	font-size: 0.8125rem;
+	vertical-align: middle;
+}
+
+.link {
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	min-width: 24px;
+	min-height: 25px;
+	padding: 3px 8px;
+	color: #004098;
+	font-size: 0.8125rem;
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+		background-color: #ecf3fc;
+		cursor: pointer;
+	}
+}
+
+.active {
+	color: #333;
+	font-weight: bold;
+	background-color: #ecf3fc;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.arrow {
+	@extend .link;
+
+	font-size: 0;
+}
+
+.arrowLeft {
+	margin-right: 8px;
+	background: url('#{variables.$iconsPath}/left-arrow.svg') center center
+		no-repeat;
+}
+
+.arrowRight {
+	margin-left: 8px;
+	background: url('#{variables.$iconsPath}/right-arrow.svg') center center
+		no-repeat;
+}

@@ -1,0 +1,70 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	position: relative;
+}
+
+.title {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.popover {
+	position: absolute;
+	top: 24px;
+	left: 60px;
+	z-index: variables.$popoverZIndex;
+	// NOTE: calc(Screen Width - Left Position - Product Attributes Margin * 2)
+	width: calc(100vw - 60px - 15px * 2);
+	padding: 6px 10px;
+	background-color: #fff;
+	border: 2px solid #67a5dd;
+	border-radius: 2px;
+}
+
+.brand {
+	margin-top: 3px;
+	margin-bottom: 10px;
+	color: #004bb1;
+	font-size: 14px;
+	line-height: 1.6;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.brandLink {
+	display: inline-block;
+	padding-right: 15px;
+	color: #004bb1;
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.arrowDown {
+	background: url(./assets/arrow-down.png) right 8px no-repeat;
+}
+
+.arrowUp {
+	background: url(./assets/arrow-up.png) right 8px no-repeat;
+}
+
+.popoverBrandLink {
+	display: inline-block;
+	padding: 0 15px 5px 0;
+	white-space: nowrap;
+	background: url(./assets/arrow-up.png) right 8px no-repeat;
+}
+
+.item {
+	margin: 0.4em 0;
+}
+
+.link {
+	max-width: 100%;
+	padding-left: 8px;
+	font-size: 16px;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	background: url(./assets/arrow-right.png) 0 0.4em no-repeat;
+}

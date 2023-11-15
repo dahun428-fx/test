@@ -1,0 +1,22 @@
+.page {
+	position: relative;
+	min-height: 100dvh;
+}
+
+.main {
+	margin-top: 101px; // header height
+	&:empty {
+		min-height: 100dvh;
+	}
+}
+
+.fixedBottom {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.footer {
+	margin-bottom: 180px;
+}

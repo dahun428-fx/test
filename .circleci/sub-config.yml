@@ -1,0 +1,121 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.2.0
+parameters:
+  #path-filteringでワークフローの実行を制御するための変数群
+  #ecアプリをビルドするフラグ
+  is_build_ec:
+    type: boolean
+    default: false
+executors:
+  default:
+    docker:
+      - image: cimg/node:18.17.0
+        environment:
+          TZ: Asia/Tokyo
+jobs:
+  pipeline_start:
+    executor:
+      name: default
+    steps:
+      - run:
+          name: pipeline_start
+          command: |
+            set -x
+            echo "Execution date=`date`"
+            echo "Processing branch=${CIRCLE_PROJECT_REPONAME}"
+            echo "Processing branch=${CIRCLE_BRANCH}"
+            echo "Execution user=${CIRCLE_USERNAME}"
+            echo "CircleCIにて処理を実行します。"
+  initialize:
+    executor: default
+    parameters:
+      work-dir:
+        type: string
+        default: "./ec"
+    steps:
+      - checkout
+      - node/install-packages:
+          app-dir: <<parameters.work-dir>>/tools/config-generator
+      - node/install-packages:
+          app-dir: <<parameters.work-dir>>
+      - persist_to_workspace:
+          root: <<parameters.work-dir>>
+          paths:
+            - node_modules
+            - tools/config-generator/node_modules
+            - config/dist
+  build:
+    executor: default
+    parameters:
+      work-dir:
+        type: string
+        default: "./ec"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: <<parameters.work-dir>>
+      - run:
+          working_directory: <<parameters.work-dir>>
+          command: |
+            export APP_CONFIG=my-local
+            export ENABLE_GENERATE_SOURCE_MAPS=true
+            npm run build
+      - persist_to_workspace:
+          root: <<parameters.work-dir>>
+          paths:
+            - node_modules
+            - tools/config-generator/node_modules
+            - config/dist
+            - .next
+  upload_source_maps_to_datadog_devm:
+    executor: default
+    parameters:
+      work-dir:
+        type: string
+        default: "./ec"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: <<parameters.work-dir>>
+      - run:
+          working_directory: <<parameters.work-dir>>
+          command: |
+            set -x
+            export DATADOG_API_KEY=${DEVM_DATADOG_API_KEY}
+            ./node_modules/.bin/datadog-ci sourcemaps upload ./.next --service ${DEVM_DATADOG_RUM_SERVICE_NAME} --minified-path-prefix ${DEVM_PUBLIC_JS_URL} --release-version $(cat ./.next/BUILD_ID)
+            ./node_modules/.bin/datadog-ci sourcemaps upload ./.next --service ${DEVM_DATADOG_RUM_SERVICE_NAME} --minified-path-prefix ${DEVM_PRIVATE_JS_URL} --release-version $(cat ./.next/BUILD_ID)
+  no_job_execution:
+    executor: default
+    steps:
+      - run:
+          name: no_job_execution
+          command: |
+            echo "Job execution is skipped because there is no update in the corresponding directory."
+workflows:
+  build-ec:
+    when: << pipeline.parameters.is_build_ec >>
+    jobs:
+      - pipeline_start
+      - initialize:
+          work-dir: "./ec"
+          requires:
+            - pipeline_start
+      - build:
+          work-dir: "./ec"
+          requires:
+            - initialize
+      - upload_source_maps_to_datadog_devm:
+          work-dir: "./ec"
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release/devm
+  no_job_execution:
+    when:
+      and:
+        - not: << pipeline.parameters.is_build_ec >>
+    jobs:
+      - no_job_execution

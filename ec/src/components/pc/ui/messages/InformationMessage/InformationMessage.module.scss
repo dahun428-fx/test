@@ -1,0 +1,16 @@
+.message {
+	padding-left: 1.5rem;
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-bottom: -3px;
+		margin-left: calc(-16px - 0.5rem);
+		padding-left: 1.5rem;
+		vertical-align: baseline;
+		background-image: url(./assets/images/informationIcon.svg);
+		background-repeat: no-repeat;
+		content: '';
+	}
+}

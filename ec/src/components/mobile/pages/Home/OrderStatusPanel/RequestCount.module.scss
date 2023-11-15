@@ -1,0 +1,57 @@
+.announceBox {
+	padding: 10px 5px;
+	background-color: #fff;
+}
+
+.announce {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.announceList {
+	display: table-cell;
+	padding: 0 5px;
+	font-size: 14px;
+	text-align: center;
+	vertical-align: middle;
+	border-left: 1px solid #a7a7a7;
+
+	&:first-child {
+		padding-left: 0;
+		border-left: none;
+	}
+
+	&:last-child {
+		padding-right: 0;
+	}
+}
+
+.requestCountWrapper {
+	margin-top: -5px;
+	margin-bottom: -5px;
+	padding-bottom: 3px;
+}
+
+.requestCount {
+	color: #000;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 1.1;
+}
+
+.noRequest {
+	color: #868686;
+}
+
+.highlightCount {
+	background-color: #fff5cb;
+}
+
+.title {
+	font-size: 12px;
+}
+
+.hasRequestTitle {
+	color: #004bb1;
+}

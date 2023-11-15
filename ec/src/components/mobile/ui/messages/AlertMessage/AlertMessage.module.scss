@@ -1,0 +1,19 @@
+@use 'src/styles/mobile/icon';
+
+.message {
+	padding-left: 1.5rem;
+	color: #c00;
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-bottom: -3px;
+		margin-left: calc(-16px - 0.5rem);
+		padding-left: 1.5rem;
+		vertical-align: baseline;
+		background-image: url('#{icon.get-path('warning')}');
+		background-repeat: no-repeat;
+		content: '';
+	}
+}

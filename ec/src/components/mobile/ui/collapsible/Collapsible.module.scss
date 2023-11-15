@@ -1,0 +1,119 @@
+.heading {
+	text-decoration: none;
+}
+
+.title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+
+	&::after {
+		width: 13px;
+		height: 13px;
+		background-repeat: no-repeat;
+		background-size: 13px auto;
+		content: '';
+	}
+}
+
+.titlePrimary {
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 24px;
+	background-color: #0098d8;
+}
+
+.titleSecondary {
+	color: #333;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 1.35;
+	background-color: #e6e6e6;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.titleTertiary {
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 1.35;
+	background-color: #025fae;
+}
+
+.titleSection {
+	position: relative;
+	height: 52px;
+	margin: 0 15px;
+	padding: 15px 0;
+	color: #333;
+	font-weight: normal;
+	font-size: 16px;
+	border-bottom: 1px solid #bfbfbf;
+
+	&::after {
+		position: absolute;
+		right: 3px;
+		display: block;
+		width: 8px;
+		height: 16px;
+		background: {
+			size: 8px 16px;
+			image: url(./assets/images/arrow-right.png);
+			repeat: no-repeat;
+		}
+	}
+}
+
+.titlePrimaryCollapsed {
+	&::after {
+		display: block;
+		background-image: url(./assets/images/plus-icon.png);
+	}
+}
+
+.titleSecondaryCollapsed {
+	&::after {
+		display: block;
+		background-image: url(./assets/images/black-plus-icon.png);
+	}
+}
+
+.titleTertiaryCollapsed {
+	@extend .titlePrimaryCollapsed;
+}
+
+.titleSectionCollapsed {
+	&::after {
+		transform: rotate(90deg);
+	}
+}
+
+.titlePrimaryExpanded {
+	&::after {
+		display: block;
+		background-image: url(./assets/images/minus-icon.png);
+	}
+}
+
+.titleSecondaryExpanded {
+	&::after {
+		display: block;
+		background-image: url(./assets/images/black-minus-icon.png);
+	}
+}
+
+.titleTertiaryExpanded {
+	@extend .titlePrimaryExpanded;
+}
+
+.titleSectionExpanded {
+	&::after {
+		transform: rotate(-90deg);
+	}
+}
+
+.bodyCollapsed {
+	display: none;
+}

@@ -1,0 +1,23 @@
+.container {
+	width: 100%;
+	font-size: 16px;
+}
+
+.spec {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: baseline;
+	padding: 10px 15px;
+}
+
+.specName {
+	padding-right: 8px;
+	font-weight: bold;
+}
+
+.pictValue {
+	display: inline-block;
+	margin-right: 16px;
+	color: #004bb1;
+}

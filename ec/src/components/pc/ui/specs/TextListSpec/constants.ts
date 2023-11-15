@@ -1,0 +1,1 @@
+export const MIN_SPEC_VALUE_COUNT_TO_SHOW_TEXT_FILTER = 7;

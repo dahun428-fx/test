@@ -1,0 +1,110 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	width: 260px;
+}
+
+.sticky {
+	z-index: variables.$standardStickyZIndex;
+}
+
+.headerBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 12px 0 12px 8px;
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+}
+
+.filterHeading,
+.filterHeadingConfigured {
+	padding-right: 2em;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.filterHeadingConfigured {
+	background: url('#{variables.$iconsPath}/completed.svg') right center
+		no-repeat;
+}
+
+.progress {
+	width: 100%;
+	height: 8px;
+	font-size: 0;
+	background-color: #e5e5e5;
+	border-radius: 2px;
+}
+
+.progressPercent {
+	@for $i from 0 through 100 {
+		&[data-progress-percent='#{$i}'] {
+			width: #{$i} + '%';
+		}
+	}
+
+	height: 8px;
+	background-color: #004098;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+	transition: width 0.5s ease-in-out;
+}
+
+.panel {
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #fff;
+}
+
+.clearAll {
+	display: inline-block;
+	box-sizing: border-box;
+	margin-right: 8px;
+	padding: 4px 8px;
+	color: #004098;
+	font-size: 0.6875rem;
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none;
+	background-color: transparent;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+		opacity: 0.8;
+	}
+}
+
+.showSpecWrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 18px;
+	background-color: #f8fbff;
+}
+
+.specList {
+	overflow: hidden;
+}
+
+.enter {
+	height: 0;
+	transition: height 500ms;
+}
+
+.enterActive {
+	height: 100%;
+}
+
+.exit {
+	height: 100%;
+}
+
+.exitActive {
+	height: 0;
+	transition: height 500ms;
+}

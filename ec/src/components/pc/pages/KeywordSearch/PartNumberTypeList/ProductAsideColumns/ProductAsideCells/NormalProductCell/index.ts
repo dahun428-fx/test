@@ -1,0 +1,1 @@
+export { NormalProductCell } from './NormalProductCell';

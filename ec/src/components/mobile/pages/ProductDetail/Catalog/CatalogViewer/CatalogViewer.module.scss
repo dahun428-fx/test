@@ -1,0 +1,12 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	position: relative;
+	overflow: auto;
+	border: 1px solid #bfbfbf;
+	cursor: pointer;
+}
+
+.catalogImage {
+	max-width: 100%;
+}

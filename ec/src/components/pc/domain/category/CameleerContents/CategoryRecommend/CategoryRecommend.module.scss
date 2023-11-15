@@ -1,0 +1,34 @@
+.container {
+	margin-top: 40px;
+	padding-top: 80px;
+	border-top: solid 1px #ccc;
+}
+
+.item {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: center;
+	box-sizing: border-box;
+	width: 124px;
+	padding: 8px;
+	cursor: pointer;
+
+	.itemName {
+		display: block;
+		color: #004bb1;
+		font-weight: bold;
+
+		&:link {
+			color: #004098;
+		}
+	}
+
+	&:hover {
+		background-color: #ecf3fc;
+
+		.itemName {
+			text-decoration: underline;
+		}
+	}
+}

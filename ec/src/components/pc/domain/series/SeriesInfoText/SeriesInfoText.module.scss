@@ -1,0 +1,24 @@
+@use 'src/styles/pc/icon';
+
+.cautionWrapper {
+	margin-top: 16px;
+	padding: 16px;
+	font-size: 13px;
+	background-color: #fffaeb;
+	border: 1px solid #ccc;
+}
+
+.cautionTitle {
+	padding-left: 24px;
+	font-weight: bold;
+	background: url('#{icon.get-path('information')}') no-repeat;
+}
+
+.infoTextList {
+	margin-top: 8px;
+}
+
+.infoText {
+	margin: 4px 0 4px 24px;
+	list-style-type: disc;
+}

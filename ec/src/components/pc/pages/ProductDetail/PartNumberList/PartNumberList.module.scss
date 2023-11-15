@@ -1,0 +1,49 @@
+@use 'src/styles/pc/variables';
+
+.head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.mainOuter {
+	position: relative;
+}
+
+.main {
+	display: flex;
+	margin-top: 8px;
+	padding-top: 11px;
+	background-color: #fff;
+}
+
+.foot {
+	display: flex;
+	justify-content: flex-end;
+	padding: 8px 0;
+}
+
+.partNumberColumn {
+	flex: 2 0 190px;
+}
+
+.specColumns {
+	flex: 0 1 920px;
+	min-width: 0;
+}
+
+.asideColumns {
+	flex: 1 0 290px;
+}
+
+.loader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: variables.$loaderZIndex;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	opacity: 0.4;
+}

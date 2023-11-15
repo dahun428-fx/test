@@ -1,0 +1,1 @@
+export { PopularBrand } from './PopularBrand';

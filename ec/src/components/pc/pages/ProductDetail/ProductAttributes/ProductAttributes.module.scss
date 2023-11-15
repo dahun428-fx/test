@@ -1,0 +1,66 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/icon';
+
+.catchCopyDetailInfo {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.container {
+	width: 100%;
+	overflow: hidden;
+
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
+.priceListWrapper {
+	margin-top: 16px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	overflow: hidden;
+}
+
+.priceListWrapperBorder {
+	border-top: dotted 1px #ccc;
+}
+
+.priceListWrapperBorderBottom {
+	border-bottom: dotted 1px #ccc;
+}
+
+.priceListInner {
+	font-size: 0.8125rem;
+}
+
+.unitPriceExcludeTaxLabel {
+	margin-right: 5px;
+}
+
+.specialPrice {
+	margin-left: 6px;
+	color: #c00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.link {
+	display: inline-block;
+	padding: 2px 0 2px 1.5rem;
+	color: #004098;
+	text-decoration: none;
+	background: url('#{variables.$iconsPath}/down-arrow.svg') 0 center no-repeat;
+	cursor: pointer;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: underline;
+	}
+}
+
+.containerNavigation {
+	display: flex;
+}

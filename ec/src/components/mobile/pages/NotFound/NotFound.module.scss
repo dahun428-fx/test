@@ -1,0 +1,63 @@
+.pageNotFound {
+	width: auto;
+	margin: 15px 15px 45px;
+}
+
+.title {
+	display: flex;
+	flex-direction: column-reverse;
+	color: #0169c6;
+	font-weight: bold;
+}
+
+.mainTitle {
+	display: block;
+	margin: 25px 0 10px;
+	font-size: 10vw;
+	text-align: center;
+}
+
+.subTitle {
+	display: block;
+	margin-left: 0;
+	padding: 10px;
+	font-size: 14px;
+	background: #e8e8e8;
+}
+
+.errorMessage {
+	margin: 10px 0;
+	color: #333;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.reasons {
+	margin: 15px 0;
+	border-top: 1px solid #9d9d9d;
+}
+
+.reasonItem {
+	position: relative;
+	padding: 10px 10px 10px 30px;
+	font-size: 14px;
+	border-bottom: 1px solid #9d9d9d;
+	counter-increment: numberItem;
+
+	&::before {
+		position: absolute;
+		left: 0;
+		padding: 0 0.5em 0 12px;
+		color: #0169c6;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 1.2;
+		content: counter(numberItem);
+	}
+}
+
+.backToHome {
+	margin-top: 30px;
+	text-align: center;
+}

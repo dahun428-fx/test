@@ -1,0 +1,17 @@
+.quantityField {
+	max-width: 66px;
+	height: 35px;
+	padding: 0.5em;
+	text-align: right;
+	border: 1px solid #bfbfbf;
+	box-shadow: 0 1px rgb(0 0 0 / 0.1) inset;
+
+	&[aria-invalid='true'] {
+		background-color: #ffd9d9;
+	}
+
+	&:disabled {
+		color: #cdcdcd;
+		background-color: #f3f3f3;
+	}
+}

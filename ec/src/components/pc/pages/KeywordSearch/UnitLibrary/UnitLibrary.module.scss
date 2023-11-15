@@ -1,0 +1,64 @@
+.listContainer {
+	margin-bottom: 1rem;
+	border-top: 1px solid #ccc;
+}
+
+.listItem {
+	margin-top: -1px;
+	color: #004098;
+	border-top: 1px solid #ccc;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: underline;
+		background-color: #ecf3fc;
+		cursor: pointer;
+	}
+
+	&:last-child {
+		border-bottom: 1px solid #ccc;
+	}
+}
+
+.linkContainer {
+	width: 100%;
+}
+
+.listArea {
+	display: flex;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 16px;
+	table-layout: fixed;
+
+	&:hover {
+		color: #3366ac;
+	}
+}
+
+.imageBox {
+	margin-right: 1rem;
+}
+
+.image {
+	max-width: 93px;
+	max-height: 150px;
+}
+
+.itemDescriptionContainer {
+	overflow: hidden;
+}
+
+.itemName {
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.htmlSubmissionItem {
+	display: inline-block;
+	color: #333;
+}
+
+.searchAllContainer {
+	text-align: right;
+}

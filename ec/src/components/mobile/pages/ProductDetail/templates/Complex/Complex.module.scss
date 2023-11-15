@@ -1,0 +1,16 @@
+.priceCheckResult {
+	margin-top: 15px;
+}
+
+// MY では真上のコンテンツに margin-bottom: 15px
+// TH では真上のコンテンツに margin-bottom: 10px 自分に padding-top: 5px
+// 全体としてどうあるべきかが読みきれないのでここでは一旦個別で margin-top: 15px つけますが、
+// 青色バー(h2) を共通化すべき（もしくはもうあるかもしれない）かもしれないのでここは適宜共通化なり修正なりしてほしいです。
+.configuredSpecifications {
+	margin-top: 15px;
+	padding-bottom: 5px;
+}
+
+.tabContainer {
+	margin-top: 10px;
+}

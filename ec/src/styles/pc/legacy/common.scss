@@ -1,0 +1,8 @@
+// アプリ全体の SSI コンテンツで共通利用する global css を定義します。
+
+// margin-top
+@for $i from 0 through 8 {
+	.u-mt#{$i * 5} {
+		margin-top: 5px * $i;
+	}
+}

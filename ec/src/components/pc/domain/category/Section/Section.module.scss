@@ -1,0 +1,50 @@
+@use 'src/styles/pc/variables';
+
+.contentsContainer {
+	margin-top: 16px;
+	overflow: hidden;
+	transition: max-height 400ms;
+}
+
+.panel {
+	display: flex;
+	justify-content: space-between;
+	margin: 32px 0 16px;
+	padding: 8px 0;
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.panelFixed {
+	margin: 0;
+	box-shadow: rgb(0 0 0 / 0.1) 3px 3px 3px;
+}
+
+.totalItem {
+	display: table-cell;
+	min-width: 60px;
+	font-size: 0.8125rem;
+	vertical-align: middle;
+}
+
+.totalCount {
+	margin-right: 0.5rem;
+	font-size: 1.3125rem;
+	vertical-align: baseline;
+}
+
+.tabList {
+	display: flex;
+}
+
+.productNotFound {
+	color: #333;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	word-break: break-word;
+}
+
+.sticky {
+	z-index: variables.$standardStickyZIndex;
+}

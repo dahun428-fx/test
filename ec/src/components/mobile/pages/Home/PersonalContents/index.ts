@@ -1,0 +1,1 @@
+export { PersonalContents } from './PersonalContents';

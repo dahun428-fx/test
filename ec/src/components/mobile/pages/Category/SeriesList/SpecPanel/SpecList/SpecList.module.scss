@@ -1,0 +1,7 @@
+.item {
+	margin-left: 16px;
+
+	&:not(:first-child) {
+		margin-top: 8px;
+	}
+}

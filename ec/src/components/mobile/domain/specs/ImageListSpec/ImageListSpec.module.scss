@@ -1,0 +1,54 @@
+@use 'src/styles/mobile/variables';
+
+$margin: 4px;
+
+.candidate {
+	position: relative;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid transparent;
+	cursor: pointer;
+
+	&[aria-checked='true'] {
+		border-color: #004bb1;
+
+		&::after {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: 17px;
+			height: 13px;
+			background-image: url('#{variables.$commonPath}/checked.png');
+			background-size: 17px 13px;
+			content: '';
+		}
+	}
+}
+
+.candidates {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > .candidate {
+		margin-right: $margin;
+		margin-bottom: $margin;
+	}
+
+	&[data-view-type='5'] > .candidate {
+		flex: 0 0 calc(100% / 1);
+	}
+
+	&[data-view-type='6'] > .candidate {
+		flex: 0 0 calc((100% - $margin * 2) / 2);
+	}
+
+	&[data-view-type='7'] > .candidate,
+	&[data-view-type='12'] > .candidate {
+		flex: 0 0 calc((100% - $margin * 3) / 3);
+	}
+}
+
+.valueDisp {
+	overflow: hidden;
+	font-size: 12px;
+}

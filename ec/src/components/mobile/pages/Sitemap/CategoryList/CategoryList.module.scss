@@ -1,0 +1,59 @@
+.title {
+	padding-bottom: 12px;
+	font-weight: normal;
+	font-size: 1.3125rem;
+	line-height: 1.3;
+	border-bottom: 2px solid #ccc;
+}
+
+.categoryTitleLevel1 {
+	font-size: 15px;
+	line-height: 1.35;
+	background-color: #777;
+
+	.link[class] {
+		display: block;
+		padding: 15px;
+		color: #fff;
+		background: url(../assets/images/arrow-big.png) right 15px center no-repeat;
+	}
+}
+
+.categoryTitleLevel2 {
+	background-color: #e6e6e6;
+
+	.link[class] {
+		line-height: 1.35;
+		border-top: 1px solid #fff;
+	}
+}
+
+.listItem {
+	.link[class] {
+		display: block;
+		padding: 15px 30px 15px 15px;
+		color: #333;
+		text-decoration: none;
+		background: url(../assets/images/arrow-small.png) 0 0.2em no-repeat;
+		background-position: right 15px center;
+		border-bottom: 1px solid #bfbfbf;
+	}
+}
+
+.listItemLevel2 {
+	.link[class] {
+		border-top: 1px solid #fff;
+	}
+}
+
+.listItemLevel3 {
+	.link[class] {
+		padding-left: 30px;
+	}
+}
+
+.listItemLevel4OrMore {
+	.link[class] {
+		padding-left: 45px;
+	}
+}

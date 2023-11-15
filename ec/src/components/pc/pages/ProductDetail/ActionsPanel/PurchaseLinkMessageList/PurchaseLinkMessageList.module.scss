@@ -1,0 +1,22 @@
+.message {
+	padding-left: 19px;
+	font-size: 0.8125rem;
+
+	&::before {
+		display: inline;
+		margin-right: 4px;
+		margin-left: -19px;
+		padding-bottom: 1px;
+		padding-left: 15px;
+		vertical-align: top;
+		content: '';
+	}
+}
+
+.error {
+	background: url(./assets/images/error.png) left 3px no-repeat;
+}
+
+.warn {
+	background: url(./assets/images/warn.png) left 2px no-repeat;
+}

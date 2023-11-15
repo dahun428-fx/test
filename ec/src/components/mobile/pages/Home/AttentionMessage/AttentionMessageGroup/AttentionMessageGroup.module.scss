@@ -1,0 +1,43 @@
+$attentionThemes: (
+	warning: (
+		border: none,
+		background: #ffd9d9,
+	),
+	caution: (
+		border: none,
+		background: #fff2bf,
+	),
+	notice: (
+		border: #d00,
+	),
+	info: (
+		border: none,
+		border-radius: 6px,
+		box-shadow: 0 0 5px 0 rgb(0 0 0 / 0.2),
+		padding: 5px 10px,
+	),
+);
+
+@mixin stylesThemes($theme) {
+	padding: map-get($theme, padding);
+	background-color: map-get($theme, background);
+	border: 1px solid map-get($theme, border);
+	border-radius: map-get($theme, border-radius);
+	box-shadow: map-get($theme, box-shadow);
+}
+
+.attention {
+	@each $property, $theme in $attentionThemes {
+		&[data-theme='#{$property}'] {
+			@include stylesThemes($theme);
+		}
+	}
+
+	position: relative;
+	padding: 12px 10px;
+	border-radius: 2px;
+
+	& > li:nth-child(n + 2) {
+		margin-top: 7px;
+	}
+}

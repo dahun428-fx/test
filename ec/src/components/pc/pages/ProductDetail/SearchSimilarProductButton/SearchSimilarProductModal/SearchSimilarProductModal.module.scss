@@ -1,0 +1,106 @@
+@use 'src/styles/pc/variables';
+
+.modal {
+	width: 480px;
+}
+
+.categoryTitle {
+	margin: 20px 0 10px;
+	font-size: 14px;
+}
+
+.categoryLabel {
+	font-weight: bold;
+}
+
+.specListWrap {
+	margin-top: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+
+.specList {
+	height: 272px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.anchor {
+	display: block;
+	color: currentcolor;
+	text-decoration: none;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.specItem {
+	padding: 0 10px;
+	font-size: 14px;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+	// NOTE: Specificity is basically prohibited.
+	&:last-child > .anchor {
+		border-bottom: none;
+	}
+
+	&[aria-selected='true'] {
+		background-image: url('#{variables.$commonPath}/checkbox-checked.svg');
+		background-repeat: no-repeat;
+		background-position: 10px 14px;
+	}
+
+	&[aria-selected='false'] {
+		background-image: url('#{variables.$commonPath}/checkbox.svg');
+		background-repeat: no-repeat;
+		background-position: 10px 14px;
+	}
+}
+
+.spec {
+	display: flex;
+}
+
+.specColumnTitle {
+	flex-basis: 45%;
+	padding: 10px 10px 10px 25px;
+	font-weight: bold;
+}
+
+.specColumn {
+	flex-basis: 55%;
+	padding: 10px;
+}
+
+.bottom {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: 20px auto 0;
+}
+
+.bottomButtonLeftBox {
+	width: 89px;
+}
+
+.bottomButtonLeft {
+	flex-basis: 50%;
+}
+
+.bottomButtonRightBox {
+	width: 91px;
+	margin-left: 10px;
+}
+
+.bottomButtonRight {
+	flex-basis: 50%;
+}
+
+.textPosition {
+	text-align: justify;
+}
+
+.modalWidth {
+	display: block;
+	width: 91px;
+}

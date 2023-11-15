@@ -1,0 +1,94 @@
+.interestRecommendContainer {
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	min-height: 270px;
+	padding: 14px 0 5px;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.itemContainer {
+	display: flex;
+	width: 130px;
+	min-height: 257px;
+	margin-left: 15px;
+	padding: 5px;
+	font-size: 15px;
+	line-height: 1.25;
+	vertical-align: top;
+	background-color: #fff;
+	border-radius: 5px;
+
+	&:last-child {
+		margin-right: 15px;
+	}
+}
+
+.itemLink[class] {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	text-decoration: none;
+}
+
+.itemImageBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 110px;
+	height: 110px;
+	padding: 5px;
+	background-color: #fff;
+}
+
+.image {
+	max-width: 100px;
+	max-height: 100px;
+	object-fit: contain;
+}
+
+.itemProductName {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	margin-top: 15px;
+	overflow: hidden;
+	color: #004bb1;
+	font-weight: bold;
+	white-space: pre-line;
+	text-decoration: none;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+/** NOTE: Using display inline-block to remove underline of text decoration. This is a CSS trick */
+.itemBrandName {
+	display: block;
+	margin-top: 3px;
+	overflow: hidden;
+	color: #aaa;
+	font-size: 12px;
+	white-space: normal;
+	text-decoration: none;
+	word-break: break-word;
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	margin-top: 3px;
+	color: #333;
+	font-size: 11px;
+}
+
+.price {
+	font-weight: bold;
+}
+
+.daysToShip {
+	display: flex;
+	flex: 1 0;
+	align-items: flex-end;
+	margin: 4px 0;
+}

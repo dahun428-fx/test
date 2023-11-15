@@ -1,0 +1,1 @@
+export { TopCategoryItem } from './TopCategoryItem';

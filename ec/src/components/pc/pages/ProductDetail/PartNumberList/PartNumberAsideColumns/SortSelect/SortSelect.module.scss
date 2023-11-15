@@ -1,0 +1,75 @@
+@use 'src/styles/pc/variables';
+
+.selectBoxWrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.buttonSort {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 22px;
+	height: 22px;
+	margin-left: 4px;
+	padding: 0;
+	color: #004098 !important;
+	font-weight: bold;
+	font-size: 0;
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none !important;
+	vertical-align: top;
+	background-color: #fff !important;
+	background-image: url(./assets/images/buttonSort.svg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: 1px solid #ccc !important;
+	border-radius: 4px;
+	box-shadow: none;
+}
+
+.sortBox {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	z-index: 5000;
+	box-sizing: border-box;
+	width: 120px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.2);
+}
+
+.sortList {
+	font-size: 0.8125rem;
+	text-align: left;
+}
+
+.sortListItem {
+	padding: 8px 16px;
+	color: #333;
+	line-height: 1.5;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}
+
+.on {
+	background-color: #ecf3fc;
+}
+
+.sortClear {
+	padding: 8px 16px;
+	color: #004098;
+	font-weight: bold;
+	line-height: 1.5;
+	border-top: solid 1px #ccc;
+	cursor: pointer;
+
+	&:hover {
+		color: #004098;
+		background-color: #ecf3fc;
+	}
+}

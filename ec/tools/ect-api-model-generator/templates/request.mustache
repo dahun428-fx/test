@@ -1,0 +1,20 @@
+import { MsmApiRequest } from '@/models/api/msm/MsmApiRequest';
+{{#imports}}
+{{{.}}}
+{{/imports}}
+{{#interfaces}}
+
+{{#descriptions}}
+/** {{{.}}} */
+{{/descriptions}}
+{{#root}}
+export interface {{name}} extends MsmApiRequest {
+{{/root}}
+{{^root}}
+export interface {{name}} {
+{{/root}}
+{{#properties}}
+{{> property}}
+{{/properties}}
+}
+{{/interfaces}}

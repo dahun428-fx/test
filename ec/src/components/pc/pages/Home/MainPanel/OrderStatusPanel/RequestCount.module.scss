@@ -1,0 +1,80 @@
+.main {
+	display: flex;
+	width: 100%;
+}
+
+.item {
+	@media screen and (max-width: 1399px) {
+		margin-left: 7px;
+	}
+
+	@media screen and (max-width: 1199px) {
+		margin-left: 14px;
+	}
+
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+	margin-left: 14px;
+	padding: 16px;
+	text-align: center;
+	word-break: break-word;
+	background-color: #fff;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+.box {
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	@media screen and (max-width: 1399px) {
+		font-size: 14px;
+	}
+
+	@media screen and (max-width: 1199px) {
+		font-size: 1rem;
+	}
+
+	margin-right: -16px;
+	margin-left: -16px;
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.count {
+	@media screen and (max-width: 1399px) {
+		font-size: 30px;
+	}
+
+	@media screen and (max-width: 1199px) {
+		font-size: 40px;
+	}
+
+	font-size: 40px;
+	line-height: 1.3;
+}
+
+// NOTE: Specificity is basically prohibited.
+.link[class] {
+	color: #333;
+
+	&:hover {
+		text-decoration: none;
+
+		// NOTE: Specificity is basically prohibited.
+		& .count {
+			text-decoration: underline;
+		}
+	}
+}
+
+.disabled {
+	color: #999;
+}

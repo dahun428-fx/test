@@ -1,0 +1,93 @@
+@use 'src/styles/pc/icon';
+
+.pageNotFound {
+	width: 625px;
+	margin: 117px auto;
+}
+
+.title {
+	color: #0169c6;
+	font-weight: bold;
+	font-size: 53px;
+	line-height: 1.4;
+	letter-spacing: -0.3em;
+}
+
+.mainTitle {
+	display: inline-block;
+	letter-spacing: -0.01em;
+	vertical-align: middle;
+}
+
+.subTitle {
+	display: inline-block;
+	margin-left: 21px;
+	padding: 4px 15px;
+	font-size: 22px;
+	letter-spacing: 0;
+	vertical-align: middle;
+	background: #e8e8e8;
+}
+
+.errorMessage {
+	width: 100%;
+	margin-bottom: 25px;
+	overflow: hidden;
+	font-weight: bold;
+	font-size: 22px;
+	white-space: nowrap;
+}
+
+.reasons {
+	margin: 0 0 20px;
+	border-top: 1px dotted #bfbfbf;
+}
+
+.reasonItem {
+	position: relative;
+	padding: 7px 20px 7px 2.25em;
+	font-weight: bold;
+	font-size: 14px;
+	border-bottom: 1px dotted #bfbfbf;
+	counter-increment: numberItem;
+
+	&::before {
+		position: absolute;
+		left: 0;
+		padding: 0 0.5em 0 12px;
+		color: #0169c6;
+		font-weight: bold;
+		font-size: 18px;
+		line-height: 1.4;
+		content: counter(numberItem);
+	}
+}
+
+.backToHome {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.backToHomeButton {
+	display: block;
+	width: 215px;
+	margin: 0 auto;
+	padding: 8px 0;
+	color: #666;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid #bfbfbf;
+	border-radius: 2px;
+	box-shadow: inset 0 1px 0 0 #fff, 0 2px 0 0 rgb(0 0 0 / 0.1);
+	background: {
+		position: 10px;
+		color: #f2f2f2;
+		image: url('#{icon.get-icon-path(right-arrow, dark)}');
+		repeat: no-repeat;
+	}
+
+	&:hover {
+		opacity: 0.9;
+	}
+}

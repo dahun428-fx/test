@@ -1,0 +1,68 @@
+@use '../PartNumberTypeList.shared';
+
+.table {
+	@extend .tableBase;
+
+	width: 100%;
+}
+
+.specHeaderRow {
+	@extend .headerRowBase;
+}
+
+.specHeaderCell {
+	@extend .headerCellBase;
+
+	min-width: 60px;
+	border: 1px solid #ccc;
+
+	&:first-child {
+		border-left: none;
+	}
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.specDataRow {
+	@extend .dataRowBase;
+}
+
+.specDataCell {
+	@extend .dataCellBase;
+
+	text-align: center;
+	word-break: break-all;
+
+	&:first-child {
+		border-left: none;
+	}
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.noSpecDataCell {
+	@extend .specDataCell;
+
+	text-align: left;
+}
+
+.specHeader {
+	max-width: 160px;
+	margin: auto;
+	word-break: break-all;
+}
+
+.specData {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	max-width: 150px;
+	margin: auto;
+	overflow: hidden;
+	word-break: break-all;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}

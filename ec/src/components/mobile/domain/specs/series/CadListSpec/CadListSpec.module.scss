@@ -1,0 +1,15 @@
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	padding-left: 16px;
+	font-size: 12px;
+}
+
+.item {
+	flex-basis: 30%;
+	justify-content: center;
+	align-items: center;
+	min-height: 50px;
+	margin-right: 4px;
+	margin-bottom: 8px;
+}

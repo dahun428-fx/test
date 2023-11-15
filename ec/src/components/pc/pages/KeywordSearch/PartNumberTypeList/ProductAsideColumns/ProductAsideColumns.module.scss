@@ -1,0 +1,21 @@
+@use '../PartNumberTypeList.shared';
+
+.table {
+	@extend .tableBase;
+
+	position: relative;
+	width: 100%;
+}
+
+.cadHeaderCell {
+	@extend .headerCellBase;
+
+	width: 140px;
+}
+
+.priceLeadTimeHeaderCell {
+	@extend .headerCellBase;
+
+	width: 270px;
+	border-right: none;
+}

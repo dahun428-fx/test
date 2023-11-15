@@ -1,0 +1,35 @@
+.categoryItem {
+	display: inline-flex;
+	font-size: 0.8125rem;
+	vertical-align: top;
+}
+
+.categoryItemName {
+	word-break: break-word;
+}
+
+.categoryLink {
+	display: block;
+	padding: 12px;
+	color: #004098;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover,
+	&:active {
+		color: #3366ac;
+		background-color: #ecf3fc;
+	}
+}
+
+.categoryImage {
+	max-width: 100px;
+	max-height: 100px;
+	text-align: center;
+}
+
+.imageWrapper {
+	width: 100px;
+	height: 100px;
+	margin-bottom: 8px;
+}

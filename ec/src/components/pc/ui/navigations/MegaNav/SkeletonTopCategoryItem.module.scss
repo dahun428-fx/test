@@ -1,0 +1,15 @@
+@use 'src/styles/pc/mixins';
+
+$fontSize: 16px;
+$lineHeight: $fontSize * 1.6;
+
+.skeletonWrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 15px;
+}
+
+.contents {
+	@include mixins.skeleton(100%, $lineHeight, $fontSize);
+}

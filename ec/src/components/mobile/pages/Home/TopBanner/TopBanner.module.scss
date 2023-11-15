@@ -1,0 +1,10 @@
+.container {
+	position: relative;
+}
+
+.bannerListContainer {
+	position: relative;
+	width: 100%;
+	padding-bottom: calc(350 / 950 * 100%); // NOTE: アスペクト比維持
+	overflow: hidden;
+}

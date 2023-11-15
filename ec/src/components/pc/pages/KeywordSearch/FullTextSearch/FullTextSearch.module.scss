@@ -1,0 +1,71 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	background-color: #ddd;
+}
+
+.control {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px 0;
+	font-size: 0.8125rem;
+}
+
+.totalCount {
+	min-width: 60px;
+}
+
+.totalCountLabel {
+	margin-right: 0.5rem;
+	font-weight: bold;
+	font-size: 1.0625rem;
+}
+
+.tileWrapper {
+	font-size: 0.8125rem;
+	border-bottom: 1px solid #ccc;
+
+	&:first-child {
+		border-top: 1px solid #ccc;
+	}
+}
+
+// NOTE: Specificity is not allowed, but it is used here to handle
+// underlining of the title on hover of the Link component.
+.tile[class] {
+	width: 100%;
+	padding: 16px;
+
+	&:hover {
+		text-decoration: none;
+		cursor: pointer;
+		opacity: 0.8;
+
+		// NOTE: Specificity is not allowed, but it is used here to handle
+		// underlining of the title on hover of the Link component.
+		& > .link {
+			text-decoration: underline;
+		}
+	}
+}
+
+.pdf {
+	padding-left: 1.5rem;
+	background: url('#{variables.$iconsPath}/pdf.svg') 0 2px no-repeat;
+}
+
+.text {
+	color: #333;
+}
+
+.footer {
+	margin-top: 8px;
+	text-align: right;
+}

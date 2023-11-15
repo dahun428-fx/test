@@ -1,0 +1,52 @@
+@use 'src/styles/pc/variables';
+
+.wrapper {
+	margin-top: 32px;
+}
+
+.heading {
+	display: flex;
+	margin: 32px 0 16px;
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.infoBox {
+	margin-top: 32px;
+}
+
+.link {
+	display: inline-block;
+	padding-left: 1.5rem;
+	color: #004098;
+	text-decoration: none;
+	background: url('#{variables.$iconsPath}/pdf.svg') 0 2px no-repeat;
+	cursor: pointer;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: underline;
+	}
+
+	&:visited {
+		color: #681da8;
+	}
+}
+
+.sectionHeading {
+	display: flex;
+	padding: 12px 0;
+	font-weight: normal;
+	font-size: 1.3125rem;
+	line-height: 1.3;
+	text-indent: 0;
+	word-break: break-word;
+	border-bottom: 2px solid #ccc;
+}
+
+.catchCopy {
+	font-size: 0.8125rem;
+}

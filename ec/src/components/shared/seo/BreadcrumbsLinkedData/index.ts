@@ -1,0 +1,1 @@
+export { BreadcrumbsLinkedData } from './BreadcrumbsLinkedData';

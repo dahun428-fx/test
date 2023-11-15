@@ -1,0 +1,92 @@
+.item {
+	display: inline-block;
+	width: 100%;
+	padding: 15px 0;
+	overflow: hidden;
+	vertical-align: top;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.informationContainer {
+	position: relative;
+	width: 100%;
+	min-height: fit-content;
+}
+
+.image {
+	position: absolute;
+	top: 0;
+	max-width: 64px;
+	max-height: 64px;
+	margin: 0;
+	padding: 0;
+}
+
+.information {
+	max-width: 258px;
+	margin-left: 72px;
+	word-wrap: break-word;
+}
+
+.label {
+	display: inline-block;
+	min-width: 50px;
+	padding: 2px 6px;
+	color: #fff;
+	font-size: 12px;
+	line-height: 1;
+	text-align: center;
+	text-indent: 0;
+	word-wrap: break-word;
+	background-color: #4d96d7;
+	border: 1px solid #4d96d7;
+}
+
+.partNumber {
+	font-weight: bold;
+	font-size: 15px;
+	word-wrap: break-word;
+}
+
+.makerName {
+	margin: 3px 0;
+	margin-top: 8px;
+	color: #aaa;
+	font-size: 12px;
+	word-wrap: break-word;
+}
+
+.proceed {
+	margin-top: 8px;
+	padding: 4px 0;
+}
+
+.quantity {
+	display: flex;
+	align-items: center;
+	margin: 10px 0;
+}
+
+.quantityLabel {
+	padding-top: 0.25em;
+	padding-right: 0.5em;
+	font-weight: bold;
+	white-space: nowrap;
+	word-wrap: break-word;
+}
+
+.quantityInput {
+	font-size: 16px;
+}
+
+.buttonsWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.orderNow {
+	margin-right: 10px;
+}

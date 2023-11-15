@@ -1,0 +1,8 @@
+.container {
+	display: inline-block;
+	// NOTE: on IE, svg does not render if width and height are not specified.
+	//       25 is the rendered height, 76 and 26 are the actual width and height of the svg file
+	width: calc(((25 * 76) / 26) * 1px);
+	height: 25px;
+	margin-left: 2px;
+}

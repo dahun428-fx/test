@@ -1,0 +1,50 @@
+@use 'src/styles/pc/icon';
+
+.trigger {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 12px;
+	color: #004098;
+	background-color: transparent;
+	border: none;
+
+	&:hover {
+		background-color: #ecf3fc;
+		cursor: pointer;
+	}
+
+	&::after {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		content: '';
+		background: {
+			position: center;
+			repeat: no-repeat;
+		}
+	}
+
+	&[aria-expanded='true'] {
+		background-color: #ecf3fc;
+
+		&::after {
+			background-image: url('#{icon.get-path('left-arrow')}');
+		}
+	}
+
+	&[aria-expanded='false']::after {
+		background-image: url('#{icon.get-path('right-arrow')}');
+	}
+}
+
+.popover {
+	@media (min-width: 1400px) {
+		left: 50%;
+		margin-left: -420px;
+	}
+
+	position: fixed;
+	left: 296px;
+}

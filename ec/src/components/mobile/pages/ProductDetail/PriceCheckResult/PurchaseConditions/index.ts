@@ -1,0 +1,1 @@
+export { PurchaseConditions } from './PurchaseConditions';

@@ -1,0 +1,1 @@
+export { ProductImagePanel } from './ProductImagePanel';

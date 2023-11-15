@@ -1,0 +1,8 @@
+.container {
+	position: absolute;
+	left: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	transition: margin-left 0.45s ease-in-out;
+}

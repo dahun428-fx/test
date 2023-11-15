@@ -1,0 +1,49 @@
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.books {
+	display: flex;
+}
+
+.book {
+	&:nth-child(n + 2) {
+		margin-left: 1rem;
+	}
+}
+
+.link {
+	font-size: 0.8125rem;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&:active {
+		color: #3366ac;
+	}
+}
+
+.pageNavs {
+	display: flex;
+	align-items: center;
+}
+
+.sliderWrap {
+	width: 180px;
+}
+
+.formWrap {
+	flex-shrink: 0;
+	margin-left: 18px;
+}
+
+.openerWrap {
+	width: 200px;
+	margin-left: 10px;
+}

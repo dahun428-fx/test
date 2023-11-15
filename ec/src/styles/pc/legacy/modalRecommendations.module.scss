@@ -1,0 +1,148 @@
+@use 'src/styles/pc/variables';
+
+.modalRecommendations :global {
+	.modalProductCart__recommend,
+	.modalMyPartsAdd__recommend {
+		margin-top: 32px;
+		border-top: solid 1px #bfbfbf;
+
+		h4.titleBlock__h4 {
+			margin: 17px 0 5px;
+			font-weight: bold;
+		}
+	}
+
+	.crmCartInModalList,
+	.crmMyPartsAddModalList {
+		position: relative;
+		min-height: 150px;
+
+		&__box {
+			position: relative;
+			padding: 0 36px;
+		}
+
+		a,
+		a:link {
+			margin-top: 5px;
+			color: #004bb1;
+		}
+
+		a:visited {
+			color: #851f99;
+		}
+
+		a:hover,
+		a:active {
+			color: #ff730a;
+		}
+	}
+
+	.listwrap {
+		z-index: 1;
+		width: 780px;
+		margin: 0 auto;
+		letter-spacing: -0.4em;
+
+		.item {
+			width: 156px;
+			letter-spacing: normal;
+			text-align: left;
+			vertical-align: top;
+			border: none;
+
+			&:hover {
+				cursor: pointer;
+
+				a {
+					color: #ff730a;
+				}
+			}
+
+			&__box {
+				padding: 10px 12px;
+
+				.image {
+					display: block;
+					min-height: 100px;
+					text-align: center;
+
+					img {
+						max-width: 100px;
+						max-height: 100px;
+						vertical-align: bottom;
+					}
+				}
+
+				a {
+					display: block;
+					padding: 0;
+				}
+
+				p.txt {
+					margin-top: 5px;
+					color: #333;
+				}
+
+				.maker {
+					word-wrap: break-word;
+				}
+
+				.price {
+					display: block;
+				}
+
+				.delivery {
+					display: block;
+				}
+
+				span.num {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.crmTemplateBlock {
+		position: relative;
+
+		a.btn {
+			position: absolute;
+			top: 57px;
+			width: 35px;
+			height: 74px;
+			padding: 0;
+			overflow: hidden;
+			white-space: nowrap;
+			text-align: left;
+			text-indent: 100%;
+			background-image: url('#{variables.$commonPath}/arrow-button-next-back.png');
+			background-repeat: no-repeat;
+
+			&:hover {
+				opacity: 0.75;
+			}
+		}
+
+		&_left {
+			left: 0;
+			background-position: 0 0;
+		}
+
+		&_right {
+			right: 0;
+			background-position: 0 -74px;
+		}
+	}
+}
+
+.addMultipleModal :global {
+	.modalProductCart__recommend,
+	.modalMyPartsAdd__recommend {
+		border: none;
+	}
+
+	.listwrap {
+		width: 810px;
+	}
+}

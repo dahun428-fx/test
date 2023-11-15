@@ -1,0 +1,58 @@
+.main {
+	@media screen and (max-width: 1399px) {
+		width: 1220px;
+	}
+
+	@media screen and (max-width: 1199px) {
+		width: 970px;
+	}
+
+	width: 100%;
+	max-width: 1420px;
+	margin: 24px auto;
+	padding: 0 10px;
+}
+
+.firstView {
+	display: flex;
+	flex-direction: column;
+}
+
+.rightBoxWrapper {
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+}
+
+.attention {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	background-color: #eee;
+}
+
+.topBanner {
+	&:nth-child(2) {
+		margin-top: 1rem;
+	}
+}
+
+.asideBannerContainer {
+	display: flex;
+	align-items: center;
+	margin-top: 80px;
+}
+
+.asideBanner {
+	display: flex;
+	flex: 0 1 25%;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+	background-color: #eee;
+
+	&:nth-child(n + 2) {
+		margin-left: 25px;
+	}
+}

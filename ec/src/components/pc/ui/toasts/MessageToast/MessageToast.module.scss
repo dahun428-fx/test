@@ -1,0 +1,121 @@
+@use 'src/styles/pc/variables';
+
+//TODO: Refactor shadow box
+.toast {
+	padding: 20px 15px;
+	text-decoration: none;
+	background: #fff;
+	border: 2px solid #0098d8;
+	border-radius: 2px;
+
+	&:hover {
+		color: #025fae;
+		text-decoration: underline;
+	}
+
+	&:visited {
+		color: #004098;
+	}
+}
+
+.message {
+	width: 260px;
+	padding: 5px 0 4px 45px;
+	font-weight: bold;
+	font-size: 0.8125rem;
+}
+
+// mail icon
+.mail {
+	background: url(./assets/mail.png) 0 0 no-repeat;
+}
+
+// partnumber completed icon
+.completed {
+	background: url('#{variables.$iconsPath}/completed.svg') 0 0 no-repeat;
+	background-position: 16px 17px;
+	background-size: 16px;
+}
+
+.codeMessageBox {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	min-width: 408px;
+	max-width: 660px;
+	padding: 16px;
+	padding-left: 40px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.2);
+	cursor: pointer;
+	animation: codemessagebox 4s linear both;
+}
+
+.btnCloseMessageToast {
+	position: absolute;
+	top: 25%;
+	right: 12px;
+	display: block;
+	width: 24px;
+	height: 24px;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}
+
+.iconClose {
+	display: block;
+	width: 24px;
+	height: 24px;
+	background: url(./assets/close_button.svg) no-repeat;
+	background-position: center center;
+}
+
+@keyframes codemessagebox {
+	0% {
+		transform: translateY(-200px);
+	}
+
+	3.6% {
+		transform: translateY(-96.416px);
+	}
+
+	7.11% {
+		transform: translateY(-24.02px);
+	}
+
+	10.61% {
+		transform: translateY(11.17px);
+	}
+
+	14.11% {
+		transform: translateY(19.769px);
+	}
+
+	23.22% {
+		transform: translateY(4.462px);
+	}
+
+	32.33% {
+		transform: translateY(-1.421px);
+	}
+
+	50.55% {
+		transform: translateY(0.102px);
+	}
+
+	68.77% {
+		transform: translateY(-0.007px);
+	}
+
+	86.99% {
+		transform: translateY(0.001px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}

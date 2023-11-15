@@ -1,0 +1,22 @@
+.loadMoreButton {
+	display: block;
+	box-sizing: border-box;
+	width: 140px;
+	height: 35px;
+	margin: 0 auto;
+	padding: 6px 2px;
+	color: #333;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	text-decoration: none;
+	background-color: #f2f2f2;
+	border: 1px solid #bfbfbf;
+	border-radius: 2px;
+	box-shadow: inset 0 1px 0 0 #fff, 0 2px 0 0 rgb(0 0 0 / 0.1);
+	cursor: pointer;
+	margin: {
+		top: 15px;
+		bottom: 15px;
+	}
+}

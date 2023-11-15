@@ -1,0 +1,54 @@
+.item {
+	display: inline-block;
+	width: calc(50% - 12px);
+	min-height: 300px;
+	margin-top: 8px;
+	padding: 8px 8px 40px;
+	background-color: #fff;
+
+	&:nth-child(odd) {
+		margin-right: 8px;
+		margin-left: 8px;
+	}
+}
+
+.imageWrapper {
+	display: flex;
+	justify-content: center;
+	height: 120px;
+	margin-top: 32px;
+}
+
+.image {
+	display: block;
+	max-width: 120px;
+	max-height: 120px;
+}
+
+.partNumber {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.seriesName {
+	min-height: 81px;
+	margin-top: 5px;
+	overflow: hidden;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 27px;
+}
+
+.brandName {
+	min-height: 40px;
+	margin: 3px 0;
+	color: #aaa;
+	font-size: 12px;
+}
+
+.notice {
+	padding: 10px;
+	font-size: 16px;
+	background-color: #fff2bf;
+	border-radius: 2px;
+}

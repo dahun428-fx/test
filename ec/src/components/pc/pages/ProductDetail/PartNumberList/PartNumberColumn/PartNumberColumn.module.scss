@@ -1,0 +1,53 @@
+@use '../PartNumberList.shared';
+
+.headerTable {
+	@extend .headerTableBase;
+
+	table-layout: initial;
+
+	&::after {
+		left: -100vw;
+	}
+}
+
+.scrollSideSpace {
+	@extend .scrollSideSpaceBase;
+
+	&::before {
+		left: 0;
+		width: calc(100% + 1px);
+	}
+}
+
+.headerCell {
+	@extend .headerCellBase;
+
+	width: 190px;
+}
+
+.data {
+	display: flex;
+	align-items: center;
+}
+
+.image {
+	margin-right: 10px;
+}
+
+.label {
+	margin-bottom: 5px;
+}
+
+.partNumberLink {
+	color: #004098;
+	text-decoration: none;
+	word-wrap: break-word;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&:link {
+		color: #004098;
+	}
+}

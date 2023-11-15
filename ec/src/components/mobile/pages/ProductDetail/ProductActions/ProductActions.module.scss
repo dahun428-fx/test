@@ -1,0 +1,28 @@
+.buttonContainer {
+	padding: 5px 10px;
+
+	& > :nth-child(n + 2) {
+		margin-top: 10px;
+	}
+}
+
+.linkButtonContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.linkButton {
+	width: 30%;
+	color: #004bb1;
+	font-weight: bold;
+	text-align: center;
+}
+
+.addToMyComponents {
+	width: 30%;
+}
+
+.disabledLink {
+	color: #bfbfbf;
+	pointer-events: none;
+}

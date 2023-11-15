@@ -1,0 +1,1 @@
+export { DiscontinuedProduct } from './DiscontinuedProduct';

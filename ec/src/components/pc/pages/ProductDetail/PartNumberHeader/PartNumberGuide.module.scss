@@ -1,0 +1,31 @@
+.title {
+	margin-right: 8px;
+	font-size: 0.8125rem;
+	white-space: nowrap;
+}
+
+.messageWrapper {
+	display: flex;
+	align-items: center;
+	color: #333;
+	font-size: 0.8125rem;
+}
+
+.messageItem {
+	font-size: 0.8125rem;
+}
+
+.partNumberListLink {
+	color: #004098;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: none;
+	}
+}
+
+.alertMessage {
+	color: #c00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}

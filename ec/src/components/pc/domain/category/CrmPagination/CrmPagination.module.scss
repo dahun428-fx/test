@@ -1,0 +1,54 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	position: relative;
+}
+
+%pager {
+	position: absolute;
+	top: 50%;
+	display: block;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	border: none;
+	border-radius: 4px;
+	transform: translateY(-50%);
+	cursor: pointer;
+	background: {
+		position: center;
+		repeat: no-repeat;
+		size: 44px auto;
+	}
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}
+
+.previous {
+	@extend %pager;
+
+	left: 0;
+	background-image: url('#{variables.$commonPath}/arrow-left.svg');
+}
+
+.next {
+	@extend %pager;
+
+	right: 0;
+	background-image: url('#{variables.$commonPath}/arrow-right.svg');
+}
+
+.panelList {
+	margin: 0 auto;
+	overflow-x: hidden;
+}
+
+.itemListWrap {
+	overflow: hidden;
+}
+
+.noMargin {
+	margin: 0;
+}

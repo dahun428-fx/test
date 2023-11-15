@@ -1,0 +1,17 @@
+.page {
+	position: relative;
+	min-height: 100dvh;
+}
+
+.main {
+	&:empty {
+		min-height: 100dvh;
+	}
+}
+
+.fixedBottom {
+	position: sticky;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}

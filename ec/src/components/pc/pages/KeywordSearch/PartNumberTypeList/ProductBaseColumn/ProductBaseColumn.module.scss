@@ -1,0 +1,14 @@
+@use '../PartNumberTypeList.shared';
+
+.table {
+	@extend .tableBase;
+
+	position: relative;
+	width: 100%;
+}
+
+.headerCell {
+	@extend .headerCellBase;
+
+	border-left: none;
+}

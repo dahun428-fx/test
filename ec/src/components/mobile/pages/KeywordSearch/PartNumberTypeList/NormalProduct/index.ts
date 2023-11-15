@@ -1,0 +1,1 @@
+export { NormalProduct } from './NormalProduct';

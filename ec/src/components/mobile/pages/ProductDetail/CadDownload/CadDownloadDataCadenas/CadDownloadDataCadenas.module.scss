@@ -1,0 +1,102 @@
+@use 'src/styles/mobile/variables';
+
+.title {
+	margin-bottom: 20px;
+	padding: 15px;
+	color: #fff;
+	font-size: 15px;
+	line-height: 1.35;
+	text-indent: 0;
+	background-color: #777;
+}
+
+.detailLinkWrapper {
+	text-align: right;
+}
+
+.detailLink {
+	color: #004098;
+
+	&:link {
+		color: #004098;
+	}
+
+	&:visited {
+		color: #681da8;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+.imageGuide {
+	margin-top: 1rem;
+	padding: 1rem;
+	background-color: #fffaeb;
+	border: 1px solid #ccc;
+}
+
+.checkBoxWrapper {
+	text-align: center;
+}
+
+.buttonHelpIcon {
+	display: inline-block;
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+.helpIcon {
+	display: inline-block;
+	width: 17px;
+	height: 18px;
+	vertical-align: middle;
+	background: {
+		image: url('#{variables.$commonPath}/help.png');
+		repeat: no-repeat;
+	}
+}
+
+.buttonWrapper {
+	margin: 15px 20px 0;
+}
+
+.resolve {
+	// DO NOT use "display: none" in others. This is for CADENAS functions.
+	display: none;
+}
+
+.errorMessage {
+	color: #c00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.alert {
+	color: #c00;
+	font-size: 0.8125rem;
+}
+
+.noteItem {
+	margin: 0.25rem 0;
+	padding-left: 13px;
+	font-size: 0.8125rem;
+	white-space: nowrap;
+	text-indent: -13px;
+}
+
+.alertStrong {
+	color: #d00;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.loader {
+	margin: 57px 0;
+}
+
+.select {
+	min-width: 178px;
+}

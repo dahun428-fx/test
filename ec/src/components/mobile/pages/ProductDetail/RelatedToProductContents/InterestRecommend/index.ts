@@ -1,0 +1,1 @@
+export { InterestRecommend } from './InterestRecommend';

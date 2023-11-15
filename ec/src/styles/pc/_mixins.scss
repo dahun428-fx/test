@@ -1,0 +1,127 @@
+/* stylelint-disable order/order */
+
+@use 'sass:math';
+@use 'utils';
+
+/*
+ * @param $direction - "top", "right", "bottom", "left"
+ * @param $color - triangle color
+ * @param $border - border configuration map(width, color)
+ * @param $width - tail width
+ * @param $height - tail height
+ * @param $position - distance from origin. "near", "center", "far"
+ */
+@mixin balloon-tail(
+	$direction: top,
+	$color: currentColor,
+	$border: null,
+	$width: 10px,
+	$height: 10px,
+	$position: center
+) {
+	// border の幅
+	// $border 指定なしの場合は 0
+	// $border.width 指定なしの場合は 1
+	$borderWidth: if(
+		$border != null,
+		if(map-has-key($border, width), map-get($border, width), 1),
+		0
+	);
+
+	@if $border != null {
+		// 吹き出しのボーダー部を構成
+		&::before {
+			@include tail-position($direction, $height, $position);
+			@include triangle($width, $height, $direction, map-get($border, color));
+
+			content: '';
+		}
+	}
+
+	// 吹き出しのコンテンツ部を構成
+	&::after {
+		@include tail-position($direction, $height - $borderWidth, $position);
+		@include triangle($width, $height, $direction, $color);
+
+		content: '';
+	}
+}
+
+@mixin tail-position($direction, $height, $position: center) {
+	$position-map: (
+		near: 20%,
+		center: 50%,
+		far: 80%,
+	);
+	$axis: if(index(top bottom, $direction), x, y);
+
+	@if index(top bottom, $direction) {
+		left: map-get($position-map, $position);
+	} @else if index(left right, $direction) {
+		top: map-get($position-map, $position);
+	}
+
+	#{$direction}: -$height;
+	position: absolute;
+	transform: translate#{$axis }(-50%);
+}
+
+@mixin triangle($width, $height, $direction, $color: currentColor) {
+	$perpendicular-border: math.div($width, 2) solid transparent;
+
+	@if index(top bottom, $direction) {
+		border-left: $perpendicular-border;
+		border-right: $perpendicular-border;
+	} @else if index(right left, $direction) {
+		border-top: $perpendicular-border;
+		border-bottom: $perpendicular-border;
+	}
+
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-#{utils.opposite-direction($direction)}: $height solid $color;
+	border-#{$direction}: none;
+}
+
+@keyframes slide-x {
+	0% {
+		transform: translateX(-100%);
+	}
+
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+/**
+ * @param $width
+ * @param $height
+ * @param $contentHeight
+ */
+@mixin skeleton($width: 100%, $height: 100%, $contentHeight: $height) {
+	position: relative;
+	width: $width;
+	height: $contentHeight;
+	margin: math.div($height - $contentHeight, 2) 0;
+	overflow: hidden;
+	background-color: #e5e5e5;
+	@content;
+
+	&::before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255 255 255 / 0.5),
+			transparent
+		);
+		animation: slide-x 1.2s linear infinite;
+		content: '';
+	}
+}

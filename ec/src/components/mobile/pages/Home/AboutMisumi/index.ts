@@ -1,0 +1,1 @@
+export { AboutMisumi } from './AboutMisumi';

@@ -1,0 +1,61 @@
+@use 'src/styles/pc/variables';
+
+.header {
+	@media (max-width: 1158px) {
+		min-width: 990px;
+	}
+
+	z-index: variables.$headerZIndex;
+	width: 100%;
+	min-width: 1200px;
+	background: #fff;
+
+	&[data-sticky-enabled='true'] {
+		position: sticky;
+		top: 0;
+	}
+}
+
+.contentsWrapper {
+	box-shadow: 0 0 5px 0 rgb(0 0 0 / 0.4);
+}
+
+.contents {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin: 0 auto;
+	padding: 16px 10px;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+	padding-right: 24px;
+}
+
+.aside {
+	width: 301px;
+}
+
+.searchBoxWrapper {
+	display: flex;
+	margin-top: 11px;
+}
+
+.megaNavWrapper {
+	margin-right: 25px;
+}
+
+.hasSuggestOverlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: variables.$suggestOverlayZIndex;
+	display: block;
+	background: rgb(0 0 0 / 0.4);
+}

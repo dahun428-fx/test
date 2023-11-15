@@ -1,0 +1,90 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	display: flex;
+	justify-content: space-between;
+	min-height: 40px;
+	margin: 0;
+	padding: 0 15px;
+	background-color: #ffcc01;
+	border-top: 1px dotted #bfbfbf;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+//=============================================================================
+// 型番件数 or 確定型番表示
+
+.partNumberContainer {
+	display: flex;
+}
+
+.partNumberBox {
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+	font-size: 15px;
+}
+
+.partNumberGuide {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.partNumber {
+	color: #004bb1;
+}
+
+.count {
+	margin: 0 4px;
+	color: #004098;
+}
+
+.partNumberListIcon {
+	width: 20px;
+	height: 20px;
+	margin-left: 5px;
+	background: url(./assets/images/angle-up.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	transform: rotate(180deg);
+	content: '';
+}
+
+//=============================================================================
+// スペック指定
+
+.configureContainer {
+	display: flex;
+	align-self: center;
+	padding: 2px 0;
+}
+
+.configure {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 100px;
+	padding: 9px 24px;
+	color: #fff;
+	font-size: 14px;
+	text-decoration: none;
+	background: #039;
+	border: none;
+	border-radius: 20px;
+
+	&::after {
+		width: 17px;
+		height: 17px;
+		background-image: url(./assets/images/arrow-right.png);
+		background-size: 17px 17px;
+		content: '';
+	}
+
+	&[data-exists-part-number='false'] {
+		height: 25px;
+	}
+}

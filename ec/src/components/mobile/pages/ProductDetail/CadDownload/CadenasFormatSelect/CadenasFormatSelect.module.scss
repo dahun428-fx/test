@@ -1,0 +1,53 @@
+@use 'src/styles/mobile/variables';
+
+.list {
+	& > dt {
+		margin-top: 15px;
+	}
+
+	& > dd {
+		margin-top: 5px;
+	}
+}
+
+.item {
+	margin-top: 15px;
+}
+
+.label {
+	font-weight: bold;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.select {
+	width: 100%;
+}
+
+.seeAllLink {
+	padding-left: 8px;
+	color: #004bb1;
+	text-decoration: none;
+	background: {
+		position: left center;
+		image: url('#{variables.$commonPath}/arrow-right-small.png');
+		repeat: no-repeat;
+	}
+
+	&:link {
+		color: #004bb1;
+	}
+
+	&:visited {
+		color: #004bb1;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+.linkWrapper {
+	margin-top: 15px;
+}

@@ -1,0 +1,19 @@
+@use 'src/styles/pc/variables';
+
+.box {
+	position: relative;
+}
+
+.menu {
+	position: absolute;
+	top: 100%;
+	left: -100%;
+	z-index: 1;
+	box-sizing: border-box;
+	width: 301px;
+	margin-left: 1px;
+	padding: 9px;
+	background-color: #fff;
+	border: 1px solid #a7a7a7;
+	box-shadow: 0 1px 5px 0 rgb(0 0 0 / 0.3);
+}

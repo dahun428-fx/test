@@ -1,0 +1,1 @@
+export { NewsArea } from './NewsArea';

@@ -1,0 +1,107 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: variables.$modalZIndex;
+	box-sizing: border-box;
+	width: 100vw;
+	height: 100%;
+	overflow: hidden;
+	background-color: rgb(0 0 0 / 0.5);
+	transition: opacity 0.6s linear 0s;
+}
+
+.filterModal {
+	position: relative;
+	display: block;
+	width: 330px;
+	height: 100%;
+	margin-right: 0;
+	margin-left: auto;
+	padding-bottom: 55px;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 3px 13px #000;
+	transition: opacity 0.6s linear 0s;
+}
+
+.footerContent {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	box-sizing: border-box;
+	height: 56px;
+	padding: 8px;
+	background-color: #004bb1;
+}
+
+.searchResultCount {
+	display: inline-block;
+	width: 47%;
+	margin-right: 8px;
+	color: #fff;
+	font-size: 14px;
+	line-height: 40px;
+}
+
+.totalCount {
+	color: #fc0;
+	font-size: 16px;
+}
+
+.actionContainer {
+	display: inline-block;
+	width: 49%;
+	text-align: right;
+}
+
+.clearButton {
+	display: inline-block;
+	width: 48%;
+	padding: 6px 2px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	text-decoration: none;
+	background-color: rgb(255 255 255 / 0.5);
+	border-radius: 32px 0 0 32px;
+}
+
+.confirmButton {
+	display: inline-block;
+	width: 48%;
+	padding: 6px 2px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	text-decoration: none;
+	background-color: #fc0;
+	border-radius: 0 32px 32px 0;
+}
+
+.closeButton {
+	position: fixed;
+	top: 50px;
+	right: 333px;
+	width: 24px;
+	height: 24px;
+
+	background: {
+		size: cover;
+		image: url(./assets/images/close.png);
+		repeat: no-repeat;
+	}
+}
+
+.content {
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+}

@@ -1,0 +1,186 @@
+@use 'src/styles/pc/variables';
+
+.devTool {
+	position: fixed;
+	top: 0;
+	right: 0;
+	// NOTE: In product application, define z-index alias in "styles/.../_variables.scss"
+	z-index: 530000;
+	min-height: 15px;
+}
+
+.arrow {
+	display: inline-block;
+	transition: all 0.1s ease-in-out;
+}
+
+.expandButton {
+	display: block;
+	padding: 3px 15px;
+	color: #fff;
+	font-size: 10px;
+	background-color: #668ad8;
+	border: none;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+	opacity: 0.5;
+}
+
+.loggedIn {
+	background-color: #fa8072;
+}
+
+.panel {
+	position: absolute;
+	right: 0;
+	display: none;
+	width: 350px;
+	max-height: calc(100vh - 40px);
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 3px;
+	box-shadow: 0 0 8px #aaa;
+	transition: 0.3ms ease-in-out;
+}
+
+.panelContainer {
+	position: relative;
+
+	&:hover {
+		// NOTE: Increasing CSS specificity using nested classes is prohibited.
+		// But this is a dev tool -> can be flexible. But do not use this style in other places.
+		.panel {
+			display: block;
+		}
+
+		.arrow {
+			transform: rotate(180deg);
+		}
+	}
+}
+
+.heading {
+	padding: 5px;
+	color: #494949;
+	background-color: #f4f4f4;
+	border-left: solid 5px #7db4e6;
+}
+
+.contents {
+	padding: 5px;
+}
+
+.loginButton {
+	// NOTE: Increasing CSS specificity using nested classes is prohibited.
+	// But this is a dev tool -> can be flexible. But do not use this style in other places.
+	margin: 0 10px 10px 5px;
+	padding: 5px 10px;
+	color: #fff;
+	background: #004bb1;
+	border: none;
+	border-radius: 2px;
+
+	&:hover {
+		opacity: 0.75;
+	}
+
+	&:active {
+		transform: translateY(1px);
+	}
+}
+
+.logoutButton {
+	padding: 5px 10px;
+	color: #fff;
+	background: #d3d3d3;
+	border: none;
+	border-radius: 2px;
+
+	&:hover {
+		opacity: 0.75;
+	}
+
+	&:active {
+		transform: translateY(1px);
+	}
+}
+
+.buttonList {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	background-color: #fff;
+	opacity: 0.6;
+}
+
+.heading4 {
+	margin-top: 5px;
+	padding: 2px;
+	color: #494949;
+	border-bottom: solid 1px #ccc;
+}
+
+.checkbox {
+	margin-left: 5px;
+}
+
+.detailLinks {
+	padding: 0 8px;
+
+	// NOTE: Increasing CSS specificity using nested classes is prohibited.
+	// But this is a dev tool -> can be flexible. But do not use this style in other places.
+	& > li {
+		display: inline-block;
+		margin-right: 5px;
+	}
+}
+
+.linksBox {
+	padding-top: 10px;
+
+	// NOTE: Increasing CSS specificity using nested classes is prohibited.
+	// But this is a dev tool -> can be flexible. But do not use this style in other places.
+	& > li {
+		display: inline-block;
+
+		&:nth-child(n + 2) {
+			margin-left: 10px;
+		}
+	}
+}
+
+.link {
+	padding: 5px 10px;
+	color: #fff;
+	text-decoration: none;
+	background: #004bb1;
+	border: none;
+	border-radius: 2px;
+
+	&:active {
+		transform: translateY(1px);
+	}
+}
+
+.heading5 {
+	margin-top: 5px;
+	margin-left: 5px;
+
+	&::before {
+		content: '# ';
+	}
+}
+
+.scroll {
+	// ちゃんと計算したい
+	max-height: 450px;
+	overflow-y: scroll;
+}

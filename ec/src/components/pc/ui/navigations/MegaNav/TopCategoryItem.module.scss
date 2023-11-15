@@ -1,0 +1,20 @@
+@use 'src/styles/pc/variables';
+
+.balloon {
+	position: absolute;
+	top: -1px;
+	left: 294px;
+	display: none;
+}
+
+.topCategoryItem {
+	display: block;
+
+	&:hover {
+		// NOTE: 詳細度を上げることは原則禁止だが、やむを得ないのでつける。
+		//       バルーンを表示するために block 設定。(通常は display: none となっている。)
+		.balloon {
+			display: block;
+		}
+	}
+}

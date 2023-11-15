@@ -1,0 +1,18 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	background-color: #ddd;
+}
+
+.paginationWrap {
+	display: flex;
+	justify-content: flex-end;
+	padding: 8px 0;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+}

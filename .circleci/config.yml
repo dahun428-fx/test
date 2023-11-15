@@ -1,0 +1,17 @@
+version: 2.1
+setup: true
+orbs:
+  path-filtering: circleci/path-filtering@0.1.1
+parameters:
+ # システム
+  system:
+    type: string
+    default: "ec-web-my"
+workflows:
+  setup-workflow:
+    jobs:
+      - path-filtering/filter:
+          base-revision: << pipeline.git.branch >>
+          config-path: .circleci/sub-config.yml
+          mapping:  |
+            ec/.*      is_build_ec                   true

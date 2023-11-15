@@ -1,0 +1,12 @@
+.economyLabel {
+	display: inline-block;
+	width: 55px;
+	height: 25px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-indent: 100%;
+	background: {
+		image: url(./assets/images/economy.svg);
+		repeat: no-repeat;
+	}
+}

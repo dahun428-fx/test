@@ -1,0 +1,43 @@
+.container {
+	border: 1px solid #ccc;
+	padding: 8px;
+	height: calc(100vh - 238px);
+	border-radius: 4px;
+	overflow-y: auto;
+}
+
+.pathContainer {
+	display: flex;
+	align-items: center;
+}
+
+.pathSelectContainer {
+	margin-left: 8px;
+}
+
+.ruleTile {
+	margin-top: 8px;
+}
+
+.addRuleButton {
+	margin-top: 8px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 15px;
+	text-align: center;
+	box-shadow: 0 10px 19px -19px rgb(0 0 0 / 80%);
+	user-select: none;
+
+	&:hover {
+		border: 1px solid #004098;
+		background: linear-gradient(
+			90deg,
+			rgba(0, 112, 200, 1) 0%,
+			rgba(0, 64, 152, 1) 50%,
+			rgba(0, 112, 200, 1) 100%
+		);
+		color: #fff;
+		cursor: pointer;
+	}
+}

@@ -1,0 +1,22 @@
+.container {
+	min-height: 300px;
+}
+
+.loader {
+	display: flex;
+	align-items: center;
+	height: 300px;
+}
+
+.resolve {
+	// DO NOT use "display: none" in others. This is for CADENAS functions.
+	display: none;
+}
+
+.preview {
+	// DO NOT use "display: none" in others. This is for CADENAS functions.
+	display: none;
+	width: 100%;
+	height: 600px;
+	border: none;
+}

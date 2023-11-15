@@ -1,0 +1,38 @@
+.megaNavMenu {
+	padding: 10px;
+	background-color: #f5f5f5;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	height: 302px;
+	padding: 10px 3px 15px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.megaNav {
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+	text-align: center;
+}
+
+.link {
+	min-height: 55px;
+	color: #000;
+	text-decoration: none;
+}
+
+.title {
+	padding: 0 3px;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 1.2;
+}
+
+.categoryImage {
+	width: 44px;
+	height: auto;
+}

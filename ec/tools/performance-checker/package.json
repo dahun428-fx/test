@@ -1,0 +1,21 @@
+{
+	"name": "performance-checker",
+	"version": "1.0.0",
+	"description": "check web site performacne",
+	"scripts": {
+		"lighthouse": "npx ts-node ./lighthouse",
+		"network": "npx ts-node ./network"
+	},
+	"dependencies": {
+		"axios": "^0.26.1",
+		"dayjs": "^1.11.0",
+		"fs-extra": "^10.0.1",
+		"lighthouse": "^9.5.0",
+		"ts-node": "^10.7.0",
+		"typescript": "^4.6.3"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^9.0.13",
+		"@types/node": "18.17.0"
+	}
+}

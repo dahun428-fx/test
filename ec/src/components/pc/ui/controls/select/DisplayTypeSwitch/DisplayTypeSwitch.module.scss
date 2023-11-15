@@ -1,0 +1,54 @@
+.buttonWrapper {
+	display: flex;
+}
+
+.button {
+	@each $icon in ('dispList', 'dispPhoto', 'dispDetail') {
+		&[data-icon='#{$icon}'] {
+			&::before {
+				background-image: url('./assets/images/#{$icon}.svg');
+			}
+		}
+	}
+
+	display: flex;
+	align-items: center;
+	padding: 4px 16px;
+	color: #004098;
+	font-size: 0.8125rem;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+		vertical-align: -4px;
+		content: '';
+	}
+
+	&:not(:first-child) {
+		border-left: 1px solid #ccc;
+	}
+}
+
+/* NOTE: To keep same width when it is activated and not */
+.label {
+	&::after {
+		display: block;
+		height: 0;
+		overflow: hidden;
+		font-weight: bold;
+		visibility: hidden;
+		content: attr(data-text);
+	}
+}
+
+.active {
+	font-weight: bold;
+	background-color: #ecf3fc;
+}

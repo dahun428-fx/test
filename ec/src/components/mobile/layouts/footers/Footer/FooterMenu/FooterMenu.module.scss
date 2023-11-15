@@ -1,0 +1,60 @@
+.footerTop {
+	line-height: 1.35;
+}
+
+.paymentMethodWrapper {
+	font-size: 14px;
+}
+
+.paymentMethods {
+	padding: 15px;
+	font-size: 14px;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.methodItem {
+	&:first-child {
+		margin-bottom: 5px;
+	}
+}
+
+.methodName {
+	margin-bottom: 10px;
+	font-weight: bold;
+	line-height: 1.6;
+}
+
+.methodContent {
+	display: flex;
+}
+
+.methodImage {
+	margin-right: 5px;
+}
+
+.socialItem {
+	padding: 15px;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.socialLinkItem {
+	display: flex;
+}
+
+.contact {
+	font-size: 15px;
+}
+
+.contactItem {
+	padding: 10px 15px;
+	font-size: 15px;
+	line-height: 1.6;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.highlightNumber {
+	color: #ea0000;
+	font-weight: bold;
+	font-size: 22px;
+	text-decoration: none;
+}

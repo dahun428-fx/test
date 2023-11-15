@@ -1,0 +1,72 @@
+.quoteHistoryBox {
+	vertical-align: top;
+	background-color: #fff;
+}
+
+.quoteHistory {
+	display: table;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px 0;
+	font-size: 15px;
+	background-color: #eee;
+}
+
+.quoteHistoryTitle {
+	display: table-cell;
+	color: #333;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.quoteHistoryAside {
+	display: table-cell;
+	font-size: 14px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+.quoteHistoryMain {
+	vertical-align: middle;
+}
+
+.historyTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.historyTableHead {
+	padding: 5px 5px 4px 0;
+	color: #333;
+	font-weight: bold;
+	font-size: 12px;
+	white-space: pre-line;
+	text-align: left;
+	border-bottom: 1px solid #a7a7a7;
+
+	&:first-child {
+		padding: 5px 5px 4px;
+	}
+}
+
+.historyData {
+	padding: 5px 5px 4px 0;
+	font-size: 12px;
+	text-align: left;
+	border-bottom: 1px dotted #a7a7a7;
+
+	&:first-child {
+		padding: 5px 5px 4px;
+	}
+}
+
+.noHistoryData {
+	padding: 15px;
+	color: #333;
+	font-size: 14px;
+	text-align: center;
+}
+
+.textRed {
+	color: #ea0000;
+}

@@ -1,0 +1,15 @@
+@use './Loader';
+
+.loader {
+	@extend .loader;
+
+	color: #004098;
+}
+
+.hideLoadingText {
+	font-size: 0;
+
+	&::before {
+		margin-bottom: 0;
+	}
+}

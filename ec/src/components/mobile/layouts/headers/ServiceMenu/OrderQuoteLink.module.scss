@@ -1,0 +1,22 @@
+@use 'src/styles/mobile/icon';
+
+.link {
+	display: block;
+	padding: 15px;
+	color: #333;
+	color: #004098;
+	font-size: 15px;
+	text-decoration: none;
+	background: {
+		position: right 10px center;
+		image: url('#{icon.get-icon-path(small-right-arrow, dark)}');
+		repeat: no-repeat;
+	}
+}
+
+.disabledLink {
+	display: block;
+	padding: 15px;
+	color: #868686;
+	font-size: 15px;
+}

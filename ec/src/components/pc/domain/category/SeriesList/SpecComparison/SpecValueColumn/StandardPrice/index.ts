@@ -1,0 +1,1 @@
+export { StandardPrice } from './StandardPrice';

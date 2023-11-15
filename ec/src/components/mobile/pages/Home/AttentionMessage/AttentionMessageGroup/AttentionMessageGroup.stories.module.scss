@@ -1,0 +1,17 @@
+.container {
+	max-width: 400px;
+	margin: 0;
+	padding: 10px;
+
+	dt {
+		margin: 0 0 5px;
+	}
+
+	dd {
+		margin: 0 0 15px;
+
+		& > *:nth-child(n + 2) {
+			margin-top: 10px;
+		}
+	}
+}

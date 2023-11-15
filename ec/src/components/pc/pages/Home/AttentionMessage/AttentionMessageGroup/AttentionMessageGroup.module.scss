@@ -1,0 +1,33 @@
+$attentionThemes: (
+	warning: (
+		border: #c00,
+		background: #fdefef,
+	),
+	caution: (
+		border: #ccc,
+		background: #fffaeb,
+	),
+	notice: (
+		border: #c00,
+		background: #fff,
+	),
+	info: (
+		border: #004098,
+	),
+);
+
+@mixin color($theme) {
+	background-color: map-get($theme, background);
+	border: 1px solid map-get($theme, border);
+}
+
+.attention {
+	@each $property, $theme in $attentionThemes {
+		&[data-theme='#{$property}'] {
+			@include color($theme);
+		}
+	}
+
+	margin-bottom: 1rem;
+	padding: 12px 10px;
+}

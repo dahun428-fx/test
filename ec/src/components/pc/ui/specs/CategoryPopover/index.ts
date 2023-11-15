@@ -1,0 +1,1 @@
+export { CategoryPopoverTrigger } from './CategoryPopoverTrigger';

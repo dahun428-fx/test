@@ -1,0 +1,1 @@
+export { VolumeDiscountTable } from './VolumeDiscountTable';

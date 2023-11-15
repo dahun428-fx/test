@@ -1,0 +1,74 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	position: fixed;
+	top: 101px;
+	z-index: variables.$contentsHeaderZIndex;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	background: {
+		position: 0 0;
+		color: #1f4ea9;
+		image: url(~src/components/mobile/pages/Category/assets/images/background.webp);
+		repeat: no-repeat;
+		size: cover;
+	}
+}
+
+.filterMinimizedContainer {
+	padding-bottom: 0;
+}
+
+.categoryName {
+	margin-bottom: 8px;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 1.5;
+}
+
+.countWrapper {
+	margin-bottom: 8px;
+}
+
+.loading {
+	height: 22.4px;
+}
+
+.countValue {
+	color: #fc0;
+}
+
+.normalFilterPadding {
+	height: 150px;
+}
+
+.minimizedFilterPadding {
+	height: 88px;
+}
+
+.buttonWrapper {
+	width: 60%;
+	margin: 0 auto;
+	padding-bottom: 12px;
+}
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 6px 2px;
+	padding-left: 18px;
+	color: #333;
+	font-weight: bold;
+	background-color: #fc0;
+	border: 1px solid #bfbfbf;
+	border-radius: 20px;
+	background: {
+		position-x: calc(50% - 50px);
+		position-y: center;
+		image: url('#{variables.$commonPath}/filter.png');
+		repeat: no-repeat;
+		size: 16px 17px;
+	}
+}

@@ -1,0 +1,1 @@
+export { BrandListSpec } from './BrandListSpec';

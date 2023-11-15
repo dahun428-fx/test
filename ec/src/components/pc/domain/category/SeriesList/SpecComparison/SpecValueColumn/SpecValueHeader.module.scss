@@ -1,0 +1,10 @@
+.image {
+	height: 100px;
+	text-align: center;
+}
+
+.imageLink {
+	&:hover {
+		opacity: 0.75;
+	}
+}

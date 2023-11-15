@@ -1,0 +1,33 @@
+@use 'src/styles/pc/variables';
+
+// NOTE: Specificity is basically prohibited.
+[aria-haspopup='false'] > .image {
+	cursor: default;
+}
+
+.productImage {
+	position: relative;
+	display: flex;
+	justify-content: stretch;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.mainImage {
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+}
+
+.singleImage {
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+}
+
+.caption {
+	height: 16px; // for CLS
+	color: #666;
+	font-size: 10px;
+	text-align: center;
+}

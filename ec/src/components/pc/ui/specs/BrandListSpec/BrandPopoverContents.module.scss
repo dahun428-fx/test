@@ -1,0 +1,28 @@
+.filter {
+	width: 100%;
+	max-width: 228px;
+	height: 37px;
+}
+
+.economy {
+	padding-left: 12px;
+}
+
+.groupList {
+	display: flex;
+	flex-wrap: wrap;
+	max-height: 75vh;
+	margin-right: 16px;
+}
+
+.group {
+	width: 210px;
+}
+
+.groupName {
+	display: flex;
+	margin: 16px 0;
+	font-weight: bold;
+	font-size: 0.9375rem;
+	line-height: 1.3;
+}

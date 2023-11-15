@@ -1,0 +1,15 @@
+@use '../../../PartNumberTypeList.shared';
+
+.cadDataCell {
+	@extend .dataCellBase;
+
+	width: 150px;
+	text-align: center;
+}
+
+.priceLeadTimeDataCell {
+	@extend .dataCellBase;
+
+	width: 271px;
+	border-right: none;
+}

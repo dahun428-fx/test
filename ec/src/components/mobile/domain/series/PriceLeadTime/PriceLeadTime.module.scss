@@ -1,0 +1,74 @@
+@use 'src/styles/mobile/variables';
+
+.priceLeadTimeContainer {
+	display: block;
+	color: #333;
+}
+
+.preDiscountPrice {
+	text-decoration: line-through;
+}
+
+.standardPrice {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.campaignPriceLabel {
+	color: #d00;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.daysToShip {
+	margin-top: 8px;
+	padding: 4px;
+}
+
+.campaignDate {
+	width: 120px;
+}
+
+.sameDayShippingGuide {
+	margin-top: 0.5rem;
+	padding-left: 20px;
+}
+
+.guideLink {
+	color: #004bb1;
+	font-size: 10px;
+	text-decoration: none;
+
+	&:hover {
+		color: #ff730a;
+		text-decoration: underline;
+	}
+
+	&::before {
+		display: inline;
+		margin-left: -20px;
+		padding: 5px 0 8px 18px;
+		vertical-align: top;
+		background: url('#{variables.$iconsPath}/information.svg') left 0.2rem
+			no-repeat;
+		content: '';
+	}
+}
+
+.pricePhoto {
+	min-height: 40px;
+	margin-top: 8px;
+	padding: 4px 0;
+	background: none;
+}
+
+.daysToShipPhoto {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 40px;
+	margin-bottom: 4px;
+	padding: 4px;
+	letter-spacing: -0.4px;
+}

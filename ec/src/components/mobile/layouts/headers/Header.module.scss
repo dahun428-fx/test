@@ -1,0 +1,74 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	position: fixed;
+	top: 0;
+	z-index: variables.$headerZIndex;
+	width: 100%;
+	background-color: #fff;
+	box-shadow: 0 0 5px 0 rgb(0 0 0 / 0.4);
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 52px;
+}
+
+.menu {
+	flex: 0 0 80px;
+	height: 100%;
+}
+
+.logoWrap {
+	display: inline-flex;
+	flex: 1 0 auto;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.logoImage {
+	width: 165px;
+	height: 100%;
+	background: {
+		image: url(./assets/images/logo.png);
+		position: center;
+		repeat: no-repeat;
+		size: 165px auto;
+	}
+}
+
+.aside {
+	display: inline-flex;
+	flex: 0 0 80px;
+	justify-content: flex-end;
+	height: 100%;
+}
+
+@mixin icon($url) {
+	display: flex;
+	width: 40px;
+	height: 100%;
+	background: {
+		image: url($url);
+		position: center;
+		repeat: no-repeat;
+		size: 24px;
+	}
+}
+
+.menuIcon {
+	@include icon('./assets/images/header-menu.png');
+
+	width: 55px;
+}
+
+.coupon {
+	@include icon('./assets/images/coupon-icon.png');
+}
+
+.chat {
+	@include icon('./assets/images/chatplus.png');
+}

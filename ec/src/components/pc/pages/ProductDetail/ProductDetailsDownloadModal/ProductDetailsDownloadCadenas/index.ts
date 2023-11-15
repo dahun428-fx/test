@@ -1,0 +1,1 @@
+export { ProductDetailsDownloadCadenas } from './ProductDetailsDownloadCadenas';

@@ -1,0 +1,38 @@
+.breadcrumbArea {
+	width: 100%;
+}
+
+.breadcrumbList {
+	padding: 0 10px 5px;
+	font-size: 14px;
+}
+
+.breadcrumb {
+	display: block;
+
+	&:not(:last-child) > a {
+		color: #004bb1;
+		text-decoration: underline;
+	}
+
+	&:not(:first-child) {
+		margin: 8px 0 8px 15px;
+
+		& > a::before {
+			display: inline-block;
+			content: '>\00a0';
+			text-decoration: underline;
+		}
+
+		& > strong::before {
+			display: inline-block;
+			font-weight: bold;
+			content: '>\00a0';
+		}
+
+		& > span::before {
+			display: inline-block;
+			content: '>\00a0';
+		}
+	}
+}

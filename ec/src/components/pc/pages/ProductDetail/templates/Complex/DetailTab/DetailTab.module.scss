@@ -1,0 +1,57 @@
+@use 'src/styles/pc/icon';
+@use 'src/styles/pc/variables';
+
+.container {
+	padding-top: 16px;
+	background-color: #fff;
+	border-bottom: 2px solid #004098;
+}
+
+.list {
+	display: flex;
+	height: 36px;
+}
+
+.item {
+	width: 33.3333%;
+	border-left: 1px solid #ccc;
+
+	&:first-child {
+		border-left: 0;
+	}
+}
+
+.itemLink {
+	display: block;
+	padding: 8px 0;
+	color: #333;
+	text-align: center;
+	text-decoration: none;
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+		vertical-align: -4px;
+		content: '';
+		background: {
+			position: center;
+			image: url("#{icon.get-path('down-arrow')}");
+			repeat: no-repeat;
+		}
+	}
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}
+
+.active {
+	font-weight: bold;
+	background-color: #ecf3fc;
+}
+
+.sticky {
+	z-index: variables.$standardStickyZIndex - 1;
+}

@@ -1,0 +1,100 @@
+@use 'src/styles/mobile/variables';
+
+$checkBoxStylesThemes: (
+	default: (
+		display: flex,
+		padding: 5px 8px,
+		background: #e6e6e6,
+		active-border: 1px solid #004bb1,
+		after: (
+			right: 0,
+			bottom: 0,
+			width: 17px,
+			height: 13px,
+			background-image: url('#{variables.$commonPath}/checked.png'),
+			background-size: 17px 13px,
+		),
+	),
+	sub: (
+		display: inline-flex,
+		padding: 4px,
+		min-height: 40px,
+		background: #e6e6e6,
+		border: 1px solid #e6e6e6,
+		active-border: 1px solid #004bb1,
+		width: 100%,
+		text-align: center,
+		word-break: break-word,
+		after: (
+			right: 0,
+			bottom: 0,
+			width: 17px,
+			height: 13px,
+			background-image: url('#{variables.$commonPath}/checked.png'),
+			background-size: 17px 13px,
+		),
+	),
+);
+
+@mixin mainStyle($styles) {
+	display: map-get($styles, display);
+	width: map-get($styles, width);
+	min-height: map-get($styles, min-height);
+	padding: map-get($styles, padding);
+	text-align: map-get($styles, text-align);
+	word-break: map-get($styles, word-break);
+	background: map-get($styles, background);
+	border: map-get($styles, border);
+}
+
+@mixin afterStyle($styles) {
+	right: map-get($styles, 'after', right);
+	bottom: map-get($styles, 'after', bottom);
+	width: map-get($styles, 'after', width);
+	height: map-get($styles, 'after', height);
+	background-image: map-get($styles, 'after', background-image);
+	background-repeat: map-get($styles, 'after', background-repeat);
+	background-position: map-get($styles, 'after', background-position);
+	background-size: map-get($styles, 'after', background-size);
+}
+
+@mixin activedStyle($styles) {
+	border: map-get($styles, 'active-border');
+}
+
+.checkbox {
+	@each $property, $styles in $checkBoxStylesThemes {
+		&[data-theme='#{$property}'] {
+			@include mainStyle($styles);
+		}
+	}
+
+	position: relative;
+	align-items: center;
+	font-size: 12px;
+	cursor: pointer;
+
+	&[aria-checked='true'] {
+		@each $property, $styles in $checkBoxStylesThemes {
+			&[data-theme='#{$property}'] {
+				@include activedStyle($styles);
+			}
+		}
+
+		@each $property, $styles in $checkBoxStylesThemes {
+			&[data-theme='#{$property}'] {
+				&::after {
+					@include afterStyle($styles);
+
+					position: absolute;
+					content: '';
+				}
+			}
+		}
+	}
+
+	&[aria-disabled='true'] {
+		cursor: default;
+		opacity: 0.5;
+	}
+}

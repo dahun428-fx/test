@@ -1,0 +1,86 @@
+@use 'variables';
+@use 'utils';
+
+$icons: (
+	order-now: (
+		light,
+	),
+	cart: (
+		light,
+	),
+	right-arrow: (
+		light,
+		dark,
+	),
+	left-arrow: (
+		dark,
+	),
+	download: (
+		light,
+		dark,
+	),
+	save: (
+		light,
+		dark,
+	),
+	pdf: (
+		light,
+	),
+	copy: (
+		light,
+		dark,
+	),
+	refresh: (
+		light,
+	),
+	quote: (
+		light,
+	),
+	application: (
+		dark,
+	),
+	small-new-tab: (
+		light,
+		dark,
+	),
+	small-right-arrow: (
+		dark,
+	),
+	large-right-arrow: (
+		light,
+	),
+	circle-right-arrow: (
+		light,
+		dark,
+	),
+	circle-left-arrow: (
+		light,
+		dark,
+	),
+	search: (
+		dark,
+	),
+	zip: (
+		light,
+		dark,
+	),
+	plus: (
+		light,
+	),
+	minus: (
+		light,
+	),
+);
+
+// icon image までのパスを取得します
+@function get-icon-path($icon, $brightness) {
+	@if utils.array-has(map-get($icons, $icon), $brightness) {
+		@return '#{variables.$iconsPath}/#{$brightness}/#{$icon}.png';
+	} @else {
+		@return '#{variables.$iconsPath}/#{if($brightness == dark, light, dark)}/#{$icon}.png';
+	}
+}
+
+@function get-path($icon, $extension: 'svg') {
+	@return '#{variables.$iconsPath}/#{$icon}.#{$extension}';
+}

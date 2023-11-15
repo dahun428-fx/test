@@ -1,0 +1,34 @@
+@use 'src/styles/pc/variables';
+
+.toast {
+	position: fixed;
+	// top は本来ここで定義すべきではありません。しかし、2022/3/11 現在、新着メッセージトースト以外
+	// マレーシアにはトーストが存在しないため、唯一のトーストとして位置を固定して定義しています。
+	// 複数のトーストを表示したい状況が生じたら、作りを見直す必要があります。
+	// ここでは「必要ないかもしれないものを作らない」ポリシーに従いこの実装としています。
+	top: 16px;
+	right: 16px;
+	z-index: variables.$toastZIndex;
+}
+
+.enter {
+	top: -400px;
+	opacity: 0.8;
+}
+
+.enterActive {
+	top: 20px;
+	opacity: 1;
+	transition: top 1s ease-out, opacity 1s;
+}
+
+.exit {
+	top: 20px;
+	opacity: 1;
+}
+
+.exitActive {
+	top: -400px;
+	opacity: 0.8;
+	transition: opacity 1s;
+}

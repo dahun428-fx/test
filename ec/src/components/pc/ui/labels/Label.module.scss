@@ -1,0 +1,54 @@
+@mixin color($text, $background, $border: $background) {
+	color: $text;
+	background-color: $background;
+	border: 1px solid $border;
+}
+
+// ラベル内文字列
+.caption {
+	display: inline-block;
+	padding: 2px 8px 0;
+	font-size: 0.6875rem;
+	line-height: 1.5;
+	text-align: center;
+	text-indent: 0;
+}
+
+// アイコンラベルのテーマ毎の定義
+.strong {
+	@include color(#fff, #c00);
+}
+
+.standard {
+	@include color(#333, #fff, #ccc);
+}
+
+.disabled {
+	@include color(#fff, #aaa);
+}
+
+.pict {
+	@include color(#333, #fff, #ccc);
+}
+
+.grade {
+	@include color(#c00, #fff, #c00);
+}
+
+.iconList {
+	@include color(#333, #fff, #ccc);
+}
+
+.dayToShip {
+	@include color(#333, #e5e5e5, #ccc);
+}
+
+.info {
+	@include color(#333, #e5e5e5, #ccc);
+
+	padding: 2px 8px;
+	font-size: 0.6875rem;
+	line-height: 1.5;
+	text-indent: 0;
+	word-break: keep-all;
+}

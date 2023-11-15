@@ -1,0 +1,84 @@
+.container {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+
+$theme: (
+	default: (
+		border: 1px solid #bfbfbf,
+	),
+	sub: (
+		border: 1px solid #efefef,
+	),
+);
+
+$buttonSizes: (
+	s: (
+		height: 24px,
+		width: 24px,
+	),
+	m: (
+		height: 35px,
+		width: 35px,
+	),
+);
+
+$inputSizes: (
+	s: (
+		height: 24px,
+		width: 40px,
+	),
+	m: (
+		height: 35px,
+		width: 54px,
+	),
+);
+
+@mixin getStylesTheme($styles) {
+	border: map-get($styles, border);
+}
+
+@mixin getStylesSize($styles) {
+	width: map-get($styles, width);
+	height: map-get($styles, height);
+}
+
+.input {
+	@each $property, $styles in $theme {
+		&[data-theme='#{$property}'] {
+			@include getStylesTheme($styles);
+		}
+	}
+	@each $property, $styles in $inputSizes {
+		&[data-size='#{$property}'] {
+			@include getStylesSize($styles);
+		}
+	}
+
+	font-size: 16px;
+	text-align: center;
+	border: solid #bfbfbf;
+	border-width: 1px 0;
+}
+
+.button {
+	@each $property, $styles in $theme {
+		&[data-theme='#{$property}'] {
+			@include getStylesTheme($styles);
+		}
+	}
+	@each $property, $styles in $buttonSizes {
+		&[data-size='#{$property}'] {
+			@include getStylesSize($styles);
+		}
+	}
+
+	background-color: #fff;
+
+	&:disabled {
+		color: #fff;
+		background-color: #a7a7a7;
+		border-color: #a7a7a7;
+	}
+}

@@ -1,0 +1,33 @@
+@use '../../PartNumberList.shared';
+@use 'src/styles/pc/icon';
+
+.headerCell {
+	@extend .headerCellBase;
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.rohsHelp {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+	text-indent: 100%;
+	vertical-align: middle;
+	background: {
+		image: url("#{icon.get-path('question')}");
+		repeat: no-repeat;
+	}
+}
+
+.data {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	max-height: 100%;
+	overflow: hidden;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	word-break: break-all;
+}

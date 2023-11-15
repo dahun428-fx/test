@@ -1,0 +1,68 @@
+@use 'src/styles/pc/variables';
+
+.priceLeadTimeContainer {
+	display: inline-block;
+	color: #333;
+}
+
+.label {
+	font-size: 0.825rem;
+}
+
+.priceContainer,
+.leadTimeContainer {
+	font-size: 1rem;
+
+	&:not(:first-child) {
+		margin-top: 5px;
+	}
+}
+
+.preDiscountPriceContainer {
+	color: #666;
+	text-decoration: line-through;
+}
+
+.preDiscountPrice {
+	font-size: 0.825rem;
+}
+
+.campaignPriceLabel {
+	color: #d00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.campaignPrice {
+	color: #d00;
+}
+
+.leadTime {
+	font-weight: bold;
+	font-size: 0.825rem;
+}
+
+.sameDayShippingGuide {
+	margin-top: 0.5rem;
+	padding-left: 20px;
+}
+
+.guideLink {
+	color: #004bb1;
+	text-decoration: none;
+
+	&:hover {
+		color: #ff730a;
+		text-decoration: underline;
+	}
+
+	&::before {
+		display: inline;
+		margin-left: -20px;
+		padding: 0.2rem 0 1px 20px;
+		vertical-align: top;
+		background: url('#{variables.$iconsPath}/information.svg') left 0.2rem
+			no-repeat;
+		content: '';
+	}
+}

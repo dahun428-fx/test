@@ -1,0 +1,22 @@
+.placeholder {
+	margin-bottom: 16px;
+	padding: 16px 8px;
+	background-color: #eee;
+}
+
+.seriesList {
+	padding: 15px;
+	padding-bottom: 8px;
+}
+
+.horizontalList {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+	padding-bottom: 8px;
+	background-color: #eee;
+}
+
+.pagination {
+	margin: 15px 0;
+}

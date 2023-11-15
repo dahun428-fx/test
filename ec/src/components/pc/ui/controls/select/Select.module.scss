@@ -1,0 +1,24 @@
+.select {
+	height: 36px;
+	padding-right: 31px;
+	padding-left: 7px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	appearance: none;
+	background: {
+		position: right 7px center;
+		color: #fff;
+		image: url(./assets/images/down-arrow.svg);
+		repeat: no-repeat;
+	}
+
+	&:focus {
+		background-color: #fffaeb;
+		outline-color: #004098;
+	}
+
+	// for IE11: https://stackoverflow.com/a/20163273
+	&::-ms-expand {
+		display: none;
+	}
+}

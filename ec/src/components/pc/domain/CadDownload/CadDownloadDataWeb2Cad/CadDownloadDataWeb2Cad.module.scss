@@ -1,0 +1,26 @@
+.title {
+	margin-bottom: 16px;
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.guide {
+	font-size: 0.8125rem;
+	text-align: left;
+}
+
+.buttonWrapper {
+	width: 320px;
+}
+
+.errorMessage {
+	margin: 0.25rem 0;
+	padding-left: 13px;
+	color: #c00;
+	font-size: 0.8125rem;
+	white-space: nowrap;
+	text-indent: -13px;
+}

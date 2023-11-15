@@ -1,0 +1,70 @@
+.shipmentsBox {
+	vertical-align: top;
+	background-color: #fff;
+}
+
+.shipments {
+	display: table;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px 0;
+	font-size: 15px;
+	background-color: #eee;
+}
+
+.shipmentsTitle {
+	display: table-cell;
+	color: #333;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.shipmentsTitleAside {
+	display: table-cell;
+	font-size: 14px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+.shipmentsMain {
+	vertical-align: middle;
+}
+
+.shipmentsList {
+	font-size: 1px;
+	letter-spacing: -1px;
+	word-spacing: -1px;
+}
+
+.shipmentsItem {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 33%;
+	min-height: 95px;
+	padding-top: 15px;
+	font-size: 14px;
+	letter-spacing: normal;
+	text-align: center;
+	vertical-align: middle;
+	word-spacing: normal;
+	border-right: 1px dotted #a7a7a7;
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.shipmentsSubTitle {
+	color: #333;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.shipmentsCount {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.hasShipmentsCount {
+	color: #004bb1;
+}

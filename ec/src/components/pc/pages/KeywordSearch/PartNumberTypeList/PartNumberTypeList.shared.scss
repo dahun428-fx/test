@@ -1,0 +1,30 @@
+.tableBase {
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+.headerRowBase {
+	background-color: #f5f5f5;
+}
+
+.headerCellBase {
+	padding: 8px;
+	font-weight: normal;
+	border: solid #ccc;
+	border-width: 1px 1px 1px 0;
+}
+
+.dataRowBase {
+	background-color: #fff;
+
+	&[data-hover='true'] {
+		background-color: #ecf3fc;
+		cursor: pointer;
+	}
+}
+
+.dataCellBase {
+	padding: 4px;
+	border: solid #ccc;
+	border-width: 1px 1px 1px 0;
+}

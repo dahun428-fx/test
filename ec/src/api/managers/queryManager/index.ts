@@ -1,0 +1,1 @@
+export { queryManager } from './queryManager';

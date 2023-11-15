@@ -1,0 +1,41 @@
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.books {
+	display: flex;
+}
+
+.book {
+	margin-top: 15px;
+
+	&:nth-child(n + 2) {
+		margin-left: 1rem;
+	}
+}
+
+.link {
+	padding-left: 8px;
+	font-size: 0.8125rem;
+	text-decoration: none;
+	background: url(./assets/arrow-right.png) 0 0.2em no-repeat;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&:active {
+		color: #3366ac;
+	}
+}
+
+.pageNavs {
+	display: flex;
+	flex-direction: column;
+
+	& > li:not(:first-child) {
+		margin-top: 15px;
+	}
+}

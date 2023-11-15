@@ -1,0 +1,95 @@
+.title {
+	display: flex;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.orderQuoteBox {
+	font-size: 13px;
+	border: 1px solid #a7a7a7;
+
+	&[data-panel-size='wide'] {
+		width: 100%;
+		padding: 20px;
+
+		& .title {
+			justify-content: center;
+			font-size: 1.3125rem;
+		}
+
+		& .button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 47px;
+		}
+	}
+
+	&[data-panel-size='narrow'] {
+		width: 301px;
+		padding: 19px 9px;
+	}
+}
+
+.orderLink {
+	flex: 1 0 calc(50% - 5px);
+
+	&:nth-child(even) {
+		margin-left: 10px;
+	}
+}
+
+.orderLinks {
+	display: flex;
+	margin-top: 10px;
+}
+
+.serviceList {
+	padding-top: 15px;
+}
+
+.linkList {
+	margin-top: 10px;
+}
+
+.linkListTitle {
+	display: inline-block;
+	width: 50%;
+	min-width: 0;
+	font-weight: bold;
+}
+
+.lineLinkList {
+	display: inline-block;
+	margin-left: 0.5em;
+}
+
+.otherServiceList {
+	margin-top: 10px;
+}
+
+.returnRequest {
+	margin-top: 10px;
+}
+
+.upgradeAccount {
+	margin-top: 30px;
+	margin-bottom: 10px;
+	color: #333;
+	font-weight: bold;
+	text-align: center;
+}
+
+.upgradeAccountButton {
+	margin-bottom: 25px;
+	padding-bottom: 25px;
+	border-bottom: solid 1px #ccc;
+}
+
+.marginLeft {
+	margin-left: 20px;
+}
+
+.fontBold {
+	font-weight: bold;
+}

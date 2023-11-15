@@ -1,0 +1,18 @@
+@use 'src/styles/pc/variables';
+
+.wrapper {
+	display: inline-block;
+}
+
+.link {
+	padding: 2px 0 2px 24px;
+	color: #004098;
+	font-size: 13px;
+	background: url('#{variables.$iconsPath}/down-arrow.svg') 0 center no-repeat;
+	cursor: pointer;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: underline;
+	}
+}

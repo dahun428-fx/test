@@ -1,0 +1,24 @@
+.breadcrumbList {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 13px;
+}
+
+.breadcrumb {
+	display: flex;
+	align-items: center;
+	color: #666;
+
+	&:not(:last-child)::after {
+		display: inline-block;
+		width: 13px;
+		height: 13px;
+		margin: -1px 11px 0 7px;
+		background: url(./assets/images/arrow-right.svg) no-repeat 0 0;
+		content: '';
+	}
+
+	&[data-strong='true'] {
+		color: #333;
+	}
+}

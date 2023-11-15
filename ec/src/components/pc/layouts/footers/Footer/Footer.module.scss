@@ -1,0 +1,197 @@
+.footer {
+	min-width: min-content;
+	max-width: 100%;
+	padding: 7px 0 31px;
+	font-size: 14px;
+	background: #fff;
+	box-shadow: 0 0 5px 0 rgb(0 0 0 / 0.4);
+}
+
+.contents {
+	@media (max-width: 1158px) {
+		min-width: 990px;
+	}
+
+	max-width: 1420px;
+	margin: 0 auto;
+}
+
+.heading {
+	width: 100%;
+	margin: 32px 0 20px;
+	padding: 0 21px 10px;
+	border-bottom: 1px solid #a7a7a7;
+}
+
+//=============================================================================
+// payment method
+
+.paymentHeading {
+	display: flex;
+	justify-content: space-between;
+}
+
+.payment {
+	display: flex;
+	padding: 0 21px;
+}
+
+.paymentTitle {
+	font-weight: bold;
+}
+
+.paymentGroupList {
+	display: flex;
+	align-items: center;
+	margin-left: 54px;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+.paymentMethodList {
+	display: flex;
+	margin-left: 14px;
+	line-height: 1;
+}
+
+.paymentMethodImage {
+	height: 30px; // これがないと next/image の妙な余白を消しきれなかった
+	margin-left: 4px;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+//=============================================================================
+// About Misumi
+
+.about {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	margin-top: 75px;
+}
+
+.aboutBox {
+	position: relative;
+	flex: 0 1 300px;
+	margin-top: 5px;
+	padding: 17px 0;
+	border: 1px solid #a7a7a7;
+	border-right: none;
+}
+
+.aboutLastBox {
+	@extend .aboutBox;
+
+	border-right: 1px solid #a7a7a7;
+}
+
+// absolute は 2022/2 時点の現行を踏襲。h2 を仕込みながらあのレイアウトするには確かに苦肉の策？
+.aboutTitle {
+	position: absolute;
+	top: -28px;
+	left: 20px;
+	display: inline-block;
+	font-weight: bold;
+}
+
+.aboutItem {
+	margin-top: 3px;
+	padding: 0 24px 0 20px;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+//=============================================================================
+// SNS
+
+.sns {
+	padding: 0 21px;
+}
+
+.snsHeading {
+	@extend .heading;
+
+	margin: 43px 0 20px;
+}
+
+.facebook {
+	display: block;
+	width: 28px;
+	height: 28px;
+	background: url(./assets/facebook.svg);
+}
+
+//=============================================================================
+// contact
+
+.contactHeading {
+	display: flex;
+}
+
+.businessHour {
+	margin-left: 18px;
+}
+
+.contact {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 21px;
+}
+
+.contactBox {
+	display: flex;
+}
+
+.contactNumber {
+	display: flex;
+	align-items: center;
+	margin-left: 92px;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+.contactTitle {
+	padding-top: 4px;
+	font-weight: bold;
+}
+
+.contactValue {
+	margin-left: 6px;
+	color: #ea0000;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.contactButtonBox {
+	padding-right: 120px;
+}
+//=============================================================================
+// view board
+.switchToMobile {
+	display: block;
+	margin-top: 11px;
+}
+
+.switchToMobileLink {
+	display: block;
+	padding: 11px 20px;
+	color: #004098;
+	text-decoration: none;
+	background-color: #fff2bf;
+}
+
+//=============================================================================
+// copyright
+
+.copyright {
+	margin: 40px 20px 0;
+}

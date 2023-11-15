@@ -1,0 +1,18 @@
+.titleBox {
+	display: flex;
+	justify-content: center;
+}
+
+.title {
+	padding-bottom: 8px;
+	color: #000;
+	font-weight: 600;
+	font-size: 15px;
+	border-bottom: 3px solid #fc0;
+}
+
+.container {
+	margin: 15px 0 10px; // bottom margin is not good
+	padding: 0 15px 5px;
+	overflow-x: auto;
+}

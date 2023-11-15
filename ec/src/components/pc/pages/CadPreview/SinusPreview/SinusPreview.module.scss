@@ -1,0 +1,40 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	min-height: 300px;
+}
+
+.iframe {
+	width: 100%;
+	height: 637px;
+	border: none;
+}
+
+.loader {
+	display: flex;
+	align-items: center;
+	height: 300px;
+}
+
+.preview {
+	position: relative;
+}
+
+.help {
+	position: absolute;
+	bottom: 26px;
+	left: 20px;
+	height: 33px;
+	padding: 7px 0 0 38px;
+	color: #004bb1;
+	background: {
+		image: url('#{variables.$commonPath}/help-large.png');
+		repeat: no-repeat;
+	}
+
+	&:hover {
+		text-decoration: none;
+		cursor: pointer;
+		opacity: 0.75;
+	}
+}

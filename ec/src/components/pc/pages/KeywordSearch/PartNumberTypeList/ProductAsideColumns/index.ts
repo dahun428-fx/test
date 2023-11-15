@@ -1,0 +1,1 @@
+export { ProductAsideColumns } from './ProductAsideColumns';

@@ -1,0 +1,45 @@
+@use 'src/styles/mobile/variables';
+
+.technicalInformation {
+	margin-top: 20px;
+}
+
+.list {
+	margin: 15px;
+}
+
+.item {
+	padding: 15px 0;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.link {
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.text {
+	color: #000;
+}
+
+.searchAllContainer {
+	margin: 15px 0;
+	padding: 0 15px;
+	text-align: right;
+}
+
+.showAllLink {
+	padding-left: 8px;
+	background: {
+		position: 0 0.4em;
+		image: url('#{variables.$commonPath}/arrow.png');
+		repeat: no-repeat;
+	}
+
+	&:visited,
+	&:hover {
+		color: #004bb1;
+		text-decoration: underline;
+	}
+}

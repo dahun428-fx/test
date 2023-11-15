@@ -1,0 +1,13 @@
+.container {
+	max-width: 400px;
+	margin: 0;
+	padding: 10px;
+	// NOTE: 基本的には詳細度をつけることは禁止されています。ここでは stories のため特別に許可されていますが真似しないでください。
+	dt {
+		margin: 0 0 5px;
+	}
+
+	dd {
+		margin: 0 0 15px;
+	}
+}

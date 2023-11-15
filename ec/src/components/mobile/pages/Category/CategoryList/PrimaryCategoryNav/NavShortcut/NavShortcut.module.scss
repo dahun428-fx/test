@@ -1,0 +1,71 @@
+@use 'src/styles/mobile/variables';
+
+.trigger {
+	width: 36px;
+	height: 18px;
+	padding: 0 4px;
+	border: none;
+	border-left: 1px solid #fff;
+	background: {
+		position: center;
+		color: transparent;
+		repeat: no-repeat;
+	}
+}
+
+.opener {
+	@extend .trigger;
+
+	background-image: url(./assets/images/view-all.png);
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: variables.$popoverZIndex;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgb(0 0 0 / 0.777);
+
+	&[aria-hidden='true'] {
+		display: none;
+	}
+}
+
+.popover {
+	padding: 8px;
+	background-color: #fff;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.closer {
+	@extend .trigger;
+
+	background-image: url(./assets/images/close.png);
+}
+
+.label {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+
+	& > li {
+		flex: 0 0 50%;
+		margin: 8px 0;
+	}
+}
+
+.link {
+	color: #333;
+	text-decoration: none;
+}

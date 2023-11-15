@@ -1,0 +1,53 @@
+.title {
+	margin-bottom: 16px;
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.table {
+	display: table;
+	border-collapse: collapse;
+}
+
+.tableRow {
+	display: table-row;
+}
+
+.tableCell {
+	display: table-cell;
+	padding: 4px 0;
+}
+
+.label {
+	font-weight: bold;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.selectWrapper {
+	padding-left: 8px;
+}
+
+.buttonWrapper {
+	margin-left: 8px;
+}
+
+.errorMessage {
+	color: #c00;
+	font-size: 0.9375rem;
+}
+
+.errorGuide {
+	margin: 0.25rem 0;
+	padding-left: 13px;
+	font-size: 0.8125rem;
+	white-space: nowrap;
+	text-indent: -13px;
+}
+
+.select {
+	min-width: 178px;
+}

@@ -1,0 +1,32 @@
+.container {
+	flex: 0 0 108px;
+	padding-right: 10px;
+	overflow: auto;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	height: 55px;
+	padding: 0 8px;
+	font-weight: normal;
+	background-color: #fff;
+
+	&[data-active='true'] {
+		font-weight: bold;
+		background-color: transparent;
+	}
+}
+
+.link {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	overflow: hidden;
+	color: #333;
+	font-size: 12px;
+	line-height: 16px;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}

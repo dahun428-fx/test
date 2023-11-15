@@ -1,0 +1,188 @@
+@use 'src/styles/pc/variables';
+
+.tile {
+	display: flex;
+	width: 100%;
+	margin-top: -1px;
+	padding: 32px 16px;
+	text-decoration: none;
+	border-top: 1px solid #ccc;
+
+	&:hover {
+		color: #3366ac;
+		background-color: #ecf3fc;
+		cursor: pointer;
+	}
+
+	&:last-child {
+		border-bottom: 1px solid #ccc;
+	}
+}
+
+.seriesNameLink {
+	color: #004098;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	text-decoration: none;
+}
+
+// NOTE: Specificity is basically prohibited.
+.tile:hover .seriesNameLink {
+	text-decoration: underline;
+}
+
+.main {
+	flex: 1 1;
+	padding-right: 1rem;
+}
+
+.panel {
+	display: flex;
+	min-height: 150px;
+}
+
+.imageSide {
+	flex: 0 0 150px;
+	margin-right: 16px;
+}
+
+.textSide {
+	flex: 1 1;
+	vertical-align: top;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.imgBox {
+	height: 150px;
+	text-align: left;
+}
+
+.inlineItem {
+	display: inline-block;
+	margin-left: 0.5rem;
+	color: #333;
+	font-size: 0.8125rem;
+	vertical-align: middle;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+.cadLinkSeparator {
+	margin: 0 0.25rem;
+}
+
+.categoryLinkSeparator {
+	margin: 0 0.5rem;
+	color: #333;
+}
+
+.cadLabel {
+	display: inline-block;
+	color: #666;
+}
+
+.cadType {
+	display: inline-block;
+}
+
+.categoryLinkItem {
+	display: inline-block;
+}
+
+.categoryLink {
+	color: #333;
+	text-decoration: none;
+
+	&:hover {
+		color: #666;
+		text-decoration: underline;
+	}
+}
+
+.cValueBox {
+	margin-top: 5px;
+	text-align: right;
+}
+
+.catchCopyBox {
+	position: relative;
+	width: 100%;
+	max-height: 60px;
+	margin: 0.25rem;
+	overflow: hidden;
+}
+
+.catchCopyText {
+	display: inline-block;
+	color: #333;
+}
+
+.readMoreCatchCopy {
+	max-height: none;
+}
+
+.readMoreButton {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: inline-block;
+	color: #004098;
+	text-decoration: none;
+	background: linear-gradient(270deg, #fff 50%, rgb(255 255 255 / 0) 100%);
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		padding-left: 75px;
+		vertical-align: middle;
+		background-image: url('#{variables.$iconsPath}/plus.svg');
+		background-repeat: no-repeat;
+		background-position: right 8px center;
+		content: '';
+	}
+}
+
+.itemList {
+	display: flex;
+	margin-bottom: 4px;
+}
+
+.item {
+	display: inline-block;
+	margin-right: 8px;
+	margin-bottom: 4px;
+	font-size: 0.8125rem;
+}
+
+.seriesName {
+	margin: 0.25rem 0;
+}
+
+.cadLinkList {
+	margin: 4px 0;
+}
+
+.categoryLinkList {
+	margin-top: 8px;
+}
+
+.none {
+	display: none;
+}
+
+.priceLeadTime {
+	flex: 0 0 169px;
+	padding-left: 1rem;
+	font-size: 0.825rem;
+	border-left: 1px solid #ccc;
+}
+
+.brandWrapper {
+	display: flex;
+	align-items: center;
+}

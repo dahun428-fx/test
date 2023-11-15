@@ -1,0 +1,84 @@
+.container {
+	margin-top: 10px;
+}
+
+// タイトル (why misumi)
+.noticeBoxTitle {
+	padding: 12px 15px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 16px;
+	background-color: #a7a7a7;
+}
+
+// コンテンツ全体の枠
+.noticeBoxMain {
+	padding: 15px;
+	background: #eee;
+}
+
+// アイコンボックス
+.noticeBoxImageBox {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.noticeBoxImage {
+	box-sizing: border-box;
+	width: 50%;
+	min-height: 160px;
+	margin-bottom: 10px;
+	padding: 10px;
+	background: #fff;
+
+	&:nth-child(odd) {
+		border-right: 5px solid #eee;
+	}
+
+	&:nth-child(even) {
+		border-left: 5px solid #eee;
+	}
+}
+
+.noticeBoxImageCaption {
+	margin-bottom: 10px;
+	color: #025fae;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 1.3;
+}
+
+.noticeBoxImageDescription {
+	color: #000;
+	font-size: 14px;
+	line-height: 1.3;
+}
+
+// ボタンボックス
+.noticeBoxButtonBox {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.imageBox {
+	display: flex;
+	flex-grow: 0;
+	justify-content: center;
+	padding: 0 10px;
+	text-align: center;
+}
+
+.membershipRewardsBox {
+	display: flex;
+	padding: 10px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.membershipRewardsImage {
+	margin-right: 10px;
+}
+
+.membershipRewardsText {
+	flex: 1;
+}

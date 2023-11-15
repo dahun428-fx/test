@@ -1,0 +1,33 @@
+.message {
+	width: 560px;
+	padding: 17px;
+}
+
+.buttonContainer {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+
+.customButtonWrapper {
+	display: inline-block;
+}
+
+.closeButton {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	background-image: url(../assets/images/closeButton.svg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"name": "ect-api-model-generator",
+	"version": "1.0.0",
+	"description": "generate ect-api models.",
+	"scripts": {
+		"generate": "npx ts-node ./scripts"
+	},
+	"dependencies": {
+		"fs-extra": "^10.0.0",
+		"mustache": "^4.2.0",
+		"ts-node": "^10.4.0",
+		"typescript": "^4.5.4",
+		"xlsx": "^0.17.5"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^9.0.13",
+		"@types/mustache": "^4.1.2",
+		"@types/node": "18.17.0",
+		"@types/xlsx": "^0.0.36",
+		"prettier": "^2.5.1"
+	}
+}

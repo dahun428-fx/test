@@ -1,0 +1,54 @@
+@use 'src/styles/pc/icon';
+
+.trigger {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin: 4px 0;
+	padding: 12px;
+	color: #004098;
+	text-align: left;
+	background-color: transparent;
+	border: none;
+
+	&:hover {
+		background-color: #ecf3fc;
+		cursor: pointer;
+	}
+
+	&::after {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		content: '';
+		background: {
+			position: center;
+			repeat: no-repeat;
+		}
+	}
+
+	&[aria-expanded='true'] {
+		background-color: #ecf3fc;
+
+		&::after {
+			background-image: url('#{icon.get-path('left-arrow')}');
+		}
+	}
+
+	&[aria-expanded='false']::after {
+		background-image: url('#{icon.get-path('right-arrow')}');
+	}
+}
+
+.popover {
+	position: fixed;
+	left: 296px;
+}
+
+.isFixedWidthLayoutPage {
+	@media (min-width: 1400px) {
+		left: 50%;
+		margin-left: -420px;
+	}
+}

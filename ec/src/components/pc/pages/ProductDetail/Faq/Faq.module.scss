@@ -1,0 +1,78 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	margin-top: 40px;
+	border-top: solid 1px #ccc;
+}
+
+.faq {
+	padding: 16px;
+	border: 1px solid #ccc;
+
+	& + .faq {
+		margin-top: 32px;
+	}
+}
+
+.question {
+	display: flex;
+	align-items: baseline;
+	margin-bottom: 16px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.questionTitle {
+	flex: 0 0 30px;
+	font-size: 17px;
+}
+
+.answer {
+	font-size: 13px;
+}
+
+.answerTitle {
+	flex: 0 0 30px;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.answerDescription {
+	margin-top: 8px;
+}
+
+.expandLink {
+	display: inline-block;
+	box-sizing: border-box;
+	padding: 10px 12px;
+	color: #004098;
+	font-weight: bold;
+	font-size: 13px;
+	text-align: center;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+
+	&::before {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+		vertical-align: -4px;
+		content: '';
+	}
+
+	&[aria-expanded='true'] {
+		&::before {
+			background-image: url('#{variables.$iconsPath}/minus.svg');
+		}
+	}
+
+	&[aria-expanded='false'] {
+		&::before {
+			background-image: url('#{variables.$iconsPath}/plus.svg');
+		}
+	}
+}

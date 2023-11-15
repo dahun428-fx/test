@@ -1,0 +1,17 @@
+.textField {
+	padding: 0.5em;
+	border-radius: 2px;
+
+	&[aria-invalid='true'] {
+		background-color: #fff;
+	}
+
+	&:focus {
+		background-color: #fff2bf;
+	}
+
+	&:disabled {
+		color: #cdcdcd;
+		background-color: #e5e5e5;
+	}
+}

@@ -1,0 +1,1 @@
+export { BrandCategory } from './BrandCategory';

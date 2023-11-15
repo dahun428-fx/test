@@ -1,0 +1,23 @@
+.container {
+	margin-bottom: 15px;
+}
+
+.title {
+	padding: 12px 15px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 1.35;
+	background-color: #a7a7a7;
+}
+
+.scrollWrapper {
+	overflow-x: auto;
+}
+
+.list {
+	width: auto;
+	min-height: 200px;
+	padding-top: 15px;
+	white-space: nowrap;
+}

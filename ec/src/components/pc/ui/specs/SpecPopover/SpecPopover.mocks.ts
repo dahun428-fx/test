@@ -1,0 +1,218 @@
+import {
+	PartNumberSpec,
+	SpecViewType,
+	SupplementType,
+} from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
+
+export const listSpec: PartNumberSpec = {
+	specCode: '00000004087',
+	specName: '内接円径 dr',
+	specUnit: 'φ',
+	specViewType: '9',
+	openCloseType: '3',
+	supplementType: '2',
+	specImageUrl:
+		'//stg0-jp.misumi-ec.com/linked/illustration/mech/M0104_C5_F.png',
+	specValueList: [
+		{
+			specValue: 'mig00000002469043',
+			specValueDisp: '3',
+			hiddenFlag: '0',
+			selectedFlag: '1',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469049',
+			specValueDisp: '4',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002495326',
+			specValueDisp: '5',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002499897',
+			specValueDisp: '6',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002499829',
+			specValueDisp: '8',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469004',
+			specValueDisp: '10',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469013',
+			specValueDisp: '12',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002499839',
+			specValueDisp: '13',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469009',
+			specValueDisp: '16',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469022',
+			specValueDisp: '20',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469026',
+			specValueDisp: '25',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002468994',
+			specValueDisp: '30',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002468998',
+			specValueDisp: '35',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469035',
+			specValueDisp: '40',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'mig00000002469039',
+			specValueDisp: '50',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+	],
+};
+
+export const illustrationSpec: PartNumberSpec = {
+	specCode: '00000229040',
+	specName: 'フリーガイドアーム種類',
+	specViewType: SpecViewType.TEXT_SINGLE_LINE,
+	openCloseType: '3',
+	supplementType: SupplementType.ILLUSTRATION,
+	specValueList: [
+		{
+			specValue: 'a',
+			specValueDisp: '固定アーム',
+			specValueImageUrl:
+				'//stg0-jp.misumi-ec.com/linked/illustration/mech/M150904_C2_S_a.png',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'c',
+			specValueDisp: 'メカロック式フレキシブル',
+			specValueImageUrl:
+				'//stg0-jp.misumi-ec.com/linked/illustration/mech/M150904_C2_S_c.png',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+	],
+};
+
+export const imageSpec: PartNumberSpec = {
+	openCloseType: '3',
+	specCode: '00000144105',
+	specName: 'Mounting Method',
+	specViewType: SpecViewType.IMAGE_TRIPLE_LINE,
+	supplementType: SupplementType.ZOOM_IMAGE,
+	specValueList: [
+		{
+			specValue: 'b',
+			specValueDisp: 'Retaining Ring',
+			specValueImageUrl:
+				'//stg0-my.misumi-ec.com/linked/illustration/mech/M2202_C2_S_b.png',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'd',
+			specValueDisp: 'Lock Nut (Threaded)',
+			specValueImageUrl:
+				'//stg0-my.misumi-ec.com/linked/illustration/mech/M2202_C2_S_d.png',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'e',
+			specValueDisp: 'Tapped',
+			specValueImageUrl:
+				'//stg0-my.misumi-ec.com/linked/illustration/mech/M2202_C2_S_e.png',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+		{
+			specValue: 'f',
+			specValueDisp: 'Set Screw (Set Screw Flat, D-Cut)',
+			specValueImageUrl:
+				'//stg0-my.misumi-ec.com/linked/illustration/mech/M2202_C2_S_f.png',
+			hiddenFlag: '0',
+			selectedFlag: '0',
+			childSpecValueList: [],
+			specValueAttributeList: [],
+		},
+	],
+};

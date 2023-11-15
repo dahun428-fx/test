@@ -1,0 +1,26 @@
+.anchor[class] {
+	display: block;
+	background-repeat: no-repeat;
+}
+
+.link {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	background-repeat: no-repeat;
+
+	&:hover {
+		color: #004098;
+		text-decoration: underline;
+	}
+}
+
+.rightArrow {
+	background-image: url(./assets/right-arrow.png);
+	background-position: right 5px;
+}
+
+.newTab {
+	background-image: url(./assets/new-tab.png);
+	background-position: right 50%;
+}

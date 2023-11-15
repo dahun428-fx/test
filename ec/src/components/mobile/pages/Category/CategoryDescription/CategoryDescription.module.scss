@@ -1,0 +1,56 @@
+@use 'src/styles/pc/variables';
+
+.descriptionBox {
+	position: relative;
+	margin: 10px 15px;
+}
+
+.description {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	word-break: break-word;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+
+	&[data-expanded='true'] {
+		// Category Description展開時にフッターと重ならないようにする。
+		display: block;
+		overflow: visible;
+	}
+}
+
+.readMoreLink {
+	color: #004098;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+%readMore {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: inline-block;
+}
+
+.closeReadMore {
+	@extend %readMore;
+
+	border-right: 5px solid transparent;
+	border-bottom: 10px solid #1948a8;
+	border-left: 5px solid transparent;
+}
+
+.openReadMore {
+	@extend %readMore;
+
+	border-top: 10px solid #1948a8;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+}
+
+.none {
+	display: none;
+}

@@ -1,0 +1,93 @@
+@use 'src/styles/mobile/icon';
+
+.container {
+	position: relative;
+	width: 100%;
+	margin: 15px 0 10px;
+	padding-bottom: 5px;
+	overflow: auto;
+}
+
+.table {
+	margin: 10px 0;
+	border-spacing: 0;
+}
+
+.dataTable {
+	position: relative;
+	font-size: 14px;
+
+	a:visited {
+		color: #004bb1;
+	}
+}
+
+.tableHead {
+	padding: 10px;
+	font-weight: normal;
+	white-space: nowrap;
+	text-align: center;
+	background-color: #e8e8e8;
+	border-bottom: 1px solid #d6d6d6;
+	border-left: 1px solid #e7e7e7;
+}
+
+.tableCell {
+	box-sizing: content-box;
+	padding: 5px 10px 4px;
+	line-height: 18px;
+	white-space: nowrap;
+	text-align: center;
+	border-bottom: 1px solid #d6d6d6;
+	border-left: 1px solid #e7e7e7;
+}
+
+.tableCellFirstColumn {
+	width: 190px;
+	font-weight: bold;
+	white-space: nowrap;
+	word-wrap: break-word;
+	border-left: none;
+}
+
+.partNumber {
+	white-space: normal;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.textBold {
+	font-weight: 700;
+}
+
+.textLeft {
+	text-align: left;
+}
+
+.daysToShip {
+	color: #333;
+}
+
+.dataPrice {
+	font-size: 15px;
+}
+
+.rohsLink {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-left: 1.5rem;
+	text-indent: -1.5rem;
+}
+
+.rohsQuestion {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+	vertical-align: bottom;
+	background: {
+		image: url("#{icon.get-path('question')}");
+		repeat: no-repeat;
+	}
+}

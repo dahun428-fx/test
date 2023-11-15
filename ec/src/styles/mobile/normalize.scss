@@ -1,0 +1,101 @@
+body,
+div,
+span,
+p,
+pre,
+code,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+small,
+strong,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+form,
+label,
+table,
+tbody,
+tr,
+th,
+td,
+footer,
+header,
+nav,
+section {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	vertical-align: baseline;
+	background: transparent;
+	border: 0;
+	outline: 0;
+}
+
+ul,
+ol,
+li,
+dl,
+dt,
+dd {
+	list-style: none outside none;
+}
+
+tr,
+th,
+td {
+	vertical-align: middle;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	color: #333;
+	font-size: 14px;
+	line-height: 1.6;
+	// This prevents wrong font size on iOS safari
+	// Reference: https://stackoverflow.com/questions/3226001/some-font-sizes-rendered-larger-on-safari-iphone
+	/* stylelint-disable-next-line property-no-vendor-prefix */
+	-webkit-text-size-adjust: 100%;
+}
+
+//=========================================================
+// ect-web-th の mobile の _reset.styl に合わせるための指定
+// - WARN: normalize.scss への追加は細心の注意を払ってください。安易に行わないでください。
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 12px;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+iframe {
+	border-style: none;
+}
+
+input,
+select,
+textarea,
+button {
+	font-family: inherit;
+}

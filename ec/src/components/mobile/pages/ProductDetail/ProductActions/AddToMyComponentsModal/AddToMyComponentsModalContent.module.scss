@@ -1,0 +1,18 @@
+.message {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.buttonWrapper {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+
+.buttonBox {
+	width: 152px;
+
+	&:not(:first-child) {
+		margin-left: 6px;
+	}
+}

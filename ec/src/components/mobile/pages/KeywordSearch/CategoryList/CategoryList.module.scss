@@ -1,0 +1,39 @@
+@use 'src/styles/mobile/variables';
+
+.sticky {
+	z-index: variables.$categoryListZIndex;
+}
+
+.section {
+	height: 176px;
+	background-color: #eee;
+}
+
+.categoryHeader {
+	padding: 0 10px 8px;
+}
+
+.num {
+	color: #fc0;
+}
+
+.list {
+	height: 152px;
+	padding-bottom: 4px;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.categoryItem {
+	display: inline-block;
+	box-sizing: content-box;
+	width: 120px;
+	margin-left: 10px;
+	padding: 8px;
+	font-size: 15px;
+	white-space: normal;
+	vertical-align: top;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+}

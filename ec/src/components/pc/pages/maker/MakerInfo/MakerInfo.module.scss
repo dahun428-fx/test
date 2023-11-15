@@ -1,0 +1,38 @@
+@use 'src/styles/pc/variables';
+
+.makerInfo {
+	flex: 1;
+}
+
+.head {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+
+.brandName {
+	font-weight: normal;
+	font-size: 1.4375rem;
+	line-height: 1.3;
+}
+
+.description {
+	margin-top: 16px;
+	font-size: 0.8125rem;
+}
+
+.brandInfo {
+	margin-top: 16px;
+}
+
+.brandLink {
+	padding-right: 1.25rem;
+	color: #004098;
+	font-size: 0.8125rem;
+	text-decoration: none;
+	background: url('#{variables.$iconsPath}/new-tab.svg') right 0 no-repeat;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}

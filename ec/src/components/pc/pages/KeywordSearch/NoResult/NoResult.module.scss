@@ -1,0 +1,49 @@
+@use 'src/styles/pc/icon';
+
+.notice {
+	margin-top: 40px;
+	font-size: 1.3125rem;
+}
+
+.messageBox {
+	padding: 1rem;
+	background-color: #f8fbff;
+	border: 1px solid #ccc;
+}
+
+.itemNumber {
+	padding-right: 0.7rem;
+}
+
+.info {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5rem;
+	color: transparent;
+	background: {
+		image: url('#{icon.get-path('information')}');
+		repeat: no-repeat;
+	}
+}
+
+.heading {
+	display: inline-flex;
+	font-weight: bold;
+}
+
+.reviewPoint {
+	margin: 0.25rem 0;
+	padding-left: 1.3rem;
+	text-indent: -1.3rem;
+}
+
+.examples {
+	display: flex;
+	margin-top: 24px;
+	padding: 0 1.3rem;
+}
+
+.example {
+	flex-basis: 50%;
+}

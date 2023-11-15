@@ -1,0 +1,54 @@
+@use 'src/styles/mobile/variables';
+
+.control {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 25px 0 10px;
+	padding: 6px 10px;
+}
+
+.totalCount {
+	font-weight: 700;
+	font-size: 15px;
+}
+
+.totalCountLabel {
+	font-size: 20px;
+}
+
+.list {
+	margin: 15px;
+}
+
+.tileWrapper {
+	padding: 15px 0;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.text {
+	color: #000;
+}
+
+// NOTE: Specificity is not allowed, but it is used here to handle
+// underlining of the title on hover of the Link component.
+.tile[class] {
+	width: 100%;
+
+	&:hover {
+		text-decoration: none;
+		cursor: pointer;
+		opacity: 0.8;
+
+		// NOTE: Specificity is not allowed, but it is used here to handle
+		// underlining of the title on hover of the Link component.
+		& > .link {
+			text-decoration: underline;
+		}
+	}
+}
+
+.pdf {
+	padding: 3px 0 1px 22px;
+	background: url('#{variables.$commonPath}/pdf.png') 0 2px no-repeat;
+}

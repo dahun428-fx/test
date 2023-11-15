@@ -1,0 +1,35 @@
+.button {
+	@each $icon in ('list', 'photo') {
+		&[data-icon='#{$icon}'] {
+			&::before {
+				background-image: url('./assets/images/#{$icon}.png');
+			}
+		}
+	}
+
+	display: flex;
+	align-items: center;
+	font-size: 0.8125rem;
+	cursor: pointer;
+
+	&::before {
+		width: 24px;
+		height: 24px;
+		background-repeat: no-repeat;
+		background-size: cover;
+		content: '';
+	}
+}
+
+.noIcon {
+	display: flex;
+	align-items: center;
+	font-size: 0.8125rem;
+	cursor: pointer;
+
+	&::before {
+		width: 24px;
+		height: 24px;
+		content: '';
+	}
+}

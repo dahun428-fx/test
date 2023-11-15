@@ -1,0 +1,43 @@
+.checkbox {
+	position: absolute;
+	opacity: 0;
+	appearance: none;
+}
+
+.label {
+	display: inline-block;
+	cursor: pointer;
+
+	background: {
+		position: left center;
+		repeat: no-repeat;
+		image: url(./assets/images/unchecked.png);
+	}
+
+	&:empty {
+		width: 21px;
+		height: 18px;
+		background-position: center;
+	}
+
+	&:not(:empty) {
+		padding-left: 22px;
+		background-position: 5px 2px;
+	}
+}
+
+// NOTE: 詳細度はやむを得ずつけています。
+.checkbox:checked + .label {
+	background-image: url(./assets/images/checked.png);
+}
+
+// NOTE: 詳細度はやむを得ずつけています。
+.checkbox:disabled + .label {
+	background-image: url(./assets/images/disabled.png);
+}
+
+// NOTE: 詳細度はやむを得ずつけています。
+// IE は focus-visible が効かないが、現行はフォーカスすらできないのでよし？
+.checkbox:focus-visible + .label {
+	outline: auto;
+}

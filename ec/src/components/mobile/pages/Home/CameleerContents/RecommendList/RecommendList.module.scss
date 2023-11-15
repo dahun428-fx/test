@@ -1,0 +1,10 @@
+.list {
+	display: flex;
+	align-items: stretch;
+	overflow-y: auto;
+	white-space: nowrap;
+
+	& > li {
+		margin: 5px;
+	}
+}

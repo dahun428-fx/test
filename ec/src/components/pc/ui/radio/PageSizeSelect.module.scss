@@ -1,0 +1,35 @@
+.container {
+	display: inline-block;
+	font-size: 13px;
+	vertical-align: middle;
+}
+
+.titleDescription {
+	display: table-cell;
+	padding-right: 8px;
+}
+
+.switchPageSizeContainer {
+	display: table-cell;
+}
+
+.switchPageSize {
+	height: 36px;
+	padding-right: 31px;
+	padding-left: 7px;
+	font-size: 13px;
+	background: url(./assets/images/down-arrow.svg) right 7px center no-repeat;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	appearance: none;
+
+	&:focus {
+		background-color: #fffaeb;
+		outline-color: #004098;
+	}
+
+	&::-ms-expand {
+		display: none;
+	}
+}

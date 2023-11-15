@@ -1,0 +1,28 @@
+@use 'src/styles/pc/variables';
+
+.layout {
+	display: flex;
+}
+
+// .layout and .container is only for IE11. Check the following hack:
+// https://stackoverflow.com/a/39296819
+.container {
+	display: flex;
+	flex-flow: column;
+	width: 100%;
+	min-height: 100vh;
+}
+
+.childrenWrapper {
+	flex: 1 0 auto;
+	width: 910px;
+	margin: 0 auto 20px;
+	padding: 20px 0 0;
+}
+
+.rightSideFloating {
+	position: fixed;
+	right: 0;
+	bottom: 99px;
+	z-index: variables.$popoverZIndex;
+}

@@ -1,0 +1,87 @@
+.container {
+	display: block;
+	margin-bottom: 12px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.maxHeight {
+	max-height: 190px;
+}
+
+.specListLayoutContainer {
+	display: flex;
+	flex-wrap: wrap;
+	line-height: 1.5;
+}
+
+.listItemDefault {
+	box-sizing: border-box;
+	padding: 4px 8px;
+	font-size: 13px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}
+
+.specImageWrapper {
+	margin-bottom: 8px;
+	text-align: center;
+}
+
+.specImage {
+	width: 54px;
+}
+
+.zoomSpecImage {
+	width: 104px;
+}
+
+.checkboxDefault {
+	background-repeat: no-repeat;
+	background-position: 0 2px;
+}
+
+.specValueDisp {
+	padding-left: 24px;
+}
+
+.noCheck {
+	background-image: url(../assets/images/unchecked.svg);
+}
+
+.checked {
+	background-image: url(../assets/images/checked.svg);
+}
+
+// Theme for 2 columns
+.imageDoubleLine {
+	display: inline-block;
+	width: 50%;
+	vertical-align: top;
+}
+
+// Theme for single column
+.imageSingleLine {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	background-position: 8px center;
+}
+
+.imageSingleLine .specValueDisp {
+	padding-left: 16px;
+}
+
+.imageSingleLine .specImageWrapper {
+	margin: 0 0 0 32px;
+}
+
+// Theme for image list in popover
+.zoom {
+	width: 120px;
+	background-position: 8px 122px;
+}

@@ -1,0 +1,21 @@
+.listItem {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tile {
+	margin-right: 8px;
+	margin-bottom: 8px;
+}
+
+.listDefault {
+	margin-bottom: 4px;
+	padding: 4px 8px 4px 32px;
+	background-repeat: no-repeat;
+	background-position: 8px 5px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}

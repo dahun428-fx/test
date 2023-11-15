@@ -1,0 +1,22 @@
+.wrapper {
+	height: 20px;
+	margin: 8px 0;
+	margin-top: 0;
+	padding: 0;
+	font-weight: bold;
+}
+
+.heading {
+	display: inline-block;
+
+	&::before {
+		position: relative;
+		display: inline-block;
+		width: 8px;
+		height: 20px;
+		margin-right: 8px;
+		vertical-align: top;
+		background-color: #ff730a;
+		content: '';
+	}
+}

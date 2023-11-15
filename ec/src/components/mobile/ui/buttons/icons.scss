@@ -1,0 +1,48 @@
+@use 'src/styles/mobile/icon';
+
+// ボタンの前方に配置するアイコンです。
+// 必要あらば追加してください。
+$prefixIcons: (
+	order-now,
+	cart,
+	right-arrow,
+	left-arrow,
+	download,
+	save,
+	pdf,
+	book,
+	copy,
+	application,
+	large-right-arrow,
+	zip,
+	refresh,
+	quote,
+	search
+);
+
+.prefixIcon {
+	@each $icon in $prefixIcons {
+		@each $brightness in (light, dark) {
+			&[data-icon='#{$brightness}:#{$icon}'] {
+				&::before {
+					background-image: url('#{icon.get-icon-path($icon, $brightness)}');
+				}
+			}
+		}
+	}
+
+	&[data-icon] {
+		&::before {
+			position: absolute;
+			top: 0;
+			right: calc(100% - 30px);
+			width: 25px;
+			height: 100%;
+			content: '';
+			background: {
+				position: center;
+				repeat: no-repeat;
+			}
+		}
+	}
+}

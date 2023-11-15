@@ -1,0 +1,95 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	position: relative;
+	margin-top: 10px;
+}
+
+.linkBox {
+	position: relative;
+	text-align: right;
+}
+
+.highLayer {
+	z-index: variables.$modalZIndex;
+}
+
+.link {
+	display: inline-block;
+	padding: 7px 20px;
+	color: #004098;
+	text-decoration: none;
+	background-color: #fff;
+	cursor: pointer;
+
+	&:visited {
+		color: #750056;
+	}
+
+	&:hover {
+		color: #025fae;
+		text-decoration: underline;
+	}
+}
+
+.popupBackground {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: variables.$modalZIndex;
+	width: auto;
+	height: auto;
+	overflow: hidden;
+	background-color: #000;
+	opacity: 0.3;
+}
+
+.popupBox {
+	position: absolute;
+	right: 0;
+	bottom: 100%;
+	z-index: variables.$modalZIndex;
+	margin-bottom: 10px;
+	padding: 16px 24px;
+	font-size: 0.6875rem;
+	white-space: pre-wrap;
+	text-align: center;
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 0 8px rgb(0 0 0 / 0.2);
+
+	&::after {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		display: block;
+		width: 0;
+		height: 0;
+		margin-left: -6px;
+		border: solid transparent;
+		border-width: 6px;
+		border-top-color: #fff;
+		content: ' ';
+	}
+}
+
+.close {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 24px;
+	height: 24px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-decoration: none;
+	text-indent: 100%;
+	background: url('#{variables.$iconsPath}/close.svg') no-repeat;
+	background-position: center center;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+}

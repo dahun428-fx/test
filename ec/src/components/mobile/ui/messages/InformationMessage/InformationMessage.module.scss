@@ -1,0 +1,16 @@
+.message {
+	display: flex;
+	font-size: 12px;
+
+	&::before {
+		position: relative;
+		top: 2px;
+		display: inline-block;
+		width: 22px;
+		height: 22px;
+		margin-right: 4px;
+		background-image: url(./assets/images/informationIcon.png);
+		background-repeat: no-repeat;
+		content: '';
+	}
+}

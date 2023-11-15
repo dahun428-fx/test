@@ -1,0 +1,66 @@
+@use 'src/styles/mobile/variables';
+
+.list {
+	margin: 15px;
+}
+
+.link {
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.main {
+	display: flex;
+}
+
+.imageWrapper {
+	max-width: 124px;
+	max-height: 94px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.image {
+	width: 100%;
+}
+
+.item {
+	box-sizing: border-box;
+	padding: 15px 0;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.title {
+	color: #000;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.text {
+	color: #333;
+	font-size: 14px;
+}
+
+.showAllWrapper {
+	margin: 15px 0;
+	padding: 0 15px;
+	text-align: right;
+}
+
+.showAllLink {
+	padding-left: 8px;
+	background: {
+		position: 0 0.4em;
+		image: url('#{variables.$commonPath}/arrow.png');
+		repeat: no-repeat;
+	}
+
+	&:visited,
+	&:hover {
+		color: #004bb1;
+		text-decoration: underline;
+	}
+}

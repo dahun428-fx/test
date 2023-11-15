@@ -1,0 +1,28 @@
+.tile {
+	display: flex;
+	flex-direction: column;
+	width: 124px;
+	padding: 12px;
+	font-size: 0.8125rem;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: none;
+		background-color: #ecf3fc;
+	}
+}
+
+.imageWrapper {
+	height: 108px;
+	padding-bottom: 8px;
+}
+
+.image {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.categoryName {
+	white-space: normal;
+}

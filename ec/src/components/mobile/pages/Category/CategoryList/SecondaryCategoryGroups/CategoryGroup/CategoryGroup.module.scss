@@ -1,0 +1,19 @@
+.category {
+	margin-top: 12px;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 9px 0;
+	padding: 8px;
+	background-color: #fff;
+	border: none;
+	border-radius: 10px;
+}
+
+.item {
+	width: 33.33%;
+	height: auto;
+	margin: 4px 0;
+}

@@ -1,0 +1,110 @@
+@use 'src/styles/pc/icon';
+
+.brand {
+	display: inline-block;
+	margin-top: 10px;
+	color: #999;
+}
+
+.productName {
+	margin-top: 10px;
+}
+
+.standardPrice {
+	display: inline-block;
+	width: 100%;
+	margin-top: 10px;
+	padding-top: 10px;
+	color: #333;
+	border-top: dotted 1px #ccc;
+}
+
+.daysToShip {
+	display: inline-block;
+	color: #333;
+}
+
+.container {
+	display: block;
+	width: 100%;
+	height: 415px;
+	min-height: 150px;
+}
+
+.pagerContainer {
+	position: relative;
+	padding: 0 40px;
+	overflow: visible;
+}
+
+.panelList {
+	display: flex;
+	min-height: 385px;
+	margin-right: 12px;
+	margin-left: 12px;
+	font-size: 0;
+}
+
+.imageContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 190px;
+	height: 190px;
+	border: solid 1px #999;
+}
+
+.panelItem {
+	max-width: 209px;
+	padding: 0 9px;
+	font-size: 0.8125rem;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.itemLink {
+	display: block;
+	margin-top: 10px;
+	color: #004098;
+	text-decoration: none;
+
+	:hover {
+		text-decoration: underline;
+	}
+}
+
+%pager {
+	position: absolute;
+	top: 44%;
+	width: 43px;
+	height: 43px;
+	background-image: url('#{icon.get-icon-path(circle-left-arrow, light)}');
+	cursor: pointer;
+	opacity: 1;
+}
+
+.previous {
+	@extend %pager;
+
+	left: 0;
+	background-image: url('#{icon.get-icon-path(circle-left-arrow, light)}');
+
+	&:hover {
+		background-image: url('#{icon.get-icon-path(circle-left-arrow, dark)}');
+	}
+}
+
+.next {
+	@extend %pager;
+
+	right: 0;
+	background-image: url('#{icon.get-icon-path(circle-right-arrow, light)}');
+
+	&:hover {
+		background-image: url('#{icon.get-icon-path(circle-right-arrow, dark)}');
+	}
+}

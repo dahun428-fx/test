@@ -1,0 +1,41 @@
+@use 'src/styles/mobile/variables';
+
+.container {
+	position: fixed;
+	top: 50px;
+	right: 0;
+	bottom: 50px;
+	left: 0;
+	// The z-index value should be equal to the z-index value of the header
+	z-index: variables.$partNumberListZIndex;
+	display: block;
+	width: 100%;
+	height: calc(100vh - 100px);
+	overflow: hidden;
+	background-color: rgb(0 0 0 / 0.5);
+	visibility: visible;
+}
+
+.panel {
+	position: fixed;
+	bottom: 50px;
+	// The z-index value should be equal to the z-index value of the header
+	z-index: variables.$partNumberListZIndex;
+	width: 100%;
+	height: calc(80% - 50px);
+	padding: 5px 0;
+	background: #fff;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.close {
+	// まさかの文字ないところも clickable... (ect-web-th 踏襲)
+	display: block;
+	color: rgb(0 0 0 / 0.5); // ect-web-th 踏襲
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 20px;
+	text-align: center;
+	text-decoration: none;
+}

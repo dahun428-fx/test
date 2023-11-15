@@ -1,0 +1,67 @@
+@use 'src/styles/pc/variables';
+
+$messageIcons: (
+	warning: (
+		background: url('#{variables.$iconsPath}/warning.svg'),
+	),
+	info: (
+		background: url('#{variables.$iconsPath}/information.svg'),
+	),
+	red-dot: (
+		background: url('#{variables.$commonPath}/red-dot.png'),
+	),
+	blue-dot: (
+		background: url('#{variables.$commonPath}/blue-dot.png'),
+	),
+	none: (
+		background: none,
+		padding-left: 0,
+	),
+);
+
+$messageColors: (
+	'red': (
+		color: #c00,
+	),
+	'black': (
+		color: #333,
+	),
+);
+
+@mixin icon($icon) {
+	padding-left: map-get($icon, padding-left);
+	background: map-get($icon, background) no-repeat 0 0.2em;
+}
+
+@mixin color($color) {
+	color: map-get($color, color);
+}
+
+.messageItem {
+	@each $property, $icon in $messageIcons {
+		&[data-icon='#{$property}'] {
+			@include icon($icon);
+		}
+	}
+
+	@each $property, $color in $messageColors {
+		&[data-text-color='#{$property}'] {
+			@include color($color);
+		}
+	}
+	@media all and (-ms-high-contrast: none) {
+		word-break: break-all;
+	}
+
+	display: inline-block;
+	margin-bottom: 0.5rem;
+	padding-left: 1.5rem;
+	font-size: 0.8125rem;
+	word-wrap: break-word;
+	word-break: break-word;
+
+	// dangerouslySetInnerHTML の a タグにスタイル充てるため仕方なく。
+	a {
+		color: #004098;
+	}
+}

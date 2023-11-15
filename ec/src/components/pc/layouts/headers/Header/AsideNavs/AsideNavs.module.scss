@@ -1,0 +1,39 @@
+.asideNavs {
+	width: 299px;
+}
+
+.list {
+	display: flex;
+	align-items: center;
+
+	&:not(:first-child) {
+		margin-top: 10px;
+	}
+}
+
+.navItem {
+	flex-basis: 50%;
+
+	&:not(:first-child) {
+		flex-basis: calc(50% + 1px);
+		margin-left: -1px;
+	}
+}
+
+.purchaseLinkUser {
+	display: flex;
+	align-items: center;
+
+	&:not(:first-child) {
+		margin-top: 10px;
+	}
+}
+
+.needHelp {
+	flex-basis: 50%;
+	margin-left: auto;
+}
+
+.cartCount {
+	font-size: 13px;
+}

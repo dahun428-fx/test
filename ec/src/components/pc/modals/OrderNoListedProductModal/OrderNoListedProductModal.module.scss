@@ -1,0 +1,95 @@
+%cellBase {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.container {
+	width: 560px;
+}
+
+.tableWrapper {
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
+}
+
+.contentWrapper {
+	margin: 10px 0;
+}
+
+.label {
+	display: inline-block;
+	padding-top: 0.25em;
+	padding-right: 0.5em;
+	font-weight: bold;
+}
+
+.table {
+	display: table;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+	padding-top: 0.25em;
+	padding-right: 0.5em;
+}
+
+.textCenter {
+	text-align: center;
+}
+
+.quantityWrapper {
+	display: inline-block;
+	width: 50%;
+}
+
+.buttonBox {
+	@extend %cellBase;
+
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+	border-left: none;
+}
+
+.buttonList {
+	display: table;
+	margin: 40px auto 0;
+}
+
+.orderButtonBox {
+	@extend %cellBase;
+
+	width: 145px;
+}
+
+.cartButtonBox {
+	@extend %cellBase;
+
+	width: 145px;
+	padding-left: 10px;
+}
+
+.cancelButtonBox {
+	@extend %cellBase;
+
+	padding-left: 10px;
+}
+
+.cartButton {
+	padding-left: 16px;
+}
+
+.quantityInput {
+	display: inline-block;
+	width: 74px;
+	height: 37px;
+	padding: 7px 15px;
+	text-align: right;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}

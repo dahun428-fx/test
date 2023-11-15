@@ -1,0 +1,61 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+.messageCount {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	z-index: variables.$fixedListHeaderZIndex;
+	padding: 0 7px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #ea0000;
+	border-radius: 50%;
+}
+
+.menu {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	z-index: variables.$popoverZIndex;
+	display: none;
+	width: 300px;
+	padding: 9px;
+	font-size: 14px;
+	background-color: #fff;
+	box-shadow: 0 1px 5px 0 rgba(0 0 0 / 0.3);
+
+	&[aria-hidden='false'] {
+		display: inline-block;
+	}
+}
+
+.section {
+	padding: 8px 10px;
+
+	&:not(:first-child) {
+		border-top: 1px dotted #a7a7a7;
+	}
+}
+
+.sectionHeading {
+	margin: 5px 0;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.linkItem {
+	&:not(:first-child) {
+		margin-top: 5px;
+	}
+}
+
+.customerCode {
+	font-weight: bold;
+}

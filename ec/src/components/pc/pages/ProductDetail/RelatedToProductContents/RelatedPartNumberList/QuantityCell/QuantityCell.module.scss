@@ -1,0 +1,16 @@
+.container {
+	display: table-cell;
+	min-width: 120px;
+	padding: 2px 4px;
+	text-align: center;
+	vertical-align: middle;
+	word-wrap: break-word;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+
+.label {
+	color: #333;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}

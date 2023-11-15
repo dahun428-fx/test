@@ -1,0 +1,42 @@
+.tile {
+	color: #000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.imageWrapper {
+	height: 96px;
+	padding: 5px;
+	text-align: center;
+}
+
+.image {
+	max-width: 80px;
+	height: 100%;
+	max-height: 80px;
+	margin: 0 auto;
+}
+
+.categoryName {
+	position: relative;
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	&::after {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 18px;
+		height: 18px;
+		content: ' ';
+		background: {
+			image: url(./assets/view-category.png);
+			repeat: no-repeat;
+			size: cover;
+		}
+	}
+}

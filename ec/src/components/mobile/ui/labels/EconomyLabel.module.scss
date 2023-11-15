@@ -1,0 +1,15 @@
+.economyLabel {
+	display: inline-block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-indent: 100%;
+	background: {
+		image: url(./assets/images/economy.svg);
+		size: cover;
+		repeat: no-repeat;
+	}
+}
+
+.sizeAuto {
+	background-size: auto;
+}

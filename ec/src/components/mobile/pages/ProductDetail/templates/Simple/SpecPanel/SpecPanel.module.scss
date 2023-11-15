@@ -1,0 +1,163 @@
+@use 'src/styles/mobile/variables';
+
+%button {
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	appearance: none;
+}
+
+.container {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: variables.$popoverZIndex;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	background: rgb(0 0 0 / 0.5);
+}
+
+.blank {
+	height: 30vh;
+}
+
+.panel {
+	position: fixed;
+	bottom: 50px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: calc(70vh - 50px);
+	background: #fff;
+}
+
+.main {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	padding: 20px 10px 0;
+	overflow: hidden;
+}
+
+.close {
+	@extend %button;
+
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 20px;
+	height: 20px;
+	background: url(./assets/images/close.png) no-repeat;
+	background-size: 20px 20px;
+}
+
+.partNumberCountMessage {
+	margin-top: 10px;
+	font-size: 0.8rem;
+}
+
+.partNumberCount {
+	color: #f00;
+}
+
+.panelSwitch {
+	position: relative;
+	display: inline-block;
+	width: max-content;
+	max-width: 100%;
+	margin-top: 10px;
+	padding: 3px 30px 3px 15px;
+	color: #fff;
+	background: #039;
+	border-radius: 20px;
+
+	&::after {
+		position: absolute;
+		top: 0;
+		right: 8px;
+		bottom: 0;
+		width: 17px;
+		height: 19px;
+		margin: auto;
+		background-image: url(./assets/images/arrow.png);
+		background-size: 17px 19px;
+		transform: rotate(270deg);
+		content: '';
+	}
+}
+
+// NOTE: Specificity is basically prohibited.
+.panelSwitchActive[class] {
+	&::after {
+		transform: rotate(90deg);
+	}
+}
+
+.panelSwitchAccent {
+	color: #ffcc01;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.confirmGuide {
+	margin-top: 10px;
+	padding-bottom: 15px;
+	color: #f00;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.panelBox {
+	flex: 1;
+	overflow-x: scroll;
+	word-wrap: break-word;
+}
+
+.buttonBox {
+	display: flex;
+	width: 100%;
+	height: 45px;
+}
+
+.resetButton {
+	@extend %button;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+	color: #000;
+	font-size: 1rem;
+	background: #efefef;
+}
+
+.confirmButton {
+	@extend %button;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+	margin: 0;
+	color: #fff;
+	font-size: 1rem;
+	background: #039;
+}
+
+.fullConfirmButton {
+	@extend .confirmButton;
+
+	width: 100%;
+}
+
+.orderQty {
+	padding: 15px 0;
+}
+
+.quantityLabel {
+	margin-right: 10px;
+}

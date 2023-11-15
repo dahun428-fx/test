@@ -1,0 +1,71 @@
+.item {
+	display: inline-block;
+	width: calc(50% - 12px);
+	min-height: 300px;
+	margin-top: 8px;
+	padding: 8px 8px 40px;
+	background-color: #fff;
+
+	&:nth-child(odd) {
+		margin-right: 8px;
+		margin-left: 8px;
+	}
+}
+
+.image {
+	display: block;
+	max-width: 120px;
+	max-height: 120px;
+	margin: 32px auto auto;
+}
+
+.label {
+	display: inline-block;
+	min-width: 50px;
+	padding: 2px 6px;
+	color: #fff;
+	font-size: 12px;
+	line-height: 1;
+	text-align: center;
+	text-indent: 0;
+	background-color: #4d96d7;
+	border: 1px solid #4d96d7;
+}
+
+.partNumber {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.makerName {
+	min-height: 40px;
+	color: #aaa;
+	font-size: 12px;
+}
+
+.proceed {
+	margin-top: 8px;
+	padding: 4px 0;
+}
+
+.quantity {
+	display: flex;
+	align-items: center;
+	margin: 10px 0;
+}
+
+.quantityLabel {
+	padding-top: 0.25em;
+	padding-right: 0.5em;
+	font-weight: bold;
+	white-space: nowrap;
+	word-wrap: break-word;
+}
+
+.quantityInput {
+	font-size: 16px;
+}
+
+.orderNow {
+	margin-bottom: 8px;
+}

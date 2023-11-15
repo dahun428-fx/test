@@ -1,0 +1,22 @@
+.heading {
+	padding: 10px 10px 9px;
+	color: #fff;
+	font-size: 18px;
+	background-color: #0098d8;
+}
+
+.specList {
+	padding: 10px;
+}
+
+.noticeWrap {
+	margin: 8px 10px 0;
+}
+
+.specItem {
+	font-size: 0.8125rem;
+
+	&:not(:first-child) {
+		margin-top: 20px;
+	}
+}

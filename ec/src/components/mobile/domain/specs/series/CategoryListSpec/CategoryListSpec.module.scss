@@ -1,0 +1,22 @@
+.content {
+	padding-left: 16px;
+	font-size: 12px;
+}
+
+.list {
+	display: initial;
+}
+
+.item {
+	display: inline-flex;
+	width: 30%;
+	margin-right: 8px;
+	margin-bottom: 8px;
+	vertical-align: top;
+	border: 1px solid #eee;
+}
+
+.checkbox {
+	justify-content: center;
+	align-items: center;
+}

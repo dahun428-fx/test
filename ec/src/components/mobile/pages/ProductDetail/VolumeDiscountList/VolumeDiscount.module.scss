@@ -1,0 +1,72 @@
+@use 'src/styles/mobile/variables';
+
+.question {
+	display: inline-block;
+	width: 17px;
+	height: 18px;
+	margin: 0 3px;
+	overflow: hidden;
+	text-indent: 100%;
+	vertical-align: middle;
+	background: {
+		image: url('#{variables.$commonPath}/help.png');
+		repeat: no-repeat;
+	}
+}
+
+// theme = 'simple'
+.simpleVolumeDiscountList {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.simpleHeaderCell {
+	min-width: 100px;
+	padding: 12px 10px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	text-indent: 0;
+	word-wrap: break-word;
+	background-color: #999;
+	border: 1px solid #bfbfbf;
+}
+
+.simpleValueCell {
+	padding: 7px 10px;
+	text-align: center;
+	word-wrap: break-word;
+	border: 1px solid #bfbfbf;
+}
+
+// theme = 'standard'
+.standardVolumeDiscountList {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.standardHeaderCell {
+	width: 33%;
+	padding: 5px 1px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	background-color: #999;
+	border: 1px solid #bfbfbf;
+}
+
+.standardValueCell {
+	padding: 5px 1px;
+	text-align: center;
+	text-indent: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	border: 1px solid #bfbfbf;
+}
+
+.daysToShipFont {
+	font-weight: normal;
+	font-size: 14px;
+}

@@ -1,0 +1,26 @@
+.linkList {
+	padding: 15px 0;
+	border-top: 1px dotted #bfbfbf;
+}
+
+.listItem {
+	margin: 8px 0;
+}
+
+.link {
+	padding-left: 8px;
+	text-decoration: none;
+	background: url(./assets/images/right-arrow.png) 0 6px no-repeat;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	&[data-active='true'] {
+		padding: 0 5px;
+		color: #fff;
+		font-weight: bold;
+		background: none;
+		background: #749dcf;
+	}
+}

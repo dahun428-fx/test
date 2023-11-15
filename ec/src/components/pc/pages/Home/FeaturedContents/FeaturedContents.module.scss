@@ -1,0 +1,20 @@
+.legacy {
+	margin-top: 60px;
+	// NOTE: 旧ECとのスタイル互換のため必要。
+	// WARN: これは legacy 領域からの侵食であり、ルール違反です。真似しないでください。
+	//       そもそも詳細度の点でもルール違反です。痛みを伴う涙の記述です…。
+	* {
+		box-sizing: content-box;
+		line-height: normal;
+	}
+
+	a,
+	a:link {
+		text-decoration: none;
+	}
+
+	a:hover,
+	a:active {
+		text-decoration: underline;
+	}
+}

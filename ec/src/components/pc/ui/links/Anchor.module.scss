@@ -1,0 +1,41 @@
+/* color mixin */
+@mixin color($colors) {
+	color: map-get($colors, text);
+}
+
+$colorThemes: (
+	primary: (
+		text: #004098,
+	),
+	secondary: (
+		text: #333,
+	),
+	tertiary: (
+		text: #000,
+	),
+);
+
+.anchorLink {
+	@each $property, $colors in $colorThemes {
+		&[data-theme='#{$property}'] {
+			@include color($colors);
+		}
+	}
+
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:visited {
+		color: #750056;
+	}
+
+	&:hover {
+		color: #004098;
+		text-decoration: underline;
+	}
+}
+
+.disabled {
+	color: #999;
+}

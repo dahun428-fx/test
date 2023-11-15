@@ -1,0 +1,49 @@
+.item {
+	display: block;
+	width: 150px;
+	height: 100%;
+	text-decoration: none;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.itemContent {
+	padding: 15px;
+	white-space: normal;
+}
+
+.imageContainer {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	min-height: 110px;
+	padding: 5px;
+}
+
+.brand {
+	height: 18px;
+	overflow: hidden;
+	color: #aaa;
+	font-size: 12px;
+}
+
+.name {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	height: 36px;
+	overflow: hidden;
+	color: #000;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 1.25;
+	white-space: normal;
+	/* stylelint-disable-next-line order/properties-order */
+	text-overflow: ellipsis;
+	word-break: break-word;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+.label {
+	display: flex;
+}

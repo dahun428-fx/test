@@ -1,0 +1,72 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	display: inline-block;
+	font-size: 0.8125rem;
+	vertical-align: top;
+}
+
+.wrapperItem {
+	margin: 1rem 0;
+	margin-left: 24px;
+	border: 1px solid #ccc;
+}
+
+.brandName {
+	padding: 0.25rem 1rem;
+	font-weight: bold;
+	background-color: #f5f5f5;
+}
+
+.linkListWrapper {
+	padding: 1rem;
+}
+
+.linkList {
+	height: 120px;
+	min-height: 120px;
+	overflow: hidden;
+	transition: height 0.5s;
+}
+
+.linkItem {
+	margin: 0.25rem 0;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	white-space: nowrap;
+}
+
+.viewMoreWrapper {
+	margin-top: 16px;
+	border-top: 1px dashed #ccc;
+}
+
+%viewMore {
+	display: block;
+	padding: 10px 12px 10px 34px;
+	color: #004098;
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+
+	&:hover {
+		color: #3366ac;
+		background-color: #ecf3fc;
+	}
+
+	&:visited {
+		color: #681da8;
+	}
+}
+
+.show {
+	@extend %viewMore;
+
+	background-image: url('#{variables.$iconsPath}/plus.svg');
+}
+
+.hide {
+	@extend %viewMore;
+
+	background-image: url('#{variables.$iconsPath}/minus.svg');
+}

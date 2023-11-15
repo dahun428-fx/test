@@ -1,0 +1,105 @@
+.serviceMenu {
+	width: 100vw;
+	// 100px: height of header & footer
+	height: calc(100vh - 100px);
+	overflow: auto;
+	font-size: 14px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgb(0 0 0 / 0.4);
+}
+
+.workingHoursSection {
+	padding: 10px 15px;
+}
+
+.businessTel {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.telNumber {
+	color: #ea0000;
+	text-decoration: none;
+}
+
+.businessDay {
+	white-space: pre-wrap;
+}
+
+.orderQuoteSectionHeading {
+	padding: 10px 15px 9px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: 0.75px;
+	background-color: #0098d8;
+}
+
+.orderQuoteList {
+	font-size: 1px;
+	letter-spacing: -1px;
+	word-spacing: -1px;
+}
+
+.orderQuoteListItem {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 50%;
+	margin-left: -1px;
+	letter-spacing: normal;
+	word-spacing: normal;
+	border-bottom: 1px solid #bfbfbf;
+	border-left: 1px solid #bfbfbf;
+}
+
+.orderBox {
+	padding: 0 15px;
+}
+
+.orderBoxLinkListItem {
+	padding: 12px 0;
+
+	&:first-child {
+		border-top: none;
+	}
+}
+
+.orderBoxLinkListItemWithBorder {
+	@extend .orderBoxLinkListItem;
+
+	border-top: 1px dotted #a7a7a7;
+}
+
+.orderBoxLinkListLink {
+	display: block;
+	color: #004098;
+	text-decoration: none;
+}
+
+.customerServiceSectionTitle {
+	padding: 10px 15px 9px;
+	color: #333;
+	font-size: 18px;
+	background-color: #e6e6e6;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.customerServiceLinkList {
+	padding: 0 15px;
+	overflow: hidden;
+}
+
+.customerServiceLinkListItem {
+	margin: 12px 0;
+	white-space: pre-wrap;
+}
+
+.upgradeAccount {
+	margin-top: 7px;
+	padding: 8px 10px 0;
+}
+
+.upgradeAccountButtonWrapper {
+	margin: 15px 0;
+	padding: 0 15px;
+}

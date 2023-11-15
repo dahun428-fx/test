@@ -1,0 +1,53 @@
+.container {
+	width: 260px;
+}
+
+.headerBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 12px 0 12px 8px;
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+}
+
+.filterHeading {
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.panel {
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #fff;
+}
+
+.clearAll {
+	display: inline-block;
+	box-sizing: border-box;
+	margin-right: 8px;
+	padding: 4px 8px;
+	color: #004098;
+	font-size: 0.6875rem;
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none;
+	background-color: transparent;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+		opacity: 0.8;
+	}
+}
+
+.specList {
+	overflow: hidden;
+}
+
+.sticky {
+	position: sticky;
+}

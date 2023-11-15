@@ -1,0 +1,42 @@
+.item {
+	box-sizing: border-box;
+	padding: 15px;
+	background-color: #e6e6e6;
+	border-bottom: 1px dotted #bfbfbf;
+}
+
+.main {
+	display: flex;
+}
+
+.info {
+	margin-left: 8px;
+}
+
+.imageWrapper {
+	width: 64px;
+	height: 64px;
+}
+
+.partNumber {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.seriesName {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.brandName {
+	margin: 8px 0 3px;
+	color: #ccc;
+	font-size: 12px;
+}
+
+.notice {
+	padding: 10px;
+	font-size: 16px;
+	background-color: #fff2bf;
+	border-radius: 2px;
+}

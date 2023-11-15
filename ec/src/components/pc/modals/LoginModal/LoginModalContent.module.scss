@@ -1,0 +1,75 @@
+@use 'src/styles/pc/variables';
+
+.container {
+	width: 560px;
+}
+
+.contents {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 32px;
+	font-size: 0.8125rem;
+}
+
+.formContainer {
+	width: 268px;
+	min-height: 273px;
+	border: 1px solid #bfbfbf;
+	border-radius: 2px;
+}
+
+.formTitle {
+	padding: 8px 16px;
+	font-size: 0.8125rem;
+	background-color: #f8fbff;
+	border-bottom: 1px solid #ccc;
+}
+
+.formBody {
+	padding: 0 16px;
+}
+
+.formLabel {
+	margin-bottom: 5px;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.registerButtonWrapper {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.registerButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 47px;
+	font-size: 0.9375rem;
+}
+
+.guideLink {
+	position: relative;
+	margin-top: 5px;
+	padding-left: 8px;
+	font-size: 0.8125rem;
+
+	&::before {
+		position: absolute;
+		top: 3px;
+		left: 0;
+		width: 10px;
+		height: 10px;
+		background: url('#{variables.$commonPath}/arrow.png') 0 0.2em no-repeat;
+		content: '';
+	}
+}
+
+.errorContents {
+	color: #444;
+	font-size: 0.8125rem;
+}
+
+.loader {
+	height: 200px;
+}

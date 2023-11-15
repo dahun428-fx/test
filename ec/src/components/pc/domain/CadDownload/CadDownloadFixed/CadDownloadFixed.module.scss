@@ -1,0 +1,44 @@
+.title {
+	margin-top: 64px;
+	margin-bottom: 16px;
+	padding-bottom: 8px;
+	font-weight: bold;
+	font-size: 1.0625rem;
+	line-height: 1.3;
+	border-bottom: 1px solid #ccc;
+}
+
+.noMargin {
+	margin-top: 0;
+}
+
+.linkListWrapper {
+	max-height: 350px;
+	margin-top: 24px;
+	overflow-y: auto;
+}
+
+.linkItem {
+	margin: 0.25rem 0;
+	color: #004098;
+	font-size: 0.8125rem;
+	word-wrap: break-word;
+}
+
+.alert {
+	color: #c00;
+	font-size: 0.8125rem;
+}
+
+.fileLink {
+	text-decoration: none;
+
+	&:link {
+		color: #004098;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}

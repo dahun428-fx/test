@@ -1,0 +1,1 @@
+export { ProductNotice } from './ProductNotice';

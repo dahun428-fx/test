@@ -1,0 +1,17 @@
+@use 'src/styles/pc/variables';
+
+.bottom {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: variables.$floatingBannerZIndex;
+	width: 100%;
+	// NOTE: この min-height 指定は、NEW_FE-3706 で CLS を改善するために追加されました。
+	// WARN: 入稿内容が height 85px 未満のものになった場合、以下の指定を変更する必要があります。
+	min-height: 85px;
+	padding-bottom: 9px;
+	text-align: center;
+	background-color: #cce1f4;
+	border: solid 1px #bfbfbf;
+	box-shadow: rgb(0 0 0 / 0.1) 0 -3px 3px 0;
+}

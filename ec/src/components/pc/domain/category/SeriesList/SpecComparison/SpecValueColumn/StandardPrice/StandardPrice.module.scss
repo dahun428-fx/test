@@ -1,0 +1,37 @@
+@use 'src/styles/pc/variables';
+
+.priceLeadTimeContainer {
+	display: inline-block;
+	color: #333;
+}
+
+.priceContainer {
+	font-size: 1rem;
+
+	&:not(:first-child) {
+		margin-top: 5px;
+	}
+}
+
+.preDiscountPriceContainer {
+	color: #666;
+	text-decoration: line-through;
+}
+
+.preDiscountPrice {
+	font-size: 0.825rem;
+}
+
+.campaignPriceLabel {
+	color: #d00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.campaignPrice {
+	color: #d00;
+}
+
+.fallbackPrice {
+	margin-left: -3px;
+}

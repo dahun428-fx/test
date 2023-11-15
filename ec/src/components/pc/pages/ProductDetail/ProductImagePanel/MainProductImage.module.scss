@@ -1,0 +1,38 @@
+@use 'src/styles/pc/variables';
+
+.image {
+	position: relative;
+	display: inline-block;
+}
+
+.zoomImage {
+	position: absolute;
+}
+
+.zoomIndicator {
+	position: absolute;
+	background-color: #016ac6;
+	cursor: pointer;
+	opacity: 0.2;
+
+	&[aria-hidden='true'] {
+		display: none;
+	}
+}
+
+.zoomViewer {
+	position: absolute;
+	top: 0;
+	left: 266px;
+	z-index: variables.$tooltipZIndex;
+	width: 930px;
+	height: 500px;
+	overflow: hidden;
+	background: #fff url('#{variables.$commonPath}/loading-dark.gif') center
+		center no-repeat;
+	border: 2px solid #ccc;
+
+	&[aria-hidden='true'] {
+		display: none;
+	}
+}

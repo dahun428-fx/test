@@ -1,0 +1,71 @@
+@use 'src/styles/pc/variables';
+
+$lineHeight: 20.8px;
+$lineClamp: 2;
+
+.description {
+	position: relative;
+	margin: 16px 0;
+	overflow: hidden;
+	font-size: 0.8125rem;
+	word-wrap: break-word;
+}
+
+.limitContent {
+	max-height: calc($lineHeight * $lineClamp);
+}
+
+.fitContent {
+	max-height: unset;
+}
+
+.readMoreLink {
+	color: #004098;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+%read_more_icon {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	content: '';
+}
+
+.closeReadMore {
+	display: inline-block;
+
+	&::before {
+		@extend %read_more_icon;
+
+		background-image: url('#{variables.$iconsPath}/minus.svg');
+		background-position: right 4px center;
+	}
+}
+
+.readMore {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: inline-block;
+	font-size: 0.8125rem;
+	background: linear-gradient(270deg, #fff 50%, rgb(255 255 255 / 0) 100%);
+
+	&::before {
+		@extend %read_more_icon;
+
+		padding-left: 75px;
+		background-image: url('#{variables.$iconsPath}/plus.svg');
+		background-position: right 8px center;
+	}
+}
+
+.none {
+	display: none;
+}

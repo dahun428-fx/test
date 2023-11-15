@@ -1,0 +1,99 @@
+.listItem {
+	position: relative;
+	width: calc(50% - 12px);
+	min-height: 300px;
+	margin-top: 8px;
+	padding: 8px;
+	padding-bottom: 40px;
+	background-color: #fff;
+	border: none;
+}
+
+.listItem:nth-child(2n - 1) {
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+.main {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	width: auto;
+	border-left: none;
+}
+
+.panel {
+	position: relative;
+	min-height: 150px;
+}
+
+.panelFixed {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 120px;
+	margin-top: 5px;
+	text-align: center;
+}
+
+.panelFlow {
+	display: flex;
+	flex-direction: column;
+	max-width: 496px;
+	word-wrap: break-word;
+}
+
+.brandWrapper {
+	display: flex;
+	align-items: center;
+	max-width: 167px;
+	min-height: 27px;
+}
+
+.brandItem {
+	min-height: 40px;
+	margin: 3px 0;
+	color: #aaa;
+	font-size: 0.75rem;
+	word-break: break-all;
+}
+
+.seriesName {
+	/* stylelint-disable-next-line value-no-vendor-prefix */
+	display: -webkit-box;
+	min-height: 81px;
+	margin-top: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+
+.seriesNameLink {
+	color: #000;
+	font-weight: bold;
+	font-size: 0.9375rem;
+	line-height: 1.8;
+	text-decoration: none;
+}
+
+.economyLabel {
+	background-repeat: no-repeat;
+}
+
+.salesIcon {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: flex;
+}
+
+.salesLabel {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 6px;
+	display: inline-block;
+	width: calc(100% - 68px);
+}

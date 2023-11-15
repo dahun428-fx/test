@@ -1,0 +1,27 @@
+.form {
+	display: flex;
+	align-items: center;
+}
+
+.field {
+	width: 340px;
+	min-width: 340px;
+	margin-left: 20px;
+	padding: 7px 15px;
+	font-size: 0.8125rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+
+	&:focus {
+		background-color: #fffaeb;
+	}
+
+	&::placeholder {
+		color: #d00;
+	}
+
+	/* stylelint-disable-next-line */
+	&:-ms-input-placeholder {
+		color: #d00;
+	}
+}

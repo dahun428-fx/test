@@ -1,0 +1,111 @@
+@use 'src/styles/mobile/variables';
+
+$messageIcons: (
+	warning: (
+		background: url('#{variables.$commonPath}/warning.png'),
+	),
+	info: (
+		background: none,
+		padding-left: 0,
+	),
+	red-dot: (
+		background: url('#{variables.$commonPath}/red-dot.png'),
+	),
+	blue-dot: (
+		background: url('#{variables.$commonPath}/blue-dot.png'),
+	),
+	none: (
+		background: none,
+		padding-left: 0,
+	),
+);
+
+$messageColors: (
+	'red': (
+		color: #d00,
+	),
+	'black': (
+		color: #333,
+	),
+);
+
+@mixin icon($icon) {
+	padding-left: map-get($icon, padding-left);
+	background: map-get($icon, background) no-repeat 0 0.2em;
+}
+
+@mixin color($color) {
+	color: map-get($color, color);
+}
+
+.text {
+	flex: 1 1 auto;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.messageItem {
+	@each $property, $icon in $messageIcons {
+		&[data-icon='#{$property}'] {
+			@include icon($icon);
+		}
+	}
+
+	@each $property, $color in $messageColors {
+		&[data-text-color='#{$property}'] {
+			@include color($color);
+		}
+	}
+
+	display: flex;
+	padding-left: 26px;
+	font-size: 14px;
+
+	&[data-expanded='true'] {
+		flex-wrap: wrap;
+
+		& > .text {
+			white-space: pre-wrap;
+		}
+	}
+}
+
+$moreStyleTheme: (
+	'default': (
+		color: #004098,
+		background-color: transparent,
+	),
+	'info': (
+		color: #eee,
+		background-color: #004098,
+		border-radius: 6px,
+		margin-left: 5px,
+		white-space: nowrap,
+	),
+);
+
+@mixin moreStyles($styles) {
+	margin-left: map-get($styles, margin-left);
+	color: map-get($styles, color);
+	white-space: map-get($styles, white-space);
+	background-color: map-get($styles, background-color);
+	border-radius: map-get($styles, border-radius);
+}
+
+.moreWrap {
+	display: inline-flex;
+	flex: 1 0 auto;
+	justify-content: flex-end;
+}
+
+.more {
+	@each $property, $styles in $moreStyleTheme {
+		&[data-theme='#{$property}'] {
+			@include moreStyles($styles);
+		}
+	}
+
+	padding: 0 5px;
+	text-decoration: none;
+}
