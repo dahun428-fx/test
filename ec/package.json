@@ -22,7 +22,8 @@
 		"build-storybook": "export NODE_OPTIONS=--openssl-legacy-provider; build-storybook",
 		"stylelint-check": "stylelint-config-prettier-check",
 		"analyze-bundle:pc": "cross-env ANALYZE=true npm run build",
-		"analyze-bundle:mobile": "cross-env ANALYZE=true npm run build:mobile"
+		"analyze-bundle:mobile": "cross-env ANALYZE=true npm run build:mobile",
+		"install-all" : "npm i ts-node && npm i && cd tools/config-generator && npm i && cd ../tools/cors-proxy && npm i && cd ../tools/ect-api-model-generator && npm i"
 	},
 	"dependencies": {
 		"@datadog/browser-logs": "^4.23.3",
