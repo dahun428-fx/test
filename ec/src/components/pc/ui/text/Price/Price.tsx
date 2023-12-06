@@ -224,6 +224,61 @@ const SGD: React.VFC<CurrencyProps> = ({
 		</span>
 	);
 };
+/**
+ * currency code: SGD
+ */
+const KRW: React.VFC<CurrencyProps> = ({
+	value,
+	symbolLess,
+	className,
+	isRed = false,
+	strike = false,
+	theme = 'standard',
+}) => {
+	const digits = 2;
+	const symbol = 'SGD';
+	const price = useMemo(() => format(value, digits), [value]);
+
+	if (
+		theme === 'accent' ||
+		theme === 'medium-accent' ||
+		theme === 'large-accent'
+	) {
+		return (
+			<span className={className}>
+				{price && !symbolLess && (
+					<span
+						className={classNames(styles.symbol, {
+							[String(styles.strike)]: strike,
+						})}
+					>
+						{symbol}
+					</span>
+				)}
+				<span
+					className={classNames({
+						[String(styles.accent)]: theme === 'accent',
+						[String(styles.mediumAccent)]: theme === 'medium-accent',
+						[String(styles.largeAccent)]: theme === 'large-accent',
+						[String(styles.isRed)]: isRed,
+						[String(styles.strike)]: strike,
+					})}
+				>
+					{price}
+				</span>
+			</span>
+		);
+	}
+
+	return (
+		<span className={className}>
+			{price && !symbolLess && `${symbol} `}
+			<span className={classNames({ [String(styles.isRed)]: isRed })}>
+				{price}
+			</span>
+		</span>
+	);
+};
 
 /** Fallback price */
 const FallbackPrice: React.VFC<CurrencyProps> = ({
@@ -274,4 +329,5 @@ const prices: Record<string, React.VFC<CurrencyProps>> = {
 	MYR,
 	USD,
 	SGD,
+	KRW,
 } as const;
