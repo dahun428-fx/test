@@ -36,6 +36,28 @@ export const MegaNav: React.VFC<Props> = ({ onClickLink }) => {
 					: // There is 13 top categories
 					  range(0, 13).map(index => <SkeletonTopCategoryItem key={index} />)}
 			</ul>
+
+			<div className={styles.section}>
+				<Heading>{t('components.ui.navigations.megaNav.headingBrand')}</Heading>
+				<ul>
+					<li>
+						<Link href={url.brandList} onClick={onClickLink}>
+							{t('components.ui.navigations.megaNav.brandPageLink')}
+						</Link>
+					</li>
+					<li>
+						<Link
+							href={url.brandCategory({
+								brandCode: 'MSM1',
+								brandUrlCode: 'misumi',
+							})}
+							onClick={onClickLink}
+						>
+							{t('components.ui.navigations.megaNav.misumiCategoryPageLink')}
+						</Link>
+					</li>
+				</ul>
+			</div>
 		</div>
 	);
 };

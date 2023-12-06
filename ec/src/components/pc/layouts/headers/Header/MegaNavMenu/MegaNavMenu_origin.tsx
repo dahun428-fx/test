@@ -83,30 +83,24 @@ export const MegaNavMenu: React.VFC = () => {
 	});
 
 	return (
-		<div className={styles.headerMeganavWrap}>
-			<div className={styles.headerMeganav}>
-				<div className={styles.meganav}>
-					<h2 className={styles.h2}>
-						<i></i>
-						카테고리/브랜드
-					</h2>
-					<div className={styles.meganavBody}>
-						<div className={styles.meganavSearch}>
-							<div className={styles.meganavCategory}>
-								<ul>
-									{/* include meganav.html */}
-									<MegaNav onClickLink={handleClickLink} />
-								</ul>
-							</div>
-						</div>
-						<div className={styles.newMeganavBanner}>
-							<ul>
-								<li>{/* 브랜드전체보기 */}</li>
-								<li>{/* 공구,MRO,소모성자재 전용사이트 바로가기 */}</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+		<div
+			ref={rootRef}
+			className={styles.wrapper}
+			// NOTE: Suppress automatic opening when the mouse is already over a button
+			//       when moving from the TOP page to other pages. Last resort.
+			onMouseEnter={mounted && handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
+			<button
+				className={styles.trigger}
+				onClick={handleClick}
+				aria-haspopup="menu"
+				aria-expanded={isOpen}
+			>
+				<h2>{t('components.ui.layouts.headers.header.megaNavMenu.heading')}</h2>
+			</button>
+			<div className={styles.menu} aria-hidden={!isOpen}>
+				<MegaNav onClickLink={handleClickLink} />
 			</div>
 		</div>
 	);

@@ -1,20 +1,55 @@
 @use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
 
-.balloon {
-	position: absolute;
-	top: -1px;
-	left: 294px;
-	display: none;
+$spriteMega: './assets/images/sprite_meganavi_20180322.png';
+$spriteMegaOn: './assets/images/sprite_meganavi_on_20180322.png';
+
+.meganavCategory {
+	padding: 12px 0 11px;
+	& > ul {
+		& > li {
+			& > a {
+				display: block;
+				padding: 8px 15px;
+				line-height: 1.25;
+				letter-spacing: -1px;
+				font-weight: bold;
+				font-size: 15px;
+				color: $nagi_color_text_base;
+				text-decoration: none;
+				background-image: url($spriteMega);
+				background-repeat: no-repeat;
+				&:hover {
+					background-color: #f5f5f7;
+					background-image: url($spriteMegaOn);
+					text-decoration: underline;
+					color: $nagi_color_text_link_hover;
+				}
+			}
+			&.on {
+				& > a {
+					background-color: #f5f5f7;
+					background-image: url($spriteMegaOn);
+					text-decoration: underline;
+					color: $nagi_color_text_link_hover;
+				}
+			}
+		}
+	}
 }
-
-.topCategoryItem {
-	display: block;
-
-	&:hover {
-		// NOTE: 詳細度を上げることは原則禁止だが、やむを得ないのでつける。
-		//       バルーンを表示するために block 設定。(通常は display: none となっている。)
-		.balloon {
-			display: block;
+.headerWrap {
+	.meganavCategory {
+		& > ul {
+			& > li {
+				& > a {
+					&:link {
+						color: #004098;
+					}
+					&:visited {
+						color: #750056;
+					}
+				}
+			}
 		}
 	}
 }

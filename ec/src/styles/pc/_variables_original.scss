@@ -1,0 +1,282 @@
+// ------------------------
+// common
+// ------------------------
+// column
+$w_1col_main: auto;
+$w_2col_main: auto;
+$w_2col_main_category: auto;
+$w_2col_main_filter: auto;
+$w_2col_nav: auto;
+$w_2col_nav_category: auto;
+$w_2col_nav_filter: auto;
+
+// line-height
+$lh_base: 1.5;
+
+// font-size
+$font_size_base: 14px;
+$fs_S: round($font_size_base * 0.8572); //12px
+$fs_M: $font_size_base;
+$fs_L: round($font_size_base * 1.07143); //15px
+$fs_XL: round($font_size_base * 1.1428); //16px
+$fs_XXS: round($font_size_base * 1.2142); //17px
+$fs_XXL: round($font_size_base * 1.2857); //18px
+$fs_XXXL: round($font_size_base * 1.4285); //20px
+$fs_XXXXS: round($font_size_base * 1.5714); //22px
+$fs_XXXXL: round($font_size_base * 1.7142); //24px
+
+// color : text
+$color_text_base: #333;
+$color_text_base_sub: #fff;
+$color_text_strong: #dd0000; //red
+
+// color : link
+$color_text_link: #004bb1;
+$color_text_link_visited: #004bb1;
+$color_text_link_hover: #004bb1;
+
+// color : box
+$color_alert_box: #ffd9d9; //light red
+$color_caution_box: #fff2bf; //light yellow
+$color_strong_box: #cce1f4; //light blue
+$color_general_box: #e6e6e6; //light gray
+
+// color
+$color_default: #f2f2f2; //gray
+$color_default_sub: #999; //gray
+$color_accent: #0169c6; //blue
+$color_accent_sub: #67a5dd; //blue
+$color_sale: #dd0000; //red
+$color_alert: #dd0000; //red
+$color_caution: #ffcc00; //yellow
+$color_current: #749dcf; //light blue
+$color_conversion: #ff730a; //orange
+$color_disabled: #bfbfbf; //gray
+$color_disabled_textbox: #ebebe4; //gray
+
+// border
+$color_border_base: #333; //gray
+$color_border_default: #bfbfbf; //gray
+$color_border_strong: #dd0000; //red
+$color_border_hover: #b9cee7; //light blue
+$color_border_accent: #0169c6; //blue
+$color_border_progress_on: #2d70c3; //blue
+$color_border_progress_off: #b8b8b8; //gray
+$color_border_img: #c5c5c5; //gray
+
+// icon
+$color_icon_default: #4d96d7; //light blue
+
+// radius
+$bd_radius: 2px;
+
+// nagiデザインカラー
+// ヘッダ・フッタ・トップなど部分的な対応のため、既存のモジュールと名前をわけておく。
+// 統一するとき、「nagi_」接頭辞は削除する。
+$nagi_color_default_sub: #eeeeee; //gray
+$nagi_color_accent: #004098; //blue
+$nagi_color_accent_hover: #025fae;
+$nagi_color_accent_sub: #0098d8; //blue
+$nagi_color_sale: #ea0000; //red
+$nagi_color_alert: #ea0000; //red
+$nagi_color_conversion: #ffcd00; //yamabuki
+$nagi_color_active: #fff5cb; //cream
+$nagi_color_disabled: #a7a7a7; //gray
+$nagi_color_disabled_text: #868686; //gray
+
+// color : text
+$nagi_color_text_base: #000;
+$nagi_color_text_base_sub: #fff;
+$nagi_color_text_strong: #ea0000; //red
+
+// color : link
+$nagi_color_text_link: #004098;
+$nagi_color_text_link_visited: #750056;
+$nagi_color_text_link_hover: #025fae;
+
+// border
+$nagi_color_border_default: #a7a7a7; //gray
+
+// placeholder
+@mixin placeholder-color($color) // 記述をまとめると動作しなくなる
+ {
+	&::-moz-placeholder // Chrome
+	{
+		color: $color;
+		opacity: 1;
+	}
+	&::-webkit-input-placeholder // Firefox
+	{
+		color: $color;
+	}
+	&:-ms-input-placeholder // IE
+	{
+		color: $color;
+	}
+	&::-ms-input-placeholder // Edge
+	{
+		color: $color;
+	}
+	&:focus::-moz-placeholder // Chrome フォーカス時
+	{
+		color: transparent;
+	}
+	&:focus::-webkit-input-placeholder // Firefox フォーカス時
+	{
+		color: transparent;
+	}
+	&:focus:-ms-input-placeholder // IE フォーカス時
+	{
+		color: transparent;
+	}
+	&:focus::-ms-input-placeholder // Edge フォーカス時
+	{
+		color: transparent;
+	}
+}
+
+// ------------------------
+// header
+// ------------------------
+$header_color_bg_default: #f2f2f2; //gray
+$header_color_border_sub: #e6e6e6; //gray
+$header_color_bg_box_default: #fff; //white
+$header_color_bg_keyword_hover: #b9cee7; //light blue
+$header_color_sp_default: #d1d1d1; //sp gray
+
+// ------------------------
+// footer
+// ------------------------
+$footer_color_bg_default: #f2f2f2; //gray
+$footer_color_bg_lead: #fff; //white
+$footer_color_border: #bfbfbf; //gray
+$footer_color_text_copyright: #646464;
+
+// ------------------------
+// mega navi
+// ------------------------
+$meganav_color_bg_default: #fff;
+$meganav_color_bg_brand: #f2f2f2; //gray
+$meganav_color_bg_nav_hover: #7e8fd5; // light blue
+$meganav_color_border_arrow_before: #fff; //white
+$meganav_color_border_arrow_after: #0169c6; //blue
+
+// ------------------------
+// navCategory
+// ------------------------
+$navcategory_box_border: #bfbfbf; //gray
+$navcategory_color_border: #333; //gray
+$navcategory_color_text_current: #fff; //white
+$navcategory_color_bg_default: #fff; //white
+$navcategory_color_bg_current: #749dcf; //blue
+$navcategory_color_bg_maker: #999; //dark gray
+$navcategory_color_bg_level2: #f3f3f3; //light blue
+
+// ------------------------
+// navFilter
+// ------------------------
+$navfilter_box_border: #bfbfbf; //gray
+$navfilter_box_bg: #f2f2f2; //light gray
+$navfilter_color_text_current: #fff; //white
+$navfilter_color_bg_default: #e6e6e6; //light gray
+$navfilter_color_bg_addoption: #cce1f4; //light blue
+$navfilter_color_bg_current: #749dcf; //blue
+
+// ------------------------
+// m-balloonBox
+// ------------------------
+$m-balloonBox_border: #67a5dd; //blue
+$m-balloonBox_bg_default: #fff; //white
+
+// ------------------------
+// z-index
+// ------------------------
+
+// --------------------
+// header
+$z-l-headerWrap: 8000;
+//サジェストオーバーレイ
+$z-l-suggestOverlay: 7000;
+
+// メガナビエリア
+
+//ナビロールオーバー時の右側三角形
+//z-l-meganav_arrow_after : 1020
+//z-l-meganav_arrow_before : 1030
+
+// --------------------
+//  ヘッダーエリア
+
+//キーワードサジェストエリア
+// l-headerに含まれ、メガナビ以上。
+$z-l-header__keywordBox: 8020;
+
+// spメニュー
+// ヘッダー内他要素に勝ちつつ、サジェスト以上。
+$z-l-header__spMenu: 8040;
+
+//ログインバルーン
+//z-l-header__balloonBox : 2010
+
+//キーワードオーバーレイ(IE8時のプレースフォルダ表示用)
+//z-l-header__keywordOverlay :2020
+
+//キーワード検索フォーム(IE8時のプレースフォルダ表示用)
+//z-l-header__searchInner_lc-input : 2030
+
+// --------------------
+//  breadcrumb
+$z-l-breadcrumbWrap: 1; // asideが無くなったので最下位にする。
+
+//カテゴリ　技術サポート窓口
+// ページ内コンテンツに移り、下部に.m-headerMenuバルーンがあるため、それに勝つ。
+$z-m-contact: 4810;
+
+//メーカー カテゴリ
+$z-m-headerMenu: 4800;
+//お探しのメーカーはこちらですか？
+$z-makerInformation: 4700;
+
+// 商品詳細
+$z-l-product: 4300;
+//z-product__main : 4310
+//z-product__aside : 4320
+
+// 商品詳細バルーン
+// 上記 z-l-product以上
+$z-l-productBalloon: 4400;
+
+$z-l-contentWrap: 4200;
+$z-l-content: 4200; //z-l-contentWrapと同一値でよい
+
+$z-c-balloonBoxWrap--cadDL: 4210; //l-content--filterの中にz-indexが要素が増えたら変更は必要
+$z-c-balloonBoxWrap--zipDL: 4210; //l-content--filterの中にz-indexが要素が増えたら変更は必要
+
+$z-l-meganavi: 4000; // z-l-mainと同階層値。
+
+// --------------------
+//  メインカラム
+$z-l-main: 4000;
+
+// --------------------
+//  ページトップへ戻る
+// l-mainより大であること
+$z-VN_pageTopWrapper: 5000;
+
+// --------------------
+//  フッター
+// z-l-footer : 3000
+
+$z-VNpageTooltip: 3010;
+
+// --------------------
+//  検索結果　評価モーダル表示ボタン
+$z-m-btn--feedback: 8000;
+
+// --------------------
+//  モーダル
+$z-VNmodal: 9000;
+$z-VNmodal2: 9001;
+
+// SPスペック検索用
+$z-l-modal--filter: 9000;

@@ -1,58 +1,103 @@
 @use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
 
-.menu {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	z-index: variables.$popoverZIndex;
-	display: none;
-
-	&[aria-hidden='false'] {
-		display: inline-block;
-	}
+.headerMeganavWrap {
+	width: 200px;
+	margin: 10px 0 0 0;
 }
 
-.wrapper {
+.meganav {
 	position: relative;
-	display: inline-block;
-	width: 220px;
+	.h2 {
+		width: 100%;
+		display: flex;
+		font-weight: 600;
+		align-items: center;
+		padding: 0 10px;
+		height: 40px;
+		background-color: #0f218b;
+		color: #fff;
+		border: none;
+		font-size: 14px;
+		cursor: pointer;
+		i {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 16px;
+			height: 12px;
+			border-top: #fff 2px solid;
+			border-bottom: #fff 2px solid;
+			margin: 0 20px 0 0;
+			&::after {
+				content: '';
+				width: 100%;
+				height: 2px;
+				background-color: #fff;
+			}
+		}
+	}
+	.h3 {
+		box-sizing: border-box;
+		margin: -1px;
+		padding: 6px 20px 4px;
+		background-color: $nagi_color_accent_sub;
+		font-size: $fs_XL;
+		font-weight: bold;
+		color: $nagi_color_text_base_sub;
+	}
+}
+.page1 {
+	.meganav {
+		.h2 {
+			background-position: 169px 50%;
+		}
+	}
+}
+.on {
+	&.meganav {
+		.h2 {
+			background-color: $nagi_color_accent_hover;
+		}
+		.meganavSearch {
+			display: block;
+		}
+	}
 }
 
-.trigger {
-	width: 100%;
-	height: 35px;
-	padding: 7px 20px 6px 10px;
-	color: #fff;
-	font-weight: bold;
-	font-size: 14px;
-	text-align: left;
-	background-color: #004098;
-	border: none;
-	box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.3);
-	cursor: pointer;
-
-	&:hover {
-		opacity: 0.9;
-	}
-
-	&::after {
-		position: absolute;
-		top: calc(50% - 2px);
-		right: 12px;
-		display: block;
-		width: 0;
-		height: 0;
-		border-top: solid 4px #fff;
-		border-right: solid 3px transparent;
-		border-left: solid 3px transparent;
-		transform-origin: center center;
-		content: '';
-	}
-
-	&[aria-expanded='true']::after {
-		transform: rotate(180deg);
-		background: {
-			color: #025fae;
+.newMaganavBanner {
+	display: none;
+	& > ul {
+		& > li {
+			line-height: 0;
+			font-size: 0;
+			border: 1px solid #a7a7a7;
+			margin-top: 10px;
+			&:first-child {
+				margin-top: 0;
+				border-top: 0;
+			}
+			& > a {
+				display: block;
+				background-repeat: no-repeat;
+				background-position: 50% 50%;
+				font-size: 1px;
+				text-indent: -10000px;
+				overflow: hidden;
+			}
 		}
+	}
+}
+.on {
+	&.meganav {
+		.newMaganavBanner {
+			display: block;
+		}
+	}
+}
+.simpleTop {
+	.newMaganavBanner {
+		display: none;
 	}
 }

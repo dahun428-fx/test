@@ -1,0 +1,59 @@
+@use 'src/styles/pc/variables';
+
+.searchBox {
+	flex-basis: calc(100% - 75px);
+	height: 35px;
+	padding-left: 10px;
+	font-size: 16px;
+	line-height: 35px;
+	border: 1px solid #a7a7a7;
+
+	&:focus {
+		background-color: #fffaeb;
+		outline-color: #004098;
+	}
+
+	&::-ms-clear {
+		display: none;
+		width: 0;
+		height: 0;
+	}
+}
+
+.searchBoxForm {
+	position: relative;
+	display: flex;
+	width: 100%;
+}
+
+.buttonContainer {
+	flex-basis: 75px;
+	margin-left: -1px;
+}
+
+.suggestionsWrapper {
+	position: absolute;
+	top: calc(100% - 1px);
+	left: 0;
+	z-index: variables.$popoverZIndex;
+	width: 550px;
+	border: 1px solid #ccc;
+	border-top: none;
+	box-shadow: 0 1px 5px 0 rgb(0 0 0 / 0.3);
+
+	&:empty {
+		display: none;
+	}
+}
+
+.suggestions {
+	&:nth-child(n + 2) {
+		margin-top: -1px;
+	}
+}
+
+.removeBorder {
+	&[data-theme='primary'] {
+		box-shadow: none;
+	}
+}

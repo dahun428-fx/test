@@ -29,32 +29,30 @@ export const Header: React.VFC<Props> = ({}) => {
 
 	return (
 		<>
-			<header data-sticky-enabled={pathIsHome}>
-				<div>
-					{/* <div></div> l-headerFixedBg */}
-					<div className={styles.headN}>
-						{/* <div></div> l-header_ttUserWrap */}
-						<div className={styles.headerWrap}>
-							<div className={styles.header}>
-								<div className={styles.headerMain}>
-									<div className={styles.headerLogoWrap}>
-										<h1 className={styles.headerLogo}>
-											<span>MISUMI | Your Time, Our Priority</span>
-										</h1>
-									</div>
-									<SearchBox
-										keyword={keyword}
-										isReSearch={pathIsResult}
-										setIsOverlay={setIsOverlay}
-									/>
+			<header className={styles.header} data-sticky-enabled={pathIsHome}>
+				{/* <NoSupportBrowserMessage />
+				<div className={styles.contentsWrapper}>
+					<div className={styles.contents}>
+						<div className={styles.main}>
+							<Logo needsHeading={pathIsHome} />
+							<div className={styles.searchBoxWrapper}>
+								<div className={styles.megaNavWrapper}>
 									<MegaNavMenu />
 								</div>
-								<div className={styles.headerAside}></div>
+								<SearchBox
+									keyword={keyword}
+									isReSearch={pathIsResult}
+									setIsOverlay={setIsOverlay}
+								/>
 							</div>
 						</div>
+						<div className={styles.aside}>
+							<AsideNavs />
+						</div>
 					</div>
-				</div>
+				</div> */}
 			</header>
+			<div className={isOverlay ? styles.hasSuggestOverlay : ''} />
 		</>
 	);
 };

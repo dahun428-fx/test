@@ -206,36 +206,58 @@ export const SearchBox: React.VFC<Props> = ({
 	]);
 
 	return (
-		<div className={styles.headerSearchWrap}>
-			<div className={styles.headerSearch}>
-				<div className={styles.headerSearchForm}>
-					<input
-						className={styles.input}
-						name="keyword_placehold"
-						type="text"
-						placeholder=""
-						maxLength={200}
-						autoComplete="off"
+		<form
+			className={styles.searchBoxForm}
+			onSubmit={handleSubmit}
+			ref={rootRef}
+		>
+			<input
+				value={cursored.keyword}
+				className={styles.searchBox}
+				onChange={handleChange}
+				onFocus={handleFocus}
+				onKeyDown={handleKeydown}
+				autoComplete="off"
+				maxLength={config.form.length.max.keyword}
+				placeholder={t(
+					'components.ui.layouts.headers.header.searchBox.placeholder'
+				)}
+			/>
+			{active && (
+				<div className={styles.suggestionsWrapper}>
+					<Suggestions
+						key="keyword"
+						title={t(
+							'components.ui.layouts.headers.header.searchBox.keywordSectionTitle'
+						)}
+						cursor={cursor - 1}
+						suggestionList={keywordList}
 					/>
-					<div className={styles.btnSubmitWrap}>
-						<div id="keyword_btn">
-							<input
-								type="submit"
-								className={styles.searchBtn}
-								value="검색"
-								id="keyword_go"
-							/>
-							<input
-								type="submit"
-								className={styles.searchBtnTypeCode}
-								value="Type Code Search"
-								id="typecode_go"
-							/>
-						</div>
-					</div>
+					<Suggestions
+						key="part-number"
+						loading={loading}
+						title={t(
+							'components.ui.layouts.headers.header.searchBox.partNumberSectionTitle'
+						)}
+						cursor={cursor - keywordList.length - 1}
+						suggestionList={partNumberList}
+					/>
+					<Suggestions
+						key="discontinued"
+						title={t(
+							'components.ui.layouts.headers.header.searchBox.discontinuedSectionTitle'
+						)}
+						cursor={cursor - keywordList.length - partNumberList.length - 1}
+						suggestionList={discontinuedList}
+					/>
 				</div>
+			)}
+			<div className={styles.buttonContainer}>
+				<NagiButton type="submit" className={styles.removeBorder}>
+					{t('components.ui.layouts.headers.header.searchBox.submitButton')}
+				</NagiButton>
 			</div>
-		</div>
+		</form>
 	);
 };
 SearchBox.displayName = 'SearchBox';
