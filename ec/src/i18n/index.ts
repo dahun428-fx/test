@@ -20,6 +20,13 @@ if (!i18n.isInitialized) {
 						...sharedResources.en.translation,
 					},
 				},
+				ko: {
+					translation: {
+						...pcResources.en.translation,
+						...mobileResources.en.translation,
+						...sharedResources.en.translation,
+					},
+				}
 			},
 			lng: config.defaultLocale,
 			fallbackLng: config.defaultLocale,

@@ -20,7 +20,7 @@ async function getDefaultParams() {
 		sessionId: await getSessionId(),
 		applicationId: config.applicationId.msm,
 		// NOTE: マレーシアに英語以外の言語が追加されたら要改善
-		lang: 'ENG',
+		lang: 'KOR',
 	};
 }
 

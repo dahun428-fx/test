@@ -1,9 +1,9 @@
 import { Subsidiary } from '@/config/types';
 
 export const subsidiary: Subsidiary = {
-	subsidiaryCode: 'MYS',
-	locales: ['en'],
-	defaultCurrencyCode: 'MYR', // For fallback of the currency code obtained from the API.
+	subsidiaryCode: 'KOR',
+	locales: ['ko'],
+	defaultCurrencyCode: 'KRW', // For fallback of the currency code obtained from the API.
 	cookie: {
 		domain: '.misumi-ec.com',
 	},

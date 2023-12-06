@@ -1,20 +1,20 @@
 import { my } from './resources/country/my';
 import { stg } from './resources/env/stg';
 import { global } from './resources/global';
-import { en } from './resources/language/en';
+import { en, ko } from './resources/language/en';
 import { subsidiary } from './resources/subsidiary';
 import { Config, Site } from '@/config/types';
 
 const site: Site = {
 	api: {
 		msm: {
-			origin: 'https://stg0-my.misumi-ec.com',
+			origin: 'https://stg0-kr.misumi-ec.com',
 		},
 		ect: {
-			origin: 'https://stg0-api.my.misumi-ec.com',
+			origin: 'https://stg0-api.kr.misumi-ec.com',
 		},
 		auth: {
-			origin: 'https://stg0-my.mauth.misumi-ec.com',
+			origin: 'https://stg0-kr.mauth.misumi-ec.com',
 		},
 		sinus: {
 			origin: 'https://stg.mex.misumi-ec.com',
@@ -24,7 +24,7 @@ const site: Site = {
 			origin: 'http://localhost:3001',
 		},
 		cameleer: {
-			origin: 'https://stg-recommend-my.misumi-ec.com',
+			origin: 'https://stg-recommend-kr.misumi-ec.com',
 		},
 		legacy: {
 			htmlContents: {
@@ -39,7 +39,8 @@ const site: Site = {
 	},
 	web: {
 		ec: {
-			origin: 'https://stg0-my.misumi-ec.com',
+			// origin: 'https://stg0-kr.misumi-ec.com',
+			origin: 'http://localhost:3000',
 		},
 		wos: {
 			// 以下のように config の値を合成することはあまり推奨されません。真に必要な時に限定してください。
@@ -49,12 +50,13 @@ const site: Site = {
 			},
 		},
 		digitalCatalog: {
-			origin: 'https://stg0-my.c.misumi-ec.com',
+			origin: 'https://stg0-kr.c.misumi-ec.com',
 		},
 	},
 	// datadogRUM was copied from my-stg0.ts
 	datadogRUM: {
-		applicationId: '2b8b4e0c-1853-4564-9fd5-ce7befae3426',
+		// applicationId: '2b8b4e0c-1853-4564-9fd5-ce7befae3426',
+		applicationId: 'c77a7279-ff8b-4f62-b874-509d42c7c896-stg',
 		clientToken: 'pub67d8bb71bd6fa4c856abb5e4b9130886',
 		site: 'datadoghq.com',
 		service: 'rum-a-ecweb-apl-apne1-my-stg00-01',
@@ -74,7 +76,7 @@ export const config: Config = {
 	...global,
 	...subsidiary,
 	...my,
-	...en,
+	...ko,
 	...stg,
 	...site,
 	cookie: {
