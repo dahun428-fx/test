@@ -47,21 +47,31 @@
 		font-weight: bold;
 		color: $nagi_color_text_base_sub;
 	}
-}
-.page1 {
-	.meganav {
-		.h2 {
-			background-position: 169px 50%;
-		}
-	}
-}
-.on {
-	&.meganav {
+	&.on {
 		.h2 {
 			background-color: $nagi_color_accent_hover;
 		}
 		.meganavSearch {
 			display: block;
+		}
+	}
+}
+.meganavBody {
+	position: absolute;
+	width: 250px;
+	z-index: 7000;
+	box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+	background-color: $meganav_color_bg_default;
+}
+.meganavSearch {
+	position: relative;
+	border: 1px solid $nagi_color_border_default;
+	display: none;
+}
+.page1 {
+	.meganav {
+		.h2 {
+			background-position: 169px 50%;
 		}
 	}
 }

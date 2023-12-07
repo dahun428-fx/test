@@ -5,6 +5,7 @@ import { MegaNav } from '@/components/pc/ui/navigations/MegaNav';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import useOuterClick from '@/hooks/ui/useOuterClick';
 import { useTimer } from '@/utils/timer';
+import classNames from 'classnames';
 
 const delay = 500;
 
@@ -83,21 +84,28 @@ export const MegaNavMenu: React.VFC = () => {
 	});
 
 	return (
-		<div className={styles.headerMeganavWrap}>
-			<div className={styles.headerMeganav}>
-				<div className={styles.meganav}>
+		<div
+			className={styles.headerMeganavWrap}
+			ref={rootRef}
+			onMouseEnter={mounted && handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
+			<div className={styles.headerMeganav} onClick={handleClick}>
+				<div
+					className={
+						isOpen
+							? classNames(styles.meganav, styles.on)
+							: classNames(styles.meganav)
+					}
+				>
 					<h2 className={styles.h2}>
 						<i></i>
 						카테고리/브랜드
 					</h2>
 					<div className={styles.meganavBody}>
 						<div className={styles.meganavSearch}>
-							<div className={styles.meganavCategory}>
-								<ul>
-									{/* include meganav.html */}
-									<MegaNav onClickLink={handleClickLink} />
-								</ul>
-							</div>
+							{/* include meganav.html */}
+							<MegaNav onClickLink={handleClickLink} />
 						</div>
 						<div className={styles.newMeganavBanner}>
 							<ul>

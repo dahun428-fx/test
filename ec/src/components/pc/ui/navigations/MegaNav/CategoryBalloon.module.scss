@@ -1,50 +1,271 @@
-@use 'src/styles/pc/variables';
-@use 'src/styles/pc/icon';
+// @use 'src/styles/pc/variables';
+// @use 'src/styles/pc/_variables_original' as *;
 
-$categoryImageHeight: 224px;
+// .meganavBalloonBox {
+// 	display: none;
+// 	position: absolute;
+// 	left: 248px;
+// 	top: -1px;
+// 	box-sizing: border-box;
+// 	width: 951px;
+// 	height: 527px;
+// 	border: 1px solid $nagi_color_border_default;
+// 	background-color: $meganav_color_bg_default;
+// 	box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+// 	.lc-h4 {
+// 		margin: 15px 0;
+// 		padding: 0 10px;
+// 		font-weight: bold;
+// 		&:first-child {
+// 			margin-top: 0;
+// 		}
+// 	}
+// }
+// .meganavCategory {
+// 	& > ul {
+// 		& > li {
+// 			&.on {
+// 				.meganavBalloonBox {
+// 					display: block;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+// .page1 {
+// 	.meganavBalloonBox {
+// 		width: 701px;
+// 	}
+// 	.meganavBalloonBoxInner {
+// 		& > ul {
+// 			width: 192px;
+// 		}
+// 	}
+// }
+// .meganavBalloonBoxInner {
+// 	& > ul {
+// 		display: block;
+// 		font-size: 0;
+// 		& > li {
+// 			display: inline-block;
+// 			box-sizing: border-box;
+// 			width: 100%;
+// 			margin-bottom: 5px;
+// 			vertical-align: top;
+// 			font-size: fs_L;
+// 			& > a {
+// 				display: block;
+// 				padding: 1px 10px 0 15px;
+// 				text-decoration: none;
+// 				&:link {
+// 					color: $nagi_color_text_link;
+// 				}
+// 				&.is-active {
+// 					background-color: #f5f5f7;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+// .meganavBalloonBoxInner > ul > li > a:hover,
+// .meganavBalloonBoxInner > ul > li > a:active {
+// 	text-decoration: underline;
+// 	color: $nagi_color_text_link_hover;
+// 	background-color: #f5f5f7;
+// }
 
-//  左メニューとの隙間に pointer を置いても非表示にならないため
-.wrapper {
-	padding-left: 30px;
-}
+// .meganavLevel2,
+// .meganavLevel3,
+// .meganavPromotion {
+// 	position: absolute;
+// 	left: 0;
+// 	top: 0;
+// 	z-index: 5;
+// 	box-sizing: border-box;
+// 	padding: 15px;
+// 	padding-right: 0;
+// 	width: 498px;
+// }
+// .page1 .meganavLevel2,
+// .page1 .meganavLevel3,
+// .page1 .meganavPromotion {
+// 	padding: 15px 10px;
+// 	padding-right: 0;
+// 	width: 353px;
+// }
+// .meganavLevel3 {
+// 	position: absolute;
+// 	top: 0;
+// 	right: 0;
+// 	z-index: 15;
+// 	box-sizing: border-box;
+// 	padding: 15px 25px;
+// 	width: 451px;
+// 	min-height: 525px;
+// 	background: #f8f8f8;
+// 	border: 1px solid #ccc;
+// 	border-top: 0;
+// }
+// .page1 {
+// 	.meganavLevel3 {
+// 		padding: 15px 20px;
+// 		width: 346px;
+// 	}
+// }
 
-.balloon {
-	z-index: variables.$popoverZIndex;
-	width: 600px;
-	min-height: 614px;
-	padding: 15px 20px;
-	background-color: #fff;
-	border: 1px solid #a7a7a7;
-	box-shadow: 0 1px 5px 0 rgba(0 0 0 / 0.3);
-}
+// .meganavLevel2List {
+// 	& > li {
+// 		display: list-item;
+// 		& > ul {
+// 			display: block;
+// 			overflow: hidden;
+// 			& > li {
+// 				float: left;
+// 				width: 50%;
+// 				& > a {
+// 					display: block;
+// 					padding: 3px 0 4px 8px;
+// 					line-height: 1.25;
+// 					font-size: 14px;
+// 					text-decoration: none;
+// 					.text {
+// 						color: #333;
+// 					}
+// 					&:link {
+// 						color: $color_text_base;
+// 					}
+// 					&:hover {
+// 						.text {
+// 							font-weight: bold;
+// 							color: #025fae;
+// 							border-bottom: 1px solid #025fae;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 		&.on {
+// 			& > ul {
+// 				background: #f8f8f8;
+// 				& > li {
+// 					& > a {
+// 						.onIcon {
+// 							display: inline-block;
+// 							width: 4px;
+// 							height: 8px;
+// 							background-repeat: no-repeat;
+// 							background-position: 50% 50%;
+// 							background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEVCN0JBNENBNUFGMTFFODlGRUQ5MEJDREQwNUM4ODQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEVCN0JBNERBNUFGMTFFODlGRUQ5MEJDREQwNUM4ODQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4RUI3QkE0QUE1QUYxMUU4OUZFRDkwQkNERDA1Qzg4NCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4RUI3QkE0QkE1QUYxMUU4OUZFRDkwQkNERDA1Qzg4NCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp5F7ewAAABDSURBVHjaYmTMPFbPwMDQyAAFTEDcAMT1MAFmRtNkRqggCBxkQeI0wLSAwH8ozcgE1d8ANbiBCZkD09KIZA4DQIABAE+eC5+PtajbAAAAAElFTkSuQmCC');
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
-.categoryList {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin-bottom: $categoryImageHeight;
-}
+// .meganavLevel3List {
+// 	display: block;
+// 	overflow: hidden;
+// 	margin-bottom: 28px;
+// 	& > li {
+// 		display: list-item;
+// 		& > ul {
+// 			display: block;
+// 			overflow: hidden;
+// 			& > li {
+// 				float: left;
+// 				width: 50%;
+// 				& > a {
+// 					display: block;
+// 					padding: 2px 5px 3px 0;
+// 					line-height: 1.25;
+// 					font-size: 12px;
+// 					text-decoration: none;
+// 					span {
+// 						color: #555;
+// 					}
+// 					&:link {
+// 						color: #555;
+// 					}
+// 					&:hover {
+// 						span {
+// 							font-weight: bold;
+// 							color: #025fae;
+// 							border-bottom: 1px solid #025fae;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+// .meganavLevel3 {
+// 	& > div[data-headcat-level3]:nth-child(2n) {
+// 		.meganavLevel3List {
+// 			margin-bottom: 0;
+// 		}
+// 	}
+// }
 
-.categoryItem {
-	width: calc(50% - 20px);
-	list-style: none;
-
-	// １列目と２列目の間に間隔を設ける
-	&:nth-child(even) {
-		margin-left: 40px;
-	}
-}
-
-// バルーンの最下部にカテゴリグループイメージを設定
-// background-image は hover したカテゴリによって変わるので js 側で設定
-.categoryImage {
-	position: absolute;
-	bottom: 0;
-	left: 15px;
-	width: 100%;
-	height: $categoryImageHeight;
-	background: {
-		position: center top;
-		repeat: no-repeat;
-	}
-}
+// .meganavPromotion {
+// 	position: absolute;
+// 	left: 0;
+// 	bottom: 0;
+// 	z-index: 5;
+// 	box-sizing: border-box;
+// 	padding: 15px;
+// 	width: 498px;
+// }
+// .page1 {
+// 	.meganavPromotion {
+// 		width: 353px;
+// 	}
+// }
+// .meganavPromotionItem {
+// 	margin-left: -10px;
+// 	display: none;
+// 	& > li {
+// 		display: inline-block;
+// 		max-width: 114px;
+// 		margin-left: 10px;
+// 		margin-bottom: 12px;
+// 		vertical-align: top;
+// 		& > a {
+// 			display: block;
+// 			border: 1px solid nagi_color_border_default;
+// 			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+// 		}
+// 	}
+// }
+// .meganavPromotionBanner {
+// 	margin-bottom: 12px;
+// 	display: none;
+// 	& > a {
+// 		display: block;
+// 		& > img {
+// 			max-width: 244px;
+// 		}
+// 	}
+// }
+// .meganavPromotionPhoto {
+// 	.lc-image {
+// 		height: 150px;
+// 		text-align: center;
+// 		img {
+// 			width: 388px;
+// 			height: auto;
+// 		}
+// 	}
+// }
+// .page1 {
+// 	.meganavProPionPhoto {
+// 		.lc-image {
+// 			img {
+// 				margin-top: 13px;
+// 				width: 323px;
+// 				height: auto;
+// 			}
+// 		}
+// 	}
+// }

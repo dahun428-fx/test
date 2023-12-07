@@ -23,7 +23,7 @@ export const MegaNav: React.VFC<Props> = ({ onClickLink }) => {
 	const categoryList = useTopCategories();
 
 	return (
-		<div className={styles.megaNav}>
+		<div className={styles.meganavCategory}>
 			<ul>
 				{categoryList
 					? categoryList.map(category => (

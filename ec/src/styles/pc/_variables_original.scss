@@ -280,3 +280,9 @@ $z-VNmodal2: 9001;
 
 // SPスペック検索用
 $z-l-modal--filter: 9000;
+
+@mixin image_replace {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}

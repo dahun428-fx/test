@@ -1,0 +1,16 @@
+.megaNav {
+	position: relative;
+	width: 320px;
+	min-height: 530px;
+	margin-top: 4px;
+	padding: 16px;
+	background-color: #fff;
+	border: 1px solid #a7a7a7;
+	box-shadow: 0 1px 5px 0 rgba(0 0 0 / 0.3);
+}
+
+.section {
+	&:not(:first-child) {
+		margin-top: 32px;
+	}
+}

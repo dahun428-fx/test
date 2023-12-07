@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CategoryBalloon } from './CategoryBalloon';
 import { Link } from './Link';
-import styles from './TopCategoryItem.module.scss';
+// import styles from './TopCategoryItem.module.scss';
+import styles from './MegaNav.module.scss';
 import { Category } from '@/models/api/msm/ect/category/SearchCategoryResponse';
 import { url } from '@/utils/url';
+import classNames from 'classnames';
 
 type Props = {
 	/** トップカテゴリ情報 */
@@ -16,13 +18,30 @@ type Props = {
  * トップカテゴリのリストアイテム
  */
 export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
+	const [isHover, setIsHover] = useState(false);
+
+	const handleMouseEnter = () => {
+		setIsHover(true);
+	};
+
+	const handleMouseLeave = () => {
+		setIsHover(false);
+	};
 	return (
-		<li className={styles.topCategoryItem}>
+		<li
+			className={
+				isHover
+					? classNames(styles[category.categoryCode], styles.on)
+					: classNames(styles[category.categoryCode])
+			}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
 			<Link href={url.category(category.categoryCode)()} onClick={onClickLink}>
 				{category.categoryName}
 			</Link>
 			<CategoryBalloon
-				className={styles.balloon}
+				className={styles.meganavBalloonBox}
 				categoryCode={category.categoryCode}
 				categoryGroupImageUrl={category.categoryGroupImageUrl}
 				categoryName={category.categoryName}
