@@ -1,11 +1,13 @@
 import classNames from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 // import styles from './CategoryBalloon.module.scss';
 import styles from './MegaNav.module.scss';
 import { Heading } from './Heading';
 import { Link } from './Link';
 import { Category } from '@/models/api/msm/ect/category/SearchCategoryResponse';
 import { url } from '@/utils/url';
+import { template } from '@babel/core';
+import { categoryList } from '@/components/mobile/pages/Category/CategoryList/CategoryList.i18n.en';
 
 type Props = {
 	/** カテゴリコード */
@@ -36,6 +38,9 @@ export const CategoryBalloon: React.VFC<Props> = ({
 }) => {
 	// マウスカーソルの乗っているカテゴリのインデックス
 	const [cursor, setCursor] = useState(initialCursor);
+
+	const [hoverCategoryCode, setHoverCategoryCode] = useState('');
+
 	/** バルーンの最下部に設定するカテゴリグループイメージのスタイル */
 	const imageStyle = useMemo(() => {
 		const url =
@@ -48,30 +53,39 @@ export const CategoryBalloon: React.VFC<Props> = ({
 
 	const getCategoryListByLevel = (categoryList: Category[]) =>
 		useMemo(() => {
-			const listsize = categoryList.length;
-			if (listsize <= 0) return [];
-			let rslist: any[] = [];
-			let templist: Category[] = [];
-			let count: number = 0;
-
-			categoryList.forEach((category, index) => {
-				if (count < 2) {
-					templist.push(category);
-					count++;
-				} else {
-					rslist.push(templist);
-					templist = [];
-					count = 0;
+			let resultList = [];
+			let tempList: any[] = [];
+			for (const category of categoryList) {
+				if (tempList.length >= 2) {
+					resultList.push(tempList);
+					tempList = [];
 				}
-			});
-
-			if (categoryList.length % 2 != 0 && templist.length > 0) {
-				rslist.push(templist);
+				tempList.push(category);
 			}
-			console.log(rslist);
-
-			return rslist;
+			if (categoryList.length % 2 != 0 && tempList.length > 0) {
+				resultList.push(tempList);
+			}
+			return resultList;
 		}, [categoryList]);
+
+	const handleMouseEnter = (categoryCode: string) => {
+		setHoverCategoryCode(categoryCode);
+	};
+	const handleMouseLeave = () => {
+		setHoverCategoryCode('');
+	};
+	const hoveringCategory = (categoryList: Category[]) => {
+		if (!hoverCategoryCode) {
+			return false;
+		}
+		for (const category of categoryList) {
+			console.log('targeting category : ', categoryList);
+			if (hoverCategoryCode === category.categoryCode) {
+				return true;
+			}
+		}
+		return false;
+	};
 
 	return (
 		<div className={styles.meganavBalloonBox}>
@@ -79,13 +93,26 @@ export const CategoryBalloon: React.VFC<Props> = ({
 				<div className={styles.meganavLevel2}>
 					<ul className={styles.meganavLevel2List}>
 						{getCategoryListByLevel(childCategoryList).map(
-							(list: Category[], index: number) => {
+							(categoryList: Category[], index: number) => {
 								return (
-									<li>
+									<li
+										key={`${categoryList[0]?.categoryCode}_${index}`}
+										className={
+											hoveringCategory(categoryList)
+												? classNames(styles.on)
+												: ''
+										}
+									>
 										<ul>
-											{list.map((category: Category, index: number) => {
+											{categoryList.map((category: Category, index: number) => {
 												return (
-													<li>
+													<li
+														key={`${category.categoryCode}_${index}_${index}`}
+														onMouseEnter={() =>
+															handleMouseEnter(category.categoryCode)
+														}
+														onMouseLeave={() => handleMouseLeave()}
+													>
 														<Link
 															href={url.category(
 																categoryCode,
@@ -93,7 +120,9 @@ export const CategoryBalloon: React.VFC<Props> = ({
 															)()}
 															onClick={onClickLink}
 														>
-															{category.categoryName}
+															<span className={styles.text}>
+																{category.categoryName}
+															</span>
 															<i className={styles.onIcon}></i>
 														</Link>
 													</li>
@@ -106,12 +135,7 @@ export const CategoryBalloon: React.VFC<Props> = ({
 						)}
 					</ul>
 				</div>
-				<div className={styles.meganavLevel3}>
-					<div>
-						<h4 className="lc-heading"></h4>
-						<ul className={styles.meganavLevel3List}></ul>
-					</div>
-				</div>
+				<div className={styles.meganavLevel3}></div>
 				<div className={styles.meganavPromotion}>
 					<div className={styles.meganavPromotionPhoto}>
 						<div className="lc-image"></div>

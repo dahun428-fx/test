@@ -42,7 +42,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 				background-image: url($spriteMega);
 				background-repeat: no-repeat;
 				&:hover {
-					background-color: #f5f5f7;
+					background-color: #f5f5f7 !important;
 					background-image: url($spriteMegaOn);
 					text-decoration: underline;
 					color: $nagi_color_text_link_hover;
@@ -50,7 +50,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 			}
 			&.on {
 				& > a {
-					background-color: #f5f5f7;
+					background-color: #f5f5f7 !important;
 					background-image: url($spriteMegaOn);
 					text-decoration: underline;
 					color: $nagi_color_text_link_hover;
@@ -124,22 +124,22 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 		}
 	}
 }
-.headerWrap {
-	.meganavCategory {
-		& > ul {
-			& > li {
-				& > a {
-					&:link {
-						color: #004098;
-					}
-					&:visited {
-						color: #750056;
-					}
+// .headerWrap {
+.meganavCategory {
+	& > ul {
+		& > li {
+			& > a {
+				&:link {
+					color: #004098;
+				}
+				&:visited {
+					color: #750056;
 				}
 			}
 		}
 	}
 }
+// }
 
 .meganavCase,
 .meganavCaseDisabledBalloon {
@@ -277,7 +277,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 					color: $nagi_color_text_link;
 				}
 				&.is-active {
-					background-color: #f5f5f7;
+					background-color: #f5f5f7 !important;
 				}
 			}
 		}
@@ -287,16 +287,24 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 .meganavBalloonBoxInner > ul > li > a:active {
 	text-decoration: underline;
 	color: $nagi_color_text_link_hover;
-	background-color: #f5f5f7;
+	background-color: #f5f5f7 !important;
+}
+.meganavLevel2 {
+	z-index: 15;
+}
+.meganavLevel3 {
+	z-index: 10;
+}
+.meganavPromotion {
+	z-index: 5;
 }
 
 .meganavLevel2,
 .meganavLevel3,
 .meganavPromotion {
 	position: absolute;
-	left: 0;
+	// left: 0; //not working
 	top: 0;
-	z-index: 5;
 	box-sizing: border-box;
 	padding: 15px;
 	padding-right: 0;
@@ -351,6 +359,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 						color: $color_text_base;
 					}
 					&:hover {
+						background-color: #f5f5f7 !important;
 						.text {
 							font-weight: bold;
 							color: #025fae;
@@ -362,7 +371,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 		}
 		&.on {
 			& > ul {
-				background: #f8f8f8;
+				background: #f8f8f8 !important;
 				& > li {
 					& > a {
 						.onIcon {
