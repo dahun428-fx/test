@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 // import styles from './CategoryBalloon.module.scss';
 import styles from './MegaNav.module.scss';
 import { Heading } from './Heading';
@@ -8,6 +8,7 @@ import { Category } from '@/models/api/msm/ect/category/SearchCategoryResponse';
 import { url } from '@/utils/url';
 import { template } from '@babel/core';
 import { categoryList } from '@/components/mobile/pages/Category/CategoryList/CategoryList.i18n.en';
+import Image from 'next/image';
 
 type Props = {
 	/** カテゴリコード */
@@ -36,55 +37,57 @@ export const CategoryBalloon: React.VFC<Props> = ({
 	onClickLink,
 	className,
 }) => {
-	// マウスカーソルの乗っているカテゴリのインデックス
-	const [cursor, setCursor] = useState(initialCursor);
+	const [hoverCategoryCode, setHoverCategoryCode] = useState<
+		string | undefined
+	>('');
+	const [hoveredCategoryList, setHoveredCategoryList] = useState<Category[]>(
+		[]
+	);
+	const [meganavLevel2List, setMeganavLevel2List] = useState<Category[][]>([]);
+	const [meganavLevel3List, setMeganavLevel3List] = useState<Category[]>([]);
+	const [imgSrc, setImgSrc] = useState(categoryGroupImageUrl);
 
-	const [hoverCategoryCode, setHoverCategoryCode] = useState('');
+	useEffect(() => {
+		const makedList = makeMeganavLevel(childCategoryList);
+		console.log(makedList);
+		setMeganavLevel2List(makedList);
+		setImgSrc(categoryGroupImageUrl);
+		return () => {
+			setMeganavLevel2List([]);
+			setImgSrc('');
+		};
+	}, [categoryCode]);
 
-	/** バルーンの最下部に設定するカテゴリグループイメージのスタイル */
-	const imageStyle = useMemo(() => {
-		const url =
-			cursor < 0
-				? categoryGroupImageUrl
-				: childCategoryList[cursor]?.categoryGroupImageUrl ||
-				  categoryGroupImageUrl;
-		return { backgroundImage: `url(${url})` };
-	}, [categoryGroupImageUrl, childCategoryList, cursor]);
-
-	const getCategoryListByLevel = (categoryList: Category[]) =>
-		useMemo(() => {
-			let resultList = [];
-			let tempList: any[] = [];
-			for (const category of categoryList) {
-				if (tempList.length >= 2) {
-					resultList.push(tempList);
-					tempList = [];
-				}
-				tempList.push(category);
-			}
-			if (categoryList.length % 2 != 0 && tempList.length > 0) {
-				resultList.push(tempList);
-			}
-			return resultList;
-		}, [categoryList]);
-
-	const handleMouseEnter = (categoryCode: string) => {
-		setHoverCategoryCode(categoryCode);
-	};
-	const handleMouseLeave = () => {
-		setHoverCategoryCode('');
-	};
-	const hoveringCategory = (categoryList: Category[]) => {
-		if (!hoverCategoryCode) {
-			return false;
+	useEffect(() => {
+		if (hoveredCategoryList.length < 1) {
+			setMeganavLevel3List(meganavLevel2List[0] || []);
+		} else {
+			setMeganavLevel3List(hoveredCategoryList);
 		}
+		return () => {
+			setMeganavLevel3List([]);
+		};
+	}, [meganavLevel2List, hoveredCategoryList]);
+
+	const makeMeganavLevel = (categoryList: Category[]): Category[][] => {
+		let resultList = [];
+		let tempList: Category[] = [];
 		for (const category of categoryList) {
-			console.log('targeting category : ', categoryList);
-			if (hoverCategoryCode === category.categoryCode) {
-				return true;
+			if (tempList.length >= 2) {
+				resultList.push(tempList);
+				tempList = [];
 			}
+			tempList.push(category);
 		}
-		return false;
+		if (categoryList.length % 2 != 0 && tempList.length > 0) {
+			resultList.push(tempList);
+		}
+		return resultList;
+	};
+
+	const handleMouseEnter = (categoryList: Category[]) => {
+		setHoverCategoryCode(categoryList[0]?.categoryCode);
+		setHoveredCategoryList(categoryList);
 	};
 
 	return (
@@ -92,53 +95,106 @@ export const CategoryBalloon: React.VFC<Props> = ({
 			<div className={styles.meganavBalloonBoxInner}>
 				<div className={styles.meganavLevel2}>
 					<ul className={styles.meganavLevel2List}>
-						{getCategoryListByLevel(childCategoryList).map(
-							(categoryList: Category[], index: number) => {
-								return (
-									<li
-										key={`${categoryList[0]?.categoryCode}_${index}`}
-										className={
-											hoveringCategory(categoryList)
-												? classNames(styles.on)
-												: ''
-										}
-									>
-										<ul>
-											{categoryList.map((category: Category, index: number) => {
-												return (
-													<li
-														key={`${category.categoryCode}_${index}_${index}`}
-														onMouseEnter={() =>
-															handleMouseEnter(category.categoryCode)
-														}
-														onMouseLeave={() => handleMouseLeave()}
-													>
-														<Link
-															href={url.category(
-																categoryCode,
-																category.categoryCode
-															)()}
-															onClick={onClickLink}
-														>
-															<span className={styles.text}>
-																{category.categoryName}
-															</span>
-															<i className={styles.onIcon}></i>
-														</Link>
-													</li>
-												);
-											})}
-										</ul>
-									</li>
-								);
-							}
-						)}
+						{meganavLevel2List &&
+							meganavLevel2List.map(
+								(categoryList: Category[], index: number) => {
+									return (
+										<li
+											key={`${categoryList[0]?.categoryCode}_level2_${index}`}
+											className={
+												hoverCategoryCode === categoryList[0]?.categoryCode
+													? styles.on
+													: ''
+											}
+											onMouseEnter={() => handleMouseEnter(categoryList)}
+										>
+											<ul>
+												{categoryList.map(
+													(category: Category, index: number) => {
+														return (
+															<li
+																key={`${category.categoryCode}_level2_child_${index}`}
+																onMouseEnter={() =>
+																	setImgSrc(
+																		category.categoryGroupImageUrl || ''
+																	)
+																}
+															>
+																<Link
+																	href={url.category(
+																		categoryCode,
+																		category.categoryCode
+																	)()}
+																	onClick={onClickLink}
+																>
+																	<span className={styles.text}>
+																		{category.categoryName}
+																	</span>
+																	<i className={styles.onIcon}></i>
+																</Link>
+															</li>
+														);
+													}
+												)}
+											</ul>
+										</li>
+									);
+								}
+							)}
 					</ul>
 				</div>
-				<div className={styles.meganavLevel3}></div>
+				<div className={styles.meganavLevel3}>
+					{meganavLevel3List &&
+						meganavLevel3List.map((category: Category, index: number) => {
+							return (
+								<div key={`${category.categoryCode}_level3_${index}`}>
+									<h4 className={styles.heading}>{category.categoryName}</h4>
+									<ul className={styles.meganavLevel3List}>
+										{category.childCategoryList &&
+											makeMeganavLevel(category.childCategoryList).map(
+												(childCategoryList: Category[], index: number) => {
+													return (
+														<li>
+															<ul>
+																{childCategoryList.map(
+																	(childCategory: Category, index: number) => {
+																		// console.log(childCategory);
+
+																		return (
+																			<li
+																				key={`${category.categoryCode}_${childCategory.categoryCode}_level3_${index}`}
+																			>
+																				<Link
+																					href={url.category(
+																						categoryCode,
+																						category.categoryCode,
+																						childCategory.categoryCode
+																					)()}
+																					onClick={onClickLink}
+																				>
+																					<span>
+																						{childCategory.categoryName}
+																					</span>
+																				</Link>
+																			</li>
+																		);
+																	}
+																)}
+															</ul>
+														</li>
+													);
+												}
+											)}
+									</ul>
+								</div>
+							);
+						})}
+				</div>
 				<div className={styles.meganavPromotion}>
 					<div className={styles.meganavPromotionPhoto}>
-						<div className="lc-image"></div>
+						<div className={styles.image}>
+							<Image src={`https:${imgSrc}`} width={300} height={150} />
+						</div>
 					</div>
 				</div>
 			</div>

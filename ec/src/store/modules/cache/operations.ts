@@ -9,7 +9,7 @@ export function loadTopCategories(dispatch: Dispatch) {
 		try {
 			const response = await searchCategory({
 				ancesterType: '1',
-				categoryLevel: 2,
+				categoryLevel: 3,
 				filterType: '1',
 				page: 1,
 				pageSize: 30,

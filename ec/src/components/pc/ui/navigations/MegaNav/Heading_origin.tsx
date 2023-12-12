@@ -5,6 +5,6 @@ import styles from './Heading.module.scss';
  * Heading item for Mega Navigation
  */
 export const Heading: React.FC = ({ children }) => {
-	return <h4 className={styles.heading}>{children}</h4>;
+	return <h3 className={styles.heading}>{children}</h3>;
 };
 Heading.displayName = 'Heading';

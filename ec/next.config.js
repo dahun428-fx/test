@@ -105,5 +105,6 @@ module.exports = withBundleAnalyzer({
 	images: {
 		// 本番環境ではnext/imageの参照先を/vona2 配下に (next/imageはassetPrefixの設定が反映されないため）
 		path: systemPath + '/_next/image',
+		domains: ['content.misumi-ec.com'],
 	},
 });

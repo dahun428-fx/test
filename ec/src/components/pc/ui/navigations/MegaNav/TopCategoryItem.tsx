@@ -40,14 +40,16 @@ export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
 			<Link href={url.category(category.categoryCode)()} onClick={onClickLink}>
 				{category.categoryName}
 			</Link>
-			<CategoryBalloon
-				className={styles.meganavBalloonBox}
-				categoryCode={category.categoryCode}
-				categoryGroupImageUrl={category.categoryGroupImageUrl}
-				categoryName={category.categoryName}
-				childCategoryList={category.childCategoryList}
-				onClickLink={onClickLink}
-			/>
+			{isHover && (
+				<CategoryBalloon
+					className={styles.meganavBalloonBox}
+					categoryCode={category.categoryCode}
+					categoryGroupImageUrl={category.categoryGroupImageUrl}
+					categoryName={category.categoryName}
+					childCategoryList={category.childCategoryList}
+					onClickLink={onClickLink}
+				/>
+			)}
 		</li>
 	);
 };

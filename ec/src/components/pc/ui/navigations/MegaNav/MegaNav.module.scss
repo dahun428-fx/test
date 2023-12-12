@@ -300,11 +300,10 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 }
 
 .meganavLevel2,
-.meganavLevel3,
-.meganavPromotion {
+.meganavLevel3 {
 	position: absolute;
 	// left: 0; //not working
-	top: 0;
+	// top: 0;
 	box-sizing: border-box;
 	padding: 15px;
 	padding-right: 0;
@@ -329,6 +328,15 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 	background: #f8f8f8;
 	border: 1px solid #ccc;
 	border-top: 0;
+	.heading {
+		height: 24px;
+		line-height: 24px;
+		font-weight: bold;
+		font-size: 14px;
+		color: #333;
+		border-bottom: 1px solid #b8b8b8;
+		margin-bottom: 7px;
+	}
 }
 .page1 {
 	.meganavLevel3 {
@@ -403,21 +411,21 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 				width: 50%;
 				& > a {
 					display: block;
-					padding: 2px 5px 3px 0;
-					line-height: 1.25;
-					font-size: 12px;
+					padding: 2px 5px 3px 0 !important;
+					line-height: 1.25 !important;
+					font-size: 12px !important;
 					text-decoration: none;
 					span {
-						color: #555;
+						color: #555 !important;
 					}
 					&:link {
-						color: #555;
+						color: #555 !important;
 					}
 					&:hover {
 						span {
 							font-weight: bold;
-							color: #025fae;
-							border-bottom: 1px solid #025fae;
+							color: #025fae !important;
+							border-bottom: 1px solid #025fae !important;
 						}
 					}
 				}
@@ -435,7 +443,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 .meganavPromotion {
 	position: absolute;
 	left: 0;
-	bottom: 0;
+	bottom: 0px;
 	z-index: 5;
 	box-sizing: border-box;
 	padding: 15px;
@@ -446,7 +454,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 		width: 353px;
 	}
 }
-.meganavPrPtionItem {
+.meganavPromotionItem {
 	margin-left: -10px;
 	display: none;
 	& > li {
@@ -462,7 +470,7 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 		}
 	}
 }
-.meganavPromPonBanner {
+.meganavPromotionBanner {
 	margin-bottom: 12px;
 	display: none;
 	& > a {
@@ -472,18 +480,16 @@ $icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 		}
 	}
 }
-.meganavProPionPhoto {
-	.lc-image {
+.meganavPromotionPhoto {
+	.image {
 		height: 150px;
 		text-align: center;
-		img {
-			width: 388px;
-			height: auto;
-		}
+		width: 388px;
+		height: auto;
 	}
 }
 .page1 {
-	.meganavProPionPhoto {
+	.meganavPromotionPhoto {
 		.lc-image {
 			img {
 				margin-top: 13px;
