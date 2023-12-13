@@ -1,5 +1,6 @@
 import { Category } from '@/models/api/msm/ect/category/SearchCategoryResponse';
-import styles from './MegaNav.module.scss';
+// import styles from './MegaNav.module.scss';
+import styles from './CategoryBalloon.module.scss';
 import { Link } from './Link';
 import { url } from '@/utils/url';
 

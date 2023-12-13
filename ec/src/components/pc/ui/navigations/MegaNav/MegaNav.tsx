@@ -1,13 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Heading } from './Heading';
-import { Link } from './Link';
 import styles from './MegaNav.module.scss';
 import { useTopCategories } from '@/components/pc/ui/navigations/MegaNav/MegaNav.hooks';
 import { SkeletonTopCategoryItem } from '@/components/pc/ui/navigations/MegaNav/SkeletonTopCategoryItem';
 import { TopCategoryItem } from '@/components/pc/ui/navigations/MegaNav/TopCategoryItem';
 import { range } from '@/utils/number';
-import { url } from '@/utils/url';
 
 type Props = {
 	/** click category link handler */

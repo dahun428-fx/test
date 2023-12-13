@@ -1,18 +1,17 @@
 // NOTE: Specificity is basically prohibited.
-.link[class] {
-	width: 100%;
-	padding: 5px 0 4px 10px;
-	color: #004098;
-	font-size: 0.9375rem;
-	line-height: 1.5;
-
-	&:hover {
+.link {
+	display: block;
+	padding: 8px 15px;
+	line-height: 1.25;
+	letter-spacing: -1px;
+	font-weight: bold;
+	font-size: 15px;
+	color: #000;
+	text-decoration: none;
+	&:link {
 		color: #004098;
-		text-decoration: none;
-		background-color: #ecf3fc;
 	}
-
 	&:visited {
-		color: #004098;
+		color: #750056;
 	}
 }

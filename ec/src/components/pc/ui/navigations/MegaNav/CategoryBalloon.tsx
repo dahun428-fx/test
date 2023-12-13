@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-// import styles from './CategoryBalloon.module.scss';
-import styles from './MegaNav.module.scss';
+import styles from './CategoryBalloon.module.scss';
+// import styles from './MegaNav.module.scss';
 import { Category } from '@/models/api/msm/ect/category/SearchCategoryResponse';
 import Image from 'next/image';
 import { MegaNavLevel2 } from './MegaNavLevel2';
@@ -18,6 +18,7 @@ type Props = {
 	/** click category link handler */
 	onClickLink: () => void;
 	className?: string;
+	isOpen: boolean;
 };
 
 /**
@@ -30,6 +31,7 @@ export const CategoryBalloon: React.VFC<Props> = ({
 	childCategoryList,
 	onClickLink,
 	className,
+	isOpen,
 }) => {
 	const [targetCategoryList, setTargetCategoryList] = useState<Category[]>([]);
 	const [imgSrc, setImgSrc] = useState<string>(categoryGroupImageUrl);
@@ -75,7 +77,10 @@ export const CategoryBalloon: React.VFC<Props> = ({
 	};
 
 	return (
-		<div className={styles.meganavBalloonBox}>
+		<div
+			className={styles.meganavBalloonBox}
+			style={isOpen ? { display: 'block' } : { display: 'none' }}
+		>
 			<div className={styles.meganavBalloonBoxInner}>
 				<div className={styles.meganavLevel2}>
 					<ul className={styles.meganavLevel2List}>

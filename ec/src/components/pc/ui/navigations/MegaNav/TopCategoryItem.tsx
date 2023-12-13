@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { CategoryBalloon } from './CategoryBalloon';
 import { Link } from './Link';
-// import styles from './TopCategoryItem.module.scss';
-import styles from './MegaNav.module.scss';
+import styles from './TopCategoryItem.module.scss';
+// import styles from './MegaNav.module.scss';
 import { Category } from '@/models/api/msm/ect/category/SearchCategoryResponse';
 import { url } from '@/utils/url';
 import classNames from 'classnames';
@@ -29,11 +29,10 @@ export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
 	};
 	return (
 		<li
-			className={
-				isHover
-					? classNames(styles[category.categoryCode], styles.on)
-					: classNames(styles[category.categoryCode])
-			}
+			className={classNames(
+				styles.meganavCategoryHead,
+				styles[category.categoryCode]
+			)}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
@@ -43,6 +42,7 @@ export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
 			{isHover && (
 				<CategoryBalloon
 					className={styles.meganavBalloonBox}
+					isOpen={isHover}
 					categoryCode={category.categoryCode}
 					categoryGroupImageUrl={category.categoryGroupImageUrl}
 					categoryName={category.categoryName}
