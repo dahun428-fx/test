@@ -1,8 +1,8 @@
 import { asideNavs } from './AsideNavs/AsideNavs.i18n.en';
-import { loginForm } from './AsideNavs/LoginForm.i18n.en';
-import { loginMenu } from './AsideNavs/LoginMenu.i18n.en';
-import { needHelp } from './AsideNavs/NeedHelp.i18n.en';
-import { orderMenu } from './AsideNavs/OrderMenu.i18n.en';
+import { loginForm } from './AsideNavs/LoginForm.i18n.ko'; //change to ko
+import { loginMenu } from './AsideNavs/LoginMenu.i18n.ko'; //change to ko
+import { needHelp } from './AsideNavs/NeedHelp.i18n.ko'; //change to ko
+import { orderMenu } from './AsideNavs/OrderMenu.i18n.ko'; //change to ko
 import { userMenu } from './AsideNavs/UserMenu.i18n.en';
 import { logo } from './Logo/Logo.i18n.en';
 import { megaNavMenu } from './MegaNavMenu/MegaNavMenu.i18n.ko'; //change to ko

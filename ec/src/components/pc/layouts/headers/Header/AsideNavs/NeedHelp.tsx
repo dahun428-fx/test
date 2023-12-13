@@ -29,8 +29,7 @@ export const NeedHelp: React.VFC = () => {
 		>
 			<Expand
 				{...{
-					// label: t('components.ui.layouts.headers.header.needHelp.expand'),
-					label: '문의하기',
+					label: t('components.ui.layouts.headers.header.needHelp.expand'),
 					expanded,
 					onClick: () => setExpanded(expanded => !expanded),
 				}}

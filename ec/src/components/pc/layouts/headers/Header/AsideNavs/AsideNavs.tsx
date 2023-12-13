@@ -30,7 +30,7 @@ export const AsideNavs: React.VFC = () => {
 	return (
 		<div className={styles.headerBalloonBoxWrap}>
 			<ul className={styles.headerFunction}>
-				<li
+				{/* <li
 					className={
 						isBalloonShow === NAV_ORDER
 							? classNames(styles.order, styles.on)
@@ -39,29 +39,10 @@ export const AsideNavs: React.VFC = () => {
 					onClick={() => setIsBalloonShow(NAV_ORDER)}
 				>
 					<span>견적/주문</span>
-				</li>
-				{/* <li
-					className={
-						isBalloonShow === NAV_HELP
-							? classNames(styles.help, styles.on)
-							: classNames(styles.help)
-					}
-					onClick={() => setIsBalloonShow(NAV_HELP)}
-				>
-					<span>문의하기</span>
 				</li> */}
+				<OrderMenu />
 				<NeedHelp />
 				<LoginMenu />
-				{/* <li
-					className={
-						isBalloonShow === NAV_LOGIN
-							? classNames(styles.login, styles.on)
-							: classNames(styles.login)
-					}
-					onClick={() => setIsBalloonShow(NAV_LOGIN)}
-				>
-					<span>로그인</span>
-				</li> */}
 				<li
 					className={
 						isBalloonShow === NAV_REGIST

@@ -1,33 +1,24 @@
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from './OrderMenu.hooks';
-// import styles from './OrderMenu.module.scss';
-import styles from './AsideNavs.module.scss';
+import styles from './OrderMenu.module.scss';
 import { Expand } from '@/components/pc/layouts/headers/Header/Expand';
 import { OrderPanel } from '@/components/pc/ui/panels/OrderPanel';
 import useOuterClick from '@/hooks/ui/useOuterClick';
-import classNames from 'classnames';
 
 /**
  * Quote/Order menu
  */
 export const OrderMenu: React.VFC = () => {
 	const [t] = useTranslation();
-	const rootRef = useRef<HTMLLIElement>(null);
+	const rootRef = useRef<HTMLDivElement>(null);
 	const [expanded, setExpanded] = useState(false);
 	const { permissions, isEcUser } = useAuth();
 
 	useOuterClick(rootRef, () => setExpanded(false));
 
 	return (
-		<li
-			className={
-				expanded
-					? classNames(styles.order, styles.on)
-					: classNames(styles.order)
-			}
-			ref={rootRef}
-		>
+		<div className={styles.wrapper} ref={rootRef}>
 			<Expand
 				{...{
 					label: t('components.ui.layouts.headers.header.orderMenu.expand'),
@@ -35,23 +26,11 @@ export const OrderMenu: React.VFC = () => {
 					onClick: () => setExpanded(!expanded),
 				}}
 			/>
-			<div
-				className={classNames(
-					styles.headerBalloonBoxLeft,
-					styles.balloonBoxOrder
-				)}
-			>
-				<div>
-					{/* {expanded && (
-					<OrderPanel size="narrow" {...{ isEcUser, ...permissions }} />
-				)}	 */}
-				</div>
-			</div>
-			{/* <div className={styles.menu}>
+			<div className={styles.menu}>
 				{expanded && (
 					<OrderPanel size="narrow" {...{ isEcUser, ...permissions }} />
 				)}
-			</div> */}
-		</li>
+			</div>
+		</div>
 	);
 };
