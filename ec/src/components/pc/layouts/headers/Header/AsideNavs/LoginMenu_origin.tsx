@@ -1,11 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LoginForm } from './LoginForm';
-import styles from './AsideNavs.module.scss';
-// import styles from './LoginMenu.module.scss';
+import styles from './LoginMenu.module.scss';
 import { Expand } from '@/components/pc/layouts/headers/Header/Expand';
 import useOuterClick from '@/hooks/ui/useOuterClick';
-import classNames from 'classnames';
 
 /**
  * Login menu
@@ -27,25 +25,18 @@ export const LoginMenu: React.VFC = () => {
 	);
 
 	return (
-		<li
-			className={
-				showsMenu
-					? classNames(styles.login, styles.on)
-					: classNames(styles.login)
-			}
-			ref={ref}
-		>
+		<div className={styles.box} ref={ref}>
 			<Expand
 				expanded={showsMenu}
 				label={t('components.ui.layouts.headers.header.loginMenu.expand')}
 				onClick={handleClickButton}
 			/>
 			{showsMenu && (
-				<div>
+				<div className={styles.menu}>
 					<LoginForm />
 				</div>
 			)}
-		</li>
+		</div>
 	);
 };
 LoginMenu.displayName = 'LoginMenu';

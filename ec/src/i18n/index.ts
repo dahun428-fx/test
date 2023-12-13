@@ -2,7 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { config } from '@/config';
 import { resources as mobileResources } from '@/i18n/mobile/resources';
-import { resources as pcResources } from '@/i18n/pc/resources';
+import { resources_en as pcResourcesEn } from '@/i18n/pc/resources';
+import { resources_ko as pcResourcesKo } from '@/i18n/pc/resources';
 import { resources as sharedResources } from '@/i18n/shared/resources';
 
 if (!i18n.isInitialized) {
@@ -15,18 +16,18 @@ if (!i18n.isInitialized) {
 			resources: {
 				en: {
 					translation: {
-						...pcResources.en.translation,
-						...mobileResources.en.translation,
-						...sharedResources.en.translation,
+						...pcResourcesEn?.en.translation,
+						...mobileResources?.en.translation,
+						...sharedResources?.en.translation,
 					},
 				},
 				ko: {
 					translation: {
-						...pcResources.en.translation,
+						...pcResourcesKo.ko.translation,
 						...mobileResources.en.translation,
 						...sharedResources.en.translation,
 					},
-				}
+				},
 			},
 			lng: config.defaultLocale,
 			fallbackLng: config.defaultLocale,

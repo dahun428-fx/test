@@ -49,7 +49,9 @@ export const Header: React.VFC<Props> = ({}) => {
 									/>
 									<MegaNavMenu />
 								</div>
-								<div className={styles.headerAside}></div>
+								<div className={styles.headerAside}>
+									<AsideNavs />
+								</div>
 							</div>
 						</div>
 					</div>

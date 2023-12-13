@@ -13,7 +13,7 @@ import { applicationErrorContents } from '../../../../../components/pc/error/App
 import { errorHandler } from '../../../../../components/pc/error/ErrorHandler.i18n.en';
 import { cadDownloadStatusBalloon } from '../../../../../components/pc/layouts/footers/CadDownloadStatusBalloon/CadDownloadStatusBalloon.i18n.en';
 import { footer } from '../../../../../components/pc/layouts/footers/Footer/Footer.i18n.en';
-import { headers } from '../../../../../components/pc/layouts/headers/headers.i18n.en';
+import { headers } from '../../../../../components/pc/layouts/headers/headers.i18n.ko'; //change to ko
 import { addToCartModal } from '../../../../../components/pc/modals/AddToCartModal/AddToCartModal.i18n.en';
 import { loginModal } from '../../../../../components/pc/modals/LoginModal/LoginModal.i18n.en';
 import { orderNoListedProductModal } from '../../../../../components/pc/modals/OrderNoListedProductModal/OrderNoListedProductModal.i18n.en';

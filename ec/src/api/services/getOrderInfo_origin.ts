@@ -6,7 +6,11 @@ import { GetOrderInfoResponse } from '@/models/api/msm/ect/orderInfo/GetOrderInf
 import { store } from '@/store';
 import { selectIsEcUser, selectUser } from '@/store/modules/auth';
 
-const availableCurrencyCodes = Array.of<string | undefined>('KRW');
+const availableCurrencyCodes = Array.of<string | undefined>(
+	'MYR',
+	'SGD',
+	'USD'
+);
 
 /**
  * Get order info.

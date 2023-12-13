@@ -100,7 +100,7 @@ export const MegaNavMenu: React.VFC = () => {
 				>
 					<h2 className={styles.h2}>
 						<i></i>
-						카테고리/브랜드
+						{t('components.ui.layouts.headers.header.megaNavMenu.heading')}
 					</h2>
 					<div className={styles.meganavBody}>
 						<div className={styles.meganavSearch}>
