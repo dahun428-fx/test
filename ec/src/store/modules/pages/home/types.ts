@@ -32,6 +32,8 @@ export type OrderInfo = {
 	currencyCode?: string;
 	hasUserManagementPermission: boolean;
 	hasInvoiceReferencePermission: boolean;
+	hasUnitPricePermission: boolean;
+	hasPDFInvoicePermission: boolean;
 	hasTransactionDetailReferencePermission: boolean;
 	hasShipToManagementPermission: boolean;
 	isProxyLogin: boolean;

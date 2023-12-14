@@ -2,6 +2,8 @@ import '!style-loader!css-loader!sass-loader!../src/styles/pc/normalize.scss';
 import { setConfig } from 'next/config';
 import { WithNextRouter } from 'storybook-addon-next-router/dist/decorators';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
+import * as NextImage from 'next/image';
+
 const configName = process.env.APP_CONFIG;
 if (!configName) {
 	throw Error('APP_CONFIG must be set');
@@ -11,6 +13,12 @@ const config = require(`../config/dist/${configName}.json`);
 if (!config) {
 	throw Error(`config file APP_CONFIG=${configName} not found`);
 }
+
+// const OriginalNextImage = NextImage.default;
+// Object.defineProperties(NextImage, 'default', {
+// 	configurable: true,
+// 	value: props => <OriginalNextImage {...props} />,
+// });
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },

@@ -15,7 +15,8 @@ export const OrderMenu: React.VFC = () => {
 	const [t] = useTranslation();
 	const rootRef = useRef<HTMLLIElement>(null);
 	const [expanded, setExpanded] = useState(false);
-	const { permissions, isEcUser } = useAuth();
+	const { permissions, isEcUser, selectedUserInfo, selectedOrderInfo } =
+		useAuth();
 
 	useOuterClick(rootRef, () => setExpanded(false));
 
@@ -35,18 +36,26 @@ export const OrderMenu: React.VFC = () => {
 					onClick: () => setExpanded(!expanded),
 				}}
 			/>
-			<div
-				className={classNames(
-					styles.headerBalloonBoxLeft,
-					styles.balloonBoxOrder
-				)}
-			>
-				<div>
-					{/* {expanded && (
-					<OrderPanel size="narrow" {...{ isEcUser, ...permissions }} />
-				)}	 */}
+			{expanded && (
+				<div
+					className={classNames(
+						styles.headerBalloonBoxLeft,
+						styles.balloonBoxOrder
+					)}
+				>
+					<div>
+						<OrderPanel
+							size="narrow"
+							{...{
+								isEcUser,
+								...permissions,
+								selectedUserInfo,
+								selectedOrderInfo,
+							}}
+						/>
+					</div>
 				</div>
-			</div>
+			)}
 			{/* <div className={styles.menu}>
 				{expanded && (
 					<OrderPanel size="narrow" {...{ isEcUser, ...permissions }} />

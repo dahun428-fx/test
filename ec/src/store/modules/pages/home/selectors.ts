@@ -62,6 +62,10 @@ export const selectOrderInfo = createSelector(
 		// 代理ログインか
 		const isProxyLogin = proxyLoginFlag === '1';
 
+		const hasUnitPricePermission = permissionList.includes('11');
+
+		const hasPDFInvoicePermission = permissionList.includes('10');
+
 		const deliveryCount = customer?.deliveryCount || {};
 
 		const orderInfo: OrderInfo = {
@@ -83,6 +87,8 @@ export const selectOrderInfo = createSelector(
 			})),
 			currencyCode: orderInfoResponse.currencyCode,
 			hasUserManagementPermission,
+			hasUnitPricePermission,
+			hasPDFInvoicePermission,
 			hasInvoiceReferencePermission,
 			hasTransactionDetailReferencePermission,
 			hasShipToManagementPermission,

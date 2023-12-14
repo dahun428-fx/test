@@ -1,5 +1,10 @@
 import { useSelector } from '@/store/hooks';
-import { selectIsEcUser, selectUserPermissions } from '@/store/modules/auth';
+import {
+	selectIsEcUser,
+	selectUser,
+	selectUserPermissions,
+} from '@/store/modules/auth';
+import { selectOrderInfo } from '@/store/modules/pages/home';
 
 /**
  * 認証認可情報を store からロードして返します
@@ -10,5 +15,9 @@ export const useAuth = () => {
 	/** EC会員か */
 	const isEcUser = useSelector(selectIsEcUser);
 
-	return { permissions, isEcUser };
+	const selectedUserInfo = useSelector(selectUser);
+
+	const selectedOrderInfo = useSelector(selectOrderInfo);
+
+	return { permissions, isEcUser, selectedUserInfo, selectedOrderInfo };
 };
