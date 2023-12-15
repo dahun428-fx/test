@@ -9,6 +9,7 @@ import { UserMenu } from './UserMenu';
 import { NagiLinkButton } from '@/components/pc/ui/buttons';
 import { url } from '@/utils/url';
 import classNames from 'classnames';
+import { RegistMenu } from './RegistMenu';
 
 /**
  * Header aside navigations.
@@ -20,39 +21,13 @@ export const AsideNavs: React.VFC = () => {
 	const lang = 'en';
 	const { t } = useTranslation();
 
-	const [isBalloonShow, setIsBalloonShow] = useState<string>('');
-
-	const NAV_ORDER = 'order';
-	const NAV_HELP = 'help';
-	const NAV_LOGIN = 'login';
-	const NAV_REGIST = 'regist';
-
 	return (
 		<div className={styles.headerBalloonBoxWrap}>
 			<ul className={styles.headerFunction}>
-				{/* <li
-					className={
-						isBalloonShow === NAV_ORDER
-							? classNames(styles.order, styles.on)
-							: classNames(styles.order)
-					}
-					onClick={() => setIsBalloonShow(NAV_ORDER)}
-				>
-					<span>견적/주문</span>
-				</li> */}
 				<OrderMenu />
 				<NeedHelp />
-				<LoginMenu />
-				<li
-					className={
-						isBalloonShow === NAV_REGIST
-							? classNames(styles.regist, styles.on)
-							: classNames(styles.regist)
-					}
-					onClick={() => setIsBalloonShow(NAV_REGIST)}
-				>
-					<span>회원가입</span>
-				</li>
+				{authenticated ? <>mypage</> : <LoginMenu />}
+				{authenticated ? <>장바구니</> : <RegistMenu />}
 			</ul>
 		</div>
 	);

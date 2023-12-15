@@ -5,7 +5,7 @@
 		"node": "18.x"
 	},
 	"scripts": {
-		"dev": "npm run generate && next dev",
+		"dev": "npm run generate && next dev --hostname local.misumi-ec.com",
 		"dev:mobile": "cross-env BUILD_TARGET=mobile npm run generate && cross-env BUILD_TARGET=mobile next dev",
 		"dev:path": "pathpida --watch",
 		"build": "npm run generate && next build",
