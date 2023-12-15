@@ -19,8 +19,7 @@ const nextBuildId = require('next-build-id');
 // load app config
 
 // APP_CONFIGに基づくconfigの設定を取得
-// const configName = process.env.APP_CONFIG;
-const configName = 'my-local';
+const configName = process.env.APP_CONFIG;
 if (!configName) {
 	throw Error('APP_CONFIG must be set');
 }

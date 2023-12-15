@@ -10,8 +10,8 @@ export const subsidiary: Subsidiary = {
 	path: {
 		web: {
 			userRegistrationGuide: '/guide/category/member/register_flow.html',
-			wos: '/my',
-			wosStaticContents: '/contents/my',
+			wos: '/kr',
+			wosStaticContents: '/contents/kr',
 		},
 	},
 	form: {

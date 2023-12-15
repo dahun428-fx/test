@@ -13,20 +13,13 @@ if (!i18n.isInitialized) {
 			// NOTE: https://stackoverflow.com/a/70521614
 			compatibilityJSON: 'v3',
 			resources: {
-				en: {
-					translation: {
-						...pcResources.en.translation,
-						...mobileResources.en.translation,
-						...sharedResources.en.translation,
-					},
-				},
 				ko: {
 					translation: {
 						...pcResources.en.translation,
 						...mobileResources.en.translation,
 						...sharedResources.en.translation,
 					},
-				}
+				},
 			},
 			lng: config.defaultLocale,
 			fallbackLng: config.defaultLocale,
