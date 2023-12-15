@@ -312,3 +312,49 @@ $z-l-modal--filter: 9000;
 		}
 	}
 }
+
+@mixin isDiabledNagi {
+	background-color: $nagi_color_disabled !important;
+	box-shadow: none;
+	color: $nagi_color_text_base_sub !important;
+	cursor: default;
+	a&:hover {
+		background-color: $nagi_color_disabled !important;
+	}
+	button&,
+	input& {
+		cursor: default;
+		&:hover {
+			background-color: $nagi_color_disabled !important;
+		}
+	}
+}
+
+@mixin btnStrongNagi {
+	display: block;
+	box-sizing: border-box;
+	padding: 7px 2px 6px;
+	background-color: $nagi_color_accent !important;
+	box-shadow: none;
+	text-align: center;
+	font-size: $fs_L;
+	//font-weight bold
+	text-decoration: none !important;
+	color: $nagi_color_text_base_sub !important;
+	a&:hover {
+		background-color: $nagi_color_accent_hover !important;
+	}
+	button&,
+	input& {
+		width: 100%;
+		height: 36px;
+		border: none;
+		cursor: pointer;
+		&:hover {
+			background-color: $nagi_color_accent_hover !important;
+		}
+	}
+	&.is-disabled {
+		@include isDiabledNagi;
+	}
+}

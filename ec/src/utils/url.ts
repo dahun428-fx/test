@@ -715,7 +715,18 @@ export const url = {
 				...query,
 				OK_URL: `${config.path.web.wos}/invoice/BT010InvoiceForeignAPdfCmd.do`,
 			}),
-
+		invoice: {
+			pdf: (query: Record<'lang', string>) =>
+				toUrl(wosLogin, {
+					...query,
+					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do%3FcommandCode%3DINVOICE_PDF`,
+				}),
+			apply: (query: Record<'lang', string>) =>
+				toUrl(wosLogin, {
+					...query,
+					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do%3FcommandCode%3DINVOICE_APPLY`,
+				}),
+		},
 		//=========================================================================
 		// WOS 静的コンテンツ
 		//=========================================================================

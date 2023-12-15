@@ -5,7 +5,6 @@ import styles from './OrderPanel.module.scss';
 import { NagiLinkButton } from '@/components/pc/ui/buttons';
 import { NagiLink } from '@/components/pc/ui/links';
 import { url } from '@/utils/url';
-import Link from 'next/link';
 import { GetUserInfoResponse } from '@/models/api/msm/ect/userInfo/GetUserInfoResponse';
 import { OrderInfo } from '@/store/modules/pages/home';
 
@@ -64,25 +63,51 @@ export const OrderPanel: React.VFC<Props> = ({
 	const hasPDFInvoicePermission =
 		selectedOrderInfo?.hasPDFInvoicePermission || false;
 
+	const hasInfomationPermission =
+		selectedOrderInfo?.hasInfomationPermission || false;
+
 	const enableOrderInfo = selectedOrderInfo ? true : false;
 
 	const purchaseLinkHTML = () => {
 		return (
 			<>
-				{canEstimate || !authenticated ? (
+				{isPurchaseLinkUser ? (
 					<p>
-						<Link href={url.wos.quote.quote({ lang })}>
-							<a className={styles.btnHeaderOrder}>견적</a>
-						</Link>
+						<NagiLinkButton
+							theme="primary"
+							size="s"
+							className={styles.btnHeaderOrder}
+							href={url.wos.quote.quote({ lang })}
+							disabled={!(canEstimate || !authenticated)}
+						>
+							{t('common.quote.quote')}
+						</NagiLinkButton>
 					</p>
 				) : (
-					<p>
-						<span
-							className={classNames(styles.btnHeaderOrder, styles.isDisabled)}
-						>
-							견적
-						</span>
-					</p>
+					<ul className={styles.headerOrderFunction}>
+						<li>
+							<NagiLinkButton
+								theme="primary"
+								size="s"
+								className={styles.btnHeaderOrder}
+								href={url.wos.quote.quote({ lang })}
+								disabled={!(canEstimate || !authenticated)}
+							>
+								{t('common.quote.quote')}
+							</NagiLinkButton>
+						</li>
+						<li>
+							<NagiLinkButton
+								theme="primary"
+								size="s"
+								className={styles.btnHeaderOrder}
+								href={url.wos.order.order({ lang })}
+								disabled={!(canOrder || !authenticated)}
+							>
+								{t('common.order.order')}
+							</NagiLinkButton>
+						</li>
+					</ul>
 				)}
 			</>
 		);
@@ -93,42 +118,28 @@ export const OrderPanel: React.VFC<Props> = ({
 		const canUseOrderHistory = !authenticated || hasOrderHistoryPermission;
 		return (
 			<ul className={styles.headerOrderFunction}>
-				{canUseEstimateHistory ? (
-					<li>
-						<Link href={url.wos.quote.history({ lang })}>
-							<a className={styles.btnHeaderOrderHistory}>견적이력</a>
-						</Link>
-					</li>
-				) : (
-					<li>
-						<span
-							className={classNames(
-								styles.btnHeaderOrderHistory,
-								styles.isDisabled
-							)}
-						>
-							견적이력
-						</span>
-					</li>
-				)}
-				{canUseOrderHistory ? (
-					<li>
-						<Link href={url.wos.order.history({ lang })}>
-							<a className={styles.btnHeaderOrderHistory}>주문이력</a>
-						</Link>
-					</li>
-				) : (
-					<li>
-						<span
-							className={classNames(
-								styles.btnHeaderOrderHistory,
-								styles.isDisabled
-							)}
-						>
-							주문이력
-						</span>
-					</li>
-				)}
+				<li>
+					<NagiLinkButton
+						href={url.wos.quote.history({ lang })}
+						className={styles.btnHeaderOrderHistory}
+						disabled={!canUseEstimateHistory}
+						size="s"
+						theme="tertiary"
+					>
+						{t('common.quote.history')}
+					</NagiLinkButton>
+				</li>
+				<li>
+					<NagiLinkButton
+						className={styles.btnHeaderOrderHistory}
+						href={url.wos.order.history({ lang })}
+						size="s"
+						theme="tertiary"
+						disabled={!canUseOrderHistory}
+					>
+						{t('common.order.history')}
+					</NagiLinkButton>
+				</li>
 			</ul>
 		);
 	};
@@ -138,29 +149,43 @@ export const OrderPanel: React.VFC<Props> = ({
 			<div className={styles.headerBalloonBoxInner}>
 				<ul className={classNames(styles.headerOrderUpload, styles.estTopBox)}>
 					<li>
-						<span className={styles.type}>복사&붙여넣기</span>
-						{canEstimate || !authenticated ? (
-							<Link href={url.wos.quote.withCopyAndPaste({ lang })}>견적</Link>
-						) : (
-							<span className={styles.isDisabled}>견적</span>
-						)}
-						{!isPurchaseLinkUser && (canOrder || !authenticated) ? (
-							<Link href={url.wos.quote.withCopyAndPaste({ lang })}>주문</Link>
-						) : (
-							<span className={styles.isDisabled}>주문</span>
+						<span className={styles.type}>
+							{t('components.ui.panels.orderPanel.copyAndPaste')}
+						</span>
+						<NagiLink
+							href={url.wos.quote.withCopyAndPaste({ lang })}
+							disabled={!(canEstimate || !authenticated)}
+						>
+							{t('common.quote.quote')}
+						</NagiLink>
+						|
+						{!isPurchaseLinkUser && (
+							<NagiLink
+								href={url.wos.quote.withCopyAndPaste({ lang })}
+								disabled={!(canOrder || !authenticated)}
+							>
+								{t('common.order.order')}
+							</NagiLink>
 						)}
 					</li>
 					<li>
-						<span className={styles.type}>파일업로드</span>&nbsp;
-						{canEstimate || !authenticated ? (
-							<Link href={url.wos.quote.withUploadingFile({ lang })}>견적</Link>
-						) : (
-							<span className={styles.isDisabled}>견적</span>
-						)}
-						{!isPurchaseLinkUser && (canOrder || !authenticated) ? (
-							<Link href={url.wos.quote.withUploadingFile({ lang })}>주문</Link>
-						) : (
-							<span className={styles.isDisabled}>주문</span>
+						<span className={styles.type}>
+							{t('components.ui.panels.orderPanel.uploadFile')}
+						</span>
+						<NagiLink
+							href={url.wos.quote.withUploadingFile({ lang })}
+							disabled={!(canEstimate || !authenticated)}
+						>
+							{t('common.quote.quote')}
+						</NagiLink>
+						|
+						{!isPurchaseLinkUser && (
+							<NagiLink
+								href={url.wos.quote.withUploadingFile({ lang })}
+								disabled={!(canOrder || !authenticated)}
+							>
+								{t('common.order.order')}
+							</NagiLink>
 						)}
 					</li>
 				</ul>
@@ -174,13 +199,15 @@ export const OrderPanel: React.VFC<Props> = ({
 				<ul className={classNames(styles.headerOrderUpload, styles.estTopBox)}>
 					{hasUnitPricePermission ? (
 						<li>
-							<Link href={url.wos.quote.withUploadingFile({ lang })}>
-								단가표 작성
-							</Link>
+							<NagiLink href={url.wos.quote.withUploadingFile({ lang })}>
+								{t('components.ui.panels.orderPanel.upFileUPLOAD')}
+							</NagiLink>
 						</li>
 					) : (
 						<li>
-							<Link href={url.wos.shipment.history({ lang })}>출하이력</Link>
+							<NagiLink href={url.wos.shipment.history({ lang })}>
+								{t('components.ui.panels.orderPanel.shipmentHistory')}
+							</NagiLink>
 						</li>
 					)}
 				</ul>
@@ -191,15 +218,32 @@ export const OrderPanel: React.VFC<Props> = ({
 	const balloonInnerThirdHTML = () => {
 		return (
 			<div className={styles.headerBalloonBoxInner}>
-				<ul className={styles.headerLinkList}>
+				<ul className={classNames(styles.headerLinkList, styles.estTopBox)}>
 					{!(isHipus || isNetRicoh) && (
 						<li>
-							<Link href={url.wos.partNumberChecker}>
-								<a target="_blank">형번확인</a>
-							</Link>
+							<NagiLink href={url.wos.partNumberChecker} target="_blank">
+								{t('components.ui.panels.orderPanel.partNumberChecker')}
+							</NagiLink>
 						</li>
 					)}
-					{enableOrderInfo && !isNetRicoh}
+					{enableOrderInfo && !isNetRicoh && hasPDFInvoicePermission ? (
+						<li>
+							<NagiLink href={url.wos.invoice.pdf({ lang })} target="_blank">
+								{t('components.ui.panels.orderPanel.invocePDF')}
+							</NagiLink>
+						</li>
+					) : (
+						hasInfomationPermission && (
+							<li>
+								<NagiLink
+									href={url.wos.invoice.apply({ lang })}
+									target="_blank"
+								>
+									{t('components.ui.panels.orderPanel.invocePDF')}
+								</NagiLink>
+							</li>
+						)
+					)}
 				</ul>
 			</div>
 		);
@@ -213,17 +257,14 @@ export const OrderPanel: React.VFC<Props> = ({
 			)}
 		>
 			<div className={styles.headerBalloonBoxTtl}>
-				{isPurchaseLinkUser ? '[WOS]형번견적' : '견적/주문'}
+				{isPurchaseLinkUser
+					? `${t('components.ui.panels.orderPanel.purchaseUserTitle')}`
+					: `${t('components.ui.panels.orderPanel.title')}`}
 			</div>
 			<div>
-				{isPurchaseLinkUser ? (
-					purchaseLinkHTML()
-				) : (
-					<>
-						{orderPanelBtnPrintHTML()} {balloonInnerFirstHTML()}
-						{balloonInnerSecondHTML()}
-					</>
-				)}
+				{purchaseLinkHTML()}
+				{orderPanelBtnPrintHTML()} {balloonInnerFirstHTML()}
+				{balloonInnerSecondHTML()} {balloonInnerThirdHTML()}
 			</div>
 		</div>
 	);

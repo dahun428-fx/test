@@ -35,7 +35,7 @@ import { confirmModal } from '../../../../../components/pc/ui/modals/ConfirmModa
 import { messageModal } from '../../../../../components/pc/ui/modals/MessageModal/MessageModal.i18n.en';
 import { megaNav } from '../../../../../components/pc/ui/navigations/MegaNav/MegaNav.i18n.en';
 import { pagination } from '../../../../../components/pc/ui/paginations/i18n.en';
-import { panels } from '../../../../../components/pc/ui/panels/i18n.en';
+import { panels } from '../../../../../components/pc/ui/panels/i18n.ko'; //change to ko
 import { radio } from '../../../../../components/pc/ui/radio/i18n.en';
 import { specs } from '../../../../../components/pc/ui/specs/specs.i18n.en';
 import { text } from '../../../../../components/pc/ui/text/i18n.en';
@@ -57,13 +57,13 @@ const translation: Translation = {
 		 *   以下は登録サンプルと捉えてください。いずれ消すかもしれません。
 		 */
 		order: {
-			history: 'Order History',
+			history: '주문이력',
 			noPermission: 'You do not have order permission',
-			order: 'Order',
+			order: '주문',
 		},
 		quote: {
-			history: 'Quote History',
-			quote: 'Quote',
+			history: '견적이력',
+			quote: '견적',
 		},
 	},
 	components: {

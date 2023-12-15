@@ -66,6 +66,8 @@ export const selectOrderInfo = createSelector(
 
 		const hasPDFInvoicePermission = permissionList.includes('10');
 
+		const hasInfomationPermission = permissionList.includes('12');
+
 		const deliveryCount = customer?.deliveryCount || {};
 
 		const orderInfo: OrderInfo = {
@@ -90,6 +92,7 @@ export const selectOrderInfo = createSelector(
 			hasUnitPricePermission,
 			hasPDFInvoicePermission,
 			hasInvoiceReferencePermission,
+			hasInfomationPermission,
 			hasTransactionDetailReferencePermission,
 			hasShipToManagementPermission,
 			isProxyLogin,

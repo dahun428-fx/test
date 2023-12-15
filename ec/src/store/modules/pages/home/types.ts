@@ -34,6 +34,7 @@ export type OrderInfo = {
 	hasInvoiceReferencePermission: boolean;
 	hasUnitPricePermission: boolean;
 	hasPDFInvoicePermission: boolean;
+	hasInfomationPermission: boolean;
 	hasTransactionDetailReferencePermission: boolean;
 	hasShipToManagementPermission: boolean;
 	isProxyLogin: boolean;

@@ -56,11 +56,6 @@ export const OrderMenu: React.VFC = () => {
 					</div>
 				</div>
 			)}
-			{/* <div className={styles.menu}>
-				{expanded && (
-					<OrderPanel size="narrow" {...{ isEcUser, ...permissions }} />
-				)}
-			</div> */}
 		</li>
 	);
 };
