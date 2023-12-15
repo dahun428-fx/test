@@ -1,19 +1,20 @@
-import { my } from './resources/country/my';
+import { kr } from './resources/country/kr';
+import { stg } from './resources/env/stg';
 import { global } from './resources/global';
-import { en } from './resources/language/en';
+import { ko } from './resources/language/kr';
 import { subsidiary } from './resources/subsidiary';
 import { Config, Site } from '@/config/types';
 
 const site: Site = {
 	api: {
 		msm: {
-			origin: 'https://stg1-jp.misumi-ec.com',
+			origin: 'https://stg0-kr.misumi-ec.com',
 		},
 		ect: {
-			origin: 'https://stg1-api.jp.misumi-ec.com',
+			origin: 'https://stg0-api.kr.misumi-ec.com',
 		},
 		auth: {
-			origin: 'https://stg1-mauth.misumi.jp',
+			origin: 'https://stg0-kr.mauth.misumi-ec.com',
 		},
 		sinus: {
 			origin: 'https://stg.mex.misumi-ec.com',
@@ -23,7 +24,7 @@ const site: Site = {
 			origin: 'http://localhost:3001',
 		},
 		cameleer: {
-			origin: 'https://stg-recommend-jp.misumi-ec.com',
+			origin: 'https://stg-recommend-kr.misumi-ec.com',
 		},
 		legacy: {
 			htmlContents: {
@@ -38,7 +39,8 @@ const site: Site = {
 	},
 	web: {
 		ec: {
-			origin: 'https://stg1-jp.misumi-ec.com',
+			origin: 'https://stg0-kr.misumi-ec.com',
+			// origin: 'http://localhost:3000',
 		},
 		wos: {
 			// 以下のように config の値を合成することはあまり推奨されません。真に必要な時に限定してください。
@@ -48,15 +50,16 @@ const site: Site = {
 			},
 		},
 		digitalCatalog: {
-			origin: 'https://stg0-jp.c.misumi-ec.com',
+			origin: 'https://stg0-kr.c.misumi-ec.com',
 		},
 	},
 	// datadogRUM was copied from my-stg0.ts
+	// TODO: Update datadog setting for korea
 	datadogRUM: {
-		applicationId: '2b8b4e0c-1853-4564-9fd5-ce7befae3426',
-		clientToken: 'pub67d8bb71bd6fa4c856abb5e4b9130886',
+		applicationId: '',
+		clientToken: '',
 		site: 'datadoghq.com',
-		service: 'rum-a-ecweb-apl-apne1-my-stg00-01',
+		service: '',
 		env: 'stg0',
 		sampleRate: 100,
 		trackInteractions: true,
@@ -72,13 +75,10 @@ const site: Site = {
 export const config: Config = {
 	...global,
 	...subsidiary,
-	...my,
-	...en,
+	...kr,
+	...ko,
+	...stg,
 	...site,
-	env: 'stg',
-	applicationId: {
-		msm: 'ae680197-8861-4a83-90f8-c0d3729bd4e7-stg',
-	},
 	cookie: {
 		domain: '', // NOTE: ローカルでは domain を指定すると Cookie が取得できない。
 	},

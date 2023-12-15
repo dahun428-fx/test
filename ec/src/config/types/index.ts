@@ -97,9 +97,6 @@ export type Country = {
 			decimalPoint: string;
 		};
 	};
-	chatPlus: {
-		contractKey: string;
-	};
 };
 
 /**

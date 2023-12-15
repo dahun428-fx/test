@@ -7,9 +7,9 @@ export type Resource = {
 	translation: Translation;
 };
 
-// type Language = 'ko';
-type LanguageKorean = 'ko';
-type LanguageEnglish = 'en';
+type Language = 'ko';
 
-export type ResourcesKo = Record<LanguageKorean, Resource>;
-export type ResourcesEn = Record<LanguageEnglish, Resource>;
+// export type Resources = Record<Language, Resource>;
+export type Resources = {
+	[language: string]: Resource;
+};
