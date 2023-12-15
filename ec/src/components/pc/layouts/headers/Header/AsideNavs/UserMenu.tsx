@@ -8,13 +8,14 @@ import { Anchor, NagiLink } from '@/components/pc/ui/links';
 import useOuterClick from '@/hooks/ui/useOuterClick';
 import { Flag } from '@/models/api/Flag';
 import { url } from '@/utils/url';
+import classNames from 'classnames';
 
 /**
  * User menu.
  */
 export const UserMenu: React.VFC = () => {
 	// TODO: wos パラメータ lang を、ヘッダーで指定した言語にする (en)
-	const lang = 'en';
+	const lang = 'ko';
 	const { t } = useTranslation();
 	const { user, permissions, isEcUser, isPurchaseLinkUser } = useAuth();
 	const logout = useLogout();
@@ -34,17 +35,24 @@ export const UserMenu: React.VFC = () => {
 		useCallback(() => setIsOpen(false), [])
 	);
 
+	const isTechnicalSupport = user && user.technicalSupport ? true : false;
+
 	return (
 		<div className={styles.container} ref={rootRef}>
-			<Expand
-				expanded={isOpen}
-				onClick={() => setIsOpen(prev => !prev)}
-				label={user.userName ?? ''} // If only not logged in, name is empty.
-				isEllipsis
-			/>
-			{!!messageCount && (
-				<span className={styles.messageCount}>{messageCount}</span>
-			)}
+			<div
+				className={
+					isOpen
+						? classNames(styles.myPageBtn, styles.on)
+						: classNames(styles.myPageBtn)
+				}
+			>
+				<Expand
+					expanded={isOpen}
+					onClick={() => setIsOpen(prev => !prev)}
+					label={'마이페이지'} // If only not logged in, name is empty.
+				/>
+			</div>
+			{!!messageCount && <span className={styles.badge}>{messageCount}</span>}
 			<div className={styles.menu} aria-hidden={!isOpen}>
 				<div className={styles.section}>
 					<Anchor href={url.myPage.top}>
@@ -67,7 +75,16 @@ export const UserMenu: React.VFC = () => {
 								{t('components.ui.layouts.headers.header.userMenu.myPage')}
 							</Anchor>
 						</li>
-						{!isPurchaseLinkUser && Flag.isTrue(user.informationMessageFlag) && (
+						{Flag.isTrue(Flag.toFlag(isTechnicalSupport)) && (
+							<li className={styles.linkItem}>
+								<Anchor href={`/mypage/tech/contact/`}>
+									{t(
+										'components.ui.layouts.headers.header.userMenu.technicalSupport'
+									)}
+								</Anchor>
+							</li>
+						)}
+						{Flag.isTrue(user.informationMessageFlag) && (
 							<li className={styles.linkItem}>
 								<Anchor href={url.myPage.messageList}>
 									{t(
@@ -76,7 +93,7 @@ export const UserMenu: React.VFC = () => {
 								</Anchor>
 							</li>
 						)}
-						{!isPurchaseLinkUser && Flag.isTrue(user.couponMessageFlag) && (
+						{Flag.isTrue(user.couponMessageFlag) && (
 							<li className={styles.linkItem}>
 								<Anchor href={url.myPage.couponList}>
 									{t('components.ui.layouts.headers.header.userMenu.myCoupons')}

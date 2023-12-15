@@ -40,7 +40,6 @@ export const UserMenu: React.VFC = () => {
 				expanded={isOpen}
 				onClick={() => setIsOpen(prev => !prev)}
 				label={user.userName ?? ''} // If only not logged in, name is empty.
-				isEllipsis
 			/>
 			{!!messageCount && (
 				<span className={styles.messageCount}>{messageCount}</span>

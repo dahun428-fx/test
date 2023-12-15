@@ -26,7 +26,7 @@ export const AsideNavs: React.VFC = () => {
 			<ul className={styles.headerFunction}>
 				<OrderMenu />
 				<NeedHelp />
-				{authenticated ? <>mypage</> : <LoginMenu />}
+				{authenticated ? <UserMenu /> : <LoginMenu />}
 				{authenticated ? <>장바구니</> : <RegistMenu />}
 			</ul>
 		</div>

@@ -39,8 +39,9 @@ const site: Site = {
 	},
 	web: {
 		ec: {
-			origin: 'https://stg0-kr.misumi-ec.com',
+			// origin: 'https://stg0-kr.misumi-ec.com',
 			// origin: 'http://localhost:3000',
+			origin: 'http://local.misumi-ec.com:3000',
 		},
 		wos: {
 			// 以下のように config の値を合成することはあまり推奨されません。真に必要な時に限定してください。
