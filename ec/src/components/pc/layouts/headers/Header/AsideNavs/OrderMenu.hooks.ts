@@ -3,7 +3,6 @@ import {
 	selectIsEcUser,
 	selectIsHipus,
 	selectIsNetRicoh,
-	// selectUser,
 	selectUserPermissions,
 } from '@/store/modules/auth';
 import { selectOrderInfo } from '@/store/modules/pages/home';
@@ -17,8 +16,6 @@ export const useAuth = () => {
 	/** EC会員か */
 	const isEcUser = useSelector(selectIsEcUser);
 
-	// const selectedUserInfo = useSelector(selectUser);
-
 	const isHipus = useSelector(selectIsHipus);
 
 	const isNetRicoh = useSelector(selectIsNetRicoh);
@@ -30,7 +27,6 @@ export const useAuth = () => {
 		isEcUser,
 		isHipus,
 		isNetRicoh,
-		// selectedUserInfo,
 		selectedOrderInfo,
 	};
 };

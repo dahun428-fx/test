@@ -37,11 +37,7 @@ export const Header: React.VFC<Props> = ({}) => {
 						<div className={styles.headerWrap}>
 							<div className={styles.header}>
 								<div className={styles.headerMain}>
-									<div className={styles.headerLogoWrap}>
-										<h1 className={styles.headerLogo}>
-											<span>MISUMI | Your Time, Our Priority</span>
-										</h1>
-									</div>
+									<Logo needsHeading={pathIsHome} />
 									<SearchBox
 										keyword={keyword}
 										isReSearch={pathIsResult}

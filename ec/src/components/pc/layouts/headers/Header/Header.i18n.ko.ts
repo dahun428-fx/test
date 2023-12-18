@@ -7,6 +7,7 @@ import { registMenu } from './AsideNavs/RegistMenu.i18n.ko'; //change to ko
 import { userMenu } from './AsideNavs/UserMenu.i18n.ko'; //change to ko
 import { logo } from './Logo/Logo.i18n.en';
 import { megaNavMenu } from './MegaNavMenu/MegaNavMenu.i18n.ko'; //change to ko
+import { orderStatusPanel } from './OrderStatus/OrderStatusPanel.i18n.ko'; //change to ko
 import { noSupportBrowserMessage } from './NoSupportBrowserMessage/NoSupportBrowserMessage.i18n.en';
 import { searchBox } from './SearchBox/SearchBox.i18n.en';
 import { Translation } from '@/i18n/types';
@@ -23,4 +24,5 @@ export const header: Translation = {
 	loginForm,
 	asideNavs,
 	registMenu,
+	orderStatusPanel,
 };

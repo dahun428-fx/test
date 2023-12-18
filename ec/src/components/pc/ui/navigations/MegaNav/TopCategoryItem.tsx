@@ -27,6 +27,11 @@ export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
 	const handleMouseLeave = () => {
 		setIsHover(false);
 	};
+
+	const onClickHandler = () => {
+		setIsHover(false);
+		return () => onClickLink();
+	};
 	return (
 		<li
 			className={classNames(
@@ -36,7 +41,10 @@ export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			<Link href={url.category(category.categoryCode)()} onClick={onClickLink}>
+			<Link
+				href={url.category(category.categoryCode)()}
+				onClick={onClickHandler}
+			>
 				{category.categoryName}
 			</Link>
 			{isHover && (
@@ -47,7 +55,7 @@ export const TopCategoryItem: React.FC<Props> = ({ category, onClickLink }) => {
 					categoryGroupImageUrl={category.categoryGroupImageUrl}
 					categoryName={category.categoryName}
 					childCategoryList={category.childCategoryList}
-					onClickLink={onClickLink}
+					onClickLink={onClickHandler}
 				/>
 			)}
 		</li>

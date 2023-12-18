@@ -17,6 +17,7 @@ import { MessageModalController } from '@/components/pc/ui/modals/MessageModal';
 import { ModalController } from '@/components/pc/ui/modals/Modal.hooks';
 import { MessageToastController } from '@/components/pc/ui/toasts/MessageToast';
 import { TooltipController } from '@/components/pc/ui/tooltips';
+import { OrderStatusPanel } from './headers/Header/OrderStatus';
 
 const DevTool =
 	process.env.NODE_ENV === 'development' &&
@@ -39,6 +40,7 @@ export const Layout: React.FC = ({ children }) => {
 				<div className={styles.layout} ref={rootRef}>
 					<Header />
 					<div className={styles.main}>
+						<OrderStatusPanel />
 						<div className={styles.childrenWrapper}>{children}</div>
 					</div>
 					<div className={styles.rightSideFloating}>
