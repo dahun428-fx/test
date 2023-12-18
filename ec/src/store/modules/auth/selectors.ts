@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { CustomerType } from '@/models/api/msm/ect/userInfo/GetUserInfoResponse';
 import { AppState } from '@/store';
+import { stat } from 'fs';
 
 /** auth module */
 export function selectAuth(state: AppState) {
@@ -52,6 +53,22 @@ export const selectUserPermissions = createSelector(
 		};
 	}
 );
+
+/** NetRicoh */
+export function selectIsNetRicoh(state: AppState) {
+	return (
+		(state.auth.user?.styleKey && state.auth.user.styleKey == '1304191708') ||
+		false
+	);
+}
+
+/** isHipus */
+export function selectIsHipus(state: AppState) {
+	return (
+		(state.auth.user?.styleKey && state.auth.user.styleKey == '0708152018') ||
+		false
+	);
+}
 
 /** ログイン済みかつEC会員か */
 export function selectIsEcUser(state: AppState) {

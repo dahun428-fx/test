@@ -15,7 +15,7 @@ export const OrderMenu: React.VFC = () => {
 	const [t] = useTranslation();
 	const rootRef = useRef<HTMLLIElement>(null);
 	const [expanded, setExpanded] = useState(false);
-	const { permissions, isEcUser, selectedUserInfo, selectedOrderInfo } =
+	const { permissions, isEcUser, selectedOrderInfo, isNetRicoh, isHipus } =
 		useAuth();
 
 	useOuterClick(rootRef, () => setExpanded(false));
@@ -49,7 +49,8 @@ export const OrderMenu: React.VFC = () => {
 							{...{
 								isEcUser,
 								...permissions,
-								selectedUserInfo,
+								isNetRicoh,
+								isHipus,
 								selectedOrderInfo,
 							}}
 						/>

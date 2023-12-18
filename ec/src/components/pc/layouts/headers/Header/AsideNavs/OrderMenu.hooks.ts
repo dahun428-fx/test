@@ -1,7 +1,9 @@
 import { useSelector } from '@/store/hooks';
 import {
 	selectIsEcUser,
-	selectUser,
+	selectIsHipus,
+	selectIsNetRicoh,
+	// selectUser,
 	selectUserPermissions,
 } from '@/store/modules/auth';
 import { selectOrderInfo } from '@/store/modules/pages/home';
@@ -15,9 +17,20 @@ export const useAuth = () => {
 	/** EC会員か */
 	const isEcUser = useSelector(selectIsEcUser);
 
-	const selectedUserInfo = useSelector(selectUser);
+	// const selectedUserInfo = useSelector(selectUser);
+
+	const isHipus = useSelector(selectIsHipus);
+
+	const isNetRicoh = useSelector(selectIsNetRicoh);
 
 	const selectedOrderInfo = useSelector(selectOrderInfo);
 
-	return { permissions, isEcUser, selectedUserInfo, selectedOrderInfo };
+	return {
+		permissions,
+		isEcUser,
+		isHipus,
+		isNetRicoh,
+		// selectedUserInfo,
+		selectedOrderInfo,
+	};
 };

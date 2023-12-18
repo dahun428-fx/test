@@ -81,6 +81,12 @@ const wosLogin = `${config.web.wos.baseUrl}/common/EC002SingleLoginCmd.do`;
  * - NOTE: 外部 URL はドメイン付きで指定する必要がある可能性があります。deploy 後 要確認。
  */
 export const url = {
+	/** 배송조회 */
+	deliveryCheck:
+		'https://www.misumi.co.kr/sub.php?menu=delivery/&amp;clkid=clkid_kr_my_20160202_88',
+	/** 배송방식 변경 */
+	shippingWayChange:
+		'https://www.misumi.co.kr/shippingwaychange/?clkid=clkid_kr_my_20160202_89',
 	/** Brand list */
 	brandList: convertToURLString(pagesPath.vona2.maker.$url()),
 	/** Brand list category MISUMI */
@@ -583,6 +589,7 @@ export const url = {
 
 		/** Quote */
 		quote: {
+			/** 견적작성 */
 			quote: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
@@ -598,6 +605,7 @@ export const url = {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=EC_QT_FILE_UPLOAD`,
 				}),
+			/** 견적이력 */
 			history: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
@@ -624,7 +632,7 @@ export const url = {
 				}),
 		},
 
-		/** Return request */
+		/** 반품/교환 신청 일람 Return request */
 		returnRequest: (query: Record<'lang', string>) =>
 			toUrl(`${config.web.wos.baseUrl}/common/EC003WosTopCmd.do`, {
 				...query,
@@ -658,31 +666,37 @@ export const url = {
 		},
 
 		settings: {
+			/** WOS 고객 정보 변경 */
 			profile: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=USER_INFORMATION`,
 				}),
+			/** 비밀번호 변경 */
 			changePassword: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=CHANGE_PASSWORD`,
 				}),
+			/** 미스미 회원정보 */
 			myOrganization: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=REGISTRANT_INFO`,
 				}),
+			/** WOS 설정 변경 */
 			changeSettings: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=WOS_SETTINGS`,
 				}),
+			/** 고객 형번 설정 */
 			partNumberNicknameManagement: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=PRODUCT_CODE_REGISTRATION`,
 				}),
+			/** 배송지 관리 */
 			shipToManagement: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
@@ -694,11 +708,13 @@ export const url = {
 					...query,
 					OK_URL: `${config.path.web.wos}/shiptomaintenance/EC058ShipToAdministCmd.do?commandCode=RECEIVER_MANAGE_LOAD`,
 				}),
+			/** 배송지 추가 */
 			newShipToAddress: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,
 					OK_URL: `${config.path.web.wos}/common/EC003WosTopCmd.do?commandCode=NEW_SHIPPING_ADDRESS`,
 				}),
+			/** WOS 이용자 관리 */
 			userManagement: (query: Record<'lang', string>) =>
 				toUrl(wosLogin, {
 					...query,

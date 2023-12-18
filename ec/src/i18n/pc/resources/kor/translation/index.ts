@@ -62,6 +62,7 @@ const translation: Translation = {
 			order: '주문',
 		},
 		quote: {
+			write: '견적작성',
 			history: '견적이력',
 			quote: '견적',
 		},

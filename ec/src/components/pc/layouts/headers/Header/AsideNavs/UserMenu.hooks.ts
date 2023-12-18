@@ -4,11 +4,14 @@ import { useSelector } from '@/store/hooks';
 import {
 	logout,
 	selectIsEcUser,
+	selectIsNetRicoh,
 	selectIsPurchaseLinkUser,
 	selectNotificationCount,
+	selectSettlementTypes,
 	selectUser,
 	selectUserPermissions,
 } from '@/store/modules/auth';
+import { selectOrderInfo } from '@/store/modules/pages/home';
 import { assertNotNull } from '@/utils/assertions';
 
 /**
@@ -19,9 +22,23 @@ export const useAuth = () => {
 	const user = useSelector(selectUser);
 	const isEcUser = useSelector(selectIsEcUser);
 	const isPurchaseLinkUser = useSelector(selectIsPurchaseLinkUser);
+	const isNetRicoh = useSelector(selectIsNetRicoh);
+	const selectedOrderInfo = useSelector(selectOrderInfo);
+	const { isCashOnDeliveryUser, isCreditCardUser } = useSelector(
+		selectSettlementTypes
+	);
 	// Don't expect to be called anything other than authenticated.
 	assertNotNull(user);
-	return { user, permissions, isEcUser, isPurchaseLinkUser };
+	return {
+		user,
+		permissions,
+		isEcUser,
+		isNetRicoh,
+		isPurchaseLinkUser,
+		selectedOrderInfo,
+		isCashOnDeliveryUser,
+		isCreditCardUser,
+	};
 };
 
 /**

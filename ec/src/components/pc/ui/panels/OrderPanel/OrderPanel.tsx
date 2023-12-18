@@ -24,8 +24,12 @@ type Props = {
 	hasOrderHistoryPermission: boolean; // permissionList.includes('6'),
 	/** 注文履歴権限 (未ログインの場合は false 想定) */
 	hasQuoteHistoryPermission: boolean; //permissionList.includes('5'),
-	selectedUserInfo: Readonly<GetUserInfoResponse> | null;
+	/** OrderInfo */
 	selectedOrderInfo: OrderInfo | null;
+	/** styleKey: '1304191708' */
+	isNetRicoh: boolean;
+	/** styleKey: '0708152018' */
+	isHipus: boolean;
 };
 
 const lang = 'KOR';
@@ -42,21 +46,13 @@ export const OrderPanel: React.VFC<Props> = ({
 	hasQuotePermission,
 	hasOrderHistoryPermission,
 	hasQuoteHistoryPermission,
-	selectedUserInfo,
 	selectedOrderInfo,
+	isNetRicoh,
+	isHipus,
 }) => {
 	const [t] = useTranslation();
 	const canEstimate = !isEcUser && hasQuotePermission;
 	const canOrder = !isEcUser && hasOrderPermission;
-	const isHipus =
-		selectedUserInfo &&
-		selectedUserInfo.styleKey &&
-		selectedUserInfo.styleKey == '0708152018';
-
-	const isNetRicoh =
-		selectedUserInfo &&
-		selectedUserInfo.styleKey &&
-		selectedUserInfo.styleKey == '1304191708';
 	const hasUnitPricePermission =
 		selectedOrderInfo?.hasUnitPricePermission || false;
 

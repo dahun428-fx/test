@@ -26,7 +26,7 @@
 	right: 0;
 	z-index: variables.$popoverZIndex;
 	display: none;
-	width: 300px;
+	width: 232px;
 	padding: 9px;
 	font-size: 14px;
 	background-color: #fff;
@@ -54,6 +54,9 @@
 .linkItem {
 	&:not(:first-child) {
 		margin-top: 5px;
+	}
+	a {
+		color: #000 !important;
 	}
 }
 
@@ -129,4 +132,36 @@
 	line-height: 20px;
 	padding: 0 5px;
 	font-weight: bold;
+}
+
+.logoutBtn {
+	position: relative;
+	height: 35px;
+	a {
+		position: absolute;
+		top: 0;
+		left: -2px;
+		display: block;
+		width: 198px;
+		height: 33px;
+		line-height: 33px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 13px;
+		color: #333;
+		background-color: #fafafa;
+		border: 1px solid #bfbfbf;
+		&:hover {
+			text-decoration: none;
+			color: #fff !important;
+			background-color: #025fae;
+			border-color: #025fae;
+		}
+	}
+}
+.userName {
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 24px;
+	color: #000 !important;
 }
