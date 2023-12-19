@@ -235,8 +235,8 @@ const KRW: React.VFC<CurrencyProps> = ({
 	strike = false,
 	theme = 'standard',
 }) => {
-	const digits = 2;
-	const symbol = 'SGD';
+	const digits = 0;
+	const symbol = '원';
 	const price = useMemo(() => format(value, digits), [value]);
 
 	if (
@@ -246,15 +246,6 @@ const KRW: React.VFC<CurrencyProps> = ({
 	) {
 		return (
 			<span className={className}>
-				{price && !symbolLess && (
-					<span
-						className={classNames(styles.symbol, {
-							[String(styles.strike)]: strike,
-						})}
-					>
-						{symbol}
-					</span>
-				)}
 				<span
 					className={classNames({
 						[String(styles.accent)]: theme === 'accent',
@@ -266,16 +257,25 @@ const KRW: React.VFC<CurrencyProps> = ({
 				>
 					{price}
 				</span>
+				{price && !symbolLess && (
+					<span
+						className={classNames(styles.symbol, {
+							[String(styles.strike)]: strike,
+						})}
+					>
+						{symbol}
+					</span>
+				)}
 			</span>
 		);
 	}
 
 	return (
 		<span className={className}>
-			{price && !symbolLess && `${symbol} `}
 			<span className={classNames({ [String(styles.isRed)]: isRed })}>
 				{price}
 			</span>
+			{price && !symbolLess && `${symbol} `}
 		</span>
 	);
 };

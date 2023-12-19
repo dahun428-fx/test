@@ -1,4 +1,4 @@
-import { asideNavs } from './AsideNavs/AsideNavs.i18n.en';
+import { asideNavs } from './AsideNavs/AsideNavs.i18n.ko'; //change to ko
 import { loginForm } from './AsideNavs/LoginForm.i18n.ko'; //change to ko
 import { loginMenu } from './AsideNavs/LoginMenu.i18n.ko'; //change to ko
 import { needHelp } from './AsideNavs/NeedHelp.i18n.ko'; //change to ko

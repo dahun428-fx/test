@@ -33,19 +33,23 @@ export const MyShipments: React.FC<Props> = ({
 
 	const shipmentList = [
 		{
-			title: t('layouts.headers.orderStatusPanel.tomorrow'),
+			title: t(
+				'components.ui.layouts.headers.header.orderStatusPanel.tomorrow'
+			),
 			count: nextDay,
-			link: '',
+			link: url.wos.shipment.historyByDate({ lang }, tomorrow),
 		},
 		{
-			title: t('layouts.headers.orderStatusPanel.today'),
+			title: t('components.ui.layouts.headers.header.orderStatusPanel.today'),
 			count: currentDay,
-			link: '',
+			link: url.wos.shipment.historyByDate({ lang }, today),
 		},
 		{
-			title: t('layouts.headers.orderStatusPanel.yesterday'),
+			title: t(
+				'components.ui.layouts.headers.header.orderStatusPanel.yesterday'
+			),
 			count: previousDay,
-			link: '',
+			link: url.wos.shipment.historyByDate({ lang }, yesterday),
 		},
 	];
 
@@ -53,10 +57,14 @@ export const MyShipments: React.FC<Props> = ({
 		<div className={styles.container}>
 			<div className={styles.titleBox}>
 				<div className={styles.title}>
-					{t('layouts.headers.orderStatusPanel.shipmentsTitle')}
+					{t(
+						'components.ui.layouts.headers.header.orderStatusPanel.shipmentsTitle'
+					)}
 				</div>
 				<Link href={url.wos.order.history({ lang })} className={styles.link}>
-					{t('layouts.headers.orderStatusPanel.seeMore')}
+					{t(
+						'components.ui.layouts.headers.header.orderStatusPanel.orderSeeMore'
+					)}
 				</Link>
 			</div>
 			<div className={styles.main}>
@@ -67,12 +75,20 @@ export const MyShipments: React.FC<Props> = ({
 							{shipment.count > 0 ? (
 								<Link href={shipment.link} className={styles.link}>
 									<span className={styles.count}>{digit(shipment.count)}</span>
-									<div>{t('layouts.headers.orderStatusPanel.count')}</div>
+									<div>
+										{t(
+											'components.ui.layouts.headers.header.orderStatusPanel.count'
+										)}
+									</div>
 								</Link>
 							) : (
 								<div className={styles.disabled}>
 									<span className={styles.count}>{digit(shipment.count)}</span>
-									<div>{t('layouts.headers.orderStatusPanel.count')}</div>
+									<div>
+										{t(
+											'components.ui.layouts.headers.header.orderStatusPanel.count'
+										)}
+									</div>
 								</div>
 							)}
 						</li>

@@ -22,12 +22,16 @@ export const RequestCount: React.FC<Props> = ({
 	const requestList = useMemo(() => {
 		const unfitList = [
 			{
-				title: t('layouts.headers.orderStatusPanel.unfitQuote'),
+				title: t(
+					'components.ui.layouts.headers.header.orderStatusPanel.unfitQuote'
+				),
 				count: unfitCount.quote,
 				link: url.wos.inquiry.quote({ lang }),
 			},
 			{
-				title: t('layouts.headers.orderStatusPanel.unfitOrder'),
+				title: t(
+					'components.ui.layouts.headers.header.orderStatusPanel.unfitOrder'
+				),
 				count: unfitCount.order,
 				link: url.wos.inquiry.order({ lang }),
 			},
@@ -38,17 +42,23 @@ export const RequestCount: React.FC<Props> = ({
 		return [
 			...unfitList,
 			{
-				title: t('layouts.headers.orderStatusPanel.approvalPending'),
+				title: t(
+					'components.ui.layouts.headers.header.orderStatusPanel.approvalPending'
+				),
 				count: approvalCount.pending,
 				link: url.wos.order.approvalHistory({ lang }),
 			},
 			{
-				title: t('layouts.headers.orderStatusPanel.returned'),
+				title: t(
+					'components.ui.layouts.headers.header.orderStatusPanel.returned'
+				),
 				count: approvalCount.returned,
 				link: url.wos.order.history({ lang }),
 			},
 			{
-				title: t('layouts.headers.orderStatusPanel.rejected'),
+				title: t(
+					'components.ui.layouts.headers.header.orderStatusPanel.rejected'
+				),
 				count: approvalCount.rejected,
 				link: url.wos.order.history({ lang }),
 			},

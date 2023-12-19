@@ -13,12 +13,12 @@ type Props = {
 /**
  * Expand component (ボタンをクリックするとプルダウンを表示)
  */
-export const Expand = forwardRef<HTMLSpanElement, Props>(
+export const Expand = forwardRef<HTMLAnchorElement, Props>(
 	({ expanded, label, onClick, ...props }, ref) => {
 		return (
-			<span ref={ref} onClick={onClick} {...props}>
+			<a ref={ref} onClick={onClick} {...props}>
 				{label}
-			</span>
+			</a>
 		);
 	}
 );

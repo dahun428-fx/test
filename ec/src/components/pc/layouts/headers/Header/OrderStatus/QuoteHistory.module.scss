@@ -1,0 +1,65 @@
+.container {
+	flex-grow: 0;
+	flex-shrink: 0;
+	// マージン14pxを除いた全体の70% (IE だとバグるため flex-basis ではなく width にしています)
+	width: calc((100% - 14px) * 7 / 10);
+	margin-left: 14px;
+	padding: 20px;
+	background-color: #fff;
+}
+
+.titleBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.title {
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+// NOTE: Specificity is basically prohibited.
+.link[class] {
+	&:hover,
+	&:visited {
+		color: #004098;
+	}
+}
+
+.main {
+	margin-top: 20px;
+	padding-top: 32px;
+	vertical-align: middle;
+	border-top: 1px solid #ccc;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.head {
+	padding-bottom: 6px;
+	font-weight: bold;
+	font-size: 0.8125rem;
+	text-align: left;
+	border-bottom: 1px solid #ccc;
+}
+
+.cell {
+	padding: 7px 0;
+	font-size: 0.8125rem;
+	text-align: left;
+	border-bottom: 1px dotted #ccc;
+}
+
+.noData {
+	width: 100%;
+	margin-top: 70px;
+	font-weight: bold;
+	text-align: center;
+}

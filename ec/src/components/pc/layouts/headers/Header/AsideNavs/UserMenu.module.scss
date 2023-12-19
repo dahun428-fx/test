@@ -66,7 +66,7 @@
 
 .myPageBtn {
 	position: relative;
-	> span {
+	> a {
 		justify-content: flex-start;
 		position: relative;
 		display: flex;
@@ -94,7 +94,7 @@
 		}
 	}
 	&:hover {
-		> span {
+		> a {
 			border-color: $nagi_color_accent_hover;
 			background-color: $nagi_color_accent_hover;
 			color: $nagi_color_text_base_sub !important;
@@ -105,7 +105,7 @@
 		}
 	}
 	&.on {
-		> span {
+		> a {
 			border-color: $nagi_color_accent_hover;
 			background-color: $nagi_color_accent_hover;
 			color: $nagi_color_text_base_sub !important;

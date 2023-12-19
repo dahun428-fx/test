@@ -148,7 +148,7 @@ export const url = {
 	/** Facebook */
 	facebook: 'https://www.facebook.com/misumisea',
 	/** Cart */
-	cart: `${config.web.ec.origin}/cart/`,
+	cart: `${config.web.ec.origin}/mypage/cart/`,
 	/** Express Delivery Service */
 	expressDeliveryService: `${config.web.ec.origin}/guide/category/ecatalog/st.html`,
 	/** Stork Guide */

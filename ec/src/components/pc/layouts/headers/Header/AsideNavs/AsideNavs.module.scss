@@ -12,7 +12,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 		grid-template-columns: 1fr 1fr;
 		grid-gap: 10px;
 		> li {
-			> span {
+			> a {
 				position: relative;
 				display: flex;
 				height: 40px;
@@ -26,7 +26,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 				cursor: pointer;
 			}
 			&:hover {
-				> span {
+				> a {
 					border-color: $nagi_color_accent_hover;
 					background-color: $nagi_color_accent_hover;
 					color: $nagi_color_text_base_sub !important;
@@ -37,7 +37,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 				}
 			}
 			&.on {
-				> span {
+				> a {
 					border-color: $nagi_color_accent_hover;
 					background-color: $nagi_color_accent_hover;
 					color: $nagi_color_text_base_sub !important;
@@ -50,12 +50,12 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 			}
 		}
 		.regist {
-			> span {
+			> a {
 				border-color: #ffcc00;
 				background-color: #ffcc00;
 			}
 			&:hover {
-				> span {
+				> a {
 					border-color: #025fae;
 					background-color: #025fae;
 					color: #fff;
@@ -64,7 +64,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 			}
 		}
 		.cart {
-			> span {
+			> a {
 				border-color: #0f218b;
 				background-color: #0f218b;
 				color: #fff !important;
@@ -73,7 +73,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 				}
 			}
 			&:hover {
-				> span {
+				> a {
 					background-image: none;
 				}
 			}
@@ -82,7 +82,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 			position: relative;
 		}
 		.bookmark {
-			> span {
+			> a {
 				width: 250px;
 				> span {
 					display: inline-block;
@@ -121,14 +121,14 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 		}
 		.bookmark,
 		.help {
-			> span {
+			> a {
 				padding-left: 10px;
 				padding-right: 10px;
 				background-image: none;
 				text-align: center;
 			}
 			&:hover {
-				> span {
+				> a {
 					background-image: none;
 				}
 			}
@@ -136,7 +136,7 @@ $loader: '#{variables.$commonPath}/loading-dark.gif';
 		.order,
 		.login,
 		.user {
-			> span {
+			> a {
 				justify-content: flex-start;
 				&::after {
 					content: '';

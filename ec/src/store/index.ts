@@ -6,6 +6,7 @@ import { categoryReducer } from './modules/pages/category';
 import { homeReducer } from './modules/pages/home/slice';
 import { keywordSearchReducer } from './modules/pages/keywordSearch';
 import { productDetailReducer } from './modules/pages/productDetail';
+import { orderStatusPanelReducer } from './modules/common/orderStatusPanel';
 
 export const store = configureStore({
 	reducer: {
@@ -20,6 +21,9 @@ export const store = configureStore({
 
 		// cad Download
 		cadDownload: cadDownloadReducer,
+
+		//orderStatusPanel
+		orderStatusPanel: orderStatusPanelReducer,
 	},
 	devTools: process.env.NODE_ENV === 'development',
 });

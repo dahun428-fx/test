@@ -13,6 +13,8 @@ import {
 } from '@/store/modules/auth';
 import { selectOrderInfo } from '@/store/modules/pages/home';
 import { assertNotNull } from '@/utils/assertions';
+import { useOrderStatusPanel } from '../OrderStatus/OrderStatusPanel.hooks';
+import { updateShowsStatusOperation } from '@/store/modules/common/orderStatusPanel';
 
 /**
  * auth state
@@ -55,4 +57,9 @@ export const useLogout = () => {
 export const useMessageCount = () => {
 	const messageCount = useSelector(selectNotificationCount);
 	return messageCount;
+};
+
+export const openOrderStatusPanel = () => {
+	const { setShowsStatus } = useOrderStatusPanel();
+	return setShowsStatus(true);
 };

@@ -1,7 +1,12 @@
 import Router from 'next/router';
 import React, { MouseEvent, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth, useLogout, useMessageCount } from './UserMenu.hooks';
+import {
+	openOrderStatusPanel,
+	useAuth,
+	useLogout,
+	useMessageCount,
+} from './UserMenu.hooks';
 import styles from './UserMenu.module.scss';
 import { Expand } from '@/components/pc/layouts/headers/Header/Expand';
 import { Anchor, NagiLink } from '@/components/pc/ui/links';
@@ -9,6 +14,7 @@ import useOuterClick from '@/hooks/ui/useOuterClick';
 import { Flag } from '@/models/api/Flag';
 import { url } from '@/utils/url';
 import classNames from 'classnames';
+import { useOrderStatusPanel } from '../OrderStatus/OrderStatusPanel.hooks';
 
 /**
  * User menu.
@@ -36,6 +42,14 @@ export const UserMenu: React.VFC = () => {
 		event.preventDefault();
 		await logout();
 		Router.reload();
+	};
+
+	const { setShowsStatus } = useOrderStatusPanel();
+
+	const openPanel = (event: MouseEvent) => {
+		event.preventDefault();
+		setIsOpen(false);
+		setShowsStatus(true);
 	};
 
 	const rootRef = useRef(null);
@@ -143,7 +157,7 @@ export const UserMenu: React.VFC = () => {
 				) : (
 					<ul>
 						<li className={styles.linkItem}>
-							<Anchor href={``}>
+							<Anchor href={``} onClick={e => openPanel(e)}>
 								{t('components.ui.layouts.headers.header.userMenu.quoteOrder')}
 								{/* 견적/주문 내역 */}
 							</Anchor>

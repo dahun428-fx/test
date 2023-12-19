@@ -13,27 +13,36 @@ import classNames from 'classnames';
 export const NeedHelp: React.VFC = () => {
 	const [t] = useTranslation();
 	const rootRef = useRef<HTMLLIElement>(null);
-	const [expanded, setExpanded] = useState(false);
+	// const [expanded, setExpanded] = useState(false);
 
-	useOuterClick(
-		rootRef,
-		useCallback(() => setExpanded(false), [])
-	);
+	// useOuterClick(
+	// 	rootRef,
+	// 	useCallback(() => setExpanded(false), [])
+	// );
+
+	const handleOnClick = (
+		event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+	) => {
+		event.preventDefault();
+	};
 
 	return (
 		<li
-			className={
-				expanded ? classNames(styles.help, styles.on) : classNames(styles.help)
-			}
+			// className={
+			// 	expanded ? classNames(styles.help, styles.on) : classNames(styles.help)
+			// }
 			ref={rootRef}
 		>
-			<Expand
+			<a onClick={event => handleOnClick(event)}>
+				{t('components.ui.layouts.headers.header.needHelp.expand')}
+			</a>
+			{/* <Expand
 				{...{
 					label: t('components.ui.layouts.headers.header.needHelp.expand'),
 					expanded,
 					onClick: () => setExpanded(expanded => !expanded),
 				}}
-			/>
+			/> */}
 		</li>
 	);
 };
