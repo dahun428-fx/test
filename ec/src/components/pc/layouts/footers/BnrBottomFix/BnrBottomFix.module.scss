@@ -1,0 +1,170 @@
+$iconFold: './assets/ic_floating_fold.png';
+$iconUnFold: './assets/ic_floating_unfold.png';
+$iconCad: './assets/ic_floatingBar_cad.png';
+$iconCompare: './assets/ic_floatingBar_compare.png';
+$iconDesign: './assets/ic_floatingBar_design.png';
+$iconItem: './assets/ic_floatingBar_item.png';
+$iconOrder: './assets/ic_floatingBar_order.png';
+$iconTech: './assets/ic_floatingBar_tech.png';
+
+.wrap {
+	position: fixed;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	border-top: 1px solid #c7c9d1;
+	background-color: #eef0f5;
+	z-index: 9999;
+	display: none;
+	&.show {
+		display: block;
+		box-sizing: border-box;
+		height: 68px;
+		border-top: 3px solid #004bb1;
+		border-bottom: 1px solid #ddd;
+		background-color: #fff;
+		& + .fold.active {
+			display: block;
+		}
+		& + .fold + .unfold.active {
+			display: block;
+		}
+	}
+}
+.content {
+	position: relative;
+	width: 1200px;
+	height: 68px;
+	margin: 0 auto;
+	background-color: #fff;
+}
+.left {
+	float: left;
+	height: 100%;
+	vertical-align: middle;
+	> ul {
+		display: block;
+		height: 100%;
+		overflow: hidden;
+		li {
+			float: left;
+			vertical-align: middle;
+			height: 100%;
+			position: relative;
+			a {
+				cursor: pointer;
+				display: block;
+				width: 89px;
+				height: 64px;
+				border-right: 1px solid #ddd;
+				border-bottom: 1px solid #ddd;
+				text-decoration: none;
+				text-align: center;
+			}
+			&:first-child {
+				a {
+					border-left: 1px solid #ddd;
+				}
+			}
+		}
+	}
+}
+.iconCad {
+	background-image: url($iconCad);
+}
+.iconCompare {
+	background-image: url($iconCompare);
+}
+.iconOrder {
+	background-image: url($iconOrder);
+}
+.iconItem {
+	background-image: url($iconItem);
+}
+.iconTech {
+	background-image: url($iconTech);
+}
+.iconDesign {
+	background-image: url($iconDesign);
+}
+
+.iconCad,
+.iconItem,
+.iconOrder,
+.iconCompare,
+.iconTech,
+.iconDesign {
+	display: block;
+	padding: 40px 0 10px;
+	height: 10px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #333;
+	background-repeat: no-repeat;
+	background-position: 50% 14px;
+	opacity: 0.8;
+	&:hover {
+		opacity: 1;
+	}
+}
+.iconCadNumber {
+	position: absolute;
+	font-size: 11px;
+	text-align: center;
+	border-radius: 16px;
+	width: 26px;
+	height: 20px;
+	line-height: 20px;
+	background-color: #ffcc00;
+	left: 57px;
+	top: 6px;
+	font-weight: bold;
+}
+
+@mixin btmFixBtn {
+	position: fixed;
+	box-sizing: border-box;
+	left: 50%;
+	margin-left: 535px;
+	width: 66px;
+	height: 25px;
+	overflow: hidden;
+	text-align: center;
+	border: 0;
+	background-color: #004bb1;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	text-indent: -9999px;
+	cursor: pointer;
+	z-index: 10000;
+	display: none;
+}
+.fold {
+	@include btmFixBtn();
+	bottom: 68px;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 10px;
+		left: 25px;
+		width: 0;
+		height: 0;
+		border: 8px solid transparent;
+		border-top: 8px solid #fff;
+	}
+}
+.unfold {
+	@include btmFixBtn();
+	bottom: 0;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 2px;
+		left: 25px;
+		width: 0;
+		height: 0;
+		border: 8px solid transparent;
+		border-top: 8px solid #fff;
+	}
+}

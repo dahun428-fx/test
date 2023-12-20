@@ -1,0 +1,1 @@
+export { BnrBottomFix } from './BnrBottomFix';

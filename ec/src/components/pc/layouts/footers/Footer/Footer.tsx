@@ -16,6 +16,7 @@ import { pagesPath } from '@/utils/$path';
 import { Cookie, setCookie } from '@/utils/cookie';
 import { isMobile, ViewType } from '@/utils/device';
 import { url } from '@/utils/url';
+import { BnrBottomFix } from '../BnrBottomFix';
 
 /**
  * Footer
@@ -338,6 +339,8 @@ export const Footer: React.VFC = () => {
 					{t('components.ui.layouts.footers.footer.copyright')}
 				</div>
 			</div>
+			{/* ========================== bnrBottom ========================== */}
+			<BnrBottomFix />
 		</footer>
 	);
 };
