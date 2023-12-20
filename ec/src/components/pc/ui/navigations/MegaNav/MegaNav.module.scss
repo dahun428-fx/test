@@ -1,6 +1,69 @@
 @use 'src/styles/pc/variables';
 @use 'src/styles/pc/_variables_original' as *;
-
+$spriteMega: './assets/images/sprite_meganavi_20180322.png';
+$spriteMegaOn: './assets/images/sprite_meganavi_on_20180322.png';
+$icoEconomyMeganavi: './assets/images/ico_economy_meganavi.png';
 .meganavCategory {
 	padding: 12px 0 11px;
 }
+.miconT {
+	background: url($icoEconomyMeganavi) no-repeat;
+	background-size: 76px 29px;
+	background-position: calc(100% - 9px);
+	&.on {
+		background-color: #f5f5f7;
+		> a {
+			&::before {
+				border-width: 0px 0px;
+			}
+			&::after {
+				border-width: 0px 0px;
+			}
+		}
+	}
+}
+// .meganavCategoryHeadEcon {
+// 	backgrou
+// 	// &.on {
+// 	// 	& > a {
+// 	// 		position: relative;
+// 	// 		background-color: #f5f5f7;
+// 	// 		background-image: url($icoEconomyMeganavi);
+// 	// 		text-decoration: underline !important;
+// 	// 		color: $nagi_color_text_link_hover !important;
+// 	// 		&:before,
+// 	// 		&:after {
+// 	// 			display: block;
+// 	// 			position: absolute;
+// 	// 			top: 50%;
+// 	// 			width: 0;
+// 	// 			height: 0;
+// 	// 			margin-top: -5px;
+// 	// 			border: solid transparent;
+// 	// 			content: ' ';
+// 	// 			pointer-events: none;
+// 	// 			z-index: 1;
+// 	// 		}
+// 	// 		&:before {
+// 	// 			right: -1px;
+// 	// 			border-width: 5px 8px;
+// 	// 			border-right-color: $nagi_color_border_default;
+// 	// 		}
+// 	// 		&:after {
+// 	// 			right: -3px;
+// 	// 			border-width: 5px 8px;
+// 	// 			border-right-color: #fff;
+// 	// 		}
+// 	// 	}
+// 	// }
+// 	// & > a {
+// 	// 	background-image: url($icoEconomyMeganavi);
+// 	// 	background-repeat: no-repeat;
+// 	// 	&:hover {
+// 	// 		background-color: #f5f5f7 !important;
+// 	// 		background-image: url($spriteMegaOn);
+// 	// 		text-decoration: underline !important;
+// 	// 		color: $nagi_color_text_link_hover !important;
+// 	// 	}
+// 	// }
+// }
