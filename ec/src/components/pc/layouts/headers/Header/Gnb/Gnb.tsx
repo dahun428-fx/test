@@ -44,11 +44,11 @@ export const Gnb: React.FC = () => {
 
 	const handleOnClickFaMars = (
 		event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-		item: GnbItem,
+		url: string,
 		sublink?: string
 	) => {
 		event.preventDefault();
-		postFaMarsTop(item, sublink || '');
+		postFaMarsTop(url, sublink || '');
 	};
 
 	return (
@@ -79,7 +79,7 @@ export const Gnb: React.FC = () => {
 																onClick={e =>
 																	handleOnClickFaMars(
 																		e,
-																		children,
+																		children.link,
 																		'?bid=bid_kr_ec_44078_446'
 																	)
 																}

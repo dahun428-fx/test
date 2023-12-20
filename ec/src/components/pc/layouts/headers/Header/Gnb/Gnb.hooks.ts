@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { useSelector } from '@/store/hooks';
 import { selectAuthenticated } from '@/store/modules/auth';
 import { Cookie, getCookie } from '@/utils/cookie';
+import { postAndRemove } from '@/utils/post';
 
 export const useGnb = () => {
 	const authenticated = useSelector(selectAuthenticated);
@@ -78,38 +79,22 @@ export const useGnb = () => {
 		}
 	}
 
-	const postFaMarsTop = (item: GnbItem, sublink: string) => {
+	const postFaMarsTop = (url: string, sublink: string) => {
 		let port = location.host == 'kr.misumi-ec.com' ? '' : ':446';
-		let mdrsHost = `${item.link}${port}`;
+		let mdrsHost = `${url}${port}`;
 		let selectPage = `${mdrsHost}${sublink}`;
 		if (!authenticated) {
 			selectPage = `${mdrsHost}?bid=bid_etct_kr_m-fa_44378_1044`;
 		}
-		const formId = 'fa-mars-form';
-
-		const previousForm = document.getElementById(formId);
-		if (previousForm) {
-			try {
-				console.log('revmoew ===> ', previousForm);
-				document.body.removeChild(previousForm);
-			} catch {}
-		}
-
 		const sessionId = getCookie(Cookie.ACCESS_TOKEN_KEY) || '';
-		const form = document.createElement('form');
-		form.id = formId;
-		form.action = selectPage;
-		form.method = 'POST';
-		form.target = 'windowMDRS';
-
-		const input = document.createElement('input');
-		input.type = 'hidden';
-		input.name = 'ECsessionId';
-		input.value = sessionId;
-
-		document.body.appendChild(form);
-		form.appendChild(input);
-		form.submit();
+		const formId = 'fa-mars-form';
+		const param = { name: 'ECsessionId', value: sessionId };
+		postAndRemove({
+			formId: formId,
+			query: param,
+			url: selectPage,
+			target: 'windowMDRS',
+		});
 	};
 
 	return {
