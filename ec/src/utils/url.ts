@@ -81,6 +81,8 @@ const wosLogin = `${config.web.wos.baseUrl}/common/EC002SingleLoginCmd.do`;
  * - NOTE: 外部 URL はドメイン付きで指定する必要がある可能性があります。deploy 後 要確認。
  */
 export const url = {
+	/** 도면가공센터 */
+	faMdrs: 'https://fa-mdrs.misumi.co.kr',
 	/** 배송조회 */
 	deliveryCheck:
 		'https://www.misumi.co.kr/sub.php?menu=delivery/&amp;clkid=clkid_kr_my_20160202_88',
@@ -122,6 +124,14 @@ export const url = {
 	/** Sitemap */
 	// TODO: Remove this config when mobile footer link sitemap convert to used pagePaths
 	sitemap: `${config.web.ec.origin}/vona2/sitemap/`,
+	/** 미스미 브랜드 */
+	makerTop: `${config.web.ec.origin}/maker/`,
+	/** RAPiD Design */
+	rapidDesign: `${config.web.ec.origin}/service/rd/`,
+	/** 기술 정보 */
+	techInfo: `${config.web.ec.origin}/tech-info/`,
+	/** 미스미 베스트 2023 */
+	misumiBest2023: `${config.web.ec.origin}/pr/vona/MISUMI_BEST_2023/`,
 	/** Misumi CAD Download */
 	misumiCad: `${config.web.ec.origin}/maker/misumi/cad/`,
 	/** Musumi Technical Data */

@@ -10,6 +10,7 @@ import { megaNavMenu } from './MegaNavMenu/MegaNavMenu.i18n.ko'; //change to ko
 import { orderStatusPanel } from './OrderStatus/OrderStatusPanel.i18n.ko'; //change to ko
 import { noSupportBrowserMessage } from './NoSupportBrowserMessage/NoSupportBrowserMessage.i18n.en';
 import { searchBox } from './SearchBox/SearchBox.i18n.en';
+import { gnb } from './Gnb/Gnb.i18n.ko'; //change to ko
 import { Translation } from '@/i18n/types';
 
 export const header: Translation = {
@@ -25,4 +26,5 @@ export const header: Translation = {
 	asideNavs,
 	registMenu,
 	orderStatusPanel,
+	gnb,
 };

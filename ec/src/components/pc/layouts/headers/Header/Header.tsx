@@ -6,6 +6,7 @@ import { Logo } from './Logo';
 import { MegaNavMenu } from './MegaNavMenu';
 import { NoSupportBrowserMessage } from './NoSupportBrowserMessage/NoSupportBrowserMessage';
 import { SearchBox } from './SearchBox';
+import { Gnb } from './Gnb';
 
 type Props = {
 	/** 固定表示するか */
@@ -44,6 +45,7 @@ export const Header: React.VFC<Props> = ({}) => {
 										setIsOverlay={setIsOverlay}
 									/>
 									<MegaNavMenu />
+									<Gnb />
 								</div>
 								<div className={styles.headerAside}>
 									<AsideNavs />
