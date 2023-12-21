@@ -9,12 +9,27 @@ import classNames from 'classnames';
 
 type Props = {
 	item: CadDownloadStackItem;
+	checkedItems: Set<CadDownloadStackItem>;
+	onClick: (item: CadDownloadStackItem) => void;
 };
 
-export const StackBalloonItems: React.FC<Props> = ({ item }) => {
+export const StackBalloonItems: React.FC<Props> = ({
+	item,
+	checkedItems,
+	onClick,
+}) => {
+	const array = [];
+
 	if (item.status === CadDownloadStatus.Done) {
 		return (
-			<li className={styles.itemBox} key={item.id}>
+			<li
+				className={classNames(
+					styles.itemBox,
+					checkedItems.has(item) ? styles.on : ''
+				)}
+				key={item.id}
+				onClick={() => onClick(item)}
+			>
 				<div className={styles.itemDetail}>
 					<p>{item.seriesName}</p>
 					<p>{item.partNumber}</p>
@@ -27,7 +42,14 @@ export const StackBalloonItems: React.FC<Props> = ({ item }) => {
 		);
 	} else {
 		return (
-			<li className={classNames(styles.itemBox, styles.on)} key={item.id}>
+			<li
+				className={classNames(
+					styles.itemBox,
+					checkedItems.has(item) ? styles.on : ''
+				)}
+				key={item.id}
+				onClick={() => onClick(item)}
+			>
 				<div className={styles.itemDetail}>
 					<p>{item.seriesName}</p>
 					<p>{item.partNumber}</p>

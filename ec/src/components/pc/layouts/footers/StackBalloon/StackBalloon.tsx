@@ -11,6 +11,10 @@ export const StackBalloon: React.FC = () => {
 		stackTabStatus,
 		setStackShowStatus,
 		setStackTabDone,
+		checkedDoneCad,
+		checkedPendingCad,
+		handleSelectPendingCad,
+		handleSelectDoneCad,
 	} = useStackBalloon();
 
 	return (
@@ -60,7 +64,13 @@ export const StackBalloon: React.FC = () => {
 												{stackList &&
 													stackList.map((item, index) => {
 														if (item.status === CadDownloadStatus.Done) {
-															return <StackBalloonItems item={item} />;
+															return (
+																<StackBalloonItems
+																	item={item}
+																	checkedItems={checkedDoneCad}
+																	onClick={() => handleSelectDoneCad(item)}
+																/>
+															);
 														}
 													})}
 											</ul>
@@ -69,18 +79,17 @@ export const StackBalloon: React.FC = () => {
 												{stackList &&
 													stackList.map((item, index) => {
 														if (item.status !== CadDownloadStatus.Done) {
-															return <StackBalloonItems item={item} />;
+															return (
+																<StackBalloonItems
+																	item={item}
+																	checkedItems={checkedPendingCad}
+																	onClick={() => handleSelectPendingCad(item)}
+																/>
+															);
 														}
 													})}
 											</ul>
 										)}
-
-										{/* <ul>
-											{stackList &&
-												stackList.map((item, index) => {
-													return <StackBalloonItems item={item} />;
-												})}
-										</ul> */}
 									</div>
 								</div>
 								<div className={styles.stackMyCad}>
