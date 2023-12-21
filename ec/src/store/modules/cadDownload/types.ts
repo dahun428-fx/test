@@ -1,4 +1,4 @@
-import { CadDownloadStack } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadStack } from '@/models/localStorage/CadDownloadStack_origin';
 
 const errors = [
 	'sinus-timeout',

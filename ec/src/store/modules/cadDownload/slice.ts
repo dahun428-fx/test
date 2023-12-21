@@ -3,7 +3,7 @@ import { CadDownloadState, CadDownloadError } from './types';
 import {
 	CadDownloadStackItem,
 	CadDownloadStatus,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 
 const initialState: CadDownloadState = {
 	show: false,

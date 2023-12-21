@@ -34,18 +34,16 @@ export interface CadDownloadStack {
  * Cad download stack item
  */
 export interface CadDownloadStackItem {
-	type?: string; // sinus 出ない場合は、cadenas
+	type?: 'sinus'; // sinus 出ない場合は、cadenas
 	expiry?: number;
-	url: string | number;
+	url: string;
 	from: string;
 	time?: string; // 5,
 	partNumber: string; // "LX3005-B1-A3040-125",
 	id: string; // b6031e3a-639d-4358-9af1-eef0db8288a8",
 	label: string; // "DWF V5.5, ASCII",
-	seriesName: string;
-	seriesCode: string;
 	fileName: string; // LX3005-B1-A3040-125_DWF_V5.5,_ASCII_20220314",
-	progress: number | null; // 1,
+	progress: number; // 1,
 	created: number; // 1647223061501,
 	status: CadDownloadStatus; // pending or done
 	requestData?: DownloadCadRequest;
@@ -71,7 +69,6 @@ export interface SelectedCadDataFormat {
 }
 
 const CadDownloadStatus = {
-	Putsth: 'putsth',
 	Pending: 'pending',
 	Done: 'done',
 	Timeout: 'timeout',

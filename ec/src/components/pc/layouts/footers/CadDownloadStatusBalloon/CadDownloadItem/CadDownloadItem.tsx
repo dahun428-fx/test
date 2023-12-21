@@ -8,7 +8,7 @@ import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import {
 	CadDownloadStackItem,
 	CadDownloadStatus,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import { updateCadDownloadStackItem } from '@/services/localStorage/cadDownloadStack';
 type Props = {
 	item: CadDownloadStackItem;

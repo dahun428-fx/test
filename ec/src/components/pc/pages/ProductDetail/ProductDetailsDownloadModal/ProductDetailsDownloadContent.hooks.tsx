@@ -23,7 +23,7 @@ import {
 	SearchSeriesResponse$detail,
 } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { CadSiteType } from '@/models/domain/cad';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import { store } from '@/store';
 import {
 	refreshAuth,

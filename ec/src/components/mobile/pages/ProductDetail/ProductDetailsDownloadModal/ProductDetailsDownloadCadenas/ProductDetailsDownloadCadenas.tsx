@@ -14,7 +14,7 @@ import { Button } from '@/components/mobile/ui/buttons';
 import { BlockLoader } from '@/components/mobile/ui/loaders';
 import { Flag } from '@/models/api/Flag';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 
 type Props = {
 	cadData: DownloadCadResponse;

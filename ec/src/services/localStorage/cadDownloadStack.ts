@@ -2,7 +2,7 @@ import {
 	CadDownloadStack,
 	CadDownloadStackItem,
 	CadDownloadStatus,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import { assertNotNull } from '@/utils/assertions';
 import { EitherRequired } from '@/utils/type';
 

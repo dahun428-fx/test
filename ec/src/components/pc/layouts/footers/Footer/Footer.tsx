@@ -17,6 +17,7 @@ import { Cookie, setCookie } from '@/utils/cookie';
 import { isMobile, ViewType } from '@/utils/device';
 import { url } from '@/utils/url';
 import { BnrBottomFix } from '../BnrBottomFix';
+import { StackBalloon } from '../StackBalloon';
 
 /**
  * Footer

@@ -9,7 +9,7 @@ import { Option } from '@/components/pc/ui/controls/select/Select';
 import { SelectWithLabel } from '@/components/pc/ui/controls/select/SelectWithLabel';
 import { BlockLoader } from '@/components/pc/ui/loaders';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 
 type Props = {
 	cadData: DownloadCadResponse;

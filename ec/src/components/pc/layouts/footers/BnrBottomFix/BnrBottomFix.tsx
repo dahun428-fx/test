@@ -1,15 +1,25 @@
 import React from 'react';
 import styles from './BnrBottomFix.module.scss';
 import classNames from 'classnames';
+import { useStack } from './BnrBottomFix.hooks';
 
 export const BnrBottomFix: React.FC = () => {
+	const { stackShowStatus, setStackShowStatus } = useStack();
+
+	const handleClickCadDownloadModal = () => {
+		console.log('click');
+		setStackShowStatus(!stackShowStatus);
+	};
+
+	console.log('stackShowStatus ', stackShowStatus);
+
 	return (
 		<>
 			<div className={classNames(styles.wrap, styles.show)}>
 				<div className={styles.content}>
 					<div className={styles.left}>
 						<ul>
-							<li>
+							<li onClick={handleClickCadDownloadModal}>
 								<a>
 									<span className={styles.iconCad}>
 										CAD 다운로드<span className={styles.iconCadNumber}>0</span>

@@ -6,7 +6,7 @@ import {
 	DownloadCadResponse,
 	Format,
 } from '@/models/api/msm/ect/cad/DownloadCadResponse';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import {
 	getDefaultFormat,
 	getDefaultOtherFormat,

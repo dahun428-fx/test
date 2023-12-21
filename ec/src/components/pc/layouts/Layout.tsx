@@ -18,6 +18,7 @@ import { ModalController } from '@/components/pc/ui/modals/Modal.hooks';
 import { MessageToastController } from '@/components/pc/ui/toasts/MessageToast';
 import { TooltipController } from '@/components/pc/ui/tooltips';
 import { OrderStatusPanel } from './headers/Header/OrderStatus';
+import { StackBalloon } from './footers/StackBalloon';
 
 const DevTool =
 	process.env.NODE_ENV === 'development' &&
@@ -48,8 +49,11 @@ export const Layout: React.FC = ({ children }) => {
 						<BackToTop layoutRootRef={rootRef} />
 						<CadDownloadStatusBalloon />
 					</div>
-					<Footer />
-					<FloatingBanner />
+					<div>
+						<StackBalloon />
+						<Footer />
+						<FloatingBanner />
+					</div>
 				</div>
 				<ErrorHandler />
 				<ModalController />

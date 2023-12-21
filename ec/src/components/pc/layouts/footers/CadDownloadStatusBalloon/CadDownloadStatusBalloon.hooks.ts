@@ -12,7 +12,7 @@ import {
 	CadDownloadStack,
 	CadDownloadStackItem,
 	CadDownloadStatus,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import {
 	getCadDownloadStack,
 	updateCadDownloadStack,

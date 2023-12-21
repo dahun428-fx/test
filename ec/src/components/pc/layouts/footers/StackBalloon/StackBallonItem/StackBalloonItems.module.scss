@@ -1,0 +1,78 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
+
+.itemBox {
+	padding: 10px 10px;
+	border-bottom: 1px solid #bfbfbf;
+	&:hover {
+		cursor: pointer;
+	}
+	.progressDownload {
+		display: table-cell;
+		width: 380px;
+		text-align: right;
+		vertical-align: middle;
+		font-size: 12px;
+		.progressIng {
+			min-width: 100px;
+		}
+	}
+	&.on {
+		background-color: #789ecd;
+	}
+}
+
+.itemDetail {
+	display: table-cell;
+	width: 450px;
+	vertical-align: middle;
+	padding-left: 25px;
+	line-height: 24px;
+	&.cadDone {
+		background-repeat: no-repeat;
+		background-position: 0 30px;
+		@include icnFormCheckboxOff;
+		&.on {
+			@include icnFormCheckboxOn;
+			cursor: pointer;
+		}
+		> p {
+			font-size: 12px;
+			&:first-child {
+				font-size: 14px;
+				font-weight: bold;
+				> a {
+					color: #004bb1;
+					&:link {
+						color: #004bb1;
+					}
+					&:visited {
+						color: #004bb1;
+					}
+					&:hover,
+					&:active {
+						color: #ff730a;
+					}
+				}
+			}
+		}
+	}
+	&.cadNotDone {
+		background-repeat: no-repeat;
+		background-position: 0 30px;
+		&.on {
+			@include icnFormCheckboxOn;
+			cursor: pointer;
+		}
+		> p {
+			font-size: 12px;
+			&:first-child {
+				font-size: 14px;
+				font-weight: bold;
+			}
+		}
+	}
+	.help {
+		@include linkHelp;
+	}
+}

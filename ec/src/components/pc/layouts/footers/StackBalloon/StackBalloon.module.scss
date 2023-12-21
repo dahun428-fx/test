@@ -1,0 +1,216 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
+
+$btnArrowImg: './assets/arrow_head_cate_white.png';
+$downloadDisableImg: './assets/ic_download_disabled.png';
+
+.wrapper {
+	position: fixed;
+	bottom: 68px;
+	left: 50%;
+	margin-left: -600px;
+	padding-top: 2px;
+	z-index: 4210;
+}
+
+.balloonBox {
+	border-radius: 6px;
+	position: relative;
+	border: 1px solid #bfbfbf;
+	background: #fff;
+	display: inline-block;
+	min-width: 620px;
+	max-width: 900px;
+	height: 520px;
+	max-height: 520px;
+}
+.balloonBoxInner {
+	padding: 20px;
+	& > div > .h3 {
+		margin: 0 0 15px;
+		line-height: 1.25;
+		font-weight: 700;
+		font-size: 16px;
+		color: #333;
+		padding: 7px 13px 8px;
+		background-color: #f3f3f3;
+		text-indent: 0;
+	}
+}
+.tab {
+	border-bottom: 2px solid #727587;
+	> ul {
+		font-size: 0;
+		> li {
+			display: inline-block;
+			font-size: $fs_L;
+			width: 50%;
+			&:first-child {
+				> a {
+					border-left: 1px solid #d4d4d4;
+					&.on {
+						border-left: 1px solid #727587;
+					}
+				}
+			}
+			> a {
+				display: block;
+				padding: 9px 20px 10px;
+				border-top: 1px solid #d4d4d4;
+				border-right: 1px solid #d4d4d4;
+				background-color: #fff;
+				text-align: center;
+				font-weight: bold;
+				color: $color_text_base;
+				cursor: pointer;
+				&:hover {
+					text-decoration: underline;
+				}
+				&.on {
+					border-color: #727587;
+					box-shadow: none;
+					background-color: #727587;
+					color: $color_text_base_sub;
+				}
+			}
+		}
+	}
+}
+.listArea {
+	width: 100%;
+	.info {
+		padding: 5px 10px;
+		border-left: 1px solid #bfbfbf;
+		border-right: 1px solid #bfbfbf;
+		&::after {
+			content: '';
+			display: block;
+			clear: both;
+			visibility: hidden;
+			line-height: 0;
+			height: 0;
+		}
+		p {
+			font-weight: bold;
+			font-size: 12px;
+			padding: 0 3px;
+		}
+		> p {
+			float: left;
+		}
+		> div {
+			float: right;
+			p {
+				display: inline-block;
+				vertical-align: middle;
+			}
+		}
+		.delimiter1 {
+			display: inline-block;
+			vertical-align: middle;
+			box-sizing: border-box;
+			width: 1px;
+			height: 12px;
+			border-left: 1px solid #d4d4d4;
+			margin: 0 3px;
+		}
+	}
+	.selectAllItem,
+	.deleteItem {
+		cursor: pointer;
+		color: #004bb1;
+		> a {
+			text-decoration: none;
+		}
+	}
+	.list {
+		box-sizing: border-box;
+		width: 620px;
+		height: 277.3px;
+		border: 1px solid #bfbfbf;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+}
+
+.stackMyCad {
+	text-align: right;
+	padding: 5px 0 0 0;
+	font-weight: bold;
+	font-size: 12px;
+	> a {
+		text-decoration: none;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+		&::before {
+			display: inline-block;
+			content: '';
+			width: 8px;
+			height: 12px;
+			margin-right: 3px;
+			vertical-align: middle;
+			background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHAQMAAAAVq36TAAAABlBMVEW/v78AS7E2lsyyAAAAAXRSTlMAQObYZgAAABJJREFUGBljbmBmAEMJZgPmBAAIngE+HFgy7QAAAABJRU5ErkJggg==')
+				0 0.26em no-repeat;
+		}
+	}
+}
+
+.btnSection {
+	margin-top: 20px;
+	margin-left: -2px;
+	margin-bottom: 11px;
+	text-align: center;
+	> span {
+		display: inline-block;
+		margin-top: 0;
+		margin-left: 4px;
+		vertical-align: middle;
+		font-size: 14px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	.btnArrow {
+		display: inline-block;
+		box-sizing: border-box;
+		padding: 9px 35px 9px 47px;
+		line-height: 18px;
+		border: 0;
+		color: #fff !important;
+		text-align: center;
+		text-decoration: none !important;
+		background-color: #0169c6 !important;
+		background-image: url($btnArrowImg);
+		background-position: 70px 50%;
+		background-repeat: no-repeat;
+		width: 215px;
+		height: 36px;
+		&.direct {
+			width: 171px;
+			background-image: url($downloadDisableImg);
+		}
+		&.putsth {
+			width: 150px;
+			background-image: url($btnArrowImg);
+			background-position: 50px 50%;
+			background-repeat: no-repeat;
+		}
+	}
+	.btnClose {
+		display: inline-block;
+		box-sizing: border-box;
+		padding: 8px 53px;
+		line-height: 18px;
+		border: 1px solid #bfbfbf;
+		color: #333 !important;
+		text-align: center;
+		text-decoration: none !important;
+		background-color: #fafafa !important;
+		width: 215px;
+		height: 36px;
+		&.selectBtn {
+			width: 150px;
+		}
+	}
+}

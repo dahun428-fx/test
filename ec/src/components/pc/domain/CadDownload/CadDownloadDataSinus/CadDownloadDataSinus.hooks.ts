@@ -15,7 +15,7 @@ import {
 	CadDownloadStackItem,
 	CadDownloadStatus,
 	SelectedCadDataFormat,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import { selectAuth, selectUserPermissions } from '@/store/modules/auth';
 import {
 	addItemOperation,

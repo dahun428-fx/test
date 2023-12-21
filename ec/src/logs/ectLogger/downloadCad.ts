@@ -5,7 +5,7 @@ import { checkPrice } from '@/api/services/checkPrice';
 import { config } from '@/config';
 import { Flag } from '@/models/api/Flag';
 import { LogType } from '@/models/api/msm/ect/log/AddLogParams';
-import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack_origin';
 import { assertNotNull } from '@/utils/assertions';
 import { getDaysToShipText } from '@/utils/domain/price';
 import { normalizeUrl, url } from '@/utils/url';

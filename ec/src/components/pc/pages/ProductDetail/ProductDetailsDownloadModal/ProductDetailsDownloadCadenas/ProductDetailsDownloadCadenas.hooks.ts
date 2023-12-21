@@ -13,7 +13,7 @@ import { Flag } from '@/models/api/Flag';
 import { GetGenerationStatusResponse } from '@/models/api/cadenas/generationStatus/GetGenerationStatusResponse';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
 import { DynamicParams, SelectedOption } from '@/models/domain/cad';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import { useSelector } from '@/store/hooks';
 import { selectAuth } from '@/store/modules/auth';
 import {

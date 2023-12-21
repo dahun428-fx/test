@@ -1,4 +1,4 @@
-import type { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import type { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 
 export const MAX_CADENAS_RETRY = 50;
 

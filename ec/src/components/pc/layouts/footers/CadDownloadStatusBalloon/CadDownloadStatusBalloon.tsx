@@ -5,7 +5,7 @@ import { useCadDownload } from './CadDownloadStatusBalloon.hooks';
 import styles from './CadDownloadStatusBalloon.module.scss';
 import { CadDownloadItem } from '@/components/pc/layouts/footers/CadDownloadStatusBalloon/CadDownloadItem';
 import { useCancelCadDownloadModal } from '@/components/pc/layouts/footers/CadDownloadStatusBalloon/CancelCadDownloadModal';
-import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack_origin';
 import {
 	initializeCadDownloadStack,
 	updateCadDownloadStack,

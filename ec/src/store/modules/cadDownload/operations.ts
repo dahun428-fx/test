@@ -3,7 +3,7 @@ import { cadDownloadActions } from '.';
 import {
 	CadDownloadStack,
 	CadDownloadStackItem,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import { addCadDownloadStackItem } from '@/services/localStorage/cadDownloadStack';
 import { CadDownloadError } from '@/store/modules/cadDownload/types';
 

@@ -13,7 +13,7 @@ import {
 	CadDownloadStack,
 	CadDownloadStackItem,
 	CadDownloadStatus,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import { selectAuth } from '@/store/modules/auth';
 import {
 	clearOperation,

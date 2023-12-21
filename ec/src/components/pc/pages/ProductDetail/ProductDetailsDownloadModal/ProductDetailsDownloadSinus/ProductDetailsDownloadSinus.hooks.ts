@@ -10,7 +10,7 @@ import { useBoolState } from '@/hooks/state/useBoolState';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
 import { DownloadCadRequest } from '@/models/api/sinus/cad/DownloadCadRequest';
 import { DynamicParams } from '@/models/domain/cad';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import { useSelector } from '@/store/hooks';
 import { selectAuth } from '@/store/modules/auth';
 import {

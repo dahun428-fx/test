@@ -9,7 +9,7 @@ import { ectLogger } from '@/logs/ectLogger';
 import { Flag } from '@/models/api/Flag';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
 import { DynamicParams, SelectedOption } from '@/models/domain/cad';
-import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack_origin';
 import { useSelector } from '@/store/hooks';
 import { selectUserPermissions } from '@/store/modules/auth';
 import {

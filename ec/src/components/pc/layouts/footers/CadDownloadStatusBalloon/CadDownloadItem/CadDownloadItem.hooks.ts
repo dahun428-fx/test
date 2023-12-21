@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ectLogger } from '@/logs/ectLogger';
-import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack_origin';
 import { assertNotNull } from '@/utils/assertions';
 import { downloadCadLink } from '@/utils/cad';
 import { url } from '@/utils/url';

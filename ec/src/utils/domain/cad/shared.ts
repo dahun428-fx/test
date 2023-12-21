@@ -1,4 +1,4 @@
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import { Cookie, getCookie } from '@/utils/cookie';
 
 /** Get selected CAD data format from Cookie */

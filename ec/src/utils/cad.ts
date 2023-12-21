@@ -17,7 +17,7 @@ import {
 	DynamicParams,
 	SelectedOption,
 } from '@/models/domain/cad';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import { find, keyBy } from '@/utils/collection';
 import { date } from '@/utils/date';
 import { notNull } from '@/utils/predicate';
