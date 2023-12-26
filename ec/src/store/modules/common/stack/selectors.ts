@@ -1,9 +1,9 @@
 import { AppState } from '@/store';
 
-export function selectStackShowStatus(state: AppState) {
+export function selectShowCadDownloadBalloon(state: AppState) {
 	return state.stack.show;
 }
 
-export function selectStackTabStatus(state: AppState) {
-	return state.stack.tabDone;
+export function selectCadDownloadStack(state: AppState) {
+	return state.stack;
 }

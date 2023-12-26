@@ -2,7 +2,7 @@ import {
 	CadDownloadStack,
 	CadDownloadStackItem,
 	CadDownloadStatus,
-} from '@/models/localStorage/CadDownloadStack';
+} from '@/models/localStorage/CadDownloadStack_origin';
 import { assertNotNull } from '@/utils/assertions';
 import { EitherRequired } from '@/utils/type';
 
@@ -14,7 +14,6 @@ export const initialStack: CadDownloadStack = {
 	done: 0,
 	show: false,
 	shouldConfirm: false,
-	tabDone: false,
 };
 
 /**
@@ -101,7 +100,6 @@ export function getCadDownloadStack(): CadDownloadStack {
 		show: stackJson.show,
 		shouldConfirm: stackJson.shouldConfirm,
 		items: validItems,
-		tabDone: stackJson.tabDone,
 	};
 }
 

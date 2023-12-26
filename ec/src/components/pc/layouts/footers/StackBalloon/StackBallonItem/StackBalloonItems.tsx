@@ -28,6 +28,7 @@ export const StackBalloonItems: React.FC<Props> = ({
 					checkedItems.has(item) ? styles.on : ''
 				)}
 				key={item.id}
+				id={item.id}
 				onClick={() => onClick(item)}
 			>
 				<div className={styles.itemDetail}>
@@ -48,6 +49,7 @@ export const StackBalloonItems: React.FC<Props> = ({
 					checkedItems.has(item) ? styles.on : ''
 				)}
 				key={item.id}
+				id={item.id}
 				onClick={() => onClick(item)}
 			>
 				<div className={styles.itemDetail}>

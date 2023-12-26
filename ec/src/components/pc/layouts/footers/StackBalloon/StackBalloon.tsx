@@ -1,25 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStackBalloon } from './StackBalloon.hooks';
 import styles from './StackBalloon.module.scss';
 import { StackBalloonItems } from './StackBallonItem';
-import { stackList } from './dummy';
-import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack_origin';
+import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
 
-export const StackBalloon: React.FC = () => {
+type Props = {
+	doneList: CadDownloadStackItem[];
+	pendingList: CadDownloadStackItem[];
+	checkedDoneCadDownloadItems: Set<CadDownloadStackItem>;
+	checkedPendingCadDownloadItems: Set<CadDownloadStackItem>;
+	handleSelectDoneItem: (cadDownloadDoneItem: CadDownloadStackItem) => void;
+	handleSelectPendingItem: (
+		cadDownloadPendingItem: CadDownloadStackItem
+	) => void;
+	handleSelectAllItem: () => void;
+	handleCadDownloadClick: () => void;
+};
+
+export const StackBalloon: React.FC<Props> = ({
+	doneList,
+	pendingList,
+	checkedDoneCadDownloadItems,
+	checkedPendingCadDownloadItems,
+	handleSelectDoneItem,
+	handleSelectPendingItem,
+	handleSelectAllItem,
+	handleCadDownloadClick,
+}) => {
 	const {
-		stackShowStatus,
-		stackTabStatus,
-		setStackShowStatus,
-		setStackTabDone,
-		checkedDoneCad,
-		checkedPendingCad,
-		handleSelectPendingCad,
-		handleSelectDoneCad,
+		showsStatus,
+		cadDownloadStack,
+		setShowsStatus,
+		setTabDone,
+		generateCadData,
 	} = useStackBalloon();
+
+	const tabDoneStatus = cadDownloadStack.tabDone;
+
+	useEffect(() => {
+		generateCadData();
+	}, [generateCadData]);
+	// const handleSelectAllItem = () => {
+	// 	console.log('stackTabDoneStatus', stackTabDoneStatus);
+	// };
 
 	return (
 		<div>
-			{stackShowStatus && (
+			{showsStatus && (
 				<div className={styles.wrapper}>
 					<div className={styles.balloonBox}>
 						<div className={styles.balloonBoxInner}>
@@ -27,13 +54,13 @@ export const StackBalloon: React.FC = () => {
 								<h3 className={styles.h3}>CAD 다운로드</h3>
 								<div className={styles.tab}>
 									<ul>
-										<li onClick={() => setStackTabDone(false)}>
-											<a className={!stackTabStatus ? styles.on : ''}>
+										<li onClick={() => setTabDone(false)}>
+											<a className={!tabDoneStatus ? styles.on : ''}>
 												다운로드 대기
 											</a>
 										</li>
-										<li onClick={() => setStackTabDone(true)}>
-											<a className={!stackTabStatus ? '' : styles.on}>
+										<li onClick={() => setTabDone(true)}>
+											<a className={!tabDoneStatus ? '' : styles.on}>
 												다운로드 완료
 											</a>
 										</li>
@@ -42,15 +69,24 @@ export const StackBalloon: React.FC = () => {
 								<div className={styles.listArea}>
 									<div className={styles.info}>
 										<p>
-											총 <span>0</span>건
+											총
+											<span>
+												{tabDoneStatus ? doneList.length : pendingList.length}
+											</span>
+											건
 										</p>
 										<p>|</p>
 										<p>
-											<span>0</span> 건 선택
+											<span>
+												{tabDoneStatus
+													? checkedDoneCadDownloadItems.size
+													: checkedPendingCadDownloadItems.size}
+											</span>
+											건 선택
 										</p>
 										<div>
 											<p className={styles.selectAllItem}>
-												<a>전체 선택</a>
+												<a onClick={() => handleSelectAllItem()}>전체 선택</a>
 											</p>
 											<div className={styles.delimiter1}></div>
 											<p className={styles.deleteItem}>
@@ -59,34 +95,30 @@ export const StackBalloon: React.FC = () => {
 										</div>
 									</div>
 									<div className={styles.list}>
-										{stackTabStatus ? (
+										{tabDoneStatus ? (
 											<ul>
-												{stackList &&
-													stackList.map((item, index) => {
-														if (item.status === CadDownloadStatus.Done) {
-															return (
-																<StackBalloonItems
-																	item={item}
-																	checkedItems={checkedDoneCad}
-																	onClick={() => handleSelectDoneCad(item)}
-																/>
-															);
-														}
+												{doneList &&
+													doneList.map((item, index) => {
+														return (
+															<StackBalloonItems
+																item={item}
+																checkedItems={checkedDoneCadDownloadItems}
+																onClick={() => handleSelectDoneItem(item)}
+															/>
+														);
 													})}
 											</ul>
 										) : (
 											<ul>
-												{stackList &&
-													stackList.map((item, index) => {
-														if (item.status !== CadDownloadStatus.Done) {
-															return (
-																<StackBalloonItems
-																	item={item}
-																	checkedItems={checkedPendingCad}
-																	onClick={() => handleSelectPendingCad(item)}
-																/>
-															);
-														}
+												{pendingList &&
+													pendingList.map((item, index) => {
+														return (
+															<StackBalloonItems
+																item={item}
+																checkedItems={checkedPendingCadDownloadItems}
+																onClick={() => handleSelectPendingItem(item)}
+															/>
+														);
 													})}
 											</ul>
 										)}
@@ -96,10 +128,15 @@ export const StackBalloon: React.FC = () => {
 									<a>CAD 다운로드 이력조회</a>
 								</div>
 								<div className={styles.btnSection}>
-									<span className={styles.btnArrow}>다운로드</span>
+									<span
+										className={styles.btnArrow}
+										onClick={() => handleCadDownloadClick()}
+									>
+										다운로드
+									</span>
 									<span
 										className={styles.btnClose}
-										onClick={() => setStackShowStatus(!stackShowStatus)}
+										onClick={() => setShowsStatus(!showsStatus)}
 									>
 										닫기
 									</span>

@@ -1,13 +1,24 @@
+import { CadDownloadStack } from '@/models/localStorage/CadDownloadStack';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialState: CadDownloadStack = {
+	items: [],
+	len: 0,
+	done: 0,
 	show: false,
-	tabDone: false, //tab : 다운로드 대기 ( false ), 다운로드 완료 ( true )
+	shouldConfirm: false,
+	tabDone: false,
 };
 const slice = createSlice({
 	name: 'stack',
 	initialState,
 	reducers: {
+		updateStack(state, action: PayloadAction<CadDownloadStack>) {
+			return {
+				...state,
+				...action.payload,
+			};
+		},
 		tabDone(state) {
 			return { ...state, tabDone: true };
 		},

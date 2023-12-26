@@ -1,88 +1,74 @@
-import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack_origin';
+import {
+	CadDownloadStack,
+	CadDownloadStackItem,
+} from '@/models/localStorage/CadDownloadStack';
 import { CadDownloadStackItem as CadDownloadStackItemCustom } from '@/models/localStorage/CadDownloadStack';
 import { useSelector } from '@/store/hooks';
 import {
-	selectStackShowStatus,
-	selectStackTabStatus,
+	selectShowCadDownloadBalloon,
+	selectCadDownloadStack,
+	updateStackOperation,
 	updateStackShowStatusOperation,
 	updateStackTabStatusOperation,
 } from '@/store/modules/common/stack';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { getCadDownloadStack } from '@/services/localStorage/cadDownloadStack';
 
 export const useStackBalloon = () => {
+	const showsStatus = useSelector(selectShowCadDownloadBalloon);
+	const cadDownloadStack = useSelector(selectCadDownloadStack);
+
+	const initialized = useRef(false);
 	const dispatch = useDispatch();
-	const stackShowStatus = useSelector(selectStackShowStatus);
-	const stackTabStatus = useSelector(selectStackTabStatus);
 
-	const [checkedPendingCad, setCheckedPendingCad] = useState<
-		Set<CadDownloadStackItemCustom>
-	>(new Set());
-	const [checkedDoneCad, setCheckedDoneCad] = useState<
-		Set<CadDownloadStackItemCustom>
-	>(new Set());
-
-	const [checkedPendingCadId, setCheckedPendingCadId] = useState<Set<string>>(
-		new Set()
-	);
-	const [checkedDoneCadId, setCheckedDoneCadId] = useState<Set<string>>(
-		new Set()
-	);
-
-	const handleSelectPendingCad = useCallback(
-		(pendingCad: CadDownloadStackItemCustom) => {
-			const isSelected = checkedPendingCad.has(pendingCad);
-			if (isSelected) {
-				checkedPendingCad.delete(pendingCad);
-			} else {
-				checkedPendingCad.add(pendingCad);
-			}
-
-			setCheckedPendingCad(new Set(Array.from(checkedPendingCad)));
-			console.log(checkedPendingCad);
-		},
-		[checkedPendingCad]
-	);
-	const handleSelectDoneCad = useCallback(
-		(doneCad: CadDownloadStackItemCustom) => {
-			const isSelected = checkedDoneCad.has(doneCad);
-			if (isSelected) {
-				checkedDoneCad.delete(doneCad);
-			} else {
-				checkedDoneCad.add(doneCad);
-			}
-
-			setCheckedDoneCad(new Set(Array.from(checkedDoneCad)));
-			console.log(checkedDoneCad);
-		},
-		[checkedDoneCad]
-	);
-
-	const setStackShowStatus = useCallback(
+	const setShowsStatus = useCallback(
 		(show: boolean) => {
 			updateStackShowStatusOperation(dispatch)(show);
 		},
 		[dispatch]
 	);
 
-	const setStackTabDone = useCallback(
+	const setTabDone = useCallback(
 		(tabDone: boolean) => {
 			updateStackTabStatusOperation(dispatch)(tabDone);
 		},
 		[dispatch]
 	);
 
+	const setCadDownloadStack = useCallback(
+		(stack: CadDownloadStack) => {
+			updateStackOperation(dispatch)(stack);
+		},
+		[dispatch]
+	);
+
+	const generateCadData = useCallback(async () => {
+		//auth
+		// if (!auth.isReady || !auth.authenticated) {
+		// 	return;
+		// }
+		//api token
+		// const token = generateToken(c => (cancelerRef.current = c));
+
+		let stack: CadDownloadStack;
+
+		if (!initialized.current) {
+			//removeExpiryItemIfNeeded();
+			stack = getCadDownloadStack();
+			setCadDownloadStack(stack);
+			initialized.current = true;
+		}
+		stack = cadDownloadStack;
+
+		console.log('stack : ', stack);
+	}, [dispatch, setShowsStatus, showsStatus]);
+
 	return {
-		stackShowStatus,
-		stackTabStatus,
-		setStackShowStatus,
-		setStackTabDone,
-		checkedPendingCad,
-		// checkedPendingCad: Array.from(checkedPendingCad),
-		// ={Array.from(checkedPendingCad)},
-		checkedDoneCad,
-		// checkedDoneCad: Array.from(checkedDoneCad),
-		handleSelectPendingCad,
-		handleSelectDoneCad,
+		showsStatus,
+		cadDownloadStack,
+		setShowsStatus,
+		setTabDone,
+		generateCadData,
 	};
 };

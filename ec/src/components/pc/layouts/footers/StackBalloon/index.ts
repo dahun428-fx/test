@@ -1,1 +1,1 @@
-export { StackBalloon } from './StackBalloon';
+export { StackBalloon } from './StackBalloon.container';

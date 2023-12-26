@@ -28,6 +28,7 @@ export interface CadDownloadStack {
 	/** common ?? */
 	common?: string; // {}??
 	shouldConfirm: boolean;
+	tabDone: boolean; //tab : 다운로드 대기 ( false ), 다운로드 완료 ( true )
 }
 
 /**
