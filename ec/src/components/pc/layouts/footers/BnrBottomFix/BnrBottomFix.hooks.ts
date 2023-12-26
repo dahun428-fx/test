@@ -1,7 +1,7 @@
 import { useSelector } from '@/store/hooks';
 import {
 	selectShowCadDownloadBalloon,
-	updateStackShowStatusOperation,
+	updateShowsStatusOperation,
 } from '@/store/modules/common/stack';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ export const useStack = () => {
 	const setStackShowStatus = useCallback(
 		(show: boolean) => {
 			console.log('setStackShow status :::: ====> ', show);
-			updateStackShowStatusOperation(dispatch)(show);
+			updateShowsStatusOperation(dispatch)(show);
 		},
 		[dispatch]
 	);

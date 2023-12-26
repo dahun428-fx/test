@@ -6,21 +6,33 @@ import { StackBalloon as Presenter } from './StackBalloon';
 import { stackList } from './dummy';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+	removeItemOperation,
 	selectCadDownloadStack,
-	updateStackShowStatusOperation,
+	updateShowsStatusOperation,
 } from '@/store/modules/common/stack';
 import { useSelector } from '@/store/hooks';
+import { isEmpty } from '@/utils/predicate';
+import { useDispatch } from 'react-redux';
+import {
+	deleteCadDownloadStackItem,
+	initializeCadDownloadStack,
+} from '@/services/localStorage/cadDownloadStack';
+import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 
 export const StackBalloon: React.FC = () => {
 	const stack = useSelector(selectCadDownloadStack);
 
+	const dispatch = useDispatch();
+
+	const { showMessage } = useMessageModal();
+
 	const stackDoneList = useMemo(() => {
-		return stackList.filter(item => item.status === CadDownloadStatus.Done);
-	}, [stackList]);
+		return stack.items.filter(item => item.status === CadDownloadStatus.Done);
+	}, [stack]);
 
 	const stackPendingList = useMemo(() => {
-		return stackList.filter(item => item.status !== CadDownloadStatus.Done);
-	}, [stackList]);
+		return stack.items.filter(item => item.status !== CadDownloadStatus.Done);
+	}, [stack]);
 
 	const [checkedPendingCadDownloadItems, setCheckedPendingCadDownloadItems] =
 		useState<Set<CadDownloadStackItem>>(new Set());
@@ -88,7 +100,15 @@ export const StackBalloon: React.FC = () => {
 	const handleCadDownloadClick = useCallback(() => {
 		if (stack.tabDone) {
 			console.log(checkedDoneCadDownloadItems);
+			if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
+				showMessage('다운로드 할 데이터를 선택하여 주세요.');
+				return false;
+			}
 		} else {
+			if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
+				showMessage('다운로드 할 데이터를 선택하여 주세요.');
+				return false;
+			}
 			console.log(checkedPendingCadDownloadItems);
 		}
 	}, [
@@ -97,10 +117,53 @@ export const StackBalloon: React.FC = () => {
 		checkedPendingCadDownloadItems,
 	]);
 
-	useEffect(() => {
-		setCheckedDoneCadDownloadItems(new Set());
-		setCheckedPendingCadDownloadItems(new Set());
-	}, []);
+	const handleDeleteItems = useCallback(() => {
+		if (stack.tabDone) {
+			if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
+				showMessage('삭제할 데이터를 선택하세요.');
+				return false;
+			}
+			checkedDoneCadDownloadItems.forEach(async item => {
+				//stack state delete
+				removeItemOperation(dispatch)(item.id);
+				//localstorage delete
+				deleteCadDownloadStackItem(item);
+			});
+			setCheckedDoneCadDownloadItems(new Set());
+		} else {
+			if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
+				showMessage('삭제할 데이터를 선택하세요.');
+				return false;
+			}
+			checkedPendingCadDownloadItems.forEach(async item => {
+				//stack state delete
+				removeItemOperation(dispatch)(item.id);
+				//localstorage delete
+				deleteCadDownloadStackItem(item);
+			});
+			setCheckedPendingCadDownloadItems(new Set());
+		}
+	}, [
+		stack.tabDone,
+		dispatch,
+		checkedDoneCadDownloadItems,
+		checkedPendingCadDownloadItems,
+	]);
+
+	// useEffect(() => {
+	// 	if (!stack) {
+	// 		return;
+	// 	}
+
+	// 	setCheckedDoneCadDownloadItems(new Set(
+	// 		Array.from(
+	// 			stack.items.filter(item => {
+	// 				checkedDoneCadDownloadItems
+	// 			})
+	// 		)
+	// 	))
+
+	// }, [stack]);
 
 	return (
 		<>
@@ -109,6 +172,7 @@ export const StackBalloon: React.FC = () => {
 				handleSelectDoneItem={handleSelectDoneItem}
 				handleSelectAllItem={handleSelectAllItem}
 				handleCadDownloadClick={handleCadDownloadClick}
+				handleDeleteItems={handleDeleteItems}
 				doneList={stackDoneList}
 				pendingList={stackPendingList}
 				checkedDoneCadDownloadItems={checkedDoneCadDownloadItems}

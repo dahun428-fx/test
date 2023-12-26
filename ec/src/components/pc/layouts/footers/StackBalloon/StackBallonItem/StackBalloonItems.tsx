@@ -18,8 +18,6 @@ export const StackBalloonItems: React.FC<Props> = ({
 	checkedItems,
 	onClick,
 }) => {
-	const array = [];
-
 	if (item.status === CadDownloadStatus.Done) {
 		return (
 			<li

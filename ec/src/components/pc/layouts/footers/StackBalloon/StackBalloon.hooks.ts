@@ -2,14 +2,13 @@ import {
 	CadDownloadStack,
 	CadDownloadStackItem,
 } from '@/models/localStorage/CadDownloadStack';
-import { CadDownloadStackItem as CadDownloadStackItemCustom } from '@/models/localStorage/CadDownloadStack';
 import { useSelector } from '@/store/hooks';
 import {
 	selectShowCadDownloadBalloon,
 	selectCadDownloadStack,
 	updateStackOperation,
-	updateStackShowStatusOperation,
-	updateStackTabStatusOperation,
+	updateShowsStatusOperation,
+	updateTabDoneStatusOperation,
 } from '@/store/modules/common/stack';
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -24,14 +23,14 @@ export const useStackBalloon = () => {
 
 	const setShowsStatus = useCallback(
 		(show: boolean) => {
-			updateStackShowStatusOperation(dispatch)(show);
+			updateShowsStatusOperation(dispatch)(show);
 		},
 		[dispatch]
 	);
 
 	const setTabDone = useCallback(
 		(tabDone: boolean) => {
-			updateStackTabStatusOperation(dispatch)(tabDone);
+			updateTabDoneStatusOperation(dispatch)(tabDone);
 		},
 		[dispatch]
 	);

@@ -1,4 +1,7 @@
-import { CadDownloadStack } from '@/models/localStorage/CadDownloadStack';
+import {
+	CadDownloadStack,
+	CadDownloadStatus,
+} from '@/models/localStorage/CadDownloadStack';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: CadDownloadStack = {
@@ -17,6 +20,18 @@ const slice = createSlice({
 			return {
 				...state,
 				...action.payload,
+			};
+		},
+		removeItem(state, action: PayloadAction<string>) {
+			const remainItems = state.items.filter(
+				item => item.id !== action.payload
+			);
+			return {
+				...state,
+				items: remainItems,
+				done: remainItems.filter(item => item.status === CadDownloadStatus.Done)
+					.length,
+				len: remainItems.length,
 			};
 		},
 		tabDone(state) {

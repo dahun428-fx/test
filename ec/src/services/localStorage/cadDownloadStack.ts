@@ -153,6 +153,30 @@ export function updateCadDownloadStackItem(
 	);
 }
 
+export function deleteCadDownloadStackItem(
+	deleteItem: EitherRequired<CadDownloadStackItem, 'id'>
+) {
+	const stack = getCadDownloadStack();
+
+	const foundIndex = stack.items.findIndex(item => item.id === deleteItem.id);
+	if (foundIndex < 0) {
+		return;
+	}
+	const found = stack.items[foundIndex];
+	assertNotNull(found);
+	stack.items.splice(foundIndex, 1);
+
+	localStorage.setItem(
+		STORAGE_KEY,
+		JSON.stringify({
+			...stack,
+			done: stack.items.filter(item => item.status === CadDownloadStatus.Done)
+				.length,
+			len: stack.len - 1,
+		})
+	);
+}
+
 /**
  * Initialize CAD download stack.
  */

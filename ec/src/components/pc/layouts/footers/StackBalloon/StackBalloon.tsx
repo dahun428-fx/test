@@ -14,6 +14,7 @@ type Props = {
 		cadDownloadPendingItem: CadDownloadStackItem
 	) => void;
 	handleSelectAllItem: () => void;
+	handleDeleteItems: () => void;
 	handleCadDownloadClick: () => void;
 };
 
@@ -25,6 +26,7 @@ export const StackBalloon: React.FC<Props> = ({
 	handleSelectDoneItem,
 	handleSelectPendingItem,
 	handleSelectAllItem,
+	handleDeleteItems,
 	handleCadDownloadClick,
 }) => {
 	const {
@@ -86,40 +88,48 @@ export const StackBalloon: React.FC<Props> = ({
 										</p>
 										<div>
 											<p className={styles.selectAllItem}>
-												<a onClick={() => handleSelectAllItem()}>전체 선택</a>
+												<a onClick={handleSelectAllItem}>전체 선택</a>
 											</p>
 											<div className={styles.delimiter1}></div>
 											<p className={styles.deleteItem}>
-												<a>삭제</a>
+												<a onClick={handleDeleteItems}>삭제</a>
 											</p>
 										</div>
 									</div>
 									<div className={styles.list}>
 										{tabDoneStatus ? (
 											<ul>
-												{doneList &&
+												{doneList.length > 0 ? (
 													doneList.map((item, index) => {
 														return (
 															<StackBalloonItems
+																key={item.id}
 																item={item}
 																checkedItems={checkedDoneCadDownloadItems}
 																onClick={() => handleSelectDoneItem(item)}
 															/>
 														);
-													})}
+													})
+												) : (
+													<p className={styles.notCad}>CAD 데이터가 없습니다</p>
+												)}
 											</ul>
 										) : (
 											<ul>
-												{pendingList &&
+												{pendingList.length > 0 ? (
 													pendingList.map((item, index) => {
 														return (
 															<StackBalloonItems
+																key={item.id}
 																item={item}
 																checkedItems={checkedPendingCadDownloadItems}
 																onClick={() => handleSelectPendingItem(item)}
 															/>
 														);
-													})}
+													})
+												) : (
+													<p className={styles.notCad}>CAD 데이터가 없습니다</p>
+												)}
 											</ul>
 										)}
 									</div>
