@@ -150,7 +150,6 @@ export const useStackBalloon = () => {
 					!!item.cadFilename
 				) {
 					await timer.sleep(1000);
-					// downloadCadLink(url.cadDownload(item.downloadHref, item.cadFilename));
 					downloadCadIframe(
 						url.cadDownload(item.downloadHref, item.cadFilename)
 					);
@@ -242,6 +241,12 @@ export const useStackBalloon = () => {
 		[dispatch, generateToken, cadDownloadStack]
 	);
 
+	const cancelDownload = useCallback(() => {
+		console.log(cancelerRef.current);
+		cancelerRef.current?.();
+		cancelTimer();
+	}, [cancelTimer]);
+
 	const clearDownloadingItemIds = () => {
 		downloadingItemIds.current.clear();
 	};
@@ -254,8 +259,10 @@ export const useStackBalloon = () => {
 		setTabDone,
 		generateCadData,
 		cadDownload,
+		downloadingItemIds,
 		clearDownloadingItemIds,
 		showLoginModal,
 		showMessage,
+		cancelDownload,
 	};
 };

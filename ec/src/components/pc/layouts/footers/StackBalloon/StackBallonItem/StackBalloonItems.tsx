@@ -7,6 +7,8 @@ import {
 } from '@/models/localStorage/CadDownloadStack';
 import classNames from 'classnames';
 import { CadenasDownloadProgress } from './CadenasDownloadProgress';
+import { url } from '@/utils/url';
+import { openSubWindow } from '@/utils/window';
 
 type Props = {
 	item: CadDownloadStackItem;
@@ -19,6 +21,15 @@ export const StackBalloonItems: React.FC<Props> = ({
 	checkedItems,
 	onClick,
 }) => {
+	const handleOnClickHelp = (event: React.MouseEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+		openSubWindow(`${url.contact}?series_code=${item.seriesCode}`, 'guide', {
+			width: 1000,
+			height: 800,
+		});
+	};
+
 	const checkedItem = (id: string) => {
 		let checkedItem = Array.from(checkedItems).filter(checkedItem => {
 			if (checkedItem.id === id) {
@@ -43,7 +54,9 @@ export const StackBalloonItems: React.FC<Props> = ({
 				onClick={() => onClick(item)}
 			>
 				<div className={styles.itemDetail}>
-					<p>{item.seriesName}</p>
+					<p>
+						<a href={item.downloadHref}>{item.seriesName}</a>
+					</p>
 					<p>{item.partNumber}</p>
 					<p>{item.label}</p>
 				</div>
@@ -77,7 +90,9 @@ export const StackBalloonItems: React.FC<Props> = ({
 						<p className={styles.progressIng}>
 							다운로드 실패
 							<span className={styles.help}>
-								<a>?</a>
+								<a onClick={event => handleOnClickHelp(event)}>
+									<span>?</span>
+								</a>
 							</span>
 						</p>
 					</div>

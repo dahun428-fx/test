@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
 	removeItemOperation,
 	selectCadDownloadStack,
+	updateItemOperation,
 	updateShowsStatusOperation,
 } from '@/store/modules/common/stack';
 import { useSelector } from '@/store/hooks';
@@ -18,6 +19,7 @@ import {
 	initializeCadDownloadStack,
 } from '@/services/localStorage/cadDownloadStack';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { useCancelCadDownloadModal } from '@/components/pc/layouts/footers/CadDownloadStatusBalloon/CancelCadDownloadModal';
 
 export const StackBalloon: React.FC = () => {
 	const stack = useSelector(selectCadDownloadStack);
@@ -137,6 +139,8 @@ export const StackBalloon: React.FC = () => {
 		setCheckedDoneCadDownloadItems(new Set());
 	};
 
+	const showCancelCadDownloadModal = useCancelCadDownloadModal();
+
 	return (
 		<>
 			<Presenter
@@ -148,6 +152,7 @@ export const StackBalloon: React.FC = () => {
 					resetCheckedPendingCadDownloadItems
 				}
 				resetCheckedDoneCadDownloadItems={resetCheckedDoneCadDownloadItems}
+				showCancelCadDownloadModal={showCancelCadDownloadModal}
 				doneList={stackDoneList}
 				pendingList={stackPendingList}
 				checkedDoneCadDownloadItems={checkedDoneCadDownloadItems}

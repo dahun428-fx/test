@@ -41,7 +41,12 @@ export const downloadCadLink = (url: string) => {
 		document.body.removeChild(anchor);
 	}, 4000);
 };
-
+/**
+ * 멀티 다운로드 시 해당 함수 활용
+ * a link를 활용할 경우, request 요청이 cancel 됨
+ * iframe element를 5초이상 유지하여 다운로드에 걸리는 최소 시간 3~4초 커버 후 삭제
+ * @param url
+ */
 export const downloadCadIframe = (url: string) => {
 	const iframe = document.createElement('iframe');
 	const id = uuidv4();
