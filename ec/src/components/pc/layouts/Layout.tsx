@@ -47,7 +47,7 @@ export const Layout: React.FC = ({ children }) => {
 					<div className={styles.rightSideFloating}>
 						<ChatPlus />
 						<BackToTop layoutRootRef={rootRef} />
-						<CadDownloadStatusBalloon />
+						{/* <CadDownloadStatusBalloon /> */}
 					</div>
 					<div>
 						<StackBalloon />

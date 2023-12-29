@@ -3,6 +3,12 @@ import { useStackBalloon } from './StackBalloon.hooks';
 import styles from './StackBalloon.module.scss';
 import { StackBalloonItems } from './StackBallonItem';
 import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
+import { isEmpty } from '@/utils/predicate';
+import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { Router } from 'next/router';
+import { selectAuthenticated } from '@/store/modules/auth';
+import { useSelector } from '@/store/hooks';
+import { useLoginModal } from '@/components/pc/modals/LoginModal';
 
 type Props = {
 	doneList: CadDownloadStackItem[];
@@ -15,7 +21,9 @@ type Props = {
 	) => void;
 	handleSelectAllItem: () => void;
 	handleDeleteItems: () => void;
-	handleCadDownloadClick: () => void;
+	// handleCadDownloadClick: () => void;
+	resetCheckedPendingCadDownloadItems: () => void;
+	resetCheckedDoneCadDownloadItems: () => void;
 };
 
 export const StackBalloon: React.FC<Props> = ({
@@ -27,24 +35,62 @@ export const StackBalloon: React.FC<Props> = ({
 	handleSelectPendingItem,
 	handleSelectAllItem,
 	handleDeleteItems,
-	handleCadDownloadClick,
+	resetCheckedPendingCadDownloadItems,
+	resetCheckedDoneCadDownloadItems,
+	// handleCadDownloadClick,
 }) => {
 	const {
 		showsStatus,
 		cadDownloadStack,
+		authenticated,
 		setShowsStatus,
 		setTabDone,
+		cadDownload,
+		clearDownloadingItemIds,
 		generateCadData,
+		showLoginModal,
+		showMessage,
 	} = useStackBalloon();
 
 	const tabDoneStatus = cadDownloadStack.tabDone;
 
+	const handleCadDownloadClick = async () => {
+		if (!authenticated) {
+			const result = await showLoginModal();
+			if (result !== 'LOGGED_IN') {
+				return;
+			}
+		}
+
+		if (cadDownloadStack.tabDone) {
+			console.log(checkedDoneCadDownloadItems);
+			if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
+				showMessage('다운로드 할 데이터를 선택하여 주세요.');
+				return false;
+			}
+			await cadDownload(Array.from(checkedDoneCadDownloadItems));
+			resetCheckedDoneCadDownloadItems();
+		} else {
+			if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
+				showMessage('다운로드 할 데이터를 선택하여 주세요.');
+				return false;
+			}
+			console.log(checkedPendingCadDownloadItems);
+			await cadDownload(Array.from(checkedPendingCadDownloadItems));
+			resetCheckedPendingCadDownloadItems();
+		}
+		clearDownloadingItemIds();
+	};
+
 	useEffect(() => {
+		const handleGenerateData = () => {
+			clearDownloadingItemIds();
+			generateCadData();
+		};
 		generateCadData();
-	}, [generateCadData]);
-	// const handleSelectAllItem = () => {
-	// 	console.log('stackTabDoneStatus', stackTabDoneStatus);
-	// };
+		Router.events.on('routeChangeComplete', handleGenerateData);
+		return () => Router.events.off('routeChangeComplete', handleGenerateData);
+	}, [generateCadData, cadDownloadStack.items, clearDownloadingItemIds]);
 
 	return (
 		<div>

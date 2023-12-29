@@ -21,6 +21,9 @@ import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_or
 import { find, keyBy } from '@/utils/collection';
 import { date } from '@/utils/date';
 import { notNull } from '@/utils/predicate';
+import { resolve } from 'path';
+import { useCallback } from 'react';
+import { uuidv4 } from './uuid';
 
 /**
  * Make anchor and append to body for downloading
@@ -34,10 +37,23 @@ export const downloadCadLink = (url: string) => {
 	anchor.href = url;
 	document.body.appendChild(anchor);
 	anchor.click();
-
 	setTimeout(() => {
 		document.body.removeChild(anchor);
-	}, 300);
+	}, 4000);
+};
+
+export const downloadCadIframe = (url: string) => {
+	const iframe = document.createElement('iframe');
+	const id = uuidv4();
+	iframe.id = id;
+	iframe.src = url;
+	iframe.width = '0';
+	iframe.height = '0';
+	document.body.appendChild(iframe);
+	setTimeout(() => {
+		const targetElement = document.getElementById(id);
+		targetElement && document.body.removeChild(targetElement);
+	}, 5000);
 };
 
 /** Configure download URL */

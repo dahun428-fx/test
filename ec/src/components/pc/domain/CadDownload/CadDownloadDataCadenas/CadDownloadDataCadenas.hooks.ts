@@ -117,6 +117,11 @@ export const useCadDownloadDataCadenas = ({
 
 	const startDownload = useCallback(
 		(xmlFile: string) => {
+			console.log(
+				'startDownload ===> ',
+				selectedOption?.format,
+				dynamicCadParams?.[0]
+			);
 			assertNotNull(selectedOption?.format);
 			assertNotNull(dynamicCadParams?.[0]);
 
@@ -155,10 +160,13 @@ export const useCadDownloadDataCadenas = ({
 	);
 
 	const handleLoadResolve = () => {
+		console.log('handleLoadResolve');
 		try {
 			const iframeWindow = resolveRef.current?.contentWindow;
+			console.log('iframeWindow', iframeWindow);
 			if (iframeWindow) {
 				const path = iframeWindow.location.pathname;
+				console.log('iframeWindow path', path);
 				if (path?.includes(url.cadenasDownloadCallbackPath)) {
 					const query = new URLSearchParams(iframeWindow.location.search);
 					const mident = query.get('mident');
@@ -170,6 +178,7 @@ export const useCadDownloadDataCadenas = ({
 					// When cannot resolve due to network issue, the loading wheel shows forever
 					endLoadingResolve();
 					if (mident && isSucceeded(query)) {
+						console.log('set mident', mident);
 						setMident(mident);
 					} else {
 						if (Flag.isTrue(completeFlag)) {
@@ -194,13 +203,17 @@ export const useCadDownloadDataCadenas = ({
 	};
 
 	const handleLoadGenerate = useCallback(() => {
+		console.log('handleLoadGenerate');
 		try {
 			const iframeWindow = generateRef.current?.contentWindow;
+			console.log('handleLoadGenerate iframe', iframeWindow);
 			if (iframeWindow) {
 				const path = iframeWindow.location.pathname;
+				console.log('handleLoadGenerate iframe path', path);
 				if (path?.includes(url.cadenasDownloadCallbackPath)) {
 					const query = new URLSearchParams(iframeWindow.location.search);
 					const xmlfile = query.get('xmlfile');
+					console.log('xmlfile', xmlfile);
 					if (xmlfile) {
 						startDownload(xmlfile);
 					} else {

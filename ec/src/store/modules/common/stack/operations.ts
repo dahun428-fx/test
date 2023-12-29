@@ -1,7 +1,9 @@
 import { Dispatch } from 'redux';
 import { stackActions } from '.';
-import { CadDownloadStack } from '@/models/localStorage/CadDownloadStack';
-import { cadDownloadActions } from '../../cadDownload';
+import {
+	CadDownloadStack,
+	CadDownloadStackItem,
+} from '@/models/localStorage/CadDownloadStack';
 
 export const updateShowsStatusOperation = (dispatch: Dispatch) => {
 	return (show: boolean) => {
@@ -24,5 +26,17 @@ export const updateStackOperation = (dispatch: Dispatch) => {
 export const removeItemOperation = (dispatch: Dispatch) => {
 	return (id: string) => {
 		dispatch(stackActions.removeItem(id));
+	};
+};
+
+export const updateItemsOperation = (dispatch: Dispatch) => {
+	return (items: CadDownloadStackItem[]) => {
+		dispatch(stackActions.setItems(items));
+	};
+};
+
+export const updateItemOperation = (dispatch: Dispatch) => {
+	return (item: Partial<CadDownloadStackItem>) => {
+		dispatch(stackActions.updateItem(item));
 	};
 };

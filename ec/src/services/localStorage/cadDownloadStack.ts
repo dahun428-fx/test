@@ -55,6 +55,66 @@ export function removeExpiryItemIfNeeded(): void {
 
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(stackJson));
 }
+/**
+ * Remove item expiry in local storage if needed
+ *
+ * - ---*** new NOTE!! ***---
+ * - get json data from local-storage "stack" and parse as "stackJson"
+ * - filters stackJson to non-expired as "validItems"
+ * - set local-storage "stack"
+ * - ---*** new NOTE!! ***---
+ * @returns {void}
+ */
+export function removeExpiryItemOnlyIfNeeded(): void {
+	const stack = localStorage.getItem(STORAGE_KEY);
+
+	if (!stack) {
+		return;
+	}
+
+	// FIXME: stackJson is parsed (not JSON)
+	let stackJson: CadDownloadStack = JSON.parse(stack) || initialStack;
+	const now = new Date().getTime();
+	const validItems = stackJson.items.filter(item => {
+		return !item.expiry || item.expiry > now;
+	});
+
+	stackJson = {
+		...stackJson,
+		items: validItems,
+		len: validItems.length,
+		done: validItems.filter(item => item.status === CadDownloadStatus.Done)
+			.length,
+	};
+
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(stackJson));
+}
+
+/**
+ * Remove item pending in local storage if needed
+ * @returns {void}
+ */
+export function removePendingItemIfNeeded(): void {
+	const stack = localStorage.getItem(STORAGE_KEY);
+
+	if (!stack) {
+		return;
+	}
+
+	let stackJson: CadDownloadStack = JSON.parse(stack) || initialStack;
+	const validItems = stackJson.items.filter(item => {
+		return item.status !== CadDownloadStatus.Pending;
+	});
+	stackJson = {
+		...stackJson,
+		items: validItems,
+		len: validItems.length,
+		done: validItems.filter(item => item.status === CadDownloadStatus.Done)
+			.length,
+	};
+
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(stackJson));
+}
 
 /**
  * Get CAD download stack.
@@ -83,11 +143,11 @@ export function getCadDownloadStack(): CadDownloadStack {
 		return item;
 	});
 
-	const noErrorItems = stackItems.filter(
-		item => item.status !== CadDownloadStatus.Error
-	);
+	// const noErrorItems = stackItems.filter(
+	// 	item => item.status !== CadDownloadStatus.Error
+	// );
 
-	const validItems = noErrorItems.filter(
+	const validItems = stackItems.filter(
 		item => !item.expiry || item.expiry > now
 	);
 
@@ -153,7 +213,7 @@ export function updateCadDownloadStackItem(
 	);
 }
 
-export function deleteCadDownloadStackItem(
+export function removeCadDownloadStackItem(
 	deleteItem: EitherRequired<CadDownloadStackItem, 'id'>
 ) {
 	const stack = getCadDownloadStack();

@@ -6,6 +6,7 @@ import {
 	CadDownloadStatus,
 } from '@/models/localStorage/CadDownloadStack';
 import classNames from 'classnames';
+import { CadenasDownloadProgress } from './CadenasDownloadProgress';
 
 type Props = {
 	item: CadDownloadStackItem;
@@ -18,12 +19,24 @@ export const StackBalloonItems: React.FC<Props> = ({
 	checkedItems,
 	onClick,
 }) => {
+	const checkedItem = (id: string) => {
+		let checkedItem = Array.from(checkedItems).filter(checkedItem => {
+			if (checkedItem.id === id) {
+				return item;
+			}
+		});
+		if (checkedItem.length > 0) {
+			return true;
+		}
+		return false;
+	};
+
 	if (item.status === CadDownloadStatus.Done) {
 		return (
 			<li
 				className={classNames(
 					styles.itemBox,
-					checkedItems.has(item) ? styles.on : ''
+					checkedItem(item.id) ? styles.on : ''
 				)}
 				key={item.id}
 				id={item.id}
@@ -44,7 +57,7 @@ export const StackBalloonItems: React.FC<Props> = ({
 			<li
 				className={classNames(
 					styles.itemBox,
-					checkedItems.has(item) ? styles.on : ''
+					checkedItem(item.id) ? styles.on : ''
 				)}
 				key={item.id}
 				id={item.id}
@@ -68,14 +81,15 @@ export const StackBalloonItems: React.FC<Props> = ({
 							</span>
 						</p>
 					</div>
-				) : (
+				) : item.status === CadDownloadStatus.Pending ? (
 					<div className={styles.progressDownload}>
 						<span className={styles.progressSmall}>
-							<span>0</span>/5
+							<CadenasDownloadProgress {...item} />
+							{/* <span>0</span>/5 */}
 						</span>
 						<span className={styles.progressIng}>다운로드 중</span>
 					</div>
-				)}
+				) : null}
 			</li>
 		);
 	}

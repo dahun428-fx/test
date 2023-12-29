@@ -1,6 +1,7 @@
 import {
 	CadDownloadStack,
 	CadDownloadStatus,
+	CadDownloadStackItem,
 } from '@/models/localStorage/CadDownloadStack';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -16,6 +17,12 @@ const slice = createSlice({
 	name: 'stack',
 	initialState,
 	reducers: {
+		setItems(state, action: PayloadAction<CadDownloadStackItem[]>) {
+			return {
+				...state,
+				items: action.payload,
+			};
+		},
 		updateStack(state, action: PayloadAction<CadDownloadStack>) {
 			return {
 				...state,
@@ -32,6 +39,24 @@ const slice = createSlice({
 				done: remainItems.filter(item => item.status === CadDownloadStatus.Done)
 					.length,
 				len: remainItems.length,
+			};
+		},
+		updateItem(state, action: PayloadAction<Partial<CadDownloadStackItem>>) {
+			const updatedItems = state.items.map(item => {
+				if (item.id === action.payload.id) {
+					return {
+						...item,
+						...action.payload,
+					};
+				}
+				return item;
+			});
+			return {
+				...state,
+				items: updatedItems,
+				done: updatedItems.filter(
+					item => item.status === CadDownloadStatus.Done
+				).length,
 			};
 		},
 		tabDone(state) {
