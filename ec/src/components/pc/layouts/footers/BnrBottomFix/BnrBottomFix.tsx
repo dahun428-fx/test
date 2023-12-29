@@ -4,14 +4,11 @@ import classNames from 'classnames';
 import { useStack } from './BnrBottomFix.hooks';
 
 export const BnrBottomFix: React.FC = () => {
-	const { stackShowStatus, setStackShowStatus } = useStack();
+	const { stackShowStatus, stackItemLen, setStackShowStatus } = useStack();
 
 	const handleClickCadDownloadModal = () => {
-		console.log('click');
 		setStackShowStatus(!stackShowStatus);
 	};
-
-	console.log('stackShowStatus ', stackShowStatus);
 
 	return (
 		<>
@@ -22,7 +19,8 @@ export const BnrBottomFix: React.FC = () => {
 							<li onClick={handleClickCadDownloadModal}>
 								<a>
 									<span className={styles.iconCad}>
-										CAD 다운로드<span className={styles.iconCadNumber}>0</span>
+										CAD 다운로드
+										<span className={styles.iconCadNumber}>{stackItemLen}</span>
 									</span>
 								</a>
 							</li>

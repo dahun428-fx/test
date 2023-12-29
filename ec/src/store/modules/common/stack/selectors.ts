@@ -7,3 +7,7 @@ export function selectShowCadDownloadBalloon(state: AppState) {
 export function selectCadDownloadStack(state: AppState) {
 	return state.stack;
 }
+
+export function selectCadDownloadLength(state: AppState) {
+	return state.stack.len;
+}

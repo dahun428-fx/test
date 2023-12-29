@@ -13,38 +13,24 @@ import {
 	removeItemOperation,
 	updateItemOperation,
 } from '@/store/modules/common/stack';
-import {
-	refreshAuth,
-	selectAuth,
-	selectAuthenticated,
-	selectUserPermissions,
-} from '@/store/modules/auth';
+import { refreshAuth, selectAuth } from '@/store/modules/auth';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
 	getCadDownloadStack,
 	updateCadDownloadStackItem,
-	removeExpiryItemIfNeeded,
 	updateCadDownloadStack,
 	removeExpiryItemOnlyIfNeeded,
+	removePendingItemIfNeeded,
 } from '@/services/localStorage/cadDownloadStack';
-import { Router } from 'next/router';
 import { useApiCancellation } from '@/api/clients/cancel/useApiCancellation';
 import { CancelToken, Canceler } from 'axios';
 import { useGetCadenasFileUrl } from '@/utils/domain/cad/cadenas.hooks';
-import {
-	downloadCadIframe,
-	downloadCadLink,
-	getDownloadFileName,
-} from '@/utils/cad';
+import { downloadCadIframe, getDownloadFileName } from '@/utils/cad';
 import { url } from '@/utils/url';
 import { getSelectedCadDataFormat } from '@/utils/domain/cad/shared';
 import { getCadFormat } from '@/utils/domain/cad/cadenas';
-import { useBoolState } from '@/hooks/state/useBoolState';
-import { store } from '@/store';
 import { useTimer } from '@/utils/timer';
-import { ApiCancelError } from '@/errors/api/ApiCancelError';
-import { CadDownloadApiError } from '@/errors/api/CadDownloadApiError';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 
@@ -71,6 +57,7 @@ export const useStackBalloon = () => {
 	const setShowsStatus = useCallback(
 		(show: boolean) => {
 			updateShowsStatusOperation(dispatch)(show);
+			updateCadDownloadStack({ show });
 		},
 		[dispatch]
 	);
@@ -83,6 +70,7 @@ export const useStackBalloon = () => {
 				return;
 			}
 			updateTabDoneStatusOperation(dispatch)(tabDone);
+			updateCadDownloadStack({ tabDone });
 		},
 		[dispatch]
 	);
@@ -110,11 +98,10 @@ export const useStackBalloon = () => {
 
 	const generateCadData = useCallback(async () => {
 		if (!initialized.current) {
-			//caddownload 만료시간이 끝난 cad 데이터 제거
 			removeExpiryItemOnlyIfNeeded();
+			removePendingItemIfNeeded();
 			let stack = getCadDownloadStack();
 			setCadDownloadStack(stack);
-			//TO DO : putsth done 이외의 cad 데이터 제거 (pending)
 			initialized.current = true;
 		}
 	}, [
@@ -227,13 +214,6 @@ export const useStackBalloon = () => {
 					!downloadingItemIds.current.has(item.id)
 			);
 
-			console.log('sinus : ', sinusIncompleteItems);
-			console.log('cadenas : ', cadenasIncompleteItems);
-			console.log(
-				'download cadenas downloadingItemIds ',
-				downloadingItemIds,
-				cadenasIncompleteItems
-			);
 			if (cadenasIncompleteItems.length > 0) {
 				await downloadCadenas(cadenasIncompleteItems, token);
 			}

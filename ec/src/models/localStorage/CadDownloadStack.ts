@@ -59,7 +59,6 @@ export interface CadDownloadStackItem {
 	cadType: string;
 	downloadHref?: string;
 	downloadUrl: string;
-	checkOnStack: boolean; // stack checked or unchecked ( true / false )
 }
 
 export interface SelectedCadDataFormat {

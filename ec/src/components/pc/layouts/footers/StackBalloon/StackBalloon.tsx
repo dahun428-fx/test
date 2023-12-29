@@ -4,11 +4,7 @@ import styles from './StackBalloon.module.scss';
 import { StackBalloonItems } from './StackBallonItem';
 import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
 import { isEmpty } from '@/utils/predicate';
-import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 import { Router } from 'next/router';
-import { selectAuthenticated } from '@/store/modules/auth';
-import { useSelector } from '@/store/hooks';
-import { useLoginModal } from '@/components/pc/modals/LoginModal';
 import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack_origin';
 import { CancelCadDownloadResult } from '../CadDownloadStatusBalloon/CancelCadDownloadModal/CancelCadDownloadContent';
 
@@ -22,10 +18,8 @@ type Props = {
 		cadDownloadPendingItem: CadDownloadStackItem
 	) => void;
 	handleSelectAllItem: () => void;
-	handleDeleteItems: () => void;
-	// handleCadDownloadClick: () => void;
-	resetCheckedPendingCadDownloadItems: () => void;
-	resetCheckedDoneCadDownloadItems: () => void;
+	handleDeleteItems: (downloadPendingItemSize: number) => void;
+	resetCheckedPendingItems: () => void;
 	showCancelCadDownloadModal: () => Promise<void | CancelCadDownloadResult>;
 };
 
@@ -38,9 +32,7 @@ export const StackBalloon: React.FC<Props> = ({
 	handleSelectPendingItem,
 	handleSelectAllItem,
 	handleDeleteItems,
-	resetCheckedPendingCadDownloadItems,
-	resetCheckedDoneCadDownloadItems,
-	// handleCadDownloadClick,
+	resetCheckedPendingItems,
 	showCancelCadDownloadModal,
 }) => {
 	const {
@@ -67,7 +59,6 @@ export const StackBalloon: React.FC<Props> = ({
 				downloadingItemIds.current.has(item.id) &&
 				item.status === CadDownloadStatus.Pending
 		);
-		console.log('pending Items : ', pendingItems);
 		if (!cadDownloadStack.tabDone && pendingItems.length > 0) {
 			const isPendingDownload = pendingItems.some(
 				item => item.status === CadDownloadStatus.Pending
@@ -75,14 +66,15 @@ export const StackBalloon: React.FC<Props> = ({
 
 			if (isPendingDownload) {
 				const result = await showCancelCadDownloadModal();
-				console.log('result', result?.type);
 				if (!result || result?.type !== 'CANCEL_DOWNLOAD') {
 					return;
 				}
 				cancelDownload();
 			}
 		}
-		handleDeleteItems();
+
+		handleDeleteItems(downloadingItemIds.current.size);
+		clearDownloadingItemIds();
 	};
 
 	const handleCadDownloadClick = async () => {
@@ -94,21 +86,18 @@ export const StackBalloon: React.FC<Props> = ({
 		}
 
 		if (cadDownloadStack.tabDone) {
-			console.log(checkedDoneCadDownloadItems);
 			if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
 				showMessage('다운로드 할 데이터를 선택하여 주세요.');
 				return false;
 			}
 			await cadDownload(Array.from(checkedDoneCadDownloadItems));
-			// resetCheckedDoneCadDownloadItems();
 		} else {
 			if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
 				showMessage('다운로드 할 데이터를 선택하여 주세요.');
 				return false;
 			}
-			console.log(checkedPendingCadDownloadItems);
 			await cadDownload(Array.from(checkedPendingCadDownloadItems));
-			resetCheckedPendingCadDownloadItems();
+			resetCheckedPendingItems();
 		}
 		clearDownloadingItemIds();
 	};
@@ -169,7 +158,6 @@ export const StackBalloon: React.FC<Props> = ({
 											</p>
 											<div className={styles.delimiter1}></div>
 											<p className={styles.deleteItem}>
-												{/* <a onClick={handleDeleteItems}>삭제</a> */}
 												<a onClick={handleCancelAndDelete}>삭제</a>
 											</p>
 										</div>
