@@ -42,23 +42,36 @@ export const StackBalloon: React.FC = () => {
 	const [checkedDoneCadDownloadItems, setCheckedDoneCadDownloadItems] =
 		useState<Set<CadDownloadStackItem>>(new Set());
 
+	const [checkedPendingCadDownloadIds, setCheckedPendingCadDownloadIds] =
+		useState<Set<string>>(new Set());
+	const [checkedDoneCadDownloadIds, setCheckedDoneCadDownloadIds] = useState<
+		Set<string>
+	>(new Set());
+
+	console.log(stack.items, stackPendingList, checkedPendingCadDownloadItems);
+
 	/**
 	 * 다운로드 대기탭의 CadItem 클릭 이벤트
 	 */
 	const handleSelectPendingItem = useCallback(
 		(pendingCad: CadDownloadStackItem) => {
-			const isSelected = checkedPendingCadDownloadItems.has(pendingCad);
+			const isSelected = checkedPendingCadDownloadIds.has(pendingCad.id);
 			if (isSelected) {
+				checkedPendingCadDownloadIds.delete(pendingCad.id);
 				checkedPendingCadDownloadItems.delete(pendingCad);
 			} else {
+				checkedPendingCadDownloadIds.add(pendingCad.id);
 				checkedPendingCadDownloadItems.add(pendingCad);
 			}
 
+			setCheckedPendingCadDownloadIds(
+				new Set(Array.from(checkedPendingCadDownloadIds))
+			);
 			setCheckedPendingCadDownloadItems(
 				new Set(Array.from(checkedPendingCadDownloadItems))
 			);
 		},
-		[checkedPendingCadDownloadItems]
+		[checkedPendingCadDownloadItems, checkedPendingCadDownloadIds]
 	);
 
 	/**
@@ -66,18 +79,22 @@ export const StackBalloon: React.FC = () => {
 	 */
 	const handleSelectDoneItem = useCallback(
 		(doneCad: CadDownloadStackItem) => {
-			const isSelected = checkedDoneCadDownloadItems.has(doneCad);
+			const isSelected = checkedDoneCadDownloadIds.has(doneCad.id);
 			if (isSelected) {
 				checkedDoneCadDownloadItems.delete(doneCad);
+				checkedDoneCadDownloadIds.delete(doneCad.id);
 			} else {
 				checkedDoneCadDownloadItems.add(doneCad);
+				checkedDoneCadDownloadIds.add(doneCad.id);
 			}
-
+			setCheckedDoneCadDownloadIds(
+				new Set(Array.from(checkedDoneCadDownloadIds))
+			);
 			setCheckedDoneCadDownloadItems(
 				new Set(Array.from(checkedDoneCadDownloadItems))
 			);
 		},
-		[checkedDoneCadDownloadItems]
+		[checkedDoneCadDownloadItems, checkedDoneCadDownloadIds]
 	);
 
 	/**
@@ -86,15 +103,35 @@ export const StackBalloon: React.FC = () => {
 	 */
 	const handleSelectAllItem = useCallback(() => {
 		if (stack.tabDone) {
-			if (stackDoneList.length === checkedDoneCadDownloadItems.size) {
+			if (stackDoneList.length === checkedDoneCadDownloadIds.size) {
+				setCheckedDoneCadDownloadIds(new Set());
 				setCheckedDoneCadDownloadItems(new Set());
 			} else {
+				setCheckedDoneCadDownloadIds(
+					new Set(
+						Array.from(
+							stackDoneList.map(item => {
+								return item.id;
+							})
+						)
+					)
+				);
 				setCheckedDoneCadDownloadItems(new Set(Array.from(stackDoneList)));
 			}
 		} else {
 			if (stackPendingList.length === checkedPendingCadDownloadItems.size) {
+				setCheckedPendingCadDownloadIds(new Set());
 				setCheckedPendingCadDownloadItems(new Set());
 			} else {
+				setCheckedPendingCadDownloadIds(
+					new Set(
+						Array.from(
+							stackPendingList.map(item => {
+								return item.id;
+							})
+						)
+					)
+				);
 				setCheckedPendingCadDownloadItems(
 					new Set(Array.from(stackPendingList))
 				);
@@ -107,6 +144,8 @@ export const StackBalloon: React.FC = () => {
 		stackPendingList,
 		checkedDoneCadDownloadItems,
 		checkedPendingCadDownloadItems,
+		checkedDoneCadDownloadIds,
+		checkedPendingCadDownloadIds,
 	]);
 
 	/**
@@ -134,6 +173,7 @@ export const StackBalloon: React.FC = () => {
 					//localstorage delete
 					removeCadDownloadStackItem(item);
 				});
+				setCheckedDoneCadDownloadIds(new Set());
 				setCheckedDoneCadDownloadItems(new Set());
 			} else {
 				if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
@@ -154,6 +194,7 @@ export const StackBalloon: React.FC = () => {
 					//localstorage delete
 					removeCadDownloadStackItem(item);
 				});
+				setCheckedPendingCadDownloadIds(new Set());
 				setCheckedPendingCadDownloadItems(new Set());
 			}
 		},
@@ -168,9 +209,32 @@ export const StackBalloon: React.FC = () => {
 	//사용자가 클릭한 pending cadItem 리셋이벤트
 	const resetCheckedPendingCadDownloadItems = () => {
 		setCheckedPendingCadDownloadItems(new Set());
+		setCheckedPendingCadDownloadIds(new Set());
 	};
 
 	const showCancelCadDownloadModal = useCancelCadDownloadModal();
+
+	useEffect(() => {
+		// if (stackDoneList.length < 1) {
+		// 	return;
+		// }
+		setCheckedDoneCadDownloadItems(
+			new Set(
+				Array.from(
+					stackDoneList.filter(item => checkedDoneCadDownloadIds.has(item.id))
+				)
+			)
+		);
+		setCheckedPendingCadDownloadItems(
+			new Set(
+				Array.from(
+					stackPendingList.filter(item =>
+						checkedPendingCadDownloadIds.has(item.id)
+					)
+				)
+			)
+		);
+	}, [stack]);
 
 	return (
 		<>

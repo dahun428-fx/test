@@ -4,6 +4,7 @@ import {
 	CadDownloadStack,
 	CadDownloadStackItem,
 } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadError } from '@/store/modules/cadDownload/types';
 
 export const updateShowsStatusOperation = (dispatch: Dispatch) => {
 	return (show: boolean) => {
@@ -38,5 +39,11 @@ export const updateItemsOperation = (dispatch: Dispatch) => {
 export const updateItemOperation = (dispatch: Dispatch) => {
 	return (item: Partial<CadDownloadStackItem>) => {
 		dispatch(stackActions.updateItem(item));
+	};
+};
+
+export const setErrorOperation = (dispatch: Dispatch) => {
+	return ({ stackId, type }: { stackId: string; type: CadDownloadError }) => {
+		dispatch(stackActions.setError({ stackId, type }));
 	};
 };

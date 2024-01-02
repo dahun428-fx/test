@@ -12,6 +12,7 @@ import {
 	updateTabDoneStatusOperation,
 	removeItemOperation,
 	updateItemOperation,
+	setErrorOperation,
 } from '@/store/modules/common/stack';
 import { refreshAuth, selectAuth } from '@/store/modules/auth';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -33,6 +34,10 @@ import { getCadFormat } from '@/utils/domain/cad/cadenas';
 import { useTimer } from '@/utils/timer';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { downloadCad } from '@/api/services/sinus/downloadCad';
+import dayjs from 'dayjs';
+import { CadDownloadApiError } from '@/errors/api/CadDownloadApiError';
+import { ApiCancelError } from '@/errors/api/ApiCancelError';
 
 const PAST_DATE = 1;
 
@@ -139,18 +144,9 @@ export const useStackBalloon = () => {
 			cadenasIncompleteItems: CadDownloadStackItem[],
 			token: CancelToken
 		) => {
-			for (const item of cadenasIncompleteItems) {
-				downloadingItemIds.current.add(item.id);
+			let localStack = getCadDownloadStack();
+			updateCadStatusToPutsth(cadenasIncompleteItems);
 
-				//putsth ==> pending
-				if (item.status === CadDownloadStatus.Putsth) {
-					const pendingItem: Partial<CadDownloadStackItem> = {
-						status: CadDownloadStatus.Pending,
-					};
-					updateCadDownloadStackItem({ id: item.id, ...pendingItem });
-					updateItemOperation(dispatch)({ id: item.id, ...pendingItem });
-				}
-			}
 			for await (const item of cadenasIncompleteItems) {
 				if (
 					item.status === CadDownloadStatus.Done &&
@@ -216,6 +212,164 @@ export const useStackBalloon = () => {
 		[dispatch, getCadenasFileUrl]
 	);
 
+	const downloadSinus = useCallback(
+		async (
+			sinusIncompleteItems: CadDownloadStackItem[],
+			token: CancelToken
+		) => {
+			let localStack = getCadDownloadStack();
+			updateCadStatusToPutsth(sinusIncompleteItems);
+			let index = 0;
+			for await (const item of sinusIncompleteItems) {
+				if (
+					item.status === CadDownloadStatus.Done &&
+					!!item.downloadHref &&
+					!!item.cadFilename
+				) {
+					await timer.sleep(1000);
+					downloadCadIframe(url.cadDownload(item.downloadHref, item.fileName));
+				} else {
+					let partNumberList = item.requestData?.partNumberList;
+
+					if (partNumberList) {
+						downloadingItemIds.current.add(item.id);
+						if (index == 0) {
+							partNumberList = [];
+							index++;
+						}
+
+						try {
+							const response = await downloadCad({ partNumberList }, token);
+							console.log('res : ', response);
+							if (response.status === '201') {
+								if (response.path) {
+									await timer.sleep(1000);
+									downloadCadIframe(
+										url.cadDownload(response.path, item.fileName)
+									);
+								}
+								const selectedFormat = getSelectedCadDataFormat();
+								const updateItem: Partial<CadDownloadStackItem> = {
+									...item,
+									status: CadDownloadStatus.Done,
+									expiry: dayjs().add(30, 'day').valueOf(),
+									cadSection: 'PACD',
+									cadFilename: response.path ?? '',
+									cadFormat: selectedFormat.format ?? '',
+									cadType: (selectedFormat.grp || '2D').toUpperCase(),
+									partNumber: item.dynamicCadModifiedCommon.pn,
+									downloadHref: response.path,
+									selected: selectedFormat,
+									downloadUrl: getDownloadFileName(
+										item.fileName,
+										response.path
+									),
+								};
+								updateCadDownloadStackItem({ id: item.id, ...updateItem });
+								updateItemOperation(dispatch)({ id: item.id, ...updateItem });
+							} else if (Number(response.status) >= 400) {
+								if (response.status === '404') {
+									setErrorOperation(dispatch)({
+										stackId: item.id,
+										type: 'sinus-not-found',
+									});
+								}
+								throw new CadDownloadApiError(Number(response.status));
+							}
+							console.log(response);
+						} catch (error: any) {
+							console.log('error : ', error);
+							showMessage(
+								'시스템 오류가 발생했습니다. 잠시 후 다시 이용해 주십시오.'
+							);
+							cancelDownload();
+							clearDownloadingItemIds();
+							if (error instanceof ApiCancelError) {
+								return;
+							}
+
+							if (typeof error === 'object') {
+								let itemList: CadDownloadStackItem[] = [];
+
+								// NOTE: Handling timeout error.
+								if (
+									!(error instanceof CadDownloadApiError) &&
+									error.status === 500
+								) {
+									itemList = localStack.items.map(stackItem => {
+										if (stackItem.id === item.id) {
+											return {
+												...stackItem,
+												status: CadDownloadStatus.Timeout,
+											};
+										}
+										return stackItem;
+									});
+								} else {
+									// itemList = localStack.items.filter(
+									// 	stackItem => stackItem.id !== item.id
+									// );
+									itemList = localStack.items.map(stackItem => {
+										if (stackItem.id === item.id) {
+											return {
+												...stackItem,
+												status: CadDownloadStatus.Error,
+											};
+										}
+										return stackItem;
+									});
+								}
+
+								localStack = updateCadDownloadState({
+									...localStack,
+									items: itemList,
+									len: itemList.length,
+								});
+
+								// NOTE: Do not show error message modal when having 404 error.
+								if (error.status === 404) {
+									setErrorOperation(dispatch)({
+										stackId: item.id,
+										type: 'sinus-not-found',
+									});
+
+									return;
+								}
+							}
+							// console.log('throw error')
+							// throw error;
+							continue;
+						}
+					}
+				}
+			}
+		},
+		[
+			cadDownloadStack,
+			dispatch,
+			generateToken,
+			setCadDownloadStack,
+			setShowsStatus,
+			updateCadDownloadState,
+		]
+	);
+
+	const updateCadStatusToPutsth = (items: CadDownloadStackItem[]) => {
+		for (const item of items) {
+			downloadingItemIds.current.add(item.id);
+
+			//putsth ==> pending
+			if (item.status === CadDownloadStatus.Putsth) {
+				const pendingItem: Partial<CadDownloadStackItem> = {
+					status: CadDownloadStatus.Pending,
+					time: '5',
+				};
+				updateCadDownloadStackItem({ id: item.id, ...pendingItem });
+				updateItemOperation(dispatch)({ id: item.id, ...pendingItem });
+			}
+		}
+	};
+
 	/**
 	 * cad download common function < cadenas, sinus >
 	 */
@@ -225,7 +379,7 @@ export const useStackBalloon = () => {
 			const sinusIncompleteItems = checkedCadDownloadItems.filter(
 				item =>
 					item.type === 'sinus' &&
-					item.status !== CadDownloadStatus.Done &&
+					// item.status !== CadDownloadStatus.Done &&
 					item.status !== CadDownloadStatus.Error &&
 					!downloadingItemIds.current.has(item.id)
 			);
@@ -240,6 +394,8 @@ export const useStackBalloon = () => {
 
 			if (cadenasIncompleteItems.length > 0) {
 				await downloadCadenas(cadenasIncompleteItems, token);
+			} else if (sinusIncompleteItems.length > 0) {
+				await downloadSinus(sinusIncompleteItems, token);
 			}
 		},
 		[dispatch, generateToken, cadDownloadStack]

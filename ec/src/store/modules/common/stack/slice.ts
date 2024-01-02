@@ -3,9 +3,10 @@ import {
 	CadDownloadStatus,
 	CadDownloadStackItem,
 } from '@/models/localStorage/CadDownloadStack';
+import { CadDownloadError, CadDownloadState } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: CadDownloadStack = {
+const initialState: CadDownloadState = {
 	items: [],
 	len: 0,
 	done: 0,
@@ -57,6 +58,18 @@ const slice = createSlice({
 				done: updatedItems.filter(
 					item => item.status === CadDownloadStatus.Done
 				).length,
+			};
+		},
+		setError(
+			state,
+			action: PayloadAction<{ stackId: string; type: CadDownloadError }>
+		) {
+			return {
+				...state,
+				errors: {
+					...state.errors,
+					[action.payload.stackId]: action.payload.type,
+				},
 			};
 		},
 		tabDone(state) {
