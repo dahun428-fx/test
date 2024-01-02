@@ -239,8 +239,12 @@ export const useStackBalloon = () => {
 						}
 
 						try {
-							const response = await downloadCad({ partNumberList }, token);
-							console.log('res : ', response);
+							let response = await downloadCad({ partNumberList }, token);
+							// if (index == 0) {
+							// 	// partNumberList = [];
+							// 	response.status = '404';
+							// 	index++;
+							// }
 							if (response.status === '201') {
 								if (response.path) {
 									await timer.sleep(1000);
@@ -276,9 +280,7 @@ export const useStackBalloon = () => {
 								}
 								throw new CadDownloadApiError(Number(response.status));
 							}
-							console.log(response);
 						} catch (error: any) {
-							console.log('error : ', error);
 							showMessage(
 								'시스템 오류가 발생했습니다. 잠시 후 다시 이용해 주십시오.'
 							);

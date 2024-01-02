@@ -5,7 +5,7 @@ import { StackBalloonItems } from './StackBallonItem';
 import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
 import { isEmpty } from '@/utils/predicate';
 import { Router } from 'next/router';
-import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack_origin';
+import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack';
 import { CancelCadDownloadResult } from '../CadDownloadStatusBalloon/CancelCadDownloadModal/CancelCadDownloadContent';
 import { url } from '@/utils/url';
 import classNames from 'classnames';
@@ -109,6 +109,16 @@ export const StackBalloon: React.FC<Props> = ({
 	};
 
 	const cadDownloadButton = useMemo(() => {
+		const hasPendingItem =
+			Array.from(checkedPendingCadDownloadItems).filter(
+				item =>
+					item.status === CadDownloadStatus.Pending ||
+					item.status === CadDownloadStatus.Putsth
+			).length > 0;
+		const hasDoneItem =
+			Array.from(checkedDoneCadDownloadItems).filter(
+				item => item.status === CadDownloadStatus.Done
+			).length > 0;
 		const ableButton = (
 			<span className={styles.btnArrow} onClick={handleCadDownloadClick}>
 				다운로드
@@ -128,12 +138,12 @@ export const StackBalloon: React.FC<Props> = ({
 		}
 
 		return tabDoneStatus
-			? checkedDoneCadDownloadItems.size < 1
-				? disableButton
-				: ableButton
-			: checkedPendingCadDownloadItems.size < 1
-			? disableButton
-			: ableButton;
+			? !!hasDoneItem
+				? ableButton
+				: disableButton
+			: !!hasPendingItem
+			? ableButton
+			: disableButton;
 	}, [
 		downloadingItemIds.current.size,
 		checkedDoneCadDownloadItems.size,
