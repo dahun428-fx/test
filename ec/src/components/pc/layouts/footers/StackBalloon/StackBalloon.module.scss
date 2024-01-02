@@ -196,6 +196,12 @@ $downloadDisableImg: './assets/ic_download_disabled.png';
 			background-position: 50px 50%;
 			background-repeat: no-repeat;
 		}
+		&.disable {
+			background-color: #bbb !important;
+			color: #fff !important;
+			opacity: 0.4 !important;
+			cursor: default;
+		}
 	}
 	.btnClose {
 		display: inline-block;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useStackBalloon } from './StackBalloon.hooks';
 import styles from './StackBalloon.module.scss';
 import { StackBalloonItems } from './StackBallonItem';
@@ -7,6 +7,8 @@ import { isEmpty } from '@/utils/predicate';
 import { Router } from 'next/router';
 import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack_origin';
 import { CancelCadDownloadResult } from '../CadDownloadStatusBalloon/CancelCadDownloadModal/CancelCadDownloadContent';
+import { url } from '@/utils/url';
+import classNames from 'classnames';
 
 type Props = {
 	doneList: CadDownloadStackItem[];
@@ -84,6 +86,10 @@ export const StackBalloon: React.FC<Props> = ({
 				return;
 			}
 		}
+		if (downloadingItemIds.current.size > 0) {
+			showMessage('다운로드 진행 중입니다.');
+			return false;
+		}
 
 		if (cadDownloadStack.tabDone) {
 			if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
@@ -101,6 +107,39 @@ export const StackBalloon: React.FC<Props> = ({
 		}
 		clearDownloadingItemIds();
 	};
+
+	const cadDownloadButton = useMemo(() => {
+		const ableButton = (
+			<span className={styles.btnArrow} onClick={handleCadDownloadClick}>
+				다운로드
+			</span>
+		);
+
+		const disableButton = (
+			<span
+				className={classNames(styles.btnArrow, styles.disable)}
+				onClick={handleCadDownloadClick}
+			>
+				다운로드
+			</span>
+		);
+		if (downloadingItemIds.current.size > 0) {
+			return disableButton;
+		}
+
+		return tabDoneStatus
+			? checkedDoneCadDownloadItems.size < 1
+				? disableButton
+				: ableButton
+			: checkedPendingCadDownloadItems.size < 1
+			? disableButton
+			: ableButton;
+	}, [
+		downloadingItemIds.current.size,
+		checkedDoneCadDownloadItems.size,
+		checkedPendingCadDownloadItems.size,
+		tabDoneStatus,
+	]);
 
 	useEffect(() => {
 		const handleGenerateData = () => {
@@ -201,15 +240,12 @@ export const StackBalloon: React.FC<Props> = ({
 									</div>
 								</div>
 								<div className={styles.stackMyCad}>
-									<a>CAD 다운로드 이력조회</a>
+									<a href={url.myPage.cadDownloadHistory}>
+										CAD 다운로드 이력조회
+									</a>
 								</div>
 								<div className={styles.btnSection}>
-									<span
-										className={styles.btnArrow}
-										onClick={() => handleCadDownloadClick()}
-									>
-										다운로드
-									</span>
+									{cadDownloadButton}
 									<span
 										className={styles.btnClose}
 										onClick={() => setShowsStatus(!showsStatus)}

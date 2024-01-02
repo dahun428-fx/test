@@ -54,27 +54,37 @@ export const useStackBalloon = () => {
 	const dispatch = useDispatch();
 	const { getCadenasFileUrl, cancel: cancelTimer } = useGetCadenasFileUrl();
 
+	/**
+	 * footer stack open or close function
+	 */
 	const setShowsStatus = useCallback(
 		(show: boolean) => {
-			updateShowsStatusOperation(dispatch)(show);
-			updateCadDownloadStack({ show });
+			updateShowsStatusOperation(dispatch)(show); //redux dispatch : show => !show ( toggle )
+			updateCadDownloadStack({ show }); //localStorage : show => !show (toggle)
 		},
 		[dispatch]
 	);
 
+	/**
+	 * footer stack '다운로드 대기' or '다운로드 완료'
+	 * tabDone true : 다운로드 완료 탭
+	 * tabDone false : 다운로드 대기 탭
+	 */
 	const setTabDone = useCallback(
 		(tabDone: boolean) => {
-			console.log(downloadingItemIds.current.size);
 			if (downloadingItemIds.current.size > 0) {
 				showMessage('다운로드 진행 중입니다. 잠시 후 다시 시도하세요.');
 				return;
 			}
-			updateTabDoneStatusOperation(dispatch)(tabDone);
-			updateCadDownloadStack({ tabDone });
+			updateTabDoneStatusOperation(dispatch)(tabDone); //redux dispatch : tabDone => !tabDone ( tooggle )
+			updateCadDownloadStack({ tabDone }); //localStorage : tabDone => !tabDone (toggle)
 		},
 		[dispatch]
 	);
 
+	/**
+	 * redux dispatch stack value change ( update )
+	 */
 	const setCadDownloadStack = useCallback(
 		(stack: CadDownloadStack) => {
 			updateStackOperation(dispatch)(stack);
@@ -96,6 +106,10 @@ export const useStackBalloon = () => {
 		[setCadDownloadStack]
 	);
 
+	/**
+	 * stack cad data insert from localStorage
+	 *  when open new page or route new page / user login and user logout
+	 */
 	const generateCadData = useCallback(async () => {
 		if (!initialized.current) {
 			removeExpiryItemOnlyIfNeeded();
@@ -113,6 +127,13 @@ export const useStackBalloon = () => {
 		setCadDownloadStack,
 	]);
 
+	/**
+	 * cadenas cad download excute function
+	 * 1. downloadItemIds ref function excute (intialize download target cad data)
+	 * 2. change status putsth to pending
+	 * 3. check caddownload status 'done' or 'pending'
+	 * 4. download excute
+	 */
 	const downloadCadenas = useCallback(
 		async (
 			cadenasIncompleteItems: CadDownloadStackItem[],
@@ -195,6 +216,9 @@ export const useStackBalloon = () => {
 		[dispatch, getCadenasFileUrl]
 	);
 
+	/**
+	 * cad download common function < cadenas, sinus >
+	 */
 	const cadDownload = useCallback(
 		async (checkedCadDownloadItems: CadDownloadStackItem[]) => {
 			const token = generateToken(c => (cancelerRef.current = c));
@@ -221,12 +245,18 @@ export const useStackBalloon = () => {
 		[dispatch, generateToken, cadDownloadStack]
 	);
 
+	/**
+	 * cancel cad download use 'ref' and 'Canceler' function
+	 */
 	const cancelDownload = useCallback(() => {
 		console.log(cancelerRef.current);
 		cancelerRef.current?.();
 		cancelTimer();
 	}, [cancelTimer]);
 
+	/**
+	 * downloadingItemIds clear
+	 */
 	const clearDownloadingItemIds = () => {
 		downloadingItemIds.current.clear();
 	};
