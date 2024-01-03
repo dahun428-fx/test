@@ -140,19 +140,18 @@ export const useStackBalloon = () => {
 
 	/**
 	 * cadenas cad download excute function
-	 * 1. downloadItemIds ref function excute (intialize download target cad data)
-	 * 2. change status putsth to pending
-	 * 3. check caddownload status 'done' or 'pending'
-	 * 4. download excute
+	 * 1. check caddownload status 'done' or 'pending'
+	 * 2. receive file url from api server
+	 * 3. api data check
+	 * 4. download excute ( iframe )
 	 */
 	const downloadCadenas = useCallback(
 		async (item: CadDownloadStackItem, token) => {
 			if (
 				item.status === CadDownloadStatus.Done &&
 				!!item.downloadHref &&
-				item.cadFilename
+				!!item.cadFilename
 			) {
-				await timer.sleep(1000);
 				downloadCadIframe(url.cadDownload(item.downloadHref, item.cadFilename));
 			} else {
 				const data = await getCadenasFileUrl(item.url, token);
@@ -179,8 +178,6 @@ export const useStackBalloon = () => {
 					return false;
 				}
 
-				await timer.sleep(1000);
-
 				downloadCadIframe(url.cadDownload(data.url, item.fileName));
 
 				// Cookie から選択された CAD データフォーマットを取得
@@ -206,16 +203,20 @@ export const useStackBalloon = () => {
 		[dispatch, getCadenasFileUrl]
 	);
 
+	/**
+	 * sinus cad download excute function
+	 * 1. check caddownload status 'done' or 'pending'
+	 * 2. receive file url from api server
+	 * 3. api data check
+	 * 4. download excute ( iframe )
+	 */
 	const downloadSinus = useCallback(
 		async (item: CadDownloadStackItem, token: CancelToken) => {
-			console.log('sinus excute : ', item);
-			let localStack = getCadDownloadStack();
 			if (
 				item.status === CadDownloadStatus.Done &&
 				!!item.downloadHref &&
 				!!item.cadFilename
 			) {
-				await timer.sleep(1000);
 				downloadCadIframe(url.cadDownload(item.downloadHref, item.fileName));
 			} else {
 				let partNumberList = item.requestData?.partNumberList;
@@ -225,7 +226,6 @@ export const useStackBalloon = () => {
 
 						if (response.status === '201') {
 							if (response.path) {
-								await timer.sleep(1000);
 								downloadCadIframe(
 									url.cadDownload(response.path, item.fileName)
 								);
@@ -257,6 +257,8 @@ export const useStackBalloon = () => {
 						}
 					} catch (error: any) {
 						sinusErrorHandler();
+						let localStack = getCadDownloadStack();
+
 						if (error instanceof ApiCancelError) {
 							return false;
 						}
@@ -321,32 +323,8 @@ export const useStackBalloon = () => {
 		]
 	);
 
-	const sinusErrorHandler = () => {
-		showMessage(
-			t('components.ui.layouts.footers.stackBalloon.message.error.system')
-		);
-		cancelDownload();
-		clearDownloadingItemIds();
-	};
-
-	const readyToPending = (items: CadDownloadStackItem[]) => {
-		for (const item of items) {
-			downloadingItemIds.current.add(item.id);
-
-			//putsth ==> pending
-			if (item.status === CadDownloadStatus.Putsth) {
-				const pendingItem: Partial<CadDownloadStackItem> = {
-					status: CadDownloadStatus.Pending,
-					time: '5',
-				};
-				updateCadDownloadStackItem({ id: item.id, ...pendingItem });
-				updateItemOperation(dispatch)({ id: item.id, ...pendingItem });
-			}
-		}
-	};
-
 	/**
-	 * cad download common function < cadenas, sinus >
+	 * cad download common function << cadenas, sinus >>
 	 */
 	const cadDownload = useCallback(
 		async (checkedCadDownloadItems: CadDownloadStackItem[]) => {
@@ -357,14 +335,26 @@ export const useStackBalloon = () => {
 					!downloadingItemIds.current.has(item.id)
 			);
 
-			readyToPending(items);
-
 			if (items.length > 0) {
 				for await (const item of items) {
+					downloadingItemIds.current.add(item.id);
+
+					//putsth ==> pending start
+					if (item.status === CadDownloadStatus.Putsth) {
+						const pendingItem: Partial<CadDownloadStackItem> = {
+							status: CadDownloadStatus.Pending,
+							time: '5',
+						};
+						updateCadDownloadStackItem({ id: item.id, ...pendingItem });
+						updateItemOperation(dispatch)({ id: item.id, ...pendingItem });
+					}
+					await timer.sleep(1000);
+
+					//cad download excute for type
 					if (item.type === 'sinus') {
-						await downloadSinus(item, token);
+						downloadSinus(item, token);
 					} else {
-						await downloadCadenas(item, token);
+						downloadCadenas(item, token);
 					}
 				}
 			}
@@ -373,10 +363,20 @@ export const useStackBalloon = () => {
 	);
 
 	/**
+	 * sinus error => show message (system error)=> cad download cancel => downloadingItem reset
+	 */
+	const sinusErrorHandler = () => {
+		showMessage(
+			t('components.ui.layouts.footers.stackBalloon.message.error.system')
+		);
+		cancelDownload();
+		clearDownloadingItemIds();
+	};
+
+	/**
 	 * cancel cad download use 'ref' and 'Canceler' function
 	 */
 	const cancelDownload = useCallback(() => {
-		console.log(cancelerRef.current);
 		cancelerRef.current?.();
 		cancelTimer();
 	}, [cancelTimer]);

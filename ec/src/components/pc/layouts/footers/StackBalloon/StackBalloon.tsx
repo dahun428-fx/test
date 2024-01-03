@@ -1,7 +1,12 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, {
+	MutableRefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+} from 'react';
 import { useStackBalloon } from './StackBalloon.hooks';
 import styles from './StackBalloon.module.scss';
-import { StackBalloonItems } from './StackBallonItem';
+import { StackBalloonItems } from './StackBalloonItem';
 import { CadDownloadStackItem } from '@/models/localStorage/CadDownloadStack';
 import { isEmpty } from '@/utils/predicate';
 import { Router } from 'next/router';
@@ -16,13 +21,13 @@ type Props = {
 	pendingList: CadDownloadStackItem[];
 	checkedDoneCadDownloadItems: Set<CadDownloadStackItem>;
 	checkedPendingCadDownloadItems: Set<CadDownloadStackItem>;
+	recheckPendingCadItem: MutableRefObject<boolean>;
 	handleSelectDoneItem: (cadDownloadDoneItem: CadDownloadStackItem) => void;
 	handleSelectPendingItem: (
 		cadDownloadPendingItem: CadDownloadStackItem
 	) => void;
 	handleSelectAllItem: () => void;
 	handleDeleteItems: (downloadPendingItemSize: number) => void;
-	resetCheckedPendingItems: () => void;
 	showCancelCadDownloadModal: () => Promise<void | CancelCadDownloadResult>;
 };
 
@@ -31,11 +36,11 @@ export const StackBalloon: React.FC<Props> = ({
 	pendingList,
 	checkedDoneCadDownloadItems,
 	checkedPendingCadDownloadItems,
+	recheckPendingCadItem,
 	handleSelectDoneItem,
 	handleSelectPendingItem,
 	handleSelectAllItem,
 	handleDeleteItems,
-	resetCheckedPendingItems,
 	showCancelCadDownloadModal,
 }) => {
 	const {
@@ -53,15 +58,9 @@ export const StackBalloon: React.FC<Props> = ({
 		cancelDownload,
 	} = useStackBalloon();
 
-	console.log(
-		'stackballoon checkedPendingCadDownloadItems : ',
-		checkedPendingCadDownloadItems
-	);
-
 	const [t] = useTranslation();
 
 	const tabDoneStatus = cadDownloadStack.tabDone;
-
 	const handleCancelAndDelete = async () => {
 		//다운로드 중인 경우 stack에 있는 아이템은 선택 / 선택해제 할수 없으므로, 현재 다운로드 중인 item을 대상으로한다.
 		const pendingItems = cadDownloadStack.items.filter(
@@ -127,14 +126,14 @@ export const StackBalloon: React.FC<Props> = ({
 				return false;
 			}
 			await cadDownload(Array.from(checkedPendingCadDownloadItems));
-			resetCheckedPendingItems();
+			recheckPendingCadItem.current = true;
 		}
 		clearDownloadingItemIds();
 	}, [
 		authenticated,
 		downloadingItemIds,
 		cadDownloadStack,
-		resetCheckedPendingItems,
+		recheckPendingCadItem,
 		clearDownloadingItemIds,
 	]);
 

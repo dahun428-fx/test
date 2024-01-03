@@ -13,7 +13,6 @@ export const CadenasDownloadProgress: React.VFC<
 > = ({ id, progress: initialProgress, time: stringTime, status }) => {
 	const [progress, setProgress] = useState(initialProgress);
 	const intervalIdRef = useRef<number>();
-
 	useOnMounted(() => {
 		// initialProgress が 100% 完了なら、setInterval しない
 		if (initialProgress === 5) {

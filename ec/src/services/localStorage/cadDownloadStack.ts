@@ -194,7 +194,6 @@ export function updateCadDownloadStackItem(
 	updateItem: EitherRequired<CadDownloadStackItem, 'id'>
 ) {
 	const stack = getCadDownloadStack();
-
 	const foundIndex = stack.items.findIndex(item => item.id === updateItem.id);
 	if (foundIndex < 0) {
 		return;

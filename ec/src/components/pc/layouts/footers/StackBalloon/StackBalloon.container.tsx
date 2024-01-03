@@ -3,7 +3,7 @@ import {
 	CadDownloadStatus,
 } from '@/models/localStorage/CadDownloadStack';
 import { StackBalloon as Presenter } from './StackBalloon';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
 	removeItemOperation,
 	selectCadDownloadStack,
@@ -26,6 +26,8 @@ export const StackBalloon: React.FC = () => {
 	const { showMessage } = useMessageModal();
 	const { showConfirm } = useConfirmModal();
 
+	const recheckPendingCadItem = useRef(false);
+
 	//CadDownloadStatus => done stack cad List
 	//stack reducer 의 stack item 이 변경될 때마다 수행 ( dispatch )
 	const stackDoneList = useMemo(() => {
@@ -45,8 +47,6 @@ export const StackBalloon: React.FC = () => {
 	const [checkedDoneCadDownloadItems, setCheckedDoneCadDownloadItems] =
 		useState<Set<CadDownloadStackItem>>(new Set());
 
-	console.log(stack.items, stackPendingList, checkedPendingCadDownloadItems);
-
 	/**
 	 * 다운로드 대기탭의 CadItem 클릭 이벤트
 	 */
@@ -58,7 +58,6 @@ export const StackBalloon: React.FC = () => {
 			} else {
 				checkedPendingCadDownloadItems.add(pendingCad);
 			}
-			console.log('pending item ====> ', checkedPendingCadDownloadItems);
 			setCheckedPendingCadDownloadItems(
 				new Set(Array.from(checkedPendingCadDownloadItems))
 			);
@@ -197,23 +196,43 @@ export const StackBalloon: React.FC = () => {
 		]
 	);
 
-	//사용자가 클릭한 pending cadItem 리셋이벤트
-	const resetCheckedPendingCadDownloadItems = () => {
-		setCheckedPendingCadDownloadItems(new Set());
-	};
-
 	const showCancelCadDownloadModal = useCancelCadDownloadModal();
+
+	useEffect(() => {
+		if (
+			recheckPendingCadItem &&
+			!stack.tabDone &&
+			checkedPendingCadDownloadItems.size > 0
+		) {
+			const checkedIds = Array.from(checkedPendingCadDownloadItems).map(
+				item => {
+					return item.id;
+				}
+			);
+			const items = stack.items.filter(item => {
+				if (
+					checkedIds.includes(item.id) &&
+					item.status !== CadDownloadStatus.Done
+				) {
+					return item;
+				}
+			});
+			setCheckedPendingCadDownloadItems(new Set(items));
+
+			recheckPendingCadItem.current = false;
+		}
+	}, [stack.items, recheckPendingCadItem]);
 
 	return (
 		<>
 			<Presenter
+				recheckPendingCadItem={recheckPendingCadItem}
 				handleSelectPendingItem={handleSelectPendingItem}
 				handleSelectDoneItem={handleSelectDoneItem}
 				handleSelectAllItem={handleSelectAllItem}
 				handleDeleteItems={downloadPendingItemSize =>
 					handleDeleteItems(downloadPendingItemSize)
 				}
-				resetCheckedPendingItems={resetCheckedPendingCadDownloadItems}
 				showCancelCadDownloadModal={showCancelCadDownloadModal}
 				doneList={stackDoneList}
 				pendingList={stackPendingList}
