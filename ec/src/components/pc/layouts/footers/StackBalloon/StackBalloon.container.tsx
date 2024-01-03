@@ -3,7 +3,7 @@ import {
 	CadDownloadStatus,
 } from '@/models/localStorage/CadDownloadStack';
 import { StackBalloon as Presenter } from './StackBalloon';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
 	removeItemOperation,
 	selectCadDownloadStack,
@@ -15,8 +15,11 @@ import { removeCadDownloadStackItem } from '@/services/localStorage/cadDownloadS
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 import { useCancelCadDownloadModal } from '@/components/pc/layouts/footers/CadDownloadStatusBalloon/CancelCadDownloadModal';
 import { useConfirmModal } from '@/components/pc/ui/modals/ConfirmModal';
+import { useTranslation } from 'react-i18next';
 
 export const StackBalloon: React.FC = () => {
+	const [t] = useTranslation();
+
 	const stack = useSelector(selectCadDownloadStack);
 	const dispatch = useDispatch();
 
@@ -27,13 +30,13 @@ export const StackBalloon: React.FC = () => {
 	//stack reducer 의 stack item 이 변경될 때마다 수행 ( dispatch )
 	const stackDoneList = useMemo(() => {
 		return stack.items.filter(item => item.status === CadDownloadStatus.Done);
-	}, [stack]);
+	}, [stack.items]);
 
 	//CadDownloadStatus => putsth, error, pending cad List
 	//stack reducer 의 stack item 이 변경될 때마다 수행 ( dispatch )
 	const stackPendingList = useMemo(() => {
 		return stack.items.filter(item => item.status !== CadDownloadStatus.Done);
-	}, [stack]);
+	}, [stack.items]);
 
 	//사용자가 클릭한 cad pending, error, putsth list
 	const [checkedPendingCadDownloadItems, setCheckedPendingCadDownloadItems] =
@@ -55,7 +58,7 @@ export const StackBalloon: React.FC = () => {
 			} else {
 				checkedPendingCadDownloadItems.add(pendingCad);
 			}
-
+			console.log('pending item ====> ', checkedPendingCadDownloadItems);
 			setCheckedPendingCadDownloadItems(
 				new Set(Array.from(checkedPendingCadDownloadItems))
 			);
@@ -119,14 +122,27 @@ export const StackBalloon: React.FC = () => {
 		async downloadPendingItemSize => {
 			if (stack.tabDone) {
 				if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
-					showMessage('삭제할 데이터를 선택하세요.');
+					showMessage(
+						t(
+							'components.ui.layouts.footers.stackBalloon.message.delete.choice'
+						)
+					);
+					//삭제할 데이터를 선택하세요.
 					return false;
 				}
 				if (downloadPendingItemSize < 1) {
 					const confirm = await showConfirm({
-						message: `선택한 데이터 ${checkedDoneCadDownloadItems.size}건을 삭제하시겠습니까?`,
-						confirmButton: '예',
-						closeButton: '아니오',
+						message: t(
+							'components.ui.layouts.footers.stackBalloon.message.delete.confirm',
+							{ length: checkedDoneCadDownloadItems.size }
+						),
+						// `선택한 데이터 ${checkedDoneCadDownloadItems.size}건을 삭제하시겠습니까?`,
+						confirmButton: t(
+							'components.ui.layouts.footers.stackBalloon.message.common.yes'
+						), //예
+						closeButton: t(
+							'components.ui.layouts.footers.stackBalloon.message.common.no'
+						), //아니오
 					});
 					if (!confirm) return;
 				}
@@ -137,16 +153,30 @@ export const StackBalloon: React.FC = () => {
 					removeCadDownloadStackItem(item);
 				});
 				setCheckedDoneCadDownloadItems(new Set());
+				//Pending
 			} else {
 				if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
-					showMessage('삭제할 데이터를 선택하세요.');
+					showMessage(
+						t(
+							'components.ui.layouts.footers.stackBalloon.message.delete.choice'
+						)
+					);
+					// '삭제할 데이터를 선택하세요.'
 					return false;
 				}
 				if (downloadPendingItemSize < 1) {
 					const confirm = await showConfirm({
-						message: `선택한 데이터 ${checkedPendingCadDownloadItems.size}건을 삭제하시겠습니까?`,
-						confirmButton: '예',
-						closeButton: '아니오',
+						message: t(
+							'components.ui.layouts.footers.stackBalloon.message.delete.confirm',
+							{ length: checkedPendingCadDownloadItems.size }
+						),
+						// `선택한 데이터 ${checkedPendingCadDownloadItems.size}건을 삭제하시겠습니까?`
+						confirmButton: t(
+							'components.ui.layouts.footers.stackBalloon.message.common.yes'
+						), //예
+						closeButton: t(
+							'components.ui.layouts.footers.stackBalloon.message.common.no'
+						), //아니오
 					});
 					if (!confirm) return;
 				}
@@ -173,17 +203,6 @@ export const StackBalloon: React.FC = () => {
 	};
 
 	const showCancelCadDownloadModal = useCancelCadDownloadModal();
-
-	useEffect(() => {
-		// if (stackDoneList.length < 1) {
-		// 	return;
-		// }
-		// setCheckedDoneCadDownloadItems(new Set(
-		// 	Array.from(
-		// 		stackDoneList.filter()
-		// 	)
-		// ))
-	}, []);
 
 	return (
 		<>

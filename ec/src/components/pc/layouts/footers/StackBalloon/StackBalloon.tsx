@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useStackBalloon } from './StackBalloon.hooks';
 import styles from './StackBalloon.module.scss';
 import { StackBalloonItems } from './StackBallonItem';
@@ -9,6 +9,7 @@ import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack';
 import { CancelCadDownloadResult } from '../CadDownloadStatusBalloon/CancelCadDownloadModal/CancelCadDownloadContent';
 import { url } from '@/utils/url';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	doneList: CadDownloadStackItem[];
@@ -52,6 +53,13 @@ export const StackBalloon: React.FC<Props> = ({
 		cancelDownload,
 	} = useStackBalloon();
 
+	console.log(
+		'stackballoon checkedPendingCadDownloadItems : ',
+		checkedPendingCadDownloadItems
+	);
+
+	const [t] = useTranslation();
+
 	const tabDoneStatus = cadDownloadStack.tabDone;
 
 	const handleCancelAndDelete = async () => {
@@ -79,7 +87,7 @@ export const StackBalloon: React.FC<Props> = ({
 		clearDownloadingItemIds();
 	};
 
-	const handleCadDownloadClick = async () => {
+	const handleCadDownloadClick = useCallback(async () => {
 		if (!authenticated) {
 			const result = await showLoginModal();
 			if (result !== 'LOGGED_IN') {
@@ -87,26 +95,48 @@ export const StackBalloon: React.FC<Props> = ({
 			}
 		}
 		if (downloadingItemIds.current.size > 0) {
-			showMessage('다운로드 진행 중입니다.');
+			showMessage(
+				t(
+					'components.ui.layouts.footers.stackBalloon.message.download.progress'
+				)
+			);
+			// '다운로드 진행 중입니다.'
 			return false;
 		}
 
 		if (cadDownloadStack.tabDone) {
 			if (isEmpty(Array.from(checkedDoneCadDownloadItems))) {
-				showMessage('다운로드 할 데이터를 선택하여 주세요.');
+				showMessage(
+					t(
+						'components.ui.layouts.footers.stackBalloon.message.download.reject'
+					)
+				);
+				// '다운로드 할 데이터를 선택하여 주세요.'
+
 				return false;
 			}
 			await cadDownload(Array.from(checkedDoneCadDownloadItems));
 		} else {
 			if (isEmpty(Array.from(checkedPendingCadDownloadItems))) {
-				showMessage('다운로드 할 데이터를 선택하여 주세요.');
+				showMessage(
+					t(
+						'components.ui.layouts.footers.stackBalloon.message.download.reject'
+					)
+				);
+				// '다운로드 할 데이터를 선택하여 주세요.'
 				return false;
 			}
 			await cadDownload(Array.from(checkedPendingCadDownloadItems));
 			resetCheckedPendingItems();
 		}
 		clearDownloadingItemIds();
-	};
+	}, [
+		authenticated,
+		downloadingItemIds,
+		cadDownloadStack,
+		resetCheckedPendingItems,
+		clearDownloadingItemIds,
+	]);
 
 	const cadDownloadButton = useMemo(() => {
 		const hasPendingItem =
@@ -121,7 +151,8 @@ export const StackBalloon: React.FC<Props> = ({
 			).length > 0;
 		const ableButton = (
 			<span className={styles.btnArrow} onClick={handleCadDownloadClick}>
-				다운로드
+				{t('components.ui.layouts.footers.stackBalloon.downloadButton')}
+				{/* 다운로드 */}
 			</span>
 		);
 
@@ -130,7 +161,8 @@ export const StackBalloon: React.FC<Props> = ({
 				className={classNames(styles.btnArrow, styles.disable)}
 				onClick={handleCadDownloadClick}
 			>
-				다운로드
+				{t('components.ui.layouts.footers.stackBalloon.downloadButton')}
+				{/* 다운로드 */}
 			</span>
 		);
 		if (downloadingItemIds.current.size > 0) {
@@ -145,10 +177,10 @@ export const StackBalloon: React.FC<Props> = ({
 			? ableButton
 			: disableButton;
 	}, [
-		downloadingItemIds.current.size,
-		checkedDoneCadDownloadItems.size,
-		checkedPendingCadDownloadItems.size,
-		tabDoneStatus,
+		checkedPendingCadDownloadItems,
+		checkedDoneCadDownloadItems,
+		handleCadDownloadClick,
+		downloadingItemIds,
 	]);
 
 	useEffect(() => {
@@ -168,17 +200,26 @@ export const StackBalloon: React.FC<Props> = ({
 					<div className={styles.balloonBox}>
 						<div className={styles.balloonBoxInner}>
 							<div>
-								<h3 className={styles.h3}>CAD 다운로드</h3>
+								<h3 className={styles.h3}>
+									{t('components.ui.layouts.footers.stackBalloon.title')}
+									{/* CAD 다운로드 */}
+								</h3>
 								<div className={styles.tab}>
 									<ul>
 										<li onClick={() => setTabDone(false)}>
 											<a className={!tabDoneStatus ? styles.on : ''}>
-												다운로드 대기
+												{t(
+													'components.ui.layouts.footers.stackBalloon.downloadPending'
+												)}
+												{/* 다운로드 대기 */}
 											</a>
 										</li>
 										<li onClick={() => setTabDone(true)}>
 											<a className={!tabDoneStatus ? '' : styles.on}>
-												다운로드 완료
+												{t(
+													'components.ui.layouts.footers.stackBalloon.downloadComplete'
+												)}
+												{/* 다운로드 완료 */}
 											</a>
 										</li>
 									</ul>
@@ -186,11 +227,17 @@ export const StackBalloon: React.FC<Props> = ({
 								<div className={styles.listArea}>
 									<div className={styles.info}>
 										<p>
-											총
+											{t(
+												'components.ui.layouts.footers.stackBalloon.totalPreffix'
+											)}
+											{/* 총 */}
 											<span>
 												{tabDoneStatus ? doneList.length : pendingList.length}
 											</span>
-											건
+											{t(
+												'components.ui.layouts.footers.stackBalloon.totalSuffix'
+											)}
+											{/* 건 */}
 										</p>
 										<p>|</p>
 										<p>
@@ -199,15 +246,28 @@ export const StackBalloon: React.FC<Props> = ({
 													? checkedDoneCadDownloadItems.size
 													: checkedPendingCadDownloadItems.size}
 											</span>
-											건 선택
+											{t(
+												'components.ui.layouts.footers.stackBalloon.choosedSuffix'
+											)}
+											{/* 건 선택 */}
 										</p>
 										<div>
 											<p className={styles.selectAllItem}>
-												<a onClick={handleSelectAllItem}>전체 선택</a>
+												<a onClick={handleSelectAllItem}>
+													{t(
+														'components.ui.layouts.footers.stackBalloon.selectAll'
+													)}
+													{/* 전체 선택 */}
+												</a>
 											</p>
 											<div className={styles.delimiter1}></div>
 											<p className={styles.deleteItem}>
-												<a onClick={handleCancelAndDelete}>삭제</a>
+												<a onClick={handleCancelAndDelete}>
+													{t(
+														'components.ui.layouts.footers.stackBalloon.delete'
+													)}
+													{/* 삭제 */}
+												</a>
 											</p>
 										</div>
 									</div>
@@ -226,7 +286,12 @@ export const StackBalloon: React.FC<Props> = ({
 														);
 													})
 												) : (
-													<p className={styles.notCad}>CAD 데이터가 없습니다</p>
+													<p className={styles.notCad}>
+														{t(
+															'components.ui.layouts.footers.stackBalloon.noCadData'
+														)}
+														{/* CAD 데이터가 없습니다 */}
+													</p>
 												)}
 											</ul>
 										) : (
@@ -243,7 +308,12 @@ export const StackBalloon: React.FC<Props> = ({
 														);
 													})
 												) : (
-													<p className={styles.notCad}>CAD 데이터가 없습니다</p>
+													<p className={styles.notCad}>
+														{t(
+															'components.ui.layouts.footers.stackBalloon.noCadData'
+														)}
+														{/* CAD 데이터가 없습니다 */}
+													</p>
 												)}
 											</ul>
 										)}
@@ -251,7 +321,8 @@ export const StackBalloon: React.FC<Props> = ({
 								</div>
 								<div className={styles.stackMyCad}>
 									<a href={url.myPage.cadDownloadHistory}>
-										CAD 다운로드 이력조회
+										{t('components.ui.layouts.footers.stackBalloon.cadHistory')}
+										{/* CAD 다운로드 이력조회 */}
 									</a>
 								</div>
 								<div className={styles.btnSection}>
@@ -260,7 +331,8 @@ export const StackBalloon: React.FC<Props> = ({
 										className={styles.btnClose}
 										onClick={() => setShowsStatus(!showsStatus)}
 									>
-										닫기
+										{t('components.ui.layouts.footers.stackBalloon.close')}
+										{/* 닫기 */}
 									</span>
 								</div>
 							</div>

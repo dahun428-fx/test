@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import { CadenasDownloadProgress } from './CadenasDownloadProgress';
 import { url } from '@/utils/url';
 import { openSubWindow } from '@/utils/window';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	item: CadDownloadStackItem;
@@ -21,6 +23,10 @@ export const StackBalloonItems: React.FC<Props> = ({
 	checkedItems,
 	onClick,
 }) => {
+	const router = useRouter();
+
+	const [t] = useTranslation();
+
 	const handleOnClickHelp = (event: React.MouseEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -42,6 +48,17 @@ export const StackBalloonItems: React.FC<Props> = ({
 		return false;
 	};
 
+	const handleClickCadDownload = (
+		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+		item: CadDownloadStackItem
+	) => {
+		e.preventDefault();
+		e.stopPropagation();
+		if (item.downloadHref) {
+			router.push(item.downloadHref);
+		}
+	};
+
 	if (item.status === CadDownloadStatus.Done) {
 		return (
 			<li
@@ -55,13 +72,21 @@ export const StackBalloonItems: React.FC<Props> = ({
 			>
 				<div className={styles.itemDetail}>
 					<p>
-						<a href={item.downloadHref}>{item.seriesName}</a>
+						<a
+							onClick={e => handleClickCadDownload(e, item)}
+							href={item.downloadHref}
+						>
+							{item.seriesName}
+						</a>
 					</p>
 					<p>{item.partNumber}</p>
 					<p>{item.label}</p>
 				</div>
 				<div className={styles.progressDownload}>
-					<p>완료</p>
+					<p>
+						{t('components.ui.layouts.footers.stackBalloon.complete')}
+						{/* 완료 */}
+					</p>
 				</div>
 			</li>
 		);
@@ -83,12 +108,16 @@ export const StackBalloonItems: React.FC<Props> = ({
 				</div>
 				{item.status === CadDownloadStatus.Putsth ? (
 					<div className={styles.progressDownload}>
-						<p className={styles.progressIng}>다운로드 대기</p>
+						<p className={styles.progressIng}>
+							{t('components.ui.layouts.footers.stackBalloon.downloadPending')}
+							{/* 다운로드 대기 */}
+						</p>
 					</div>
 				) : item.status === CadDownloadStatus.Error ? (
 					<div className={styles.progressDownload}>
 						<p className={styles.progressIng}>
-							다운로드 실패
+							{t('components.ui.layouts.footers.stackBalloon.downloadFail')}
+							{/* 다운로드 실패 */}
 							<span className={styles.help}>
 								<a onClick={event => handleOnClickHelp(event)}>
 									<span>?</span>
@@ -100,9 +129,11 @@ export const StackBalloonItems: React.FC<Props> = ({
 					<div className={styles.progressDownload}>
 						<span className={styles.progressSmall}>
 							<CadenasDownloadProgress {...item} />
-							{/* <span>0</span>/5 */}
 						</span>
-						<span className={styles.progressIng}>다운로드 중</span>
+						<span className={styles.progressIng}>
+							{t('components.ui.layouts.footers.stackBalloon.downloadProgress')}
+							{/* 다운로드 중 */}
+						</span>
 					</div>
 				) : null}
 			</li>
