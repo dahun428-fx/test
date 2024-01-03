@@ -14,8 +14,8 @@ import {
 	updateItemOperation,
 	setErrorOperation,
 } from '@/store/modules/common/stack';
-import { refreshAuth, selectAuth } from '@/store/modules/auth';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { selectAuth } from '@/store/modules/auth';
+import { useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import {
 	getCadDownloadStack,
@@ -144,8 +144,7 @@ export const useStackBalloon = () => {
 			cadenasIncompleteItems: CadDownloadStackItem[],
 			token: CancelToken
 		) => {
-			let localStack = getCadDownloadStack();
-			updateCadStatusToPutsth(cadenasIncompleteItems);
+			readyToPending(cadenasIncompleteItems);
 
 			for await (const item of cadenasIncompleteItems) {
 				if (
@@ -218,8 +217,7 @@ export const useStackBalloon = () => {
 			token: CancelToken
 		) => {
 			let localStack = getCadDownloadStack();
-			updateCadStatusToPutsth(sinusIncompleteItems);
-			let index = 0;
+			readyToPending(sinusIncompleteItems);
 			for await (const item of sinusIncompleteItems) {
 				if (
 					item.status === CadDownloadStatus.Done &&
@@ -233,18 +231,10 @@ export const useStackBalloon = () => {
 
 					if (partNumberList) {
 						downloadingItemIds.current.add(item.id);
-						if (index == 0) {
-							partNumberList = [];
-							index++;
-						}
 
 						try {
 							let response = await downloadCad({ partNumberList }, token);
-							// if (index == 0) {
-							// 	// partNumberList = [];
-							// 	response.status = '404';
-							// 	index++;
-							// }
+
 							if (response.status === '201') {
 								if (response.path) {
 									await timer.sleep(1000);
@@ -281,11 +271,7 @@ export const useStackBalloon = () => {
 								throw new CadDownloadApiError(Number(response.status));
 							}
 						} catch (error: any) {
-							showMessage(
-								'시스템 오류가 발생했습니다. 잠시 후 다시 이용해 주십시오.'
-							);
-							cancelDownload();
-							clearDownloadingItemIds();
+							sinusErrorHandler();
 							if (error instanceof ApiCancelError) {
 								return;
 							}
@@ -308,9 +294,6 @@ export const useStackBalloon = () => {
 										return stackItem;
 									});
 								} else {
-									// itemList = localStack.items.filter(
-									// 	stackItem => stackItem.id !== item.id
-									// );
 									itemList = localStack.items.map(stackItem => {
 										if (stackItem.id === item.id) {
 											return {
@@ -338,8 +321,6 @@ export const useStackBalloon = () => {
 									return;
 								}
 							}
-							// console.log('throw error')
-							// throw error;
 							continue;
 						}
 					}
@@ -355,8 +336,13 @@ export const useStackBalloon = () => {
 			updateCadDownloadState,
 		]
 	);
+	const sinusErrorHandler = () => {
+		showMessage('시스템 오류가 발생했습니다. 잠시 후 다시 이용해 주십시오.');
+		cancelDownload();
+		clearDownloadingItemIds();
+	};
 
-	const updateCadStatusToPutsth = (items: CadDownloadStackItem[]) => {
+	const readyToPending = (items: CadDownloadStackItem[]) => {
 		for (const item of items) {
 			downloadingItemIds.current.add(item.id);
 
