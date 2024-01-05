@@ -1,0 +1,48 @@
+.table {
+	display: table;
+	border-collapse: collapse;
+}
+
+.tableRow {
+	display: table-row;
+}
+
+.tableCell {
+	display: table-cell;
+	padding: 4px 0;
+}
+
+.label {
+	font-weight: bold;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.selectWrapper {
+	padding-left: 8px;
+}
+
+.select {
+	min-width: 178px;
+}
+
+.seeAllLink {
+	color: #004098;
+	font-size: 0.8125rem;
+	text-decoration: none;
+
+	&:link {
+		color: #004098;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+.linkWrapper {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 8px;
+}

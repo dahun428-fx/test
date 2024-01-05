@@ -1,48 +1,28 @@
-.table {
+.selectFileType {
 	display: table;
-	border-collapse: collapse;
-}
-
-.tableRow {
-	display: table-row;
-}
-
-.tableCell {
-	display: table-cell;
-	padding: 4px 0;
-}
-
-.label {
-	font-weight: bold;
-	white-space: nowrap;
-	text-align: left;
-}
-
-.selectWrapper {
-	padding-left: 8px;
-}
-
-.select {
-	min-width: 178px;
-}
-
-.seeAllLink {
-	color: #004098;
-	font-size: 0.8125rem;
-	text-decoration: none;
-
-	&:link {
-		color: #004098;
+	margin: 10px 0;
+	> tbody {
+		> tr {
+			> th {
+				white-space: nowrap;
+				padding-top: 5px;
+				text-align: left;
+				font-weight: bold;
+			}
+			> td {
+				padding-top: 5px;
+				padding-left: 5px;
+				> .select {
+					min-width: 178px;
+					height: 36px;
+				}
+			}
+			&:first-child {
+				> th,
+				> td {
+					padding-top: 0;
+				}
+			}
+		}
 	}
-
-	&:hover {
-		text-decoration: underline;
-		cursor: pointer;
-	}
-}
-
-.linkWrapper {
-	padding-top: 4px;
-	padding-bottom: 4px;
-	padding-left: 8px;
 }

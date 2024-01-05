@@ -145,6 +145,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 							href={url.cadGuide}
 							target="_blank"
 						>
+							hello!
 							<span className={styles.helpIcon} />
 						</NagiLink>
 					</h3>

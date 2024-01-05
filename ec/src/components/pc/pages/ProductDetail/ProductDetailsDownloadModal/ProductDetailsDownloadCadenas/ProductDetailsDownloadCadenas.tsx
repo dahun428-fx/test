@@ -9,7 +9,7 @@ import {
 } from './ProductDetailsDownloadCadenas.hooks';
 import styles from './ProductDetailsDownloadCadenas.module.scss';
 import { ProductDetailsDownloadCadenasError } from './ProductDetailsDownloadCadenasError';
-import { CadenasFormatSelect } from '@/components/pc/domain/CadDownload/CadenasFormatSelect';
+import { CadenasFormatSelect } from '@/components/pc/domain/CadDownload/CadenasFormatSelect_origin';
 import { Button } from '@/components/pc/ui/buttons';
 import { BlockLoader } from '@/components/pc/ui/loaders';
 import { Flag } from '@/models/api/Flag';

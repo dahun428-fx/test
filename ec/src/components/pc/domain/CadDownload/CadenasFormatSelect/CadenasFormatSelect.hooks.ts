@@ -1,40 +1,32 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Option } from '@/components/pc/ui/controls/select/Select';
+import { Option } from '@/components/pc/ui/controls/select';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import {
 	DownloadCadResponse,
 	Format,
 } from '@/models/api/msm/ect/cad/DownloadCadResponse';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 import {
-	getDefaultFormat,
-	getDefaultOtherFormat,
-	getDefaultVersion,
 	getFormatListByValueOrFormat,
 	getFormatOptionsFromFileTypes,
 	getVersionOptions,
 } from '@/utils/cad';
 import { keyBy } from '@/utils/collection';
-import { Cookie, getCookie } from '@/utils/cookie';
+import { useCallback, useMemo, useState } from 'react';
 
-/** Cadenas format select hook */
 export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
-	const [t] = useTranslation();
-	const [selectedCadOption, setSelectedCadOption] = useState<Option>();
+	const [selectedCadOption, setSelectedOption] = useState<Option>();
 	const [selectedOtherCadOption, setSelectedOtherCadOption] =
 		useState<Option | null>(null);
 	const [selectedVersionOption, setSelectedVersionOption] =
 		useState<Option | null>(null);
 
-	const cadOptions = useMemo(() => {
+	const cadOption = useMemo(() => {
 		const data: Option[] = getFormatOptionsFromFileTypes(cadData.fileTypeList);
 		return data.concat({
-			label: t('components.domain.cadDownload.cadenasFormatSelect.other'),
+			label: '기타',
 			value: 'others',
-			group: t('components.domain.cadDownload.cadenasFormatSelect.other'),
+			group: '기타',
 		});
-	}, [cadData.fileTypeList, t]);
+	}, [cadData.fileTypeList]);
 
 	const otherCadOptions = useMemo(() => {
 		return getFormatOptionsFromFileTypes(cadData.otherFileTypeList);
@@ -46,7 +38,6 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 
 	const formatListByValueOrFormatOther = useMemo(() => {
 		const formatList: Format[] = [];
-
 		cadData.otherFileTypeList.forEach(item => {
 			item.formatList.forEach(format => {
 				formatList.push(format);
@@ -57,11 +48,8 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 	}, [cadData]);
 
 	const groups = useMemo(() => {
-		return [
-			...cadData.fileTypeList.map(list => list.type),
-			t('components.domain.cadDownload.cadenasFormatSelect.other'),
-		];
-	}, [cadData.fileTypeList, t]);
+		return [...cadData.fileTypeList.map(list => list.type), '기타'];
+	}, [cadData.fileTypeList]);
 
 	const otherGroups = useMemo(() => {
 		return cadData.otherFileTypeList.map(list => list.type);
@@ -94,97 +82,24 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 		if (selectedCadOption?.value === 'others') {
 			return versionOptionsOther;
 		}
-
 		return versionOptions;
 	}, [selectedCadOption, versionOptions, versionOptionsOther]);
 
 	const handleSelectCadOption = useCallback(
 		(option: Option) => {
-			setSelectedCadOption(option);
-			if (option.value !== 'others') {
-				setSelectedOtherCadOption(null);
-
-				const currentSelectedVersionFormat =
-					formatListByValueOrFormat[option.value]?.versionList?.[0];
-
-				if (
-					!currentSelectedVersionFormat ||
-					!currentSelectedVersionFormat.format ||
-					!currentSelectedVersionFormat.label
-				) {
-					setSelectedVersionOption(null);
-					return;
-				}
-
-				setSelectedVersionOption({
-					label: currentSelectedVersionFormat.label,
-					value: currentSelectedVersionFormat.format,
-				});
-				return;
-			}
-
-			if (!otherCadOptions[0]) {
-				setSelectedOtherCadOption(null);
-				setSelectedVersionOption(null);
-				return;
-			}
-
-			setSelectedOtherCadOption(otherCadOptions[0]);
-
-			const currentSelectedVersionFormat =
-				formatListByValueOrFormatOther[otherCadOptions[0].value]
-					?.versionList?.[0];
-
-			if (
-				!currentSelectedVersionFormat ||
-				!currentSelectedVersionFormat.label ||
-				!currentSelectedVersionFormat.format
-			) {
-				setSelectedVersionOption(null);
-				return;
-			}
-
-			setSelectedVersionOption({
-				label: currentSelectedVersionFormat.label,
-				value: currentSelectedVersionFormat.format,
-			});
+			setSelectedOption(option);
+			setSelectedOtherCadOption(null);
+			setSelectedVersionOption(null);
 		},
-		[
-			formatListByValueOrFormat,
-			formatListByValueOrFormatOther,
-			otherCadOptions,
-			setSelectedCadOption,
-			setSelectedOtherCadOption,
-			setSelectedVersionOption,
-		]
+		[setSelectedOption]
 	);
 
 	const handleSelectOtherCadOption = useCallback(
 		(option: Option) => {
 			setSelectedOtherCadOption(option);
-
-			const currentSelectedVersionFormat =
-				formatListByValueOrFormatOther[option.value]?.versionList?.[0];
-
-			if (
-				!currentSelectedVersionFormat ||
-				!currentSelectedVersionFormat.label ||
-				!currentSelectedVersionFormat.format
-			) {
-				setSelectedVersionOption(null);
-				return;
-			}
-
-			setSelectedVersionOption({
-				label: currentSelectedVersionFormat.label,
-				value: currentSelectedVersionFormat.format,
-			});
+			setSelectedVersionOption(null);
 		},
-		[
-			formatListByValueOrFormatOther,
-			setSelectedOtherCadOption,
-			setSelectedVersionOption,
-		]
+		[setSelectedOtherCadOption]
 	);
 
 	const handleSelectVersionOption = useCallback(
@@ -194,34 +109,40 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 		[setSelectedVersionOption]
 	);
 
-	useOnMounted(() => {
-		const cadDataFormatCookie = getCookie(Cookie.CAD_DATA_FORMAT);
-		let cadDataFormat: SelectedCadDataFormat | undefined;
-
-		if (cadDataFormatCookie) {
-			try {
-				cadDataFormat = JSON.parse(decodeURIComponent(cadDataFormatCookie));
-			} catch (error) {}
+	const isFixedCadOption = () => {
+		if (!selectedCadOption) {
+			return false;
 		}
-
-		const format = getDefaultFormat(cadData, cadDataFormat);
-		const otherFormat = getDefaultOtherFormat(cadData, cadDataFormat);
-		const version = getDefaultVersion(cadData, cadDataFormat);
-
-		setSelectedCadOption(format);
-		setSelectedOtherCadOption(otherFormat);
-		setSelectedVersionOption(version);
-	});
+		if (selectedCadOption.value === 'others') {
+			if (versionOptionsOther && versionOptionsOther?.length > 0) {
+				if (selectedVersionOption) {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		} else {
+			if (versionOptions && versionOptions?.length > 0) {
+				if (selectedVersionOption) {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		}
+		return false;
+	};
 
 	return {
+		cadOption,
+		groups,
+		otherGroups,
 		selectedCadOption,
 		selectedOtherCadOption,
 		selectedVersionOption,
-		groups,
-		otherGroups,
-		cadOptions,
 		otherCadOptions,
 		versionOption,
+		isFixedCadOption,
 		handleSelectCadOption,
 		handleSelectOtherCadOption,
 		handleSelectVersionOption,

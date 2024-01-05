@@ -29,7 +29,6 @@ import { isSucceeded } from '@/utils/domain/cad/cadenas';
 import { get } from '@/utils/get';
 import { url } from '@/utils/url';
 import { uuidv4 } from '@/utils/uuid';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
 
 const resolveIFrameName = 'cadenas-download-resolve-iframe';
 const generateIFrameName = 'cadenas-download-generate-iframe';
@@ -64,37 +63,14 @@ export const useCadDownloadDataCadenas = ({
 	const resolveRef = useRef<HTMLIFrameElement>(null);
 	const generateRef = useRef<HTMLIFrameElement>(null);
 	const [selectedOption, setSelectedOption] = useState<SelectedOption>();
-	const [selectedCadDataFormat, setSelectedCadDataFormat] =
-		useState<SelectedCadDataFormat | null>(null);
 	const dispatch = useDispatch();
 
 	const cadenasParameterMap = cadData.dynamic3DCadList[0]?.parameterMap;
 
-	const handleChangeFormat = useCallback(
-		(option: SelectedOption, isFixed: boolean) => {
-			setIsDisableGenerate(false);
-			setSelectedOption(option);
-			selectedCadOption(option, isFixed);
-		},
-		[]
-	);
-
-	const selectedCadOption = (option: SelectedOption, isFixed: boolean) => {
-		if (isFixed) {
-			const formatListByValueOrFormat = getFormatListByValueOrFormat(
-				cadData.fileTypeList
-			);
-			const versionOption = getVersionOptions(
-				option?.format,
-				formatListByValueOrFormat
-			);
-			const selected = getSelectedCadOption(option, versionOption);
-			console.log('selected =============> ', selected);
-			setSelectedCadDataFormat(selected);
-		} else {
-			setSelectedCadDataFormat(null);
-		}
-	};
+	const handleChangeFormat = useCallback((option: SelectedOption) => {
+		setIsDisableGenerate(false);
+		setSelectedOption(option);
+	}, []);
 
 	const handleGenerateData = () => {
 		if (!mident || !cadenasParameterMap) {
@@ -307,6 +283,5 @@ export const useCadDownloadDataCadenas = ({
 		handleLoadResolve,
 		handleGenerateData,
 		handleChangeFormat,
-		selectedCadDataFormat,
 	};
 };

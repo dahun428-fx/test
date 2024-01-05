@@ -554,7 +554,6 @@ export const getCadFormat = (selected: SelectedCadDataFormat): string => {
 /** Get format options from file type */
 export const getFormatOptionsFromFileTypes = (fileTypes: FileType[]) => {
 	const data: Option[] = [];
-
 	fileTypes.forEach(item => {
 		item.formatList.forEach(format => {
 			data.push({

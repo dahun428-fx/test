@@ -1,57 +1,48 @@
-import classNames from 'classnames';
-import React, { useEffect, VFC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useCadenasFormatSelect } from './CadenasFormatSelect.hooks';
+import { VFC, useEffect } from 'react';
 import styles from './CadenasFormatSelect.module.scss';
-import { Select } from '@/components/pc/ui/controls/select/Select';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
 import { SelectedOption } from '@/models/domain/cad';
-import { url } from '@/utils/url';
-import { openSubWindow } from '@/utils/window';
+import { Select } from '@/components/pc/ui/controls/select';
+import { useCadenasFormatSelect } from './CadenasFormatSelect.hooks';
+import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
 
 type Props = {
 	cadData: DownloadCadResponse;
-	onChange: (selectedOption: SelectedOption) => void;
-	action?: React.ReactNode;
+	onChange: (selectedOption: SelectedOption, isFixed: boolean) => void;
 };
 
-/** Cadenas format select component */
-export const CadenasFormatSelect: VFC<Props> = ({
-	cadData,
-	onChange,
-	action,
-}) => {
-	const [t] = useTranslation();
-
+export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 	const {
+		cadOption,
+		groups,
+		otherGroups,
 		selectedCadOption,
 		selectedOtherCadOption,
 		selectedVersionOption,
-		groups,
-		otherGroups,
-		cadOptions,
 		otherCadOptions,
 		versionOption,
+		isFixedCadOption,
 		handleSelectCadOption,
 		handleSelectOtherCadOption,
 		handleSelectVersionOption,
 	} = useCadenasFormatSelect(cadData);
 
-	const handleOpenWindow = (event: React.MouseEvent) => {
-		event.preventDefault();
-		openSubWindow(url.cadFormatGuide, '_blank', { width: 990, height: 800 });
-	};
-
 	useEffect(() => {
 		if (!selectedCadOption) {
 			return;
 		}
-
-		onChange({
-			format: selectedCadOption,
-			otherFormat: selectedOtherCadOption,
-			version: selectedVersionOption,
-		});
+		onChange(
+			{
+				format: selectedCadOption,
+				otherFormat: selectedOtherCadOption,
+				version: selectedVersionOption,
+			},
+			isFixedCadOption()
+		);
+		// console.log('isFixedCadOption : ', isFixedCadOption());
+		// console.log('selectedCadOption : ', selectedCadOption);
+		// console.log('selectedOtherCadOption : ', selectedOtherCadOption);
+		// console.log('selectedVersionOption : ', selectedVersionOption);
 	}, [
 		onChange,
 		selectedCadOption,
@@ -61,66 +52,52 @@ export const CadenasFormatSelect: VFC<Props> = ({
 
 	return (
 		<>
-			<div className={styles.table}>
-				<div className={styles.tableRow}>
-					<div className={classNames([styles.tableCell, styles.label])}>
-						{t('components.domain.cadDownload.cadenasFormatSelect.fileFormat')}
-					</div>
-					<div className={classNames([styles.tableCell, styles.selectWrapper])}>
-						<Select
-							value={selectedCadOption?.value}
-							onChange={handleSelectCadOption}
-							groupOrder={groups}
-							items={cadOptions}
-							className={styles.select}
-						/>
-					</div>
-					{action}
-				</div>
-				{selectedCadOption?.value === 'others' && otherCadOptions.length > 0 && (
-					<div className={styles.tableRow}>
-						<div className={classNames([styles.tableCell, styles.label])}>
-							{t(
-								'components.domain.cadDownload.cadenasFormatSelect.otherFormat'
-							)}
-						</div>
-						<div
-							className={classNames([styles.tableCell, styles.selectWrapper])}
-						>
+			<div className={styles.cadLine}></div>
+
+			<table className={styles.selectFileType}>
+				<tbody>
+					<tr>
+						<th>파일형식</th>
+						<td>
 							<Select
-								value={selectedOtherCadOption?.value}
-								onChange={handleSelectOtherCadOption}
-								groupOrder={otherGroups}
-								items={otherCadOptions}
-								className={styles.select}
+								needChoiceBlank={true}
+								value={selectedCadOption?.value}
+								groupOrder={groups}
+								onChange={handleSelectCadOption}
+								items={cadOption}
 							/>
-						</div>
-					</div>
-				)}
-				{versionOption && versionOption.length > 0 && (
-					<div className={styles.tableRow}>
-						<div className={classNames([styles.tableCell, styles.label])}>
-							{t('components.domain.cadDownload.cadenasFormatSelect.version')}
-						</div>
-						<div
-							className={classNames([styles.tableCell, styles.selectWrapper])}
-						>
-							<Select
-								value={selectedVersionOption?.value}
-								items={versionOption}
-								onChange={handleSelectVersionOption}
-								className={styles.select}
-							/>
-						</div>
-					</div>
-				)}
-			</div>
-			<div className={styles.linkWrapper}>
-				<a className={styles.seeAllLink} onClick={handleOpenWindow}>
-					{t('components.domain.cadDownload.cadenasFormatSelect.seeAllFormat')}
-				</a>
-			</div>
+						</td>
+					</tr>
+					{selectedCadOption?.value === 'others' && otherCadOptions.length > 0 && (
+						<tr>
+							<th>기타형식</th>
+
+							<td>
+								<Select
+									needChoiceBlank={true}
+									value={selectedOtherCadOption?.value}
+									groupOrder={otherGroups}
+									items={otherCadOptions}
+									onChange={handleSelectOtherCadOption}
+								/>
+							</td>
+						</tr>
+					)}
+					{versionOption && versionOption.length > 0 && (
+						<tr>
+							<th>버전</th>
+							<td>
+								<Select
+									needChoiceBlank={true}
+									value={selectedVersionOption?.value}
+									items={versionOption}
+									onChange={handleSelectVersionOption}
+								/>
+							</td>
+						</tr>
+					)}
+				</tbody>
+			</table>
 		</>
 	);
 };
-CadenasFormatSelect.displayName = 'CadenasFormatSelect';

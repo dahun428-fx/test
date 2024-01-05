@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useCadDownloadDataCadenas } from './CadDownloadDataCadenas.hooks';
 import styles from './CadDownloadDataCadenas.module.scss';
 import { CadDownloadError } from '@/components/pc/domain/CadDownload/CadDownloadError';
+import { CadenasFormatSelect } from '@/components/pc/domain/CadDownload/CadenasFormatSelect_origin';
 import { Button } from '@/components/pc/ui/buttons';
 import { NagiLink } from '@/components/pc/ui/links';
 import { BlockLoader } from '@/components/pc/ui/loaders';
@@ -11,8 +12,6 @@ import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadRespons
 import { DynamicParams } from '@/models/domain/cad';
 import { getIEVersion } from '@/utils/device';
 import { url } from '@/utils/url';
-import { CadenasFormatSelect } from '../CadenasFormatSelect';
-import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -38,12 +37,12 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 	const {
 		hasCADPermission,
 		errorState,
+		isDisableGenerate,
 		loadingResolve,
 		generateRef,
 		resolveRef,
 		resolveIFrameName,
 		generateIFrameName,
-		selectedCadDataFormat,
 		handleChangeFormat,
 		handleGenerateData,
 		handleLoadGenerate,
@@ -77,27 +76,23 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 						)}
 					</p>
 				) : (
-					<>
-						<div className={styles.cadDownProductNo}>
-							<h4>형번</h4>
-							<p>{partNumber}</p>
-							<a>CAD 파일형식 전체보기</a>
-						</div>
-						<div className={styles.cadLine}></div>
-
-						<CadenasFormatSelect
-							cadData={cadData}
-							onChange={handleChangeFormat}
-						/>
-						<div className={styles.cadLine}></div>
-
-						<CadDownloadProgressArea selectedCad={selectedCadDataFormat} />
-
-						{/* <CadenasFormatSelect
-							cadData={cadData}
-							onChange={handleChangeFormat}
-						/> */}
-					</>
+					<CadenasFormatSelect
+						cadData={cadData}
+						onChange={handleChangeFormat}
+						action={
+							<div className={styles.buttonWrapper}>
+								<Button
+									theme="strong"
+									onClick={handleGenerateData}
+									disabled={isDisableGenerate}
+								>
+									{t(
+										'components.domain.cadDownload.cadDownloadDataCadenas.generateData'
+									)}
+								</Button>
+							</div>
+						}
+					/>
 				)}
 			</>
 		);
@@ -139,7 +134,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 			) : (
 				<div>
 					<h3 className={styles.title}>
-						선택 형번 CAD 다운로드
+						{t('components.domain.cadDownload.cadDownloadDataCadenas.title')}
 						<NagiLink
 							className={styles.buttonHelpIcon}
 							href={url.cadGuide}

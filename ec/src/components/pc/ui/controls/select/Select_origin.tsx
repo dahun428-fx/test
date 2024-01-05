@@ -13,7 +13,6 @@ export type Option = {
 
 export type Props = {
 	items: Option[];
-	needChoiceBlank?: boolean;
 	groupOrder?: string[];
 	value?: string;
 	disabled?: boolean;
@@ -24,7 +23,6 @@ export type Props = {
 /** Select base */
 export const Select: React.VFC<Props> = ({
 	items,
-	needChoiceBlank,
 	groupOrder,
 	value,
 	disabled = false,
@@ -39,14 +37,14 @@ export const Select: React.VFC<Props> = ({
 			onChange(option);
 		}
 	};
+
 	return (
 		<select
 			disabled={disabled}
 			className={classNames(className, styles.select)}
-			value={value || ''}
+			value={value}
 			onChange={handleChange}
 		>
-			{needChoiceBlank && <option value={''}>선택</option>}
 			{groupOrder?.length ? (
 				<SelectOptionGroup groups={groupOrder} options={options} />
 			) : (
