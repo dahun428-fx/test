@@ -62,6 +62,30 @@ export const useStackBalloon = () => {
 	const dispatch = useDispatch();
 	const { getCadenasFileUrl, cancel: cancelTimer } = useGetCadenasFileUrl();
 
+	const updateCheckOnStackStatus = useCallback(
+		(item: CadDownloadStackItem[]) => {
+			const itemIds = item.map(item => item.id);
+			let itemList = cadDownloadStack.items.map(item => {
+				if (itemIds.includes(item.id)) {
+					return {
+						...item,
+						checkOnStack: true,
+					};
+				} else {
+					return {
+						...item,
+						checkOnStack: false,
+					};
+				}
+			});
+			updateCadDownloadState({
+				...cadDownloadStack,
+				items: itemList,
+			});
+		},
+		[cadDownloadStack]
+	);
+
 	/**
 	 * footer stack open or close function
 	 */
@@ -329,11 +353,15 @@ export const useStackBalloon = () => {
 	const cadDownload = useCallback(
 		async (checkedCadDownloadItems: CadDownloadStackItem[]) => {
 			const token = generateToken(c => (cancelerRef.current = c));
-			const items = checkedCadDownloadItems.filter(
-				item =>
-					item.status !== CadDownloadStatus.Error &&
-					!downloadingItemIds.current.has(item.id)
-			);
+			const items = checkedCadDownloadItems
+				.filter(
+					item =>
+						item.status !== CadDownloadStatus.Error &&
+						!downloadingItemIds.current.has(item.id)
+				)
+				.sort((a, b) => {
+					return b.created - a.created;
+				});
 
 			if (items.length > 0) {
 				for await (const item of items) {
@@ -401,5 +429,6 @@ export const useStackBalloon = () => {
 		showLoginModal,
 		showMessage,
 		cancelDownload,
+		updateCheckOnStackStatus,
 	};
 };

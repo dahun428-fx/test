@@ -5,11 +5,13 @@ import classNames from 'classnames';
 
 type Props = {
 	selectedCad: SelectedCadDataFormat | null;
+	onClickPutsth: (list: SelectedCadDataFormat[]) => void;
 	onClose: () => void;
 };
 
 export const CadDownloadProgressArea: FC<Props> = ({
 	selectedCad,
+	onClickPutsth,
 	onClose,
 }) => {
 	const [selectedItems, setSelectedItems] = useState<
@@ -90,13 +92,13 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	};
 
 	const handleAddStackPutsth = useCallback(() => {
-		console.log('selectedItems', selectedItems);
-
+		onClickPutsth(Array.from(selectedItems));
+		setTimeout(() => {
+			onClose();
+		}, 500);
 	}, [selectedItems]);
 
-	const startStackPutsth = () => {
-		
-	}
+	const startStackPutsth = () => {};
 
 	return (
 		<>

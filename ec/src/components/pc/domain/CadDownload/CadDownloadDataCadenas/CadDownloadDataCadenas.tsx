@@ -22,7 +22,7 @@ type Props = {
 	brandCode: string;
 	seriesCode: string;
 	onResolving: (value: boolean) => void;
-	onClose: () =>void;
+	onClose: () => void;
 };
 
 /** Cad Download Data Cadenas */
@@ -50,6 +50,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 		handleGenerateData,
 		handleLoadGenerate,
 		handleLoadResolve,
+		handleStackPutsthAdd,
 	} = useCadDownloadDataCadenas({
 		cadData,
 		brandCode,
@@ -91,7 +92,11 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 							onChange={handleChangeFormat}
 						/>
 						<div className={styles.cadLine}></div>
-						<CadDownloadProgressArea selectedCad={fixedCadOption} onClose={onClose} />
+						<CadDownloadProgressArea
+							selectedCad={fixedCadOption}
+							onClickPutsth={handleStackPutsthAdd}
+							onClose={onClose}
+						/>
 					</>
 				)}
 			</>
@@ -146,13 +151,13 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 					{getContent()}
 				</div>
 			)}
-			<iframe
+			{/* <iframe
 				ref={generateRef}
 				name={generateIFrameName}
 				className={styles.resolve}
 				onLoad={handleLoadGenerate}
 				allowFullScreen
-			/>
+			/> */}
 			<iframe
 				ref={resolveRef}
 				name={resolveIFrameName}

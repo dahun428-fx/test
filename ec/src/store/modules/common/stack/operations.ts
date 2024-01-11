@@ -5,7 +5,7 @@ import {
 	CadDownloadStackItem,
 } from '@/models/localStorage/CadDownloadStack';
 import { CadDownloadError } from '@/store/modules/cadDownload/types';
-import { addCadDownloadStackItems } from '@/services/localStorage/cadDownloadStack';
+import { addCadDownloadStackItem } from '@/services/localStorage/cadDownloadStack';
 
 export const updateShowsStatusOperation = (dispatch: Dispatch) => {
 	return (show: boolean) => {
@@ -31,10 +31,10 @@ export const removeItemOperation = (dispatch: Dispatch) => {
 	};
 };
 
-export const addItemsOperation = (dispatch: Dispatch) => {
-	return (items: CadDownloadStackItem[]) => {
-		dispatch(stackActions.putsthItems(items));
-		addCadDownloadStackItems(items);
+export const addItemOperation = (dispatch: Dispatch) => {
+	return (item: CadDownloadStackItem) => {
+		dispatch(stackActions.putsthItem(item));
+		addCadDownloadStackItem(item);
 	};
 };
 

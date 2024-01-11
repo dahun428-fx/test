@@ -7,6 +7,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
 	removeItemOperation,
 	selectCadDownloadStack,
+	updateItemOperation,
+	updateItemsOperation,
 } from '@/store/modules/common/stack';
 import { useSelector } from '@/store/hooks';
 import { isEmpty } from '@/utils/predicate';
@@ -26,8 +28,7 @@ export const StackBalloon: React.FC = () => {
 	const { showMessage } = useMessageModal();
 	const { showConfirm } = useConfirmModal();
 
-	const recheckPendingCadItem = useRef(false);
-
+	const refreshPendingCadItem = useRef(false);
 	//CadDownloadStatus => done stack cad List
 	//stack reducer 의 stack item 이 변경될 때마다 수행 ( dispatch )
 	const stackDoneList = useMemo(() => {
@@ -199,11 +200,8 @@ export const StackBalloon: React.FC = () => {
 	const showCancelCadDownloadModal = useCancelCadDownloadModal();
 
 	useEffect(() => {
-		if (
-			recheckPendingCadItem &&
-			!stack.tabDone &&
-			checkedPendingCadDownloadItems.size > 0
-		) {
+		if (stack.show && !stack.tabDone && stack.len > 0) {
+			console.log('effect excute');
 			const checkedIds = Array.from(checkedPendingCadDownloadItems).map(
 				item => {
 					return item.id;
@@ -211,22 +209,23 @@ export const StackBalloon: React.FC = () => {
 			);
 			const items = stack.items.filter(item => {
 				if (
-					checkedIds.includes(item.id) &&
+					(checkedIds.includes(item.id) || item.checkOnStack) &&
 					item.status !== CadDownloadStatus.Done
 				) {
 					return item;
 				}
 			});
 			setCheckedPendingCadDownloadItems(new Set(items));
-
-			recheckPendingCadItem.current = false;
 		}
-	}, [stack.items, recheckPendingCadItem]);
+		if (!stack.show) {
+			console.log('close ====> ', stackPendingList);
+		}
+	}, [stack]);
 
 	return (
 		<>
 			<Presenter
-				recheckPendingCadItem={recheckPendingCadItem}
+				refreshPendingCadItem={refreshPendingCadItem}
 				handleSelectPendingItem={handleSelectPendingItem}
 				handleSelectDoneItem={handleSelectDoneItem}
 				handleSelectAllItem={handleSelectAllItem}

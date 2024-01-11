@@ -14,7 +14,7 @@ import { selectUserPermissions } from '@/store/modules/auth';
 import {
 	addItemOperation,
 	updateShowsStatusOperation,
-} from '@/store/modules/cadDownload';
+} from '@/store/modules/common/stack';
 import { assertNotNull } from '@/utils/assertions';
 import {
 	getCadFormat,
@@ -29,7 +29,11 @@ import { isSucceeded } from '@/utils/domain/cad/cadenas';
 import { get } from '@/utils/get';
 import { url } from '@/utils/url';
 import { uuidv4 } from '@/utils/uuid';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
+import {
+	CadDownloadStackItem,
+	CadDownloadStatus,
+	SelectedCadDataFormat,
+} from '@/models/localStorage/CadDownloadStack';
 
 const resolveIFrameName = 'cadenas-download-resolve-iframe';
 const generateIFrameName = 'cadenas-download-generate-iframe';
@@ -63,6 +67,7 @@ export const useCadDownloadDataCadenas = ({
 	const [mident, setMident] = useState<string | null>(null);
 	const resolveRef = useRef<HTMLIFrameElement>(null);
 	const generateRef = useRef<HTMLIFrameElement>(null);
+	const generateIdx = useRef<number>(0);
 	const [selectedOption, setSelectedOption] = useState<SelectedOption>();
 	const [fixedCadOption, setFixedCadOption] =
 		useState<SelectedCadDataFormat | null>(null);
@@ -79,10 +84,6 @@ export const useCadDownloadDataCadenas = ({
 		[]
 	);
 
-	const handleCadDownload = (cadDownloadList: SelectedCadDataFormat[]) => {
-		console.log('handle cad download => ', cadDownloadList);
-	};
-
 	const selectedFixedOption = (option: SelectedOption, isFixed: boolean) => {
 		if (isFixed) {
 			const formatListByValueOrFormat = getFormatListByValueOrFormat(
@@ -97,6 +98,112 @@ export const useCadDownloadDataCadenas = ({
 		} else {
 			setFixedCadOption(null);
 		}
+	};
+
+	const generateCad = async (
+		selectedCad: SelectedCadDataFormat,
+		type: 'putsth' | 'download'
+	) => {
+		if (!mident || !cadenasParameterMap) {
+			return;
+		}
+
+		// const idx = generateIdx.current;
+		// generateIdx.current = generateIdx.current + 1;
+		const idx = uuidv4();
+		let selected = selectedCad;
+
+		if (!selected) return;
+
+		// console.log('handle stack putsth ===> ', selected);
+		setCookie(
+			Cookie.CAD_DATA_FORMAT,
+			encodeURIComponent(JSON.stringify(selected))
+		);
+
+		const iframe = document.createElement('iframe');
+		iframe.id = `pss_ifDownload${idx}arr`;
+		iframe.src = '/';
+		iframe.width = '0';
+		iframe.height = '0';
+		iframe.name = `pss_ifDownload${idx}arr`;
+		iframe.onload = function () {
+			const iframeWindow = iframe.contentWindow;
+			console.log('handleLoadGenerate iframe', iframeWindow);
+			if (iframeWindow) {
+				const path = iframeWindow.location.pathname;
+				console.log('handleLoadGenerate iframe path', path);
+				if (path?.includes(url.cadenasDownloadCallbackPath)) {
+					const query = new URLSearchParams(iframeWindow.location.search);
+					const xmlfile = query.get('xmlfile');
+					console.log('xmlfile', xmlfile);
+					if (xmlfile) {
+						if (type === 'putsth') {
+							assertNotNull(dynamicCadParams?.[0]);
+							addItemOperation(dispatch)({
+								url: xmlfile + '?_=' + Date.now(),
+								from: window.location.href,
+								// assertNotNull(cadenasParameterMap) した方が良い？
+								time: cadenasParameterMap?.cadGenerationTime,
+								selected,
+								partNumber,
+								progress: 0,
+								status: 'putsth',
+								created: Date.now(),
+								dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
+								fileName: getFileName(partNumber, selected),
+								id: idx,
+								label: getLabel(selected),
+								cadSection: 'PT',
+								cadFilename: '',
+								cadFormat: getCadFormat(selected),
+								cadType: (selected.grp || '2D').toUpperCase(),
+								downloadUrl: '',
+								seriesName: dynamicCadParams[0].COMMON.SERIES_NAME,
+								seriesCode: dynamicCadParams[0].COMMON.SERIES_CODE,
+								checkOnStack: true,
+							});
+							updateShowsStatusOperation(dispatch)(true);
+						}
+					} else {
+						setErrorState('unavailable-part-number-error');
+					}
+				}
+			}
+		};
+		document.body.appendChild(iframe);
+
+		get({
+			url: cadenasParameterMap.cadenasCgi2PviewUrl,
+			query: {
+				cgiaction: cadenasParameterMap.cgiaction,
+				downloadflags: cadenasParameterMap.downloadflags,
+				firm: 'misumi',
+				language: cadenasParameterMap.language,
+				format: getCadFormat(selected),
+				part: mident,
+				ok_url: url.cadenasDownloadCallback + '?xmlfile=<%download_xml%>',
+				dxfsettings: cadenasParameterMap.dxfsettings,
+				CombinationView: cadenasParameterMap.CombinationView,
+			},
+			target: iframe.name,
+		});
+	};
+
+	const handleStackPutsthAdd = async (
+		selectedCadDataList: SelectedCadDataFormat[]
+	) => {
+		if (selectedCadDataList.length > 0) {
+			selectedCadDataList.forEach((element, index) => {
+				console.log('handleStackPutsth element ===> ', element);
+				generateCad(element, 'putsth');
+			});
+		}
+
+		// if (!!selectedCadDataList && selectedCadDataList.length > 0) {
+		// 	let data = selectedCadDataList[0];
+		// 	generateCad(data, 'putsth');
+		// }
 	};
 
 	const handleGenerateData = () => {
@@ -173,6 +280,8 @@ export const useCadDownloadDataCadenas = ({
 				cadFormat: getCadFormat(selected),
 				cadType: (selected.grp || '2D').toUpperCase(),
 				downloadUrl: '',
+				seriesCode: '',
+				seriesName: '',
 			});
 
 			updateShowsStatusOperation(dispatch)(true);
@@ -310,6 +419,7 @@ export const useCadDownloadDataCadenas = ({
 		handleLoadResolve,
 		handleGenerateData,
 		handleChangeFormat,
+		handleStackPutsthAdd,
 		fixedCadOption,
 	};
 };

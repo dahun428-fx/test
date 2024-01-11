@@ -59,6 +59,7 @@ export interface CadDownloadStackItem {
 	cadType: string;
 	downloadHref?: string;
 	downloadUrl: string;
+	checkOnStack?: boolean;
 }
 
 export interface SelectedCadDataFormat {
