@@ -18,6 +18,14 @@ const slice = createSlice({
 	name: 'stack',
 	initialState,
 	reducers: {
+		putsthItems(state, action: PayloadAction<CadDownloadStackItem[]>) {
+			return {
+				...state,
+				show : true,
+				items: [...action.payload, ...state.items],
+				len: state.len + action.payload.length,
+			}
+		},
 		setItems(state, action: PayloadAction<CadDownloadStackItem[]>) {
 			return {
 				...state,

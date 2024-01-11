@@ -10,6 +10,7 @@ import {
 	getVersionOptions,
 } from '@/utils/cad';
 import { keyBy } from '@/utils/collection';
+import { selected } from '@/utils/domain/spec';
 import { useCallback, useMemo, useState } from 'react';
 
 export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
@@ -110,26 +111,32 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 	);
 
 	const isFixedCadOption = () => {
-		if (!selectedCadOption) {
+		if (!selectedCadOption || !selectedCadOption.value) {
 			return false;
 		}
+
 		if (selectedCadOption.value === 'others') {
-			if (versionOptionsOther && versionOptionsOther?.length > 0) {
-				if (selectedVersionOption) {
+			if (selectedOtherCadOption && selectedOtherCadOption.value) {
+				if (versionOption && versionOption.length > 0) {
+					if (selectedVersionOption && selectedVersionOption.value) {
+						return true;
+					}
+				}
+				if (versionOption && versionOption.length < 1) {
 					return true;
 				}
-			} else {
-				return true;
 			}
 		} else {
-			if (versionOptions && versionOptions?.length > 0) {
-				if (selectedVersionOption) {
+			if (versionOption && versionOption.length > 0) {
+				if (selectedVersionOption && selectedVersionOption.value) {
 					return true;
 				}
-			} else {
+			}
+			if (versionOption && versionOption.length < 1) {
 				return true;
 			}
 		}
+
 		return false;
 	};
 

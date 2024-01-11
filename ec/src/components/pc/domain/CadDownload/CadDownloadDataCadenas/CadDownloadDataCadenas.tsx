@@ -22,6 +22,7 @@ type Props = {
 	brandCode: string;
 	seriesCode: string;
 	onResolving: (value: boolean) => void;
+	onClose: () =>void;
 };
 
 /** Cad Download Data Cadenas */
@@ -33,6 +34,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 	brandCode,
 	seriesCode,
 	onResolving,
+	onClose,
 }) => {
 	const [t] = useTranslation();
 	const {
@@ -43,7 +45,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 		resolveRef,
 		resolveIFrameName,
 		generateIFrameName,
-		selectedCadDataFormat,
+		fixedCadOption,
 		handleChangeFormat,
 		handleGenerateData,
 		handleLoadGenerate,
@@ -84,19 +86,12 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 							<a>CAD 파일형식 전체보기</a>
 						</div>
 						<div className={styles.cadLine}></div>
-
 						<CadenasFormatSelect
 							cadData={cadData}
 							onChange={handleChangeFormat}
 						/>
 						<div className={styles.cadLine}></div>
-
-						<CadDownloadProgressArea selectedCad={selectedCadDataFormat} />
-
-						{/* <CadenasFormatSelect
-							cadData={cadData}
-							onChange={handleChangeFormat}
-						/> */}
+						<CadDownloadProgressArea selectedCad={fixedCadOption} onClose={onClose} />
 					</>
 				)}
 			</>

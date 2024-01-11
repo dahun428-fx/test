@@ -72,6 +72,11 @@ export const CadDownLoadButton: React.VFC<Props> = ({
 		}, [authenticating])
 	);
 
+	const handleOnCloseModal = () => {
+		console.log('handleOnCloseModal')
+		setIsShowCadDownload(false);
+	}
+
 	return (
 		<div className={classNames(styles.container, className)} ref={ref}>
 			<Button
@@ -100,6 +105,7 @@ export const CadDownLoadButton: React.VFC<Props> = ({
 					position={dropdownPosition}
 					onAuthenticating={setAuthenticating}
 					onCancelLogin={() => setIsShowCadDownload(false)}
+					onClose={handleOnCloseModal}
 				/>
 			)}
 		</div>

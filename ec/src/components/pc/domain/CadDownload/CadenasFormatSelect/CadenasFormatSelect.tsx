@@ -39,10 +39,6 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 			},
 			isFixedCadOption()
 		);
-		// console.log('isFixedCadOption : ', isFixedCadOption());
-		// console.log('selectedCadOption : ', selectedCadOption);
-		// console.log('selectedOtherCadOption : ', selectedOtherCadOption);
-		// console.log('selectedVersionOption : ', selectedVersionOption);
 	}, [
 		onChange,
 		selectedCadOption,

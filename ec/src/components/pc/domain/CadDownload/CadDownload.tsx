@@ -23,6 +23,7 @@ type Props = {
 	position: DropdownPosition;
 	onAuthenticating: (status: boolean) => void;
 	onCancelLogin: () => void;
+	onClose: ()=> void;
 };
 
 /** Cad download */
@@ -39,6 +40,7 @@ export const CadDownload: FC<Props> = ({
 	position,
 	onAuthenticating,
 	onCancelLogin,
+	onClose,
 }) => {
 	const {
 		loadingTermsOfUse,
@@ -98,6 +100,7 @@ export const CadDownload: FC<Props> = ({
 					brandName={brandName}
 					seriesName={seriesName}
 					seriesImage={seriesImage}
+					onClose={onClose}
 				/>
 			);
 		}

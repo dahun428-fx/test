@@ -271,3 +271,18 @@ export function addCadDownloadStackItem(item: CadDownloadStackItem) {
 		})
 	);
 }
+/**
+ * Adding Cad download stack items
+ */
+export function addCadDownloadStackItems(items: CadDownloadStackItem[]) {
+	const stack = getCadDownloadStack();
+	localStorage.setItem(
+		STORAGE_KEY,
+		JSON.stringify({
+			...stack,
+			items: [...items, ...stack.items],
+			len: stack.len + items.length,
+			show: true,
+		})
+	);
+}

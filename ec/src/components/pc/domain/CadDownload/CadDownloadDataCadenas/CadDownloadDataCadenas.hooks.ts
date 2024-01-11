@@ -64,7 +64,7 @@ export const useCadDownloadDataCadenas = ({
 	const resolveRef = useRef<HTMLIFrameElement>(null);
 	const generateRef = useRef<HTMLIFrameElement>(null);
 	const [selectedOption, setSelectedOption] = useState<SelectedOption>();
-	const [selectedCadDataFormat, setSelectedCadDataFormat] =
+	const [fixedCadOption, setFixedCadOption] =
 		useState<SelectedCadDataFormat | null>(null);
 	const dispatch = useDispatch();
 
@@ -74,12 +74,16 @@ export const useCadDownloadDataCadenas = ({
 		(option: SelectedOption, isFixed: boolean) => {
 			setIsDisableGenerate(false);
 			setSelectedOption(option);
-			selectedCadOption(option, isFixed);
+			selectedFixedOption(option, isFixed);
 		},
 		[]
 	);
 
-	const selectedCadOption = (option: SelectedOption, isFixed: boolean) => {
+	const handleCadDownload = (cadDownloadList: SelectedCadDataFormat[]) => {
+		console.log('handle cad download => ', cadDownloadList);
+	};
+
+	const selectedFixedOption = (option: SelectedOption, isFixed: boolean) => {
 		if (isFixed) {
 			const formatListByValueOrFormat = getFormatListByValueOrFormat(
 				cadData.fileTypeList
@@ -89,10 +93,9 @@ export const useCadDownloadDataCadenas = ({
 				formatListByValueOrFormat
 			);
 			const selected = getSelectedCadOption(option, versionOption);
-			console.log('selected =============> ', selected);
-			setSelectedCadDataFormat(selected);
+			setFixedCadOption(selected);
 		} else {
-			setSelectedCadDataFormat(null);
+			setFixedCadOption(null);
 		}
 	};
 
@@ -307,6 +310,6 @@ export const useCadDownloadDataCadenas = ({
 		handleLoadResolve,
 		handleGenerateData,
 		handleChangeFormat,
-		selectedCadDataFormat,
+		fixedCadOption,
 	};
 };

@@ -21,6 +21,7 @@ type Props = {
 	brandName: string;
 	seriesName: string;
 	seriesImage?: string;
+	onClose: () => void;
 };
 
 /** Cad download data */
@@ -34,6 +35,7 @@ export const CadDownloadData: FC<Props> = ({
 	brandName,
 	seriesName,
 	seriesImage,
+	onClose,
 }) => {
 	const [t] = useTranslation();
 	const { cadData, cadDynamic, loading } = useCadDownloadData({
@@ -88,6 +90,7 @@ export const CadDownloadData: FC<Props> = ({
 							brandCode={brandCode}
 							seriesCode={seriesCode}
 							onResolving={setResolving}
+							onClose={onClose}
 						/>
 					)}
 					{cadData.cadSiteType === CadSiteType.WEB2CAD && (
