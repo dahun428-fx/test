@@ -11,6 +11,7 @@ import useOuterClick from '@/hooks/ui/useOuterClick';
 import { ectLogger } from '@/logs/ectLogger';
 import { Flag } from '@/models/api/Flag';
 import { CadDownloadButtonType } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
+import { useStackBalloon } from '@/components/pc/layouts/footers/StackBalloon/StackBalloon.hooks';
 
 type Props = {
 	seriesCode: string;
@@ -47,6 +48,8 @@ export const CadDownLoadButton: React.VFC<Props> = ({
 	const [authenticating, setAuthenticating] = useState(false);
 	const ref = useRef(null);
 
+	const { setShowsStatus } = useStackBalloon();
+
 	const handleOnClick = () => {
 		if (cadDownloadButtonType === CadDownloadButtonType.PRE_ON) {
 			return;
@@ -59,7 +62,7 @@ export const CadDownLoadButton: React.VFC<Props> = ({
 				brandCode,
 			});
 		}
-
+		setShowsStatus(false);
 		setIsShowCadDownload(prev => !prev);
 	};
 
@@ -73,9 +76,9 @@ export const CadDownLoadButton: React.VFC<Props> = ({
 	);
 
 	const handleOnCloseModal = () => {
-		console.log('handleOnCloseModal')
+		console.log('handleOnCloseModal');
 		setIsShowCadDownload(false);
-	}
+	};
 
 	return (
 		<div className={classNames(styles.container, className)} ref={ref}>

@@ -62,30 +62,6 @@ export const useStackBalloon = () => {
 	const dispatch = useDispatch();
 	const { getCadenasFileUrl, cancel: cancelTimer } = useGetCadenasFileUrl();
 
-	const updateCheckOnStackStatus = useCallback(
-		(item: CadDownloadStackItem[]) => {
-			const itemIds = item.map(item => item.id);
-			let itemList = cadDownloadStack.items.map(item => {
-				if (itemIds.includes(item.id)) {
-					return {
-						...item,
-						checkOnStack: true,
-					};
-				} else {
-					return {
-						...item,
-						checkOnStack: false,
-					};
-				}
-			});
-			updateCadDownloadState({
-				...cadDownloadStack,
-				items: itemList,
-			});
-		},
-		[cadDownloadStack]
-	);
-
 	/**
 	 * footer stack open or close function
 	 */
@@ -429,6 +405,5 @@ export const useStackBalloon = () => {
 		showLoginModal,
 		showMessage,
 		cancelDownload,
-		updateCheckOnStackStatus,
 	};
 };

@@ -13,7 +13,9 @@ import { useSelector } from '@/store/hooks';
 import { selectUserPermissions } from '@/store/modules/auth';
 import {
 	addItemOperation,
+	updateItemOperation,
 	updateShowsStatusOperation,
+	updateTabDoneStatusOperation,
 } from '@/store/modules/common/stack';
 import { assertNotNull } from '@/utils/assertions';
 import {
@@ -34,6 +36,7 @@ import {
 	CadDownloadStatus,
 	SelectedCadDataFormat,
 } from '@/models/localStorage/CadDownloadStack';
+import { updateCadDownloadStackItem } from '@/services/localStorage/cadDownloadStack';
 
 const resolveIFrameName = 'cadenas-download-resolve-iframe';
 const generateIFrameName = 'cadenas-download-generate-iframe';
@@ -67,7 +70,6 @@ export const useCadDownloadDataCadenas = ({
 	const [mident, setMident] = useState<string | null>(null);
 	const resolveRef = useRef<HTMLIFrameElement>(null);
 	const generateRef = useRef<HTMLIFrameElement>(null);
-	const generateIdx = useRef<number>(0);
 	const [selectedOption, setSelectedOption] = useState<SelectedOption>();
 	const [fixedCadOption, setFixedCadOption] =
 		useState<SelectedCadDataFormat | null>(null);
@@ -164,6 +166,11 @@ export const useCadDownloadDataCadenas = ({
 								checkOnStack: true,
 							});
 							updateShowsStatusOperation(dispatch)(true);
+							updateTabDoneStatusOperation(dispatch)(false);
+							setTimeout(() => {
+								updateCadDownloadStackItem({ id: idx, checkOnStack: false });
+								updateItemOperation(dispatch)({ id: idx, checkOnStack: false });
+							}, 500);
 						}
 					} else {
 						setErrorState('unavailable-part-number-error');
@@ -199,11 +206,6 @@ export const useCadDownloadDataCadenas = ({
 				generateCad(element, 'putsth');
 			});
 		}
-
-		// if (!!selectedCadDataList && selectedCadDataList.length > 0) {
-		// 	let data = selectedCadDataList[0];
-		// 	generateCad(data, 'putsth');
-		// }
 	};
 
 	const handleGenerateData = () => {

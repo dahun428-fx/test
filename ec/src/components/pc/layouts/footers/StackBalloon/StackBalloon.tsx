@@ -21,7 +21,6 @@ type Props = {
 	pendingList: CadDownloadStackItem[];
 	checkedDoneCadDownloadItems: Set<CadDownloadStackItem>;
 	checkedPendingCadDownloadItems: Set<CadDownloadStackItem>;
-	refreshPendingCadItem: MutableRefObject<boolean>;
 	handleSelectDoneItem: (cadDownloadDoneItem: CadDownloadStackItem) => void;
 	handleSelectPendingItem: (
 		cadDownloadPendingItem: CadDownloadStackItem
@@ -36,7 +35,6 @@ export const StackBalloon: React.FC<Props> = ({
 	pendingList,
 	checkedDoneCadDownloadItems,
 	checkedPendingCadDownloadItems,
-	refreshPendingCadItem,
 	handleSelectDoneItem,
 	handleSelectPendingItem,
 	handleSelectAllItem,
@@ -56,7 +54,6 @@ export const StackBalloon: React.FC<Props> = ({
 		showLoginModal,
 		showMessage,
 		cancelDownload,
-		updateCheckOnStackStatus,
 	} = useStackBalloon();
 
 	const [t] = useTranslation();
@@ -127,14 +124,12 @@ export const StackBalloon: React.FC<Props> = ({
 				return false;
 			}
 			await cadDownload(Array.from(checkedPendingCadDownloadItems));
-			refreshPendingCadItem.current = true;
 		}
 		clearDownloadingItemIds();
 	}, [
 		authenticated,
 		downloadingItemIds,
 		cadDownloadStack,
-		refreshPendingCadItem,
 		clearDownloadingItemIds,
 	]);
 
@@ -184,14 +179,7 @@ export const StackBalloon: React.FC<Props> = ({
 	]);
 
 	useEffect(() => {
-		if (!cadDownloadStack.show) {
-			updateCheckOnStackStatus(Array.from(checkedPendingCadDownloadItems));
-		}
-	}, [cadDownloadStack.show]);
-
-	useEffect(() => {
 		const handleGenerateData = () => {
-			console.log('handleGenerateData');
 			clearDownloadingItemIds();
 			generateCadData();
 		};

@@ -28,7 +28,6 @@ export const StackBalloon: React.FC = () => {
 	const { showMessage } = useMessageModal();
 	const { showConfirm } = useConfirmModal();
 
-	const refreshPendingCadItem = useRef(false);
 	//CadDownloadStatus => done stack cad List
 	//stack reducer 의 stack item 이 변경될 때마다 수행 ( dispatch )
 	const stackDoneList = useMemo(() => {
@@ -200,8 +199,8 @@ export const StackBalloon: React.FC = () => {
 	const showCancelCadDownloadModal = useCancelCadDownloadModal();
 
 	useEffect(() => {
-		if (stack.show && !stack.tabDone && stack.len > 0) {
-			console.log('effect excute');
+		const stackCondition = stack.show && !stack.tabDone && stack.len > 0;
+		if (stackCondition) {
 			const checkedIds = Array.from(checkedPendingCadDownloadItems).map(
 				item => {
 					return item.id;
@@ -217,15 +216,11 @@ export const StackBalloon: React.FC = () => {
 			});
 			setCheckedPendingCadDownloadItems(new Set(items));
 		}
-		if (!stack.show) {
-			console.log('close ====> ', stackPendingList);
-		}
-	}, [stack]);
+	}, [stack.show, stack.items]);
 
 	return (
 		<>
 			<Presenter
-				refreshPendingCadItem={refreshPendingCadItem}
 				handleSelectPendingItem={handleSelectPendingItem}
 				handleSelectDoneItem={handleSelectDoneItem}
 				handleSelectAllItem={handleSelectAllItem}
