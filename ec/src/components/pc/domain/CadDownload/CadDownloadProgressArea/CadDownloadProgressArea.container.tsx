@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 type Props = {
 	selectedCad: SelectedCadDataFormat | null;
 	onClickPutsth: (list: SelectedCadDataFormat[]) => void;
+	onClickDirect: (list: SelectedCadDataFormat[]) => void;
 	onClose: () => void;
 };
 export const CadDownloadProgressArea: FC<Props> = ({
 	selectedCad,
 	onClickPutsth,
+	onClickDirect,
 	onClose,
 }) => {
 	const [selectedItems, setSelectedItems] = useState<
@@ -104,6 +106,13 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		}, 500);
 	}, [selectedItems]);
 
+	const handleDirectDownload = useCallback(() => {
+		if (!!!selectedItems.size) {
+			return;
+		}
+		onClickDirect(Array.from(selectedItems));
+	}, [selectedItems]);
+
 	useEffect(() => {
 		console.log('selectedCad', selectedCad);
 		if (!!selectedCad) {
@@ -132,6 +141,7 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		<>
 			<Presenter
 				handleAddStackPutsth={handleAddStackPutsth}
+				handleDirectDownload={handleDirectDownload}
 				getSelectedCadId={getSelectedCadId}
 				handleClickDelete={handleClickDelete}
 				handleClickAllItem={handleClickAllItem}

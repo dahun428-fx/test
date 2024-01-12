@@ -46,6 +46,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 		handleChangeFormat,
 		handleLoadResolve,
 		handleStackPutsthAdd,
+		handleDirectDownload,
 	} = useCadDownloadDataCadenas({
 		cadData,
 		brandCode,
@@ -98,6 +99,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 						<CadDownloadProgressArea
 							selectedCad={fixedCadOption}
 							onClickPutsth={handleStackPutsthAdd}
+							onClickDirect={handleDirectDownload}
 							onClose={onClose}
 						/>
 					</>

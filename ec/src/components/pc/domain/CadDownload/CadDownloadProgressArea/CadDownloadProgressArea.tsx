@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 type Props = {
 	handleAddStackPutsth: () => void;
+	handleDirectDownload: () => void;
 	handleClickDelete: () => void;
 	handleClickAllItem: () => void;
 	handleClickItem: (item: SelectedCadDataFormat) => void;
@@ -18,6 +19,7 @@ type Props = {
 
 export const CadDownloadProgressArea: FC<Props> = ({
 	handleAddStackPutsth,
+	handleDirectDownload,
 	handleClickDelete,
 	handleClickAllItem,
 	handleClickItem,
@@ -115,6 +117,7 @@ export const CadDownloadProgressArea: FC<Props> = ({
 						styles.direct,
 						selectedTotalCount < 1 ? styles.disable : ''
 					)}
+					onClick={handleDirectDownload}
 				>
 					{t('components.domain.cadDownload.cadDownloadProgressArea.download')}
 				</span>

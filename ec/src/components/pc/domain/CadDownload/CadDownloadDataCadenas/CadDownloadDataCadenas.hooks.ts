@@ -37,6 +37,7 @@ import {
 	SelectedCadDataFormat,
 } from '@/models/localStorage/CadDownloadStack';
 import { updateCadDownloadStackItem } from '@/services/localStorage/cadDownloadStack';
+import dayjs from 'dayjs';
 
 const resolveIFrameName = 'cadenas-download-resolve-iframe';
 const generateIFrameName = 'cadenas-download-generate-iframe';
@@ -164,6 +165,38 @@ export const useCadDownloadDataCadenas = ({
 								seriesName: dynamicCadParams[0].COMMON.SERIES_NAME,
 								seriesCode: dynamicCadParams[0].COMMON.SERIES_CODE,
 								checkOnStack: true,
+								expiry: dayjs().add(1, 'day').valueOf(),
+							});
+							updateShowsStatusOperation(dispatch)(true);
+							updateTabDoneStatusOperation(dispatch)(false);
+							setTimeout(() => {
+								updateCadDownloadStackItem({ id: idx, checkOnStack: false });
+								updateItemOperation(dispatch)({ id: idx, checkOnStack: false });
+							}, 500);
+						} else if (type === 'download') {
+							assertNotNull(dynamicCadParams?.[0]);
+							addItemOperation(dispatch)({
+								url: xmlfile + '?_=' + Date.now(),
+								from: window.location.href,
+								// assertNotNull(cadenasParameterMap) した方が良い？
+								time: cadenasParameterMap?.cadGenerationTime,
+								selected,
+								partNumber,
+								progress: 0,
+								status: 'direct',
+								created: Date.now(),
+								dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
+								fileName: getFileName(partNumber, selected),
+								id: idx,
+								label: getLabel(selected),
+								cadSection: 'PT',
+								cadFilename: '',
+								cadFormat: getCadFormat(selected),
+								cadType: (selected.grp || '2D').toUpperCase(),
+								downloadUrl: '',
+								seriesName: dynamicCadParams[0].COMMON.SERIES_NAME,
+								seriesCode: dynamicCadParams[0].COMMON.SERIES_CODE,
+								checkOnStack: true,
 							});
 							updateShowsStatusOperation(dispatch)(true);
 							updateTabDoneStatusOperation(dispatch)(false);
@@ -197,16 +230,30 @@ export const useCadDownloadDataCadenas = ({
 		});
 	};
 
-	const handleStackPutsthAdd = async (
-		selectedCadDataList: SelectedCadDataFormat[]
-	) => {
-		if (selectedCadDataList.length > 0) {
-			selectedCadDataList.forEach((element, index) => {
-				console.log('handleStackPutsth element ===> ', element);
-				generateCad(element, 'putsth');
-			});
-		}
-	};
+	const handleStackPutsthAdd = useCallback(
+		async (selectedCadDataList: SelectedCadDataFormat[]) => {
+			if (selectedCadDataList.length > 0) {
+				selectedCadDataList.forEach((element, index) => {
+					console.log('handleStackPutsth element ===> ', element);
+					generateCad(element, 'putsth');
+				});
+			}
+		},
+		[generateCad]
+	);
+
+	const handleDirectDownload = useCallback(
+		async (selectedCadDataList: SelectedCadDataFormat[]) => {
+			console.log('direct donwload ====> ', selectedCadDataList);
+			if (selectedCadDataList.length > 0) {
+				selectedCadDataList.forEach((element, index) => {
+					console.log('handleDirectDownload element ===> ', element);
+					generateCad(element, 'download');
+				});
+			}
+		},
+		[generateCad]
+	);
 
 	const handleGenerateData = () => {
 		if (!mident || !cadenasParameterMap) {
@@ -422,6 +469,7 @@ export const useCadDownloadDataCadenas = ({
 		handleGenerateData,
 		handleChangeFormat,
 		handleStackPutsthAdd,
+		handleDirectDownload,
 		fixedCadOption,
 	};
 };

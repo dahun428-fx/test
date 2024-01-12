@@ -47,6 +47,10 @@ export const StackBalloon: React.FC = () => {
 	const [checkedDoneCadDownloadItems, setCheckedDoneCadDownloadItems] =
 		useState<Set<CadDownloadStackItem>>(new Set());
 
+	const [directDownloadCadItems, setDirectDownloadCadItems] = useState<
+		Set<CadDownloadStackItem>
+	>(new Set());
+
 	/**
 	 * 다운로드 대기탭의 CadItem 클릭 이벤트
 	 */

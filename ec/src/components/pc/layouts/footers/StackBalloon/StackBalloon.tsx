@@ -188,6 +188,24 @@ export const StackBalloon: React.FC<Props> = ({
 		return () => Router.events.off('routeChangeComplete', handleGenerateData);
 	}, [generateCadData, cadDownloadStack.items, clearDownloadingItemIds]);
 
+	// useEffect(() => {
+	// 	if (downloadingItemIds.current.size < 1) {
+	// 		console.log('cadDownloadStack.items ===> ', cadDownloadStack.items);
+	// 	}
+	// }, [downloadingItemIds, checkedPendingCadDownloadItems]);
+
+	// useEffect(() => {
+	// 	if (cadDownloadStack.show) {
+	// 		(async () => {
+	// 			const items = cadDownloadStack.items.filter(
+	// 				item => item.status === CadDownloadStatus.Direct
+	// 			);
+	// 			await cadDownload(Array.from(items));
+	// 			console.log('items ===> ', items);
+	// 		})();
+	// 	}
+	// }, [cadDownloadStack.show, cadDownloadStack.items]);
+
 	return (
 		<div>
 			{showsStatus && (

@@ -74,6 +74,7 @@ export interface SelectedCadDataFormat {
 
 const CadDownloadStatus = {
 	Putsth: 'putsth',
+	Direct: 'direct',
 	Pending: 'pending',
 	Done: 'done',
 	Timeout: 'timeout',
