@@ -5,6 +5,7 @@ import { SelectedOption } from '@/models/domain/cad';
 import { Select } from '@/components/pc/ui/controls/select';
 import { useCadenasFormatSelect } from './CadenasFormatSelect.hooks';
 import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -26,6 +27,8 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 		handleSelectOtherCadOption,
 		handleSelectVersionOption,
 	} = useCadenasFormatSelect(cadData);
+
+	const [t] = useTranslation();
 
 	useEffect(() => {
 		if (!selectedCadOption) {
@@ -53,7 +56,11 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 			<table className={styles.selectFileType}>
 				<tbody>
 					<tr>
-						<th>파일형식</th>
+						<th>
+							{t(
+								'components.domain.cadDownload.cadDownloadFormatSelect.fileType'
+							)}
+						</th>
 						<td>
 							<Select
 								needChoiceBlank={true}
@@ -66,7 +73,11 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 					</tr>
 					{selectedCadOption?.value === 'others' && otherCadOptions.length > 0 && (
 						<tr>
-							<th>기타형식</th>
+							<th>
+								{t(
+									'components.domain.cadDownload.cadDownloadFormatSelect.otherType'
+								)}
+							</th>
 
 							<td>
 								<Select
@@ -81,7 +92,11 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 					)}
 					{versionOption && versionOption.length > 0 && (
 						<tr>
-							<th>버전</th>
+							<th>
+								{t(
+									'components.domain.cadDownload.cadDownloadFormatSelect.version'
+								)}
+							</th>
 							<td>
 								<Select
 									needChoiceBlank={true}

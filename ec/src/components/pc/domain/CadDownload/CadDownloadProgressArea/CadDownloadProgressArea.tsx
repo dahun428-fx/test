@@ -2,129 +2,72 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './CadDownloadProgressArea.module.scss';
 import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
-	selectedCad: SelectedCadDataFormat | null;
-	onClickPutsth: (list: SelectedCadDataFormat[]) => void;
-	onClose: () => void;
+	handleAddStackPutsth: () => void;
+	handleClickDelete: () => void;
+	handleClickAllItem: () => void;
+	handleClickItem: (item: SelectedCadDataFormat) => void;
+	getSelectedCadId: (item: SelectedCadDataFormat) => string;
+	handleOnClose: () => void;
+	selectedTotalCount: number;
+	selectedItems: Set<SelectedCadDataFormat>;
+	cadDownloadProgressList: Set<SelectedCadDataFormat>;
 };
 
 export const CadDownloadProgressArea: FC<Props> = ({
-	selectedCad,
-	onClickPutsth,
-	onClose,
+	handleAddStackPutsth,
+	handleClickDelete,
+	handleClickAllItem,
+	handleClickItem,
+	getSelectedCadId,
+	selectedTotalCount,
+	selectedItems,
+	cadDownloadProgressList,
+	handleOnClose,
 }) => {
-	const [selectedItems, setSelectedItems] = useState<
-		Set<SelectedCadDataFormat>
-	>(new Set());
-
-	const [cadDownloadProgressList, setCadDownloadProgressList] = useState<
-		Set<SelectedCadDataFormat>
-	>(new Set());
-
-	const [cadDownloadProgressIdsList, setCadDownloadProgressIdsList] = useState<
-		Set<string>
-	>(new Set());
-
-	useEffect(() => {
-		if (!!selectedCad) {
-			let selectedCadId = getSelectedCadId(selectedCad);
-			if (!cadDownloadProgressIdsList.has(selectedCadId)) {
-				cadDownloadProgressIdsList.add(selectedCadId);
-				setCadDownloadProgressIdsList(new Set(cadDownloadProgressIdsList));
-				cadDownloadProgressList.add(selectedCad);
-				setCadDownloadProgressList(new Set(cadDownloadProgressList));
-				selectedItems.add(selectedCad);
-				setSelectedItems(new Set(selectedItems));
-			}
-		}
-	}, [selectedCad]);
-
-	const handleClickItem = (item: SelectedCadDataFormat) => {
-		const isSelected = selectedItems.has(item);
-		if (isSelected) {
-			selectedItems.delete(item);
-		} else {
-			selectedItems.add(item);
-		}
-		setSelectedItems(new Set(selectedItems));
-	};
-
-	const handleClickAllItem = () => {
-		if (cadDownloadProgressList && cadDownloadProgressList.size > 0) {
-			if (selectedItems.size === cadDownloadProgressList?.size) {
-				setSelectedItems(new Set());
-			} else {
-				setSelectedItems(new Set(cadDownloadProgressList));
-			}
-		}
-	};
-
-	const handleClickDelete = useCallback(() => {
-		if (!cadDownloadProgressList || selectedItems.size === 0) {
-			return;
-		}
-
-		const data = Array.from(cadDownloadProgressList).filter(item => {
-			if (!selectedItems.has(item)) {
-				return item;
-			}
-		});
-
-		setCadDownloadProgressIdsList(
-			new Set(data.map(item => getSelectedCadId(item)))
-		);
-		setCadDownloadProgressList(new Set(data));
-		setSelectedItems(new Set());
-	}, [
-		cadDownloadProgressList,
-		selectedItems,
-		setSelectedItems,
-		setCadDownloadProgressList,
-	]);
-
-	const getSelectedCadId = (item: SelectedCadDataFormat) => {
-		let versionText = !!item.versionText ? ` | ${item.versionText}` : '';
-		if (item.format === 'others') {
-			return `${item.grp} | 기타 | ${item.formatOthersText}${versionText}`;
-		}
-		return `${item.grp} | ${item.formatText}${versionText}`;
-	};
-
-	const handleAddStackPutsth = useCallback(() => {
-		onClickPutsth(Array.from(selectedItems));
-		setTimeout(() => {
-			onClose();
-		}, 500);
-	}, [selectedItems]);
-
-	const startStackPutsth = () => {};
+	const [t] = useTranslation();
 
 	return (
 		<>
 			<div className={styles.progressArea}>
 				<div className={styles.cadPrInfo}>
 					<p className={styles.cadPrTotal}>
-						총{' '}
+						{t(
+							'components.domain.cadDownload.cadDownloadProgressArea.totalPrefix'
+						)}
 						<span className={styles.cadPrTotal}>
 							{cadDownloadProgressList?.size ?? 0}
-						</span>{' '}
-						건
+						</span>
+						{t(
+							'components.domain.cadDownload.cadDownloadProgressArea.totalSuffix'
+						)}
 					</p>
 					<p className={styles.ndrSelCnt}>|</p>
 					<p className={styles.ndrSelCnt}>
 						<span className={styles.cadPrSelectedCnt}>
-							{selectedItems.size}
-						</span>{' '}
-						건 선택
+							{selectedTotalCount}
+						</span>
+						{t(
+							'components.domain.cadDownload.cadDownloadProgressArea.selected'
+						)}
 					</p>
 					<div>
 						<p className={styles.cadSelectAllItem}>
-							<a onClick={handleClickAllItem}>전체 선택</a>
+							<a onClick={handleClickAllItem}>
+								{t(
+									'components.domain.cadDownload.cadDownloadProgressArea.totalSelect'
+								)}
+							</a>
 						</p>
 						<div className={styles.delimiter1}></div>
 						<p className={styles.cadDeleteItem}>
-							<a onClick={handleClickDelete}>삭제</a>
+							<a onClick={handleClickDelete}>
+								{t(
+									'components.domain.cadDownload.cadDownloadProgressArea.delete'
+								)}
+							</a>
 						</p>
 					</div>
 				</div>
@@ -157,29 +100,45 @@ export const CadDownloadProgressArea: FC<Props> = ({
 							})}
 					</ul>
 					{(!cadDownloadProgressList || cadDownloadProgressList.size === 0) && (
-						<p className={styles.mgsNotCad}>CAD 데이터가 없습니다</p>
+						<p className={styles.mgsNotCad}>
+							{t(
+								'components.domain.cadDownload.cadDownloadProgressArea.noCadData'
+							)}
+						</p>
 					)}
 				</div>
 			</div>
 			<div className={styles.btnSection}>
-				<span className={classNames(styles.btnArrow, styles.direct)}>
-					즉시 다운로드
+				<span
+					className={classNames(
+						styles.btnArrow,
+						styles.direct,
+						selectedTotalCount < 1 ? styles.disable : ''
+					)}
+				>
+					{t('components.domain.cadDownload.cadDownloadProgressArea.download')}
 				</span>
 				<span
-					className={classNames(styles.btnArrow, styles.putsth)}
+					className={classNames(
+						styles.btnArrow,
+						styles.putsth,
+						selectedTotalCount < 1 ? styles.disable : ''
+					)}
 					onClick={handleAddStackPutsth}
 				>
-					담기
+					{t('components.domain.cadDownload.cadDownloadProgressArea.putsth')}
 				</span>
 				<span
 					className={classNames(styles.btnClose, styles.selectBtn)}
-					onClick={() => onClose()}
+					onClick={handleOnClose}
 				>
-					닫기
+					{t('components.domain.cadDownload.cadDownloadProgressArea.close')}
 				</span>
 			</div>
 			<ul className={styles.infoList}>
-				<li>담기 유효시간은 24시간입니다.</li>
+				<li>
+					{t('components.domain.cadDownload.cadDownloadProgressArea.notice')}
+				</li>
 			</ul>
 		</>
 	);

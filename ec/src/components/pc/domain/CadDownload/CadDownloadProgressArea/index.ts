@@ -1,1 +1,1 @@
-export { CadDownloadProgressArea } from './CadDownloadProgressArea';
+export { CadDownloadProgressArea } from './CadDownloadProgressArea.container';

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useCadDownloadDataCadenas } from './CadDownloadDataCadenas.hooks';
 import styles from './CadDownloadDataCadenas.module.scss';
 import { CadDownloadError } from '@/components/pc/domain/CadDownload/CadDownloadError';
-import { Button } from '@/components/pc/ui/buttons';
 import { NagiLink } from '@/components/pc/ui/links';
 import { BlockLoader } from '@/components/pc/ui/loaders';
 import { Flag } from '@/models/api/Flag';
@@ -41,14 +40,10 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 		hasCADPermission,
 		errorState,
 		loadingResolve,
-		generateRef,
 		resolveRef,
 		resolveIFrameName,
-		generateIFrameName,
 		fixedCadOption,
 		handleChangeFormat,
-		handleGenerateData,
-		handleLoadGenerate,
 		handleLoadResolve,
 		handleStackPutsthAdd,
 	} = useCadDownloadDataCadenas({
@@ -82,9 +77,17 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 				) : (
 					<>
 						<div className={styles.cadDownProductNo}>
-							<h4>형번</h4>
+							<h4>
+								{t(
+									'components.domain.cadDownload.cadDownloadDataCadenas.partNumber'
+								)}
+							</h4>
 							<p>{partNumber}</p>
-							<a>CAD 파일형식 전체보기</a>
+							<a>
+								{t(
+									'components.domain.cadDownload.cadDownloadDataCadenas.guide'
+								)}
+							</a>
 						</div>
 						<div className={styles.cadLine}></div>
 						<CadenasFormatSelect
@@ -139,7 +142,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 			) : (
 				<div>
 					<h3 className={styles.title}>
-						선택 형번 CAD 다운로드
+						{t('components.domain.cadDownload.cadDownloadDataCadenas.title')}
 						<NagiLink
 							className={styles.buttonHelpIcon}
 							href={url.cadGuide}
@@ -151,13 +154,6 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 					{getContent()}
 				</div>
 			)}
-			{/* <iframe
-				ref={generateRef}
-				name={generateIFrameName}
-				className={styles.resolve}
-				onLoad={handleLoadGenerate}
-				allowFullScreen
-			/> */}
 			<iframe
 				ref={resolveRef}
 				name={resolveIFrameName}
