@@ -1,9 +1,4 @@
-import React, {
-	MutableRefObject,
-	useCallback,
-	useEffect,
-	useMemo,
-} from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useStackBalloon } from './StackBalloon.hooks';
 import styles from './StackBalloon.module.scss';
 import { StackBalloonItems } from './StackBalloonItem';
@@ -59,6 +54,7 @@ export const StackBalloon: React.FC<Props> = ({
 	const [t] = useTranslation();
 
 	const tabDoneStatus = cadDownloadStack.tabDone;
+
 	const handleCancelAndDelete = async () => {
 		//다운로드 중인 경우 stack에 있는 아이템은 선택 / 선택해제 할수 없으므로, 현재 다운로드 중인 item을 대상으로한다.
 		const pendingItems = cadDownloadStack.items.filter(
@@ -197,10 +193,19 @@ export const StackBalloon: React.FC<Props> = ({
 				return item;
 			}
 		});
-		if (directItems && directItems.length > 0) {
-			console.log('stack useEffect condition ====> ', directItems);
-			cadDownload(directItems);
-		}
+		(async () => {
+			if (directItems && directItems.length > 0) {
+				console.log('stack useEffect condition ====> ', directItems);
+				await cadDownload(directItems);
+				const ids = directItems.map(item => item.id);
+				for await (const downloadedId of ids) {
+					if (downloadingItemIds.current.has(downloadedId)) {
+						downloadingItemIds.current.delete(downloadedId);
+					}
+				}
+				console.log('no direct items ==============> ', downloadingItemIds);
+			}
+		})();
 	}, [cadDownloadStack.items]);
 
 	return (
