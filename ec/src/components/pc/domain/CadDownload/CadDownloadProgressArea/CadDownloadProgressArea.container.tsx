@@ -111,6 +111,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 			return;
 		}
 		onClickDirect(Array.from(selectedItems));
+		setTimeout(() => {
+			onClose();
+		}, 500);
 	}, [selectedItems]);
 
 	useEffect(() => {

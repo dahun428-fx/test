@@ -244,7 +244,7 @@ export const useCadDownloadDataCadenas = ({
 
 	const handleDirectDownload = useCallback(
 		async (selectedCadDataList: SelectedCadDataFormat[]) => {
-			console.log('direct donwload ====> ', selectedCadDataList);
+			// console.log('direct donwload ====> ', selectedCadDataList);
 			if (selectedCadDataList.length > 0) {
 				selectedCadDataList.forEach((element, index) => {
 					console.log('handleDirectDownload element ===> ', element);

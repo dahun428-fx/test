@@ -344,7 +344,10 @@ export const useStackBalloon = () => {
 					downloadingItemIds.current.add(item.id);
 
 					//putsth ==> pending start
-					if (item.status === CadDownloadStatus.Putsth) {
+					if (
+						item.status === CadDownloadStatus.Putsth ||
+						item.status === CadDownloadStatus.Direct
+					) {
 						const pendingItem: Partial<CadDownloadStackItem> = {
 							status: CadDownloadStatus.Pending,
 							time: '5',
