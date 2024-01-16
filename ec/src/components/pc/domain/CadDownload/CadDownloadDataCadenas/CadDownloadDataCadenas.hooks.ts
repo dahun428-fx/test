@@ -82,11 +82,18 @@ export const useCadDownloadDataCadenas = ({
 		(option: SelectedOption, isFixed: boolean) => {
 			setIsDisableGenerate(false);
 			setSelectedOption(option);
+
 			selectedFixedOption(option, isFixed);
 		},
 		[]
 	);
 
+	/**
+	 * 자식 컴포넌트 ( CadenasFormatSelect ) 로부터 isFixed 에 대한 boolean 값을 받아,
+	 * true라면, fixedCadOption 에 세팅하여 CadDownloadProgressArea 컴포넌트로 전달하여,
+	 * @param option
+	 * @param isFixed boolean. CadenasFormatSelect isFixedCadOption()
+	 */
 	const selectedFixedOption = (option: SelectedOption, isFixed: boolean) => {
 		if (isFixed) {
 			const formatListByValueOrFormat = getFormatListByValueOrFormat(
@@ -103,22 +110,26 @@ export const useCadDownloadDataCadenas = ({
 		}
 	};
 
+	/**
+	 * 상품 상세의 선택 형번 CAD 다운로드 모달 창에서 담기, 즉시다운로드 버튼 클릭 시
+	 * 실행되는 함수.
+	 * iframe 만들기 -> cad 정보 받기 : api get 통신 -> iframe onload -> store 및 localStorage items 변경
+	 * @param selectedCad SelectedCadDataFormat : 다운로드 할 cad
+	 * @param type putsth : 담기, direct : 즉시다운로드
+	 */
 	const generateCad = async (
 		selectedCad: SelectedCadDataFormat,
-		type: 'putsth' | 'download'
+		type: 'putsth' | 'direct'
 	) => {
 		if (!mident || !cadenasParameterMap) {
 			return;
 		}
 
-		// const idx = generateIdx.current;
-		// generateIdx.current = generateIdx.current + 1;
 		const idx = uuidv4();
 		let selected = selectedCad;
 
 		if (!selected) return;
 
-		// console.log('handle stack putsth ===> ', selected);
 		setCookie(
 			Cookie.CAD_DATA_FORMAT,
 			encodeURIComponent(JSON.stringify(selected))
@@ -130,6 +141,7 @@ export const useCadDownloadDataCadenas = ({
 		iframe.width = '0';
 		iframe.height = '0';
 		iframe.name = `pss_ifDownload${idx}arr`;
+		//iframe on load 시 실행
 		iframe.onload = function () {
 			const iframeWindow = iframe.contentWindow;
 			console.log('handleLoadGenerate iframe', iframeWindow);
@@ -143,6 +155,7 @@ export const useCadDownloadDataCadenas = ({
 					if (xmlfile) {
 						if (type === 'putsth') {
 							assertNotNull(dynamicCadParams?.[0]);
+							//store 및 localStorage 최신화
 							addItemOperation(dispatch)({
 								url: xmlfile + '?_=' + Date.now(),
 								from: window.location.href,
@@ -151,7 +164,7 @@ export const useCadDownloadDataCadenas = ({
 								selected,
 								partNumber,
 								progress: 0,
-								status: 'putsth',
+								status: type, // putsth or direct ==> direct의 경우 CAD 다운로드 모달창에 담길 경우 자동 다운로드
 								created: Date.now(),
 								dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
 								fileName: getFileName(partNumber, selected),
@@ -167,39 +180,11 @@ export const useCadDownloadDataCadenas = ({
 								checkOnStack: true,
 								expiry: dayjs().add(1, 'day').valueOf(),
 							});
+							//CAD 다운로드 모달창 open
 							updateShowsStatusOperation(dispatch)(true);
+							//CAD 다운로드 모달창 '다운로드 대기' 탭 open
 							updateTabDoneStatusOperation(dispatch)(false);
-							setTimeout(() => {
-								updateCadDownloadStackItem({ id: idx, checkOnStack: false });
-								updateItemOperation(dispatch)({ id: idx, checkOnStack: false });
-							}, 500);
-						} else if (type === 'download') {
-							assertNotNull(dynamicCadParams?.[0]);
-							addItemOperation(dispatch)({
-								url: xmlfile + '?_=' + Date.now(),
-								from: window.location.href,
-								// assertNotNull(cadenasParameterMap) した方が良い？
-								time: cadenasParameterMap?.cadGenerationTime,
-								selected,
-								partNumber,
-								progress: 0,
-								status: 'direct',
-								created: Date.now(),
-								dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
-								fileName: getFileName(partNumber, selected),
-								id: idx,
-								label: getLabel(selected),
-								cadSection: 'PT',
-								cadFilename: '',
-								cadFormat: getCadFormat(selected),
-								cadType: (selected.grp || '2D').toUpperCase(),
-								downloadUrl: '',
-								seriesName: dynamicCadParams[0].COMMON.SERIES_NAME,
-								seriesCode: dynamicCadParams[0].COMMON.SERIES_CODE,
-								checkOnStack: true,
-							});
-							updateShowsStatusOperation(dispatch)(true);
-							updateTabDoneStatusOperation(dispatch)(false);
+							//CAD 다운로드 창에 등록 후, localstorage 및 store 에 있는 cad item check (checkOnStack) 를 해제한다.
 							setTimeout(() => {
 								updateCadDownloadStackItem({ id: idx, checkOnStack: false });
 								updateItemOperation(dispatch)({ id: idx, checkOnStack: false });
@@ -213,6 +198,7 @@ export const useCadDownloadDataCadenas = ({
 		};
 		document.body.appendChild(iframe);
 
+		//api 를 통해 받은 정보를 iframe에 추가
 		get({
 			url: cadenasParameterMap.cadenasCgi2PviewUrl,
 			query: {
@@ -228,13 +214,18 @@ export const useCadDownloadDataCadenas = ({
 			},
 			target: iframe.name,
 		});
+
+		// 	aa.events.sendDownloadCadenas();
+		// 	ga.events.downloadCad.cadenas();
 	};
 
+	/**
+	 * 담기 버튼 클릭
+	 */
 	const handleStackPutsthAdd = useCallback(
 		async (selectedCadDataList: SelectedCadDataFormat[]) => {
 			if (selectedCadDataList.length > 0) {
 				selectedCadDataList.forEach((element, index) => {
-					console.log('handleStackPutsth element ===> ', element);
 					generateCad(element, 'putsth');
 				});
 			}
@@ -242,106 +233,18 @@ export const useCadDownloadDataCadenas = ({
 		[generateCad]
 	);
 
+	/**
+	 * 즉시다운로드 버튼 클릭
+	 */
 	const handleDirectDownload = useCallback(
 		async (selectedCadDataList: SelectedCadDataFormat[]) => {
-			// console.log('direct donwload ====> ', selectedCadDataList);
 			if (selectedCadDataList.length > 0) {
 				selectedCadDataList.forEach((element, index) => {
-					console.log('handleDirectDownload element ===> ', element);
-					generateCad(element, 'download');
+					generateCad(element, 'direct');
 				});
 			}
 		},
 		[generateCad]
-	);
-
-	const handleGenerateData = () => {
-		if (!mident || !cadenasParameterMap) {
-			return;
-		}
-
-		const formatListByValueOrFormat = getFormatListByValueOrFormat(
-			cadData.fileTypeList
-		);
-		const versionOption = getVersionOptions(
-			selectedOption?.format,
-			formatListByValueOrFormat
-		);
-		const selected = getSelectedCadOption(selectedOption, versionOption);
-
-		setCookie(
-			Cookie.CAD_DATA_FORMAT,
-			encodeURIComponent(JSON.stringify(selected))
-		);
-
-		ectLogger.cad.generate({ tabName: '15', brandCode, seriesCode });
-
-		setIsDisableGenerate(true);
-
-		get({
-			url: cadenasParameterMap.cadenasCgi2PviewUrl,
-			query: {
-				cgiaction: cadenasParameterMap.cgiaction,
-				downloadflags: cadenasParameterMap.downloadflags,
-				firm: 'misumi',
-				language: cadenasParameterMap.language,
-				format: getCadFormat(selected),
-				part: mident,
-				ok_url: url.cadenasDownloadCallback + '?xmlfile=<%download_xml%>',
-				dxfsettings: cadenasParameterMap.dxfsettings,
-				CombinationView: cadenasParameterMap.CombinationView,
-			},
-			target: generateIFrameName,
-		});
-
-		aa.events.sendDownloadCadenas();
-		ga.events.downloadCad.cadenas();
-	};
-
-	const startDownload = useCallback(
-		(xmlFile: string) => {
-			console.log(
-				'startDownload ===> ',
-				selectedOption?.format,
-				dynamicCadParams?.[0]
-			);
-			assertNotNull(selectedOption?.format);
-			assertNotNull(dynamicCadParams?.[0]);
-
-			const selected = getSelectedCadOption(selectedOption, []);
-
-			addItemOperation(dispatch)({
-				url: xmlFile + '?_=' + Date.now(),
-				from: window.location.href,
-				// assertNotNull(cadenasParameterMap) した方が良い？
-				time: cadenasParameterMap?.cadGenerationTime,
-				selected,
-				partNumber,
-				progress: 0,
-				status: 'pending',
-				created: Date.now(),
-				dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
-				fileName: getFileName(partNumber, selected),
-				id: uuidv4(),
-				label: getLabel(selected),
-				cadSection: 'PT',
-				cadFilename: '',
-				cadFormat: getCadFormat(selected),
-				cadType: (selected.grp || '2D').toUpperCase(),
-				downloadUrl: '',
-				seriesCode: '',
-				seriesName: '',
-			});
-
-			updateShowsStatusOperation(dispatch)(true);
-		},
-		[
-			cadenasParameterMap,
-			dispatch,
-			dynamicCadParams,
-			partNumber,
-			selectedOption,
-		]
 	);
 
 	const handleLoadResolve = () => {
@@ -386,32 +289,6 @@ export const useCadDownloadDataCadenas = ({
 			//   Uncaught DOMException: Blocked a frame with origin "https://xxx" from accessing a cross-origin frame.
 		}
 	};
-
-	const handleLoadGenerate = useCallback(() => {
-		console.log('handleLoadGenerate');
-		try {
-			const iframeWindow = generateRef.current?.contentWindow;
-			console.log('handleLoadGenerate iframe', iframeWindow);
-			if (iframeWindow) {
-				const path = iframeWindow.location.pathname;
-				console.log('handleLoadGenerate iframe path', path);
-				if (path?.includes(url.cadenasDownloadCallbackPath)) {
-					const query = new URLSearchParams(iframeWindow.location.search);
-					const xmlfile = query.get('xmlfile');
-					console.log('xmlfile', xmlfile);
-					if (xmlfile) {
-						startDownload(xmlfile);
-					} else {
-						setErrorState('unavailable-part-number-error');
-					}
-				}
-			}
-		} catch {
-			// noop
-			// - Error example:
-			//   Uncaught DOMException: Blocked a frame with origin "https://xxx" from accessing a cross-origin frame.
-		}
-	}, [startDownload]);
 
 	useEffect(() => {
 		onResolving(loadingResolve);
@@ -464,9 +341,7 @@ export const useCadDownloadDataCadenas = ({
 		resolveRef,
 		resolveIFrameName,
 		generateIFrameName,
-		handleLoadGenerate,
 		handleLoadResolve,
-		handleGenerateData,
 		handleChangeFormat,
 		handleStackPutsthAdd,
 		handleDirectDownload,

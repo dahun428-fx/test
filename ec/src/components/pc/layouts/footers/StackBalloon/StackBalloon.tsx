@@ -55,6 +55,9 @@ export const StackBalloon: React.FC<Props> = ({
 
 	const tabDoneStatus = cadDownloadStack.tabDone;
 
+	/**
+	 * 삭제 버튼 클릭
+	 */
 	const handleCancelAndDelete = async () => {
 		//다운로드 중인 경우 stack에 있는 아이템은 선택 / 선택해제 할수 없으므로, 현재 다운로드 중인 item을 대상으로한다.
 		const pendingItems = cadDownloadStack.items.filter(
@@ -80,6 +83,9 @@ export const StackBalloon: React.FC<Props> = ({
 		clearDownloadingItemIds();
 	};
 
+	/**
+	 * 다운로드 버튼 클릭
+	 */
 	const handleCadDownloadClick = useCallback(async () => {
 		if (!authenticated) {
 			const result = await showLoginModal();
@@ -105,7 +111,6 @@ export const StackBalloon: React.FC<Props> = ({
 					)
 				);
 				// '다운로드 할 데이터를 선택하여 주세요.'
-
 				return false;
 			}
 			await cadDownload(Array.from(checkedDoneCadDownloadItems));
@@ -121,14 +126,11 @@ export const StackBalloon: React.FC<Props> = ({
 			}
 			await cadDownload(Array.from(checkedPendingCadDownloadItems));
 		}
-		clearDownloadingItemIds();
-	}, [
-		authenticated,
-		downloadingItemIds,
-		cadDownloadStack,
-		clearDownloadingItemIds,
-	]);
+	}, [authenticated, downloadingItemIds, cadDownloadStack]);
 
+	/**
+	 * 다운로드 버튼 상태 변경
+	 */
 	const cadDownloadButton = useMemo(() => {
 		const hasPendingItem =
 			Array.from(checkedPendingCadDownloadItems).filter(
@@ -174,6 +176,9 @@ export const StackBalloon: React.FC<Props> = ({
 		downloadingItemIds,
 	]);
 
+	/**
+	 * 페이지 변경시 cad 데이터 불러오기
+	 */
 	useEffect(() => {
 		const handleGenerateData = () => {
 			clearDownloadingItemIds();
@@ -184,26 +189,21 @@ export const StackBalloon: React.FC<Props> = ({
 		return () => Router.events.off('routeChangeComplete', handleGenerateData);
 	}, [generateCadData, cadDownloadStack.items, clearDownloadingItemIds]);
 
+	/**
+	 * '즉시 다운로드' 버튼 클릭 시 'direct' 상태 인 cad 즉시다운로드 수행
+	 */
 	useEffect(() => {
 		if (!cadDownloadStack.show || cadDownloadStack.items.length < 1) {
 			return;
 		}
-		const directItems = cadDownloadStack.items.filter(item => {
-			if (item.status === CadDownloadStatus.Direct) {
-				return item;
-			}
-		});
 		(async () => {
-			if (directItems && directItems.length > 0) {
-				console.log('stack useEffect condition ====> ', directItems);
-				await cadDownload(directItems);
-				const ids = directItems.map(item => item.id);
-				for await (const downloadedId of ids) {
-					if (downloadingItemIds.current.has(downloadedId)) {
-						downloadingItemIds.current.delete(downloadedId);
-					}
+			const directItems = cadDownloadStack.items.filter(item => {
+				if (item.status === CadDownloadStatus.Direct) {
+					return item;
 				}
-				console.log('no direct items ==============> ', downloadingItemIds);
+			});
+			if (directItems && directItems.length > 0) {
+				await cadDownload(directItems);
 			}
 		})();
 	}, [cadDownloadStack.items]);

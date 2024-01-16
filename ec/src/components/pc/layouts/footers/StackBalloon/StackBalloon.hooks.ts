@@ -199,6 +199,8 @@ export const useStackBalloon = () => {
 				updateCadDownloadStackItem({ id: item.id, ...updateItem });
 				updateItemOperation(dispatch)({ id: item.id, ...updateItem });
 			}
+			//다운로드 완료시 다운로드 중인 id 삭제
+			downloadingItemIds.current.delete(item.id);
 		},
 		[dispatch, getCadenasFileUrl]
 	);
@@ -312,6 +314,8 @@ export const useStackBalloon = () => {
 					}
 				}
 			}
+			//다운로드 완료시 다운로드 중인 id 삭제
+			downloadingItemIds.current.delete(item.id);
 		},
 		[
 			cadDownloadStack,
@@ -352,6 +356,7 @@ export const useStackBalloon = () => {
 							status: CadDownloadStatus.Pending,
 							time: '5',
 						};
+						//CadDownloadStatus Change in localStorage and store (putsth | cad direct ===> pending)
 						updateCadDownloadStackItem({ id: item.id, ...pendingItem });
 						updateItemOperation(dispatch)({ id: item.id, ...pendingItem });
 					}

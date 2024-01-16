@@ -31,6 +31,10 @@ export const CadDownloadProgressArea: FC<Props> = ({
 
 	const [t] = useTranslation();
 
+	/**
+	 * 선택한 cad id 설정 ex) 2D | DWF | V5.5, ASCII
+	 * @param item SelectedCadDataFormat : cad format
+	 */
 	const getSelectedCadId = (item: SelectedCadDataFormat) => {
 		let versionText = !!item.versionText ? ` | ${item.versionText}` : '';
 		if (item.format === 'others') {
@@ -53,6 +57,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		);
 	};
 
+	/**
+	 * 선택 형번 CAD 다운로드 모달 창에서 cad 선택
+	 */
 	const handleClickItem = (item: SelectedCadDataFormat) => {
 		const isSelected = selectedItems.has(item);
 		if (isSelected) {
@@ -63,6 +70,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		setSelectedItems(new Set(selectedItems));
 	};
 
+	/**
+	 * 선택 형번 CAD 다운로드 모달 창에서 '전체선택' 버튼 클릭
+	 */
 	const handleClickAllItem = () => {
 		if (cadDownloadProgressList && cadDownloadProgressList.size > 0) {
 			if (selectedItems.size === cadDownloadProgressList?.size) {
@@ -73,6 +83,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		}
 	};
 
+	/**
+	 * 선택 형번 CAD 다운로드 모달 창에서 '삭제' 버튼 클릭
+	 */
 	const handleClickDelete = useCallback(() => {
 		if (!cadDownloadProgressList || selectedItems.size === 0) {
 			return;
@@ -96,6 +109,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		setCadDownloadProgressList,
 	]);
 
+	/**
+	 * 담기 버튼 클릭
+	 */
 	const handleAddStackPutsth = useCallback(() => {
 		if (!!!selectedItems.size) {
 			return;
@@ -106,6 +122,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		}, 500);
 	}, [selectedItems]);
 
+	/**
+	 * 즉시다운로드 버튼 클릭
+	 */
 	const handleDirectDownload = useCallback(() => {
 		if (!!!selectedItems.size) {
 			return;
@@ -117,21 +136,30 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	}, [selectedItems]);
 
 	useEffect(() => {
-		console.log('selectedCad', selectedCad);
 		if (!!selectedCad) {
+			//selectedCad: SelectedOption ----> id : string
 			let selectedCadId = getSelectedCadId(selectedCad);
 			if (!cadDownloadProgressIdsList.has(selectedCadId)) {
+				//중복 방지를 위해 이미 선택 형번 CAD 다운로드 모달창에 출력된 cad는 추가하지 않음
+				//id 값으로 비교
 				cadDownloadProgressIdsList.add(selectedCadId);
 				setCadDownloadProgressIdsList(new Set(cadDownloadProgressIdsList));
+				//선택 형번 CAD 다운로드 모달 창에 select option 에서 선택한 cad 추가
 				cadDownloadProgressList.add(selectedCad);
 				setCadDownloadProgressList(new Set(cadDownloadProgressList));
+				//모달 창에 출력된 cadDownloadProgressList 중 사용자가 선택한 cad
+				//처음 출력시에는 선택 한 상태로 출력
 				selectedItems.add(selectedCad);
 				setSelectedItems(new Set(selectedItems));
+				//유효한 건 수
 				setSelectedTotalCount(selectedItems.size);
 			}
 		}
 	}, [selectedCad]);
 
+	/**
+	 * 선택 건수 표시
+	 */
 	useEffect(() => {
 		if (selectedItems.size > 0) {
 			setSelectedTotalCount(selectedItems.size);
