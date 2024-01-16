@@ -153,43 +153,41 @@ export const useCadDownloadDataCadenas = ({
 					const xmlfile = query.get('xmlfile');
 					console.log('xmlfile', xmlfile);
 					if (xmlfile) {
-						if (type === 'putsth') {
-							assertNotNull(dynamicCadParams?.[0]);
-							//store 및 localStorage 최신화
-							addItemOperation(dispatch)({
-								url: xmlfile + '?_=' + Date.now(),
-								from: window.location.href,
-								// assertNotNull(cadenasParameterMap) した方が良い？
-								time: cadenasParameterMap?.cadGenerationTime,
-								selected,
-								partNumber,
-								progress: 0,
-								status: type, // putsth or direct ==> direct의 경우 CAD 다운로드 모달창에 담길 경우 자동 다운로드
-								created: Date.now(),
-								dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
-								fileName: getFileName(partNumber, selected),
-								id: idx,
-								label: getLabel(selected),
-								cadSection: 'PT',
-								cadFilename: '',
-								cadFormat: getCadFormat(selected),
-								cadType: (selected.grp || '2D').toUpperCase(),
-								downloadUrl: '',
-								seriesName: dynamicCadParams[0].COMMON.SERIES_NAME,
-								seriesCode: dynamicCadParams[0].COMMON.SERIES_CODE,
-								checkOnStack: true,
-								expiry: dayjs().add(1, 'day').valueOf(),
-							});
-							//CAD 다운로드 모달창 open
-							updateShowsStatusOperation(dispatch)(true);
-							//CAD 다운로드 모달창 '다운로드 대기' 탭 open
-							updateTabDoneStatusOperation(dispatch)(false);
-							//CAD 다운로드 창에 등록 후, localstorage 및 store 에 있는 cad item check (checkOnStack) 를 해제한다.
-							setTimeout(() => {
-								updateCadDownloadStackItem({ id: idx, checkOnStack: false });
-								updateItemOperation(dispatch)({ id: idx, checkOnStack: false });
-							}, 500);
-						}
+						assertNotNull(dynamicCadParams?.[0]);
+						//store 및 localStorage 최신화
+						addItemOperation(dispatch)({
+							url: xmlfile + '?_=' + Date.now(),
+							from: window.location.href,
+							// assertNotNull(cadenasParameterMap) した方が良い？
+							time: cadenasParameterMap?.cadGenerationTime,
+							selected,
+							partNumber,
+							progress: 0,
+							status: type, // putsth or direct ==> direct의 경우 CAD 다운로드 모달창에 담길 경우 자동 다운로드
+							created: Date.now(),
+							dynamicCadModifiedCommon: dynamicCadParams[0].COMMON,
+							fileName: getFileName(partNumber, selected),
+							id: idx,
+							label: getLabel(selected),
+							cadSection: 'PT',
+							cadFilename: '',
+							cadFormat: getCadFormat(selected),
+							cadType: (selected.grp || '2D').toUpperCase(),
+							downloadUrl: '',
+							seriesName: dynamicCadParams[0].COMMON.SERIES_NAME,
+							seriesCode: dynamicCadParams[0].COMMON.SERIES_CODE,
+							checkOnStack: true,
+							expiry: dayjs().add(1, 'day').valueOf(),
+						});
+						//CAD 다운로드 모달창 open
+						updateShowsStatusOperation(dispatch)(true);
+						//CAD 다운로드 모달창 '다운로드 대기' 탭 open
+						updateTabDoneStatusOperation(dispatch)(false);
+						//CAD 다운로드 창에 등록 후, localstorage 및 store 에 있는 cad item check (checkOnStack) 를 해제한다.
+						setTimeout(() => {
+							updateCadDownloadStackItem({ id: idx, checkOnStack: false });
+							updateItemOperation(dispatch)({ id: idx, checkOnStack: false });
+						}, 500);
 					} else {
 						setErrorState('unavailable-part-number-error');
 					}
