@@ -219,15 +219,6 @@ export const StackBalloon: React.FC = () => {
 				}
 			});
 			setCheckedPendingCadDownloadItems(new Set(items));
-			// const directItems = stack.items.filter(item => {
-			// 	if (item.status === CadDownloadStatus.Direct) {
-			// 		return item;
-			// 	}
-			// });
-			// if (directItems && directItems.length > 0) {
-			// 	console.log('stack useEffect condition ====> ', directItems);
-
-			// }
 		}
 	}, [stack.show, stack.items]);
 

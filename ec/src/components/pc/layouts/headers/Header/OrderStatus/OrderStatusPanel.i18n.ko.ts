@@ -17,7 +17,7 @@ export const orderStatusPanel: Translation = {
 	quoteHistoryTitle: '견적이력',
 	quoteSeeMore: '견적이력조회',
 	noQuoteHistory:
-		'견적 이력이 없습니다. </br>견적된 명세서 그대로 주문할 수 있습니다.',
+		'견적 이력이 없습니다. \n견적된 명세서 그대로 주문할 수 있습니다.',
 	quoteDate: '견적일',
 	quoteSlipNumberWithItemCount: '견적번호(명세 수)',
 	totalPrice: '가격',

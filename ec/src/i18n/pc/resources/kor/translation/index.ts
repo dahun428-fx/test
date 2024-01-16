@@ -5,7 +5,7 @@
 //=============================================================================
 // import type 以外でパスに @ を使用してはいけません。i18n-ally の制約により相対パスで記述します。
 //=============================================================================
-import { cadDownload } from '../../../../../components/pc/domain/CadDownload/CadDownload.i18n.en';
+import { cadDownload } from '../../../../../components/pc/domain/CadDownload/CadDownload.i18n.ko'; // change to ko
 import { category as categoryDomain } from '../../../../../components/pc/domain/category/category.i18n.en';
 import { price } from '../../../../../components/pc/domain/price/price.i18n.en';
 import { series } from '../../../../../components/pc/domain/series/series.i18n.en';

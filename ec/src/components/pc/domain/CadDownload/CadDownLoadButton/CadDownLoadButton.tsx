@@ -68,11 +68,18 @@ export const CadDownLoadButton: React.VFC<Props> = ({
 
 	useOuterClick(
 		ref,
-		useCallback(() => {
-			if (!authenticating) {
-				setIsShowCadDownload(false);
-			}
-		}, [authenticating])
+		useCallback(
+			(event: any) => {
+				const isModalClick = event.target?.className.includes('Modal');
+				if (isModalClick) {
+					return false;
+				}
+				if (!authenticating) {
+					setIsShowCadDownload(false);
+				}
+			},
+			[authenticating]
+		)
 	);
 
 	const handleOnCloseModal = () => {

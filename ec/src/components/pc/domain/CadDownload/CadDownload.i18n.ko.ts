@@ -19,8 +19,8 @@ export const cadDownload: Translation = {
 	cadDownloadDataWeb2Cad,
 	cadDownloadError,
 	cadenasFormatSelect,
-	cadDownloadButtonOn: 'CAD Download',
-	cadDownloadButtonOnPre: 'CAD Data unavailable',
+	cadDownloadButtonOn: 'CAD 다운로드',
+	cadDownloadButtonOnPre: 'CAD',
 	cadDataIsNotAvailable:
-		'We are sorry. No CAD data meeting the specified conditions are available.',
+		'죄송합니다. 지정 조건에는 CAD가 준비되어 있지 않습니다.',
 };

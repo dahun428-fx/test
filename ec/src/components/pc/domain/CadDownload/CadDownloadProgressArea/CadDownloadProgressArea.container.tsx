@@ -2,6 +2,7 @@ import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { CadDownloadProgressArea as Presenter } from './CadDownloadProgressArea';
 import { useTranslation } from 'react-i18next';
+import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 
 type Props = {
 	selectedCad: SelectedCadDataFormat | null;
@@ -15,6 +16,8 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	onClickDirect,
 	onClose,
 }) => {
+	const { showMessage } = useMessageModal();
+
 	const [selectedItems, setSelectedItems] = useState<
 		Set<SelectedCadDataFormat>
 	>(new Set());
@@ -88,7 +91,12 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	 */
 	const handleClickDelete = useCallback(() => {
 		if (!cadDownloadProgressList || selectedItems.size === 0) {
-			return;
+			showMessage(
+				t(
+					'components.domain.cadDownload.cadDownloadProgressArea.message.noDelete'
+				)
+			);
+			return false;
 		}
 
 		const data = Array.from(cadDownloadProgressList).filter(item => {
@@ -114,7 +122,12 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	 */
 	const handleAddStackPutsth = useCallback(() => {
 		if (!!!selectedItems.size) {
-			return;
+			showMessage(
+				t(
+					'components.domain.cadDownload.cadDownloadProgressArea.message.noData'
+				)
+			);
+			return false;
 		}
 		onClickPutsth(Array.from(selectedItems));
 		setTimeout(() => {
@@ -127,7 +140,12 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	 */
 	const handleDirectDownload = useCallback(() => {
 		if (!!!selectedItems.size) {
-			return;
+			showMessage(
+				t(
+					'components.domain.cadDownload.cadDownloadProgressArea.message.noData'
+				)
+			);
+			return false;
 		}
 		onClickDirect(Array.from(selectedItems));
 		setTimeout(() => {

@@ -12,6 +12,7 @@ import { getIEVersion } from '@/utils/device';
 import { url } from '@/utils/url';
 import { CadenasFormatSelect } from '../CadenasFormatSelect';
 import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
+import { openSubWindow } from '@/utils/window';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -57,6 +58,11 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 		onResolving,
 	});
 
+	const handleOpenWindow = (event: React.MouseEvent) => {
+		event.preventDefault();
+		openSubWindow(url.cadFormatGuide, '_blank', { width: 990, height: 800 });
+	};
+
 	const getContent = () => {
 		if (Number(getIEVersion()) < 11 && dynamicCadParams?.[0]) {
 			return <CadDownloadError errorType="no-support-browser-error" />;
@@ -84,7 +90,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 								)}
 							</h4>
 							<p>{partNumber}</p>
-							<a>
+							<a onClick={e => handleOpenWindow(e)}>
 								{t(
 									'components.domain.cadDownload.cadDownloadDataCadenas.guide'
 								)}

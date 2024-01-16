@@ -13,4 +13,8 @@ export const cadDownloadProgressArea: Translation = {
 	putsth: '담기',
 	close: '닫기',
 	notice: '담기 유효시간은 24시간입니다.',
+	message: {
+		noData: '데이터를 선택하세요.',
+		noDelete: '삭제할 데이터를 선택하세요.',
+	},
 };
