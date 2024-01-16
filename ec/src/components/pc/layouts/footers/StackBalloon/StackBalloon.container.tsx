@@ -47,15 +47,16 @@ export const StackBalloon: React.FC = () => {
 	const [checkedDoneCadDownloadItems, setCheckedDoneCadDownloadItems] =
 		useState<Set<CadDownloadStackItem>>(new Set());
 
-	const [directDownloadCadItems, setDirectDownloadCadItems] = useState<
-		Set<CadDownloadStackItem>
-	>(new Set());
-
 	/**
 	 * 다운로드 대기탭의 CadItem 클릭 이벤트
 	 */
 	const handleSelectPendingItem = useCallback(
 		(pendingCad: CadDownloadStackItem) => {
+			console.log(
+				'select item =====> ',
+				checkedPendingCadDownloadItems,
+				checkedPendingCadDownloadItems.has(pendingCad)
+			);
 			const isSelected = checkedPendingCadDownloadItems.has(pendingCad);
 			if (isSelected) {
 				checkedPendingCadDownloadItems.delete(pendingCad);
@@ -218,6 +219,7 @@ export const StackBalloon: React.FC = () => {
 					return item;
 				}
 			});
+			console.log('new item ====> ', items);
 			setCheckedPendingCadDownloadItems(new Set(items));
 		}
 	}, [stack.show, stack.items]);

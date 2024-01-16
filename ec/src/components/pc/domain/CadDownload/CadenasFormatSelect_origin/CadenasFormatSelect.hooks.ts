@@ -102,73 +102,8 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 		(option: Option) => {
 			setSelectedCadOption(option);
 		},
-		[
-			// formatListByValueOrFormat,
-			// formatListByValueOrFormatOther,
-			// otherCadOptions,
-			setSelectedCadOption,
-		]
+		[setSelectedCadOption]
 	);
-	// const handleSelectCadOption = useCallback(
-	// 	(option: Option) => {
-	// 		setSelectedCadOption(option);
-	// 		if (option.value !== 'others') {
-	// 			setSelectedOtherCadOption(null);
-
-	// 			const currentSelectedVersionFormat =
-	// 				formatListByValueOrFormat[option.value]?.versionList?.[0];
-
-	// 			if (
-	// 				!currentSelectedVersionFormat ||
-	// 				!currentSelectedVersionFormat.format ||
-	// 				!currentSelectedVersionFormat.label
-	// 			) {
-	// 				setSelectedVersionOption(null);
-	// 				return;
-	// 			}
-
-	// 			setSelectedVersionOption({
-	// 				label: currentSelectedVersionFormat.label,
-	// 				value: currentSelectedVersionFormat.format,
-	// 			});
-	// 			return;
-	// 		}
-
-	// 		if (!otherCadOptions[0]) {
-	// 			setSelectedOtherCadOption(null);
-	// 			setSelectedVersionOption(null);
-	// 			return;
-	// 		}
-
-	// 		setSelectedOtherCadOption(otherCadOptions[0]);
-
-	// 		const currentSelectedVersionFormat =
-	// 			formatListByValueOrFormatOther[otherCadOptions[0].value]
-	// 				?.versionList?.[0];
-
-	// 		if (
-	// 			!currentSelectedVersionFormat ||
-	// 			!currentSelectedVersionFormat.label ||
-	// 			!currentSelectedVersionFormat.format
-	// 		) {
-	// 			setSelectedVersionOption(null);
-	// 			return;
-	// 		}
-
-	// 		setSelectedVersionOption({
-	// 			label: currentSelectedVersionFormat.label,
-	// 			value: currentSelectedVersionFormat.format,
-	// 		});
-	// 	},
-	// 	[
-	// 		formatListByValueOrFormat,
-	// 		formatListByValueOrFormatOther,
-	// 		otherCadOptions,
-	// 		setSelectedCadOption,
-	// 		setSelectedOtherCadOption,
-	// 		setSelectedVersionOption,
-	// 	]
-	// );
 
 	const handleSelectOtherCadOption = useCallback(
 		(option: Option) => {
@@ -208,7 +143,7 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 	useOnMounted(() => {
 		const cadDataFormatCookie = getCookie(Cookie.CAD_DATA_FORMAT);
 		let cadDataFormat: SelectedCadDataFormat | undefined;
-
+		console.log('cadDataFormatCookie====> ', cadDataFormatCookie);
 		if (cadDataFormatCookie) {
 			try {
 				cadDataFormat = JSON.parse(decodeURIComponent(cadDataFormatCookie));
@@ -219,9 +154,9 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 		const otherFormat = getDefaultOtherFormat(cadData, cadDataFormat);
 		const version = getDefaultVersion(cadData, cadDataFormat);
 
-		// setSelectedCadOption(format);
-		// setSelectedOtherCadOption(otherFormat);
-		// setSelectedVersionOption(version);
+		setSelectedCadOption(format);
+		setSelectedOtherCadOption(otherFormat);
+		setSelectedVersionOption(version);
 	});
 
 	return {

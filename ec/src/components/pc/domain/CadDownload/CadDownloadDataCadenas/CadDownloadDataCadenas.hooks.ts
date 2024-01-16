@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ErrorType } from '@/components/pc/domain/CadDownload/types';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
@@ -67,26 +67,26 @@ export const useCadDownloadDataCadenas = ({
 	const [loadingResolve, startToLoadResolve, endLoadingResolve] =
 		useBoolState(true);
 	const [errorState, setErrorState] = useState<ErrorType | null>(null);
-	const [isDisableGenerate, setIsDisableGenerate] = useState(false);
 	const [mident, setMident] = useState<string | null>(null);
 	const resolveRef = useRef<HTMLIFrameElement>(null);
 	const generateRef = useRef<HTMLIFrameElement>(null);
-	const [selectedOption, setSelectedOption] = useState<SelectedOption>();
 	const [fixedCadOption, setFixedCadOption] =
 		useState<SelectedCadDataFormat | null>(null);
 	const dispatch = useDispatch();
 
 	const cadenasParameterMap = cadData.dynamic3DCadList[0]?.parameterMap;
 
+	//useCallback의 인자를 [] 으로 한번만 함수 호출
 	const handleChangeFormat = useCallback(
 		(option: SelectedOption, isFixed: boolean) => {
-			setIsDisableGenerate(false);
-			setSelectedOption(option);
-
 			selectedFixedOption(option, isFixed);
 		},
 		[]
 	);
+
+	const formatListByValueOrFormat = useMemo(() => {
+		return getFormatListByValueOrFormat(cadData.fileTypeList);
+	}, [cadData.fileTypeList]);
 
 	/**
 	 * 자식 컴포넌트 ( CadenasFormatSelect ) 로부터 isFixed 에 대한 boolean 값을 받아,
@@ -96,9 +96,6 @@ export const useCadDownloadDataCadenas = ({
 	 */
 	const selectedFixedOption = (option: SelectedOption, isFixed: boolean) => {
 		if (isFixed) {
-			const formatListByValueOrFormat = getFormatListByValueOrFormat(
-				cadData.fileTypeList
-			);
 			const versionOption = getVersionOptions(
 				option?.format,
 				formatListByValueOrFormat
@@ -121,19 +118,19 @@ export const useCadDownloadDataCadenas = ({
 		selectedCad: SelectedCadDataFormat,
 		type: 'putsth' | 'direct'
 	) => {
-		if (!mident || !cadenasParameterMap) {
+		if (!mident || !cadenasParameterMap || !selectedCad) {
 			return;
 		}
 
 		const idx = uuidv4();
 		let selected = selectedCad;
 
-		if (!selected) return;
-
 		setCookie(
 			Cookie.CAD_DATA_FORMAT,
 			encodeURIComponent(JSON.stringify(selected))
 		);
+
+		ectLogger.cad.generate({ tabName: '15', brandCode, seriesCode });
 
 		const iframe = document.createElement('iframe');
 		iframe.id = `pss_ifDownload${idx}arr`;
@@ -333,7 +330,6 @@ export const useCadDownloadDataCadenas = ({
 	return {
 		hasCADPermission: userPermissions.hasCadDownloadPermission,
 		errorState,
-		isDisableGenerate,
 		loadingResolve,
 		generateRef,
 		resolveRef,

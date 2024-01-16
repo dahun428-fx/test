@@ -146,3 +146,5 @@ export const CadDownloadProgressArea: FC<Props> = ({
 		</>
 	);
 };
+
+CadDownloadProgressArea.displayName = 'CadDownloadProgressArea';

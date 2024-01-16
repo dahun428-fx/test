@@ -1,5 +1,5 @@
 import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { CadDownloadProgressArea as Presenter } from './CadDownloadProgressArea';
 import { useTranslation } from 'react-i18next';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
@@ -31,6 +31,8 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	>(new Set());
 
 	const [selectedTotalCount, setSelectedTotalCount] = useState(0);
+
+	const isDisableButton = useRef<boolean>(false);
 
 	const [t] = useTranslation();
 
@@ -121,6 +123,7 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	 * 담기 버튼 클릭
 	 */
 	const handleAddStackPutsth = useCallback(() => {
+		if (isDisableButton.current) return false;
 		if (!!!selectedItems.size) {
 			showMessage(
 				t(
@@ -130,7 +133,9 @@ export const CadDownloadProgressArea: FC<Props> = ({
 			return false;
 		}
 		onClickPutsth(Array.from(selectedItems));
+		isDisableButton.current = true;
 		setTimeout(() => {
+			isDisableButton.current = false;
 			onClose();
 		}, 500);
 	}, [selectedItems]);
@@ -139,6 +144,7 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	 * 즉시다운로드 버튼 클릭
 	 */
 	const handleDirectDownload = useCallback(() => {
+		if (isDisableButton.current) return false;
 		if (!!!selectedItems.size) {
 			showMessage(
 				t(
@@ -147,8 +153,10 @@ export const CadDownloadProgressArea: FC<Props> = ({
 			);
 			return false;
 		}
+		isDisableButton.current = true;
 		onClickDirect(Array.from(selectedItems));
 		setTimeout(() => {
+			isDisableButton.current = false;
 			onClose();
 		}, 500);
 	}, [selectedItems]);

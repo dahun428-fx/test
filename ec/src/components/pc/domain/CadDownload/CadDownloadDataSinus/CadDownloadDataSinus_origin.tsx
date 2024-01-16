@@ -10,9 +10,6 @@ import { Flag } from '@/models/api/Flag';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
 import { DynamicParams } from '@/models/domain/cad';
 import { isSinusBrowser } from '@/utils/domain/cad/sinus';
-import { CadDownloadHead } from '../CadDownloadHead';
-import { CadenasFormatSelect } from '../CadenasFormatSelect';
-import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -20,8 +17,6 @@ type Props = {
 	cadDynamic: DynamicParams[] | null;
 	brandCode: string;
 	seriesCode: string;
-	partNumber: string;
-	onClose: () => void;
 };
 
 /** CAD Download Data Sinus */
@@ -31,27 +26,22 @@ export const CadDownloadDataSinus: FC<Props> = ({
 	cadDynamic,
 	brandCode,
 	seriesCode,
-	partNumber,
-	onClose,
 }) => {
 	const [t] = useTranslation();
 
 	const {
-		// groups,
-		// cadOptions,
+		groups,
+		cadOptions,
 		hasCadDownloadPermission,
-		fixedCadOption,
-		// selected,
+		isDisableGenerate,
+		selected,
 		errors,
 		onSelectOption,
-		handleStackPutsthAdd,
-		handleDirectDownload,
-		// generateCadItem,
-	} = useCadDownloadDataSinus(cadData, cadDynamic, brandCode, seriesCode);
+		generateCadItem,
+	} = useCadDownloadDataSinus(cadData, brandCode, seriesCode);
 
 	const parameterMap = cadData.dynamic3DCadList[0]?.parameterMap;
 
-	console.log('fixed ===========> ', fixedCadOption);
 	if (!hasCadDownloadPermission || !cadDynamic?.length || !parameterMap) {
 		return (
 			<>
@@ -78,6 +68,9 @@ export const CadDownloadDataSinus: FC<Props> = ({
 
 	return (
 		<div>
+			<h3 className={styles.title}>
+				{t('components.domain.cadDownload.cadDownloadDataSinus.title')}
+			</h3>
 			{errors ? (
 				<CadDownloadError errorType="not-available-error" />
 			) : Flag.isFalse(completeFlag) || !isSinusBrowser() ? (
@@ -89,17 +82,41 @@ export const CadDownloadDataSinus: FC<Props> = ({
 					}
 				/>
 			) : (
-				<div>
-					<CadDownloadHead partNumber={partNumber} />
-					<div className={styles.cadLine}></div>
-					<CadenasFormatSelect cadData={cadData} onChange={onSelectOption} />
-					<div className={styles.cadLine}></div>
-					<CadDownloadProgressArea
-						selectedCad={fixedCadOption}
-						onClickDirect={handleDirectDownload}
-						onClickPutsth={handleStackPutsthAdd}
-						onClose={onClose}
-					/>
+				<div className={styles.table}>
+					<div className={styles.tableRow}>
+						<div className={classNames([styles.tableCell, styles.label])}>
+							{t(
+								'components.domain.cadDownload.cadDownloadDataSinus.fileFormat'
+							)}
+						</div>
+						<div
+							className={classNames([styles.tableCell, styles.selectWrapper])}
+						>
+							<Select
+								onChange={onSelectOption}
+								groupOrder={groups}
+								items={cadOptions}
+								value={selected.format}
+								className={styles.select}
+							/>
+						</div>
+						<div className={styles.buttonWrapper}>
+							<Button
+								disabled={isDisableGenerate}
+								theme="strong"
+								onClick={() =>
+									generateCadItem({
+										parameterMap,
+										dynamicCadModified: cadDynamic,
+									})
+								}
+							>
+								{t(
+									'components.domain.cadDownload.cadDownloadDataSinus.generateData'
+								)}
+							</Button>
+						</div>
+					</div>
 				</div>
 			)}
 		</div>

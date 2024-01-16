@@ -13,6 +13,7 @@ import { url } from '@/utils/url';
 import { CadenasFormatSelect } from '../CadenasFormatSelect';
 import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
 import { openSubWindow } from '@/utils/window';
+import { CadDownloadHead } from '../CadDownloadHead';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -58,11 +59,6 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 		onResolving,
 	});
 
-	const handleOpenWindow = (event: React.MouseEvent) => {
-		event.preventDefault();
-		openSubWindow(url.cadFormatGuide, '_blank', { width: 990, height: 800 });
-	};
-
 	const getContent = () => {
 		if (Number(getIEVersion()) < 11 && dynamicCadParams?.[0]) {
 			return <CadDownloadError errorType="no-support-browser-error" />;
@@ -83,19 +79,6 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 					</p>
 				) : (
 					<>
-						<div className={styles.cadDownProductNo}>
-							<h4>
-								{t(
-									'components.domain.cadDownload.cadDownloadDataCadenas.partNumber'
-								)}
-							</h4>
-							<p>{partNumber}</p>
-							<a onClick={e => handleOpenWindow(e)}>
-								{t(
-									'components.domain.cadDownload.cadDownloadDataCadenas.guide'
-								)}
-							</a>
-						</div>
 						<div className={styles.cadLine}></div>
 						<CadenasFormatSelect
 							cadData={cadData}
@@ -149,16 +132,7 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 				</div>
 			) : (
 				<div>
-					<h3 className={styles.title}>
-						{t('components.domain.cadDownload.cadDownloadDataCadenas.title')}
-						<NagiLink
-							className={styles.buttonHelpIcon}
-							href={url.cadGuide}
-							target="_blank"
-						>
-							<span className={styles.helpIcon} />
-						</NagiLink>
-					</h3>
+					<CadDownloadHead partNumber={partNumber} />
 					{getContent()}
 				</div>
 			)}

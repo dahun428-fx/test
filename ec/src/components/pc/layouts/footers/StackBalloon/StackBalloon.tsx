@@ -87,6 +87,10 @@ export const StackBalloon: React.FC<Props> = ({
 	 * 다운로드 버튼 클릭
 	 */
 	const handleCadDownloadClick = useCallback(async () => {
+		console.log(
+			'checkedPendingCadDownloadItems =====> ',
+			checkedPendingCadDownloadItems
+		);
 		if (!authenticated) {
 			const result = await showLoginModal();
 			if (result !== 'LOGGED_IN') {
@@ -126,7 +130,12 @@ export const StackBalloon: React.FC<Props> = ({
 			}
 			await cadDownload(Array.from(checkedPendingCadDownloadItems));
 		}
-	}, [authenticated, downloadingItemIds, cadDownloadStack]);
+	}, [
+		authenticated,
+		downloadingItemIds,
+		cadDownloadStack,
+		checkedPendingCadDownloadItems,
+	]);
 
 	/**
 	 * 다운로드 버튼 상태 변경

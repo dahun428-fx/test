@@ -22,11 +22,14 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 
 	const cadOption = useMemo(() => {
 		const data: Option[] = getFormatOptionsFromFileTypes(cadData.fileTypeList);
-		return data.concat({
-			label: '기타',
-			value: 'others',
-			group: '기타',
-		});
+		if (cadData.otherFileTypeList.length > 0) {
+			return data.concat({
+				label: '기타',
+				value: 'others',
+				group: '기타',
+			});
+		}
+		return data;
 	}, [cadData.fileTypeList]);
 
 	const otherCadOptions = useMemo(() => {
@@ -49,7 +52,10 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 	}, [cadData]);
 
 	const groups = useMemo(() => {
-		return [...cadData.fileTypeList.map(list => list.type), '기타'];
+		if (cadData.otherFileTypeList.length > 0) {
+			return [...cadData.fileTypeList.map(list => list.type), '기타'];
+		}
+		return cadData.fileTypeList.map(list => list.type);
 	}, [cadData.fileTypeList]);
 
 	const otherGroups = useMemo(() => {

@@ -1,4 +1,5 @@
 import { cadDownloadDataCadenas } from './CadDownloadDataCadenas/CadDownloadDataCadenas.i18n.ko'; // change to ko
+import { cadDownloadHead } from './CadDownloadHead/CadDownloadHead.i18n.ko'; // change to ko
 import { cadDownloadFormatSelect } from './CadenasFormatSelect/CadenasFormatSelect.i18n.ko'; //change to ko
 import { cadDownloadProgressArea } from './CadDownloadProgressArea/CadDownloadProgressArea.i18n.ko';
 import { cadDownloadDataSinus } from './CadDownloadDataSinus/CadDownloadDataSinus.i18n.en';
@@ -10,6 +11,7 @@ import { cadenasFormatSelect } from './CadenasFormatSelect_origin/CadenasFormatS
 import { Translation } from '@/i18n/types';
 
 export const cadDownload: Translation = {
+	cadDownloadHead,
 	cadDownloadPolicy,
 	cadDownloadDataCadenas,
 	cadDownloadFormatSelect,

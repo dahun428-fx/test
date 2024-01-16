@@ -102,11 +102,13 @@ export const CadDownloadData: FC<Props> = ({
 					)}
 					{cadData.cadSiteType === CadSiteType.SINUS && (
 						<CadDownloadDataSinus
+							partNumber={partNumber}
 							cadData={cadData}
 							cadDynamic={cadDynamic}
 							completeFlag={completeFlag}
 							brandCode={brandCode}
 							seriesCode={seriesCode}
+							onClose={onClose}
 						/>
 					)}
 				</>
