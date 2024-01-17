@@ -9,7 +9,7 @@ import { CadDownloadStatus } from '@/models/localStorage/CadDownloadStack';
 import { CancelCadDownloadResult } from '../CadDownloadStatusBalloon/CancelCadDownloadModal/CancelCadDownloadContent';
 import { url } from '@/utils/url';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type Props = {
 	doneList: CadDownloadStackItem[];
@@ -131,6 +131,7 @@ export const StackBalloon: React.FC<Props> = ({
 		downloadingItemIds,
 		cadDownloadStack,
 		checkedPendingCadDownloadItems,
+		checkedDoneCadDownloadItems,
 	]);
 
 	/**
@@ -248,28 +249,27 @@ export const StackBalloon: React.FC<Props> = ({
 								<div className={styles.listArea}>
 									<div className={styles.info}>
 										<p>
-											{t(
-												'components.ui.layouts.footers.stackBalloon.totalPreffix'
-											)}
-											{/* 총 */}
-											<span>
-												{tabDoneStatus ? doneList.length : pendingList.length}
-											</span>
-											{t(
-												'components.ui.layouts.footers.stackBalloon.totalSuffix'
-											)}
-											{/* 건 */}
+											<Trans
+												i18nKey="components.ui.layouts.footers.stackBalloon.totalCount"
+												count={
+													tabDoneStatus ? doneList.length : pendingList.length
+												}
+											>
+												<span />
+											</Trans>
 										</p>
 										<p>|</p>
 										<p>
-											<span>
-												{tabDoneStatus
-													? checkedDoneCadDownloadItems.size
-													: checkedPendingCadDownloadItems.size}
-											</span>
-											{t(
-												'components.ui.layouts.footers.stackBalloon.choosedSuffix'
-											)}
+											<Trans
+												i18nKey="components.ui.layouts.footers.stackBalloon.choosedCount"
+												count={
+													tabDoneStatus
+														? checkedDoneCadDownloadItems.size
+														: checkedPendingCadDownloadItems.size
+												}
+											>
+												<span />
+											</Trans>
 											{/* 건 선택 */}
 										</p>
 										<div>

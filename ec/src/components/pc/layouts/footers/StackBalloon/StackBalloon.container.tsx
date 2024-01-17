@@ -214,7 +214,6 @@ export const StackBalloon: React.FC = () => {
 					return item;
 				}
 			});
-			console.log('new item ====> ', items);
 			setCheckedPendingCadDownloadItems(new Set(items));
 		}
 	}, [stack.show, stack.items]);

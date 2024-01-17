@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './CadDownloadProgressArea.module.scss';
 import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type Props = {
 	handleAddStackPutsth: () => void;
@@ -36,24 +36,21 @@ export const CadDownloadProgressArea: FC<Props> = ({
 			<div className={styles.progressArea}>
 				<div className={styles.cadPrInfo}>
 					<p className={styles.cadPrTotal}>
-						{t(
-							'components.domain.cadDownload.cadDownloadProgressArea.totalPrefix'
-						)}
-						<span className={styles.cadPrTotal}>
-							{cadDownloadProgressList?.size ?? 0}
-						</span>
-						{t(
-							'components.domain.cadDownload.cadDownloadProgressArea.totalSuffix'
-						)}
+						<Trans
+							i18nKey="components.domain.cadDownload.cadDownloadProgressArea.totalCount"
+							count={cadDownloadProgressList?.size ?? 0}
+						>
+							<span className={styles.cadPrTotal} />
+						</Trans>
 					</p>
 					<p className={styles.ndrSelCnt}>|</p>
 					<p className={styles.ndrSelCnt}>
-						<span className={styles.cadPrSelectedCnt}>
-							{selectedTotalCount}
-						</span>
-						{t(
-							'components.domain.cadDownload.cadDownloadProgressArea.selected'
-						)}
+						<Trans
+							i18nKey="components.domain.cadDownload.cadDownloadProgressArea.selectCount"
+							count={selectedTotalCount}
+						>
+							<span className={styles.cadPrSelectedCnt} />
+						</Trans>
 					</p>
 					<div>
 						<p className={styles.cadSelectAllItem}>

@@ -1,8 +1,13 @@
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import {
+	CadDownloadStatus,
+	SelectedCadDataFormat,
+} from '@/models/localStorage/CadDownloadStack';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CadDownloadProgressArea as Presenter } from './CadDownloadProgressArea';
 import { useTranslation } from 'react-i18next';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { useSelector } from '@/store/hooks';
+import { selectCadDownloadStack } from '@/store/modules/common/stack';
 
 type Props = {
 	selectedCad: SelectedCadDataFormat | null;
@@ -17,6 +22,8 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	onClose,
 }) => {
 	const { showMessage } = useMessageModal();
+
+	const cadDownloadStack = useSelector(selectCadDownloadStack);
 
 	const [selectedItems, setSelectedItems] = useState<
 		Set<SelectedCadDataFormat>
@@ -35,6 +42,16 @@ export const CadDownloadProgressArea: FC<Props> = ({
 	const isDisableButton = useRef<boolean>(false);
 
 	const [t] = useTranslation();
+
+	/**
+	 * CAD 다운로드 30개 이상 CAD 담기 불가 여부 flag
+	 */
+	const maxFlag = useMemo(() => {
+		const pendingCount = cadDownloadStack.items.filter(
+			item => item.status !== CadDownloadStatus.Done
+		).length;
+		return pendingCount + cadDownloadProgressList.size > 29;
+	}, [cadDownloadStack.items, cadDownloadProgressList]);
 
 	/**
 	 * 선택한 cad id 설정 ex) 2D | DWF | V5.5, ASCII
@@ -163,6 +180,14 @@ export const CadDownloadProgressArea: FC<Props> = ({
 
 	useEffect(() => {
 		if (!!selectedCad) {
+			if (maxFlag) {
+				showMessage(
+					t(
+						'components.domain.cadDownload.cadDownloadProgressArea.message.noAdd'
+					)
+				);
+				return;
+			}
 			//selectedCad: SelectedOption ----> id : string
 			let selectedCadId = getSelectedCadId(selectedCad);
 			if (!cadDownloadProgressIdsList.has(selectedCadId)) {

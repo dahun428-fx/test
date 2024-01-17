@@ -6,7 +6,7 @@ import { cadDownloadDataSinus } from './CadDownloadDataSinus/CadDownloadDataSinu
 import { cadDownloadDataWeb2Cad } from './CadDownloadDataWeb2Cad/CadDownloadDataWeb2Cad.i18n.en';
 import { cadDownloadError } from './CadDownloadError.i18n.en';
 import { cadDownloadFixed } from './CadDownloadFixed/CadDownloadFixed.i18n.ko'; //change to ko
-import { cadDownloadPolicy } from './CadDownloadPolicy/CadDownloadPolicy.i18n.en';
+import { cadDownloadPolicy } from './CadDownloadPolicy/CadDownloadPolicy.i18n.ko';
 import { cadenasFormatSelect } from './CadenasFormatSelect_origin/CadenasFormatSelect.i18n.en';
 import { Translation } from '@/i18n/types';
 
