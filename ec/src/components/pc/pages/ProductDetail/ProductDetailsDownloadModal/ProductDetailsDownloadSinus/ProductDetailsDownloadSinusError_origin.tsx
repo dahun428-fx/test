@@ -27,6 +27,11 @@ export const ProductDetailsDownloadSinusError: FC<Props> = ({ error }) => {
 								'pages.productDetail.productDetailsDownloadModal.productDetailsDownloadSinus.error.noSupportBrowser.messageOne'
 							)}
 						</li>
+						<li className={styles.sinusBrowserOnlyItem}>
+							{t(
+								'pages.productDetail.productDetailsDownloadModal.productDetailsDownloadSinus.error.noSupportBrowser.messageTwo'
+							)}
+						</li>
 					</ul>
 				</>
 			);

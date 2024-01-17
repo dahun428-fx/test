@@ -1,6 +1,6 @@
 import { Canceler } from 'axios';
 import { FC } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useProductDetailsDownloadSinus } from './ProductDetailsDownloadSinus.hooks';
 import styles from './ProductDetailsDownloadSinus.module.scss';
 import { ProductDetailsDownloadSinusError } from './ProductDetailsDownloadSinusError';
@@ -9,8 +9,7 @@ import { Option } from '@/components/pc/ui/controls/select/Select';
 import { SelectWithLabel } from '@/components/pc/ui/controls/select/SelectWithLabel';
 import { BlockLoader } from '@/components/pc/ui/loaders';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
-import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
-import { CadenasDownloadProgress } from '../ProductDetailsDownloadCadenas/DownloadProgressCadenas';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack_origin';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -41,8 +40,6 @@ export const ProductDetailsDownloadSinus: FC<Props> = ({
 		onCadDownloadCompleted
 	);
 
-	const cadGenerationTime =
-		cadData.dynamic3DCadList[0]?.parameterMap.cadGenerationTime ?? '5';
 	const handleSelectCadFormat = (option: Option) => {
 		setSelectedCadOption(option);
 	};
@@ -70,20 +67,7 @@ export const ProductDetailsDownloadSinus: FC<Props> = ({
 							'pages.productDetail.productDetailsDownloadModal.productDetailsDownloadSinus.loadingTitle'
 						)}
 					</h4>
-					<Trans
-						i18nKey="pages.productDetail.productDetailsDownloadModal.productDetailsDownloadSinus.loadingMessage"
-						values={{
-							estimatedTime: cadGenerationTime,
-						}}
-					>
-						<br />
-					</Trans>
-					<div className={styles.progressWrapper}>
-						<CadenasDownloadProgress
-							initialProgress={0}
-							stringTime={cadGenerationTime}
-						/>
-					</div>
+					<BlockLoader />
 				</div>
 			)}
 			<div className={styles.buttonWrapper}>

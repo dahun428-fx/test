@@ -1,5 +1,5 @@
 import { productDetailsDownloadCadenas } from './ProductDetailsDownloadCadenas/ProductDetailsDownloadCadenas.i18n.ko'; //change to ko
-import { productDetailsDownloadSinus } from './ProductDetailsDownloadSinus/ProductDetailsDownloadSinus.i18n.en';
+import { productDetailsDownloadSinus } from './ProductDetailsDownloadSinus/ProductDetailsDownloadSinus.i18n.ko'; //change to ko
 import { Translation } from '@/i18n/types';
 
 export const productDetailsDownloadModal: Translation = {
