@@ -52,11 +52,6 @@ export const StackBalloon: React.FC = () => {
 	 */
 	const handleSelectPendingItem = useCallback(
 		(pendingCad: CadDownloadStackItem) => {
-			console.log(
-				'select item =====> ',
-				checkedPendingCadDownloadItems,
-				checkedPendingCadDownloadItems.has(pendingCad)
-			);
 			const isSelected = checkedPendingCadDownloadItems.has(pendingCad);
 			if (isSelected) {
 				checkedPendingCadDownloadItems.delete(pendingCad);

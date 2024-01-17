@@ -37,21 +37,16 @@ export const CadDownloadDataSinus: FC<Props> = ({
 	const [t] = useTranslation();
 
 	const {
-		// groups,
-		// cadOptions,
 		hasCadDownloadPermission,
 		fixedCadOption,
-		// selected,
 		errors,
 		onSelectOption,
 		handleStackPutsthAdd,
 		handleDirectDownload,
-		// generateCadItem,
 	} = useCadDownloadDataSinus(cadData, cadDynamic, brandCode, seriesCode);
 
 	const parameterMap = cadData.dynamic3DCadList[0]?.parameterMap;
 
-	console.log('fixed ===========> ', fixedCadOption);
 	if (!hasCadDownloadPermission || !cadDynamic?.length || !parameterMap) {
 		return (
 			<>

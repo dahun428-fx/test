@@ -342,11 +342,9 @@ export const useStackBalloon = () => {
 				.sort((a, b) => {
 					return b.created - a.created;
 				});
-
 			if (items.length > 0) {
 				for await (const item of items) {
 					downloadingItemIds.current.add(item.id);
-
 					//putsth ==> pending start
 					if (
 						item.status === CadDownloadStatus.Putsth ||

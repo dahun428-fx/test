@@ -68,7 +68,6 @@ export const useCadDownloadDataSinus = (
 	//useCallback의 인자를 [] 으로 한번만 함수 호출
 	const handleSelect = useCallback(
 		(option: SelectedOption, isFixed: boolean) => {
-			console.log('handle select ===> ', isFixed);
 			selectedFixedOption(
 				{
 					group: option.format.group,
@@ -115,14 +114,6 @@ export const useCadDownloadDataSinus = (
 			seriesCode,
 			brandCode,
 		});
-
-		console.log(
-			'genearte Cad ===> ',
-			selectedCad,
-			type,
-			parameterMap,
-			dynamicCadModified
-		);
 
 		// 		aa.events.sendDownloadSinus();
 		// 		ga.events.downloadCad.sinus();
