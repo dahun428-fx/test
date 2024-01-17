@@ -1,5 +1,5 @@
 import { Canceler } from 'axios';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useProductDetailsDownloadSinus } from './ProductDetailsDownloadSinus.hooks';
 import styles from './ProductDetailsDownloadSinus.module.scss';
@@ -7,10 +7,11 @@ import { ProductDetailsDownloadSinusError } from './ProductDetailsDownloadSinusE
 import { Button } from '@/components/pc/ui/buttons';
 import { Option } from '@/components/pc/ui/controls/select/Select';
 import { SelectWithLabel } from '@/components/pc/ui/controls/select/SelectWithLabel';
-import { BlockLoader } from '@/components/pc/ui/loaders';
 import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadResponse';
 import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
 import { CadenasDownloadProgress } from '../ProductDetailsDownloadCadenas/DownloadProgressCadenas';
+import { CadenasFormatSelect } from '@/components/pc/domain/CadDownload/CadenasFormatSelect';
+import { SelectedOption } from '@/models/domain/cad';
 
 type Props = {
 	cadData: DownloadCadResponse;
@@ -43,24 +44,24 @@ export const ProductDetailsDownloadSinus: FC<Props> = ({
 
 	const cadGenerationTime =
 		cadData.dynamic3DCadList[0]?.parameterMap.cadGenerationTime ?? '5';
-	const handleSelectCadFormat = (option: Option) => {
-		setSelectedCadOption(option);
-	};
+	const handleSelectCadFormat = useCallback((option: SelectedOption) => {
+		const { label, value, group } = option.format;
+		setSelectedCadOption({
+			label,
+			value,
+			group,
+		});
+	}, []);
 
 	return (
 		<div>
 			{error ? (
 				<ProductDetailsDownloadSinusError error={error} />
 			) : (
-				<SelectWithLabel
-					label={t(
-						'pages.productDetail.productDetailsDownloadModal.productDetailsDownloadSinus.fileFormatLabel'
-					)}
-					groupOrder={formatInfo.groups}
-					items={formatInfo.cadOptions}
-					value={selected.format}
-					className={styles.selectWrapper}
+				<CadenasFormatSelect
+					cadData={cadData}
 					onChange={handleSelectCadFormat}
+					isDetailsDownload={true}
 				/>
 			)}
 			{loading && (
