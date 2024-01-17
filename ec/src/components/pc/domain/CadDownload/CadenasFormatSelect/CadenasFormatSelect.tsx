@@ -4,15 +4,21 @@ import { DownloadCadResponse } from '@/models/api/msm/ect/cad/DownloadCadRespons
 import { SelectedOption } from '@/models/domain/cad';
 import { Select } from '@/components/pc/ui/controls/select';
 import { useCadenasFormatSelect } from './CadenasFormatSelect.hooks';
-import { CadDownloadProgressArea } from '../CadDownloadProgressArea';
 import { useTranslation } from 'react-i18next';
+import { openSubWindow } from '@/utils/window';
+import { url } from '@/utils/url';
 
 type Props = {
 	cadData: DownloadCadResponse;
+	isDetailsDownload?: boolean;
 	onChange: (selectedOption: SelectedOption, isFixed: boolean) => void;
 };
 
-export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
+export const CadenasFormatSelect: VFC<Props> = ({
+	cadData,
+	isDetailsDownload,
+	onChange,
+}) => {
 	const {
 		cadOption,
 		groups,
@@ -26,7 +32,7 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 		handleSelectCadOption,
 		handleSelectOtherCadOption,
 		handleSelectVersionOption,
-	} = useCadenasFormatSelect(cadData);
+	} = useCadenasFormatSelect(cadData, isDetailsDownload);
 
 	const [t] = useTranslation();
 
@@ -48,6 +54,11 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 		selectedOtherCadOption,
 		selectedVersionOption,
 	]);
+
+	const handleOpenWindow = (event: React.MouseEvent) => {
+		event.preventDefault();
+		openSubWindow(url.cadFormatGuide, '_blank', { width: 990, height: 800 });
+	};
 
 	return (
 		<>
@@ -109,6 +120,15 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 					)}
 				</tbody>
 			</table>
+			{isDetailsDownload && (
+				<div className={styles.linkWrapper}>
+					<a className={styles.seeAllLink} onClick={handleOpenWindow}>
+						{t(
+							'components.domain.cadDownload.cadDownloadFormatSelect.seeAllFormat'
+						)}
+					</a>
+				</div>
+			)}
 		</>
 	);
 };

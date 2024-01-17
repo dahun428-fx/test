@@ -26,3 +26,22 @@
 		}
 	}
 }
+.linkWrapper {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 8px;
+}
+.seeAllLink {
+	color: #004098;
+	font-size: 0.8125rem;
+	text-decoration: none;
+
+	&:link {
+		color: #004098;
+	}
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}

@@ -4,17 +4,25 @@ import {
 	DownloadCadResponse,
 	Format,
 } from '@/models/api/msm/ect/cad/DownloadCadResponse';
+import { SelectedCadDataFormat } from '@/models/localStorage/CadDownloadStack';
 import {
+	getDefaultFormat,
+	getDefaultOtherFormat,
+	getDefaultVersion,
 	getFormatListByValueOrFormat,
 	getFormatOptionsFromFileTypes,
 	getVersionOptions,
 } from '@/utils/cad';
 import { keyBy } from '@/utils/collection';
+import { Cookie, getCookie } from '@/utils/cookie';
 import { selected } from '@/utils/domain/spec';
 import { useCallback, useMemo, useState } from 'react';
 
-export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
-	const [selectedCadOption, setSelectedOption] = useState<Option>();
+export const useCadenasFormatSelect = (
+	cadData: DownloadCadResponse,
+	isDetailsDownload?: boolean
+) => {
+	const [selectedCadOption, setSelectedCadOption] = useState<Option>();
 	const [selectedOtherCadOption, setSelectedOtherCadOption] =
 		useState<Option | null>(null);
 	const [selectedVersionOption, setSelectedVersionOption] =
@@ -94,11 +102,11 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 
 	const handleSelectCadOption = useCallback(
 		(option: Option) => {
-			setSelectedOption(option);
+			setSelectedCadOption(option);
 			setSelectedOtherCadOption(null);
 			setSelectedVersionOption(null);
 		},
-		[setSelectedOption]
+		[setSelectedCadOption]
 	);
 
 	const handleSelectOtherCadOption = useCallback(
@@ -146,6 +154,118 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 		return false;
 	};
 
+	////details download function
+	const handleSelectCadOptionForDetailsDownload = useCallback(
+		(option: Option) => {
+			setSelectedCadOption(option);
+			if (option.value !== 'others') {
+				setSelectedOtherCadOption(null);
+
+				const currentSelectedVersionFormat =
+					formatListByValueOrFormat[option.value]?.versionList?.[0];
+
+				if (
+					!currentSelectedVersionFormat ||
+					!currentSelectedVersionFormat.format ||
+					!currentSelectedVersionFormat.label
+				) {
+					setSelectedVersionOption(null);
+					return;
+				}
+
+				setSelectedVersionOption({
+					label: currentSelectedVersionFormat.label,
+					value: currentSelectedVersionFormat.format,
+				});
+				return;
+			}
+
+			if (!otherCadOptions[0]) {
+				setSelectedOtherCadOption(null);
+				setSelectedVersionOption(null);
+				return;
+			}
+
+			setSelectedOtherCadOption(otherCadOptions[0]);
+
+			const currentSelectedVersionFormat =
+				formatListByValueOrFormatOther[otherCadOptions[0].value]
+					?.versionList?.[0];
+
+			if (
+				!currentSelectedVersionFormat ||
+				!currentSelectedVersionFormat.label ||
+				!currentSelectedVersionFormat.format
+			) {
+				setSelectedVersionOption(null);
+				return;
+			}
+
+			setSelectedVersionOption({
+				label: currentSelectedVersionFormat.label,
+				value: currentSelectedVersionFormat.format,
+			});
+		},
+		[
+			formatListByValueOrFormat,
+			formatListByValueOrFormatOther,
+			otherCadOptions,
+			setSelectedCadOption,
+			setSelectedOtherCadOption,
+			setSelectedVersionOption,
+		]
+	);
+
+	const handleSelectOtherCadOptionForDetailsDownload = useCallback(
+		(option: Option) => {
+			setSelectedOtherCadOption(option);
+
+			const currentSelectedVersionFormat =
+				formatListByValueOrFormatOther[option.value]?.versionList?.[0];
+
+			if (
+				!currentSelectedVersionFormat ||
+				!currentSelectedVersionFormat.label ||
+				!currentSelectedVersionFormat.format
+			) {
+				setSelectedVersionOption(null);
+				return;
+			}
+
+			setSelectedVersionOption({
+				label: currentSelectedVersionFormat.label,
+				value: currentSelectedVersionFormat.format,
+			});
+		},
+		[
+			formatListByValueOrFormatOther,
+			setSelectedOtherCadOption,
+			setSelectedVersionOption,
+		]
+	);
+
+	useOnMounted(() => {
+		console.log('is details download : ', isDetailsDownload);
+		if (isDetailsDownload) {
+			const cadDataFormatCookie = getCookie(Cookie.CAD_DATA_FORMAT);
+			let cadDataFormat: SelectedCadDataFormat | undefined;
+
+			if (cadDataFormatCookie) {
+				try {
+					cadDataFormat = JSON.parse(decodeURIComponent(cadDataFormatCookie));
+				} catch (error) {}
+			}
+
+			const format = getDefaultFormat(cadData, cadDataFormat);
+			const otherFormat = getDefaultOtherFormat(cadData, cadDataFormat);
+			const version = getDefaultVersion(cadData, cadDataFormat);
+
+			setSelectedCadOption(format);
+			setSelectedOtherCadOption(otherFormat);
+			setSelectedVersionOption(version);
+		}
+	});
+
 	return {
 		cadOption,
 		groups,
@@ -156,8 +276,12 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 		otherCadOptions,
 		versionOption,
 		isFixedCadOption,
-		handleSelectCadOption,
-		handleSelectOtherCadOption,
+		handleSelectCadOption: isDetailsDownload
+			? handleSelectCadOptionForDetailsDownload
+			: handleSelectCadOption,
+		handleSelectOtherCadOption: isDetailsDownload
+			? handleSelectOtherCadOptionForDetailsDownload
+			: handleSelectOtherCadOption,
 		handleSelectVersionOption,
 	};
 };

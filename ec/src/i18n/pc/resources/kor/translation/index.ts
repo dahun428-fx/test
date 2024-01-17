@@ -24,7 +24,7 @@ import { category } from '../../../../../components/pc/pages/Category/Category.i
 import { home } from '../../../../../components/pc/pages/Home/Home.i18n.en';
 import { keywordSearch } from '../../../../../components/pc/pages/KeywordSearch/KeywordSearch.i18n.en';
 import { notFound } from '../../../../../components/pc/pages/NotFound/NotFound.i18n.en';
-import { productDetail } from '../../../../../components/pc/pages/ProductDetail/ProductDetail.i18n.en';
+import { productDetail } from '../../../../../components/pc/pages/ProductDetail/ProductDetail.i18n.ko'; // change to ko
 import { sitemap } from '../../../../../components/pc/pages/Sitemap/Sitemap.i18n.en';
 import { techView } from '../../../../../components/pc/pages/TechView/TechView.i18n.en';
 import { maker } from '../../../../../components/pc/pages/maker/maker.i18n.en';
