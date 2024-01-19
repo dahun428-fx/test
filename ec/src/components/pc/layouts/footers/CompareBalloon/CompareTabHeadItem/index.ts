@@ -1,0 +1,1 @@
+export { CompareTabHeadItem } from './CompareTabHeadItem';

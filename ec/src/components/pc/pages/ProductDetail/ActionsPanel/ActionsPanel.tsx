@@ -34,6 +34,7 @@ import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
 import { needsQuote } from '@/utils/domain/price';
 import { digit } from '@/utils/number';
 import { notEmpty, notNull } from '@/utils/predicate';
+import { CompareProductButton } from '../CompareProductButton';
 
 export type ProductAttributes = {
 	completeFlag: Flag;
@@ -290,6 +291,19 @@ export const ActionsPanel: React.FC<Props> = ({
 
 							<div className={styles.actionBox}>
 								<ul className={styles.actionList}>
+									<li>
+										{partNumber && Flag.isTrue(completeFlag) && (
+											<CompareProductButton
+												{...{
+													partNumber,
+													categoryName,
+													seriesCode,
+													brandCode,
+													categoryCodeList,
+												}}
+											/>
+										)}
+									</li>
 									<li>
 										<Button
 											type="submit"

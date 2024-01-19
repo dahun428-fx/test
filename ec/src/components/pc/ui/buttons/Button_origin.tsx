@@ -45,7 +45,6 @@ export const Icons = [
 	'wos-quote',
 	'plus',
 	'minus',
-	'compare',
 	...oldIconList,
 ] as const;
 export type Icon = typeof Icons[number];

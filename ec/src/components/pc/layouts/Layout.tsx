@@ -19,6 +19,7 @@ import { MessageToastController } from '@/components/pc/ui/toasts/MessageToast';
 import { TooltipController } from '@/components/pc/ui/tooltips';
 import { OrderStatusPanel } from './headers/Header/OrderStatus';
 import { StackBalloon } from './footers/StackBalloon';
+import { CompareBalloon } from './footers/CompareBalloon';
 
 const DevTool =
 	process.env.NODE_ENV === 'development' &&
@@ -51,6 +52,7 @@ export const Layout: React.FC = ({ children }) => {
 					</div>
 					<div>
 						<StackBalloon />
+						<CompareBalloon />
 						<Footer />
 						<FloatingBanner />
 					</div>

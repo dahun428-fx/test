@@ -1,0 +1,133 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
+
+$closeBtnImgUnselected: './assets/images/ic_closeBtn3_unselect.png';
+$closeBtnImg: './assets/images/ic_closeBtn3.png';
+
+.ndrEllipsis {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ndrBold {
+	font-family: 'Nanum Gothic', 'Malgun Gothic', Dotum, Arial, sans-serif;
+	font-weight: bold;
+}
+
+.constrast {
+	position: fixed;
+	left: 50%;
+	bottom: 68px;
+	margin-left: -510px;
+	z-index: $z-l-headerWrap;
+	display: block;
+	&.active {
+		display: block;
+	}
+}
+
+.selectPopup {
+	box-sizing: border-box;
+	width: 921px;
+	min-height: 546px;
+	border-radius: 10px;
+	border: 1px solid #d4d4d4;
+	padding: 15px 20px;
+	background-color: #ffffff;
+}
+
+.asideBtnSection {
+	width: 125px;
+	height: 381px;
+	margin-left: 20px;
+	float: left;
+	margin-top: 42px;
+	button {
+		margin-top: 10px;
+		max-width: 125px;
+	}
+	a:hover,
+	a:visited {
+		color: #ffffff;
+		text-decoration: none;
+	}
+}
+
+.titleSection {
+	margin-bottom: 25px;
+	h2 {
+		box-sizing: border-box;
+		width: 100%;
+		height: 35px;
+		font-size: 17px;
+		color: #000000;
+		padding: 6px 13px;
+		background-color: #f3f3f3;
+	}
+}
+
+.tabSection {
+	float: left;
+	width: 733px;
+	min-height: 381px;
+
+	.tabHead {
+		box-sizing: border-box;
+		width: 100%;
+		height: 44px;
+		border-bottom: 2px solid #727587;
+		display: table;
+		table-layout: fixed;
+	}
+}
+.tabHeadItem {
+	display: table-cell;
+	box-sizing: border-box;
+	height: 42px;
+	width: 100%;
+	margin-left: -1px;
+	padding: 7px;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+	text-align: center;
+	font-size: 13px;
+	color: #333333;
+	background-color: #ffffff;
+	cursor: pointer;
+
+	.closeBtn {
+		float: right;
+		width: 15px;
+		height: 15px;
+		cursor: pointer;
+		text-indent: -9999px;
+		margin-top: 8px;
+		margin-right: 1px;
+		background: url($closeBtnImgUnselected) no-repeat;
+	}
+
+	p {
+		padding: 5px;
+	}
+
+	&.on {
+		background-color: #727587;
+		.closeBtn {
+			background: url($closeBtnImg) no-repeat;
+		}
+		p {
+			color: #ffffff;
+		}
+	}
+}
+.btnSection {
+	margin-top: 15px;
+	margin-left: -8px;
+	margin-bottom: 10px;
+	text-align: center;
+	button {
+		margin-left: 8px;
+	}
+}

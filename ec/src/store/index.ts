@@ -8,6 +8,7 @@ import { keywordSearchReducer } from './modules/pages/keywordSearch';
 import { productDetailReducer } from './modules/pages/productDetail';
 import { orderStatusPanelReducer } from './modules/common/orderStatusPanel';
 import { stackReducer } from './modules/common/stack';
+import { compareReducer } from './modules/common/compare';
 
 export const store = configureStore({
 	reducer: {
@@ -23,6 +24,8 @@ export const store = configureStore({
 		// cad Download
 		cadDownload: cadDownloadReducer,
 		stack: stackReducer,
+		// compare
+		compare: compareReducer,
 
 		//orderStatusPanel
 		orderStatusPanel: orderStatusPanelReducer,
