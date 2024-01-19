@@ -4,7 +4,7 @@ import { cadDownloadFormatSelect } from './CadenasFormatSelect/CadenasFormatSele
 import { cadDownloadProgressArea } from './CadDownloadProgressArea/CadDownloadProgressArea.i18n.ko';
 import { cadDownloadDataSinus } from './CadDownloadDataSinus/CadDownloadDataSinus.i18n.en';
 import { cadDownloadDataWeb2Cad } from './CadDownloadDataWeb2Cad/CadDownloadDataWeb2Cad.i18n.en';
-import { cadDownloadError } from './CadDownloadError.i18n.en';
+import { cadDownloadError } from './CadDownloadError.i18n.ko'; // change to ko
 import { cadDownloadFixed } from './CadDownloadFixed/CadDownloadFixed.i18n.ko'; //change to ko
 import { cadDownloadPolicy } from './CadDownloadPolicy/CadDownloadPolicy.i18n.ko';
 import { cadenasFormatSelect } from './CadenasFormatSelect_origin/CadenasFormatSelect.i18n.en';

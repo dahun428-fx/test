@@ -85,7 +85,10 @@ export const CadDownloadDataSinus: FC<Props> = ({
 				/>
 			) : (
 				<div>
-					<CadDownloadHead partNumber={partNumber} />
+					<CadDownloadHead
+						partNumber={partNumber}
+						completeFlag={completeFlag}
+					/>
 					<div className={styles.cadLine}></div>
 					<CadenasFormatSelect cadData={cadData} onChange={onSelectOption} />
 					<div className={styles.cadLine}></div>

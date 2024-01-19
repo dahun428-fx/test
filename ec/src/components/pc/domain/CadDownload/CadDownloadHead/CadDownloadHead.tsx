@@ -4,12 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { NagiLink } from '@/components/pc/ui/links';
 import { url } from '@/utils/url';
 import { openSubWindow } from '@/utils/window';
+import { Flag } from '@/models/api/Flag';
 
 type Props = {
 	partNumber: string;
+	completeFlag: Flag | undefined;
 };
 
-export const CadDownloadHead: FC<Props> = ({ partNumber }) => {
+export const CadDownloadHead: FC<Props> = ({ partNumber, completeFlag }) => {
 	const [t] = useTranslation();
 
 	const handleOpenWindow = (event: React.MouseEvent) => {
@@ -29,13 +31,17 @@ export const CadDownloadHead: FC<Props> = ({ partNumber }) => {
 					<span className={styles.helpIcon} />
 				</NagiLink>
 			</h3>
-			<div className={styles.cadDownProductNo}>
-				<h4>{t('components.domain.cadDownload.cadDownloadHead.partNumber')}</h4>
-				<p>{partNumber}</p>
-				<a onClick={e => handleOpenWindow(e)}>
-					{t('components.domain.cadDownload.cadDownloadHead.guide')}
-				</a>
-			</div>
+			{Flag.isTrue(completeFlag) && (
+				<div className={styles.cadDownProductNo}>
+					<h4>
+						{t('components.domain.cadDownload.cadDownloadHead.partNumber')}
+					</h4>
+					<p>{partNumber}</p>
+					<a onClick={e => handleOpenWindow(e)}>
+						{t('components.domain.cadDownload.cadDownloadHead.guide')}
+					</a>
+				</div>
+			)}
 		</>
 	);
 };

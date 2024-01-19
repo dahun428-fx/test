@@ -132,7 +132,10 @@ export const CadDownloadDataCadenas: VFC<Props> = ({
 				</div>
 			) : (
 				<div>
-					<CadDownloadHead partNumber={partNumber} />
+					<CadDownloadHead
+						partNumber={partNumber}
+						completeFlag={completeFlag}
+					/>
 					{getContent()}
 				</div>
 			)}
