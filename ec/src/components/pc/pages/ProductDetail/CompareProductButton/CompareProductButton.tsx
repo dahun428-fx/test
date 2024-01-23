@@ -1,10 +1,12 @@
 import { Button } from '@/components/pc/ui/buttons';
 import { ModalOpener, ModalProvider } from '@/components/pc/ui/modals';
-import { CompareCookiesItem } from '@/models/localStorage/CompareCookies';
+import { CompareItem } from '@/models/localStorage/Compare';
 import { useSelector } from '@/store/hooks';
 import {
 	addItemOperation,
-	selectCompareCookies,
+	selectCompare,
+	updateCompareOperation,
+	updateShowsCompareBalloonStatusOperation,
 } from '@/store/modules/common/compare';
 import { useDispatch } from 'react-redux';
 import {
@@ -13,7 +15,8 @@ import {
 } from '@/store/modules/pages/productDetail';
 import { getBreadcrumbList } from '@/utils/domain/category';
 import { FC, useEffect, useState } from 'react';
-import { getCompareCookies } from '@/services/localStorage/compare';
+import { getCompare, updateCompare } from '@/services/localStorage/compare';
+import dayjs from 'dayjs';
 
 type Props = {
 	partNumber: string;
@@ -32,27 +35,26 @@ export const CompareProductButton: FC<Props> = ({
 	innerCode,
 	// categoryCodeList,
 }) => {
-	const [compareCookiesList, setCompareCookiesList] = useState<
-		Set<CompareCookiesItem>
-	>(new Set<CompareCookiesItem>());
+	const [compareList, setCompareList] = useState<Set<CompareItem>>(
+		new Set<CompareItem>()
+	);
 
 	const categoryCodeList = useSelector(selectCategoryCodeList);
 	const series = useSelector(selectSeries);
 	const dispatch = useDispatch();
 
-	const compareCookies = useSelector(selectCompareCookies);
+	const compare = useSelector(selectCompare);
 
-	console.log(categoryCodeList);
 	const handleClick = () => {
 		const categoryCode = series.categoryCode;
 		const categoryList = series.categoryList;
-
-		if (!categoryCode || categoryCodeList.length < 1) {
+		const categoryName = series.categoryName;
+		if (!categoryCode || categoryCodeList.length < 1 || !categoryName) {
 			return;
 		}
-
-		const data: CompareCookiesItem = {
+		const data: CompareItem = {
 			categoryCode,
+			categoryName,
 			seriesCode,
 			partNumber,
 			categoryCode1: categoryList[1]?.categoryCode || 'other',
@@ -65,19 +67,39 @@ export const CompareProductButton: FC<Props> = ({
 			categoryName4: categoryList[4]?.categoryName || 'other',
 			categoryCode5: categoryList[5]?.categoryCode || 'other',
 			categoryName5: categoryList[5]?.categoryName || 'other',
-			expire: new Date(Date.now()).toUTCString(),
+			expire: dayjs()
+				.add(1, 'day')
+				.set('hour', 0)
+				.set('minute', 0)
+				.set('second', 0)
+				.toDate()
+				.toUTCString(),
 			isPu: false,
 		};
 
-		if (!compareCookiesList.has(data)) {
+		const foundIndex = Array.from(compareList).findIndex(item => {
+			if (
+				item.seriesCode === data.seriesCode &&
+				item.partNumber === data.partNumber
+			) {
+				return item;
+			}
+		});
+		if (foundIndex < 0) {
 			addItemOperation(dispatch)(data);
-			console.log('compare ======> ', data);
+		} else {
+			updateCompareOperation(dispatch)({
+				...compare,
+				active: data.categoryCode,
+			});
+			updateCompare({ active: data.categoryCode });
 		}
+		updateShowsCompareBalloonStatusOperation(dispatch)(true);
 	};
 
 	useEffect(() => {
-		setCompareCookiesList(new Set(compareCookies.items));
-	}, [compareCookies.items]);
+		setCompareList(new Set(compare.items));
+	}, [compare.items]);
 
 	return (
 		<>

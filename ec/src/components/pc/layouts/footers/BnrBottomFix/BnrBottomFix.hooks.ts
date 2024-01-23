@@ -1,5 +1,10 @@
 import { updateCadDownloadStack } from '@/services/localStorage/cadDownloadStack';
+import { updateCompare } from '@/services/localStorage/compare';
 import { useSelector } from '@/store/hooks';
+import {
+	selectShowCompareBalloon,
+	updateShowsCompareBalloonStatusOperation,
+} from '@/store/modules/common/compare';
 import {
 	selectCadDownloadLength,
 	selectShowCadDownloadBalloon,
@@ -25,5 +30,22 @@ export const useStack = () => {
 		stackShowStatus,
 		stackItemLen,
 		setStackShowStatus,
+	};
+};
+
+export const useCompare = () => {
+	const dispatch = useDispatch();
+
+	const compareShowStatus = useSelector(selectShowCompareBalloon);
+	const setCompareShowStatus = useCallback(
+		(show: boolean) => {
+			updateShowsCompareBalloonStatusOperation(dispatch)(show);
+			updateCompare({ show });
+		},
+		[dispatch]
+	);
+	return {
+		compareShowStatus,
+		setCompareShowStatus,
 	};
 };

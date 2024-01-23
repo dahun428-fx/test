@@ -1,13 +1,18 @@
 import React from 'react';
 import styles from './BnrBottomFix.module.scss';
 import classNames from 'classnames';
-import { useStack } from './BnrBottomFix.hooks';
+import { useCompare, useStack } from './BnrBottomFix.hooks';
 
 export const BnrBottomFix: React.FC = () => {
 	const { stackShowStatus, stackItemLen, setStackShowStatus } = useStack();
+	const { compareShowStatus, setCompareShowStatus } = useCompare();
 
 	const handleClickCadDownloadModal = () => {
 		setStackShowStatus(!stackShowStatus);
+	};
+
+	const handleClickCompareModal = () => {
+		setCompareShowStatus(!compareShowStatus);
 	};
 
 	return (
@@ -24,7 +29,7 @@ export const BnrBottomFix: React.FC = () => {
 									</span>
 								</a>
 							</li>
-							<li>
+							<li onClick={handleClickCompareModal}>
 								<a>
 									<span className={styles.iconCompare}>
 										비교하기<span className={styles.iconCadNumber}>0</span>

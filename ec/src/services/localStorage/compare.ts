@@ -1,76 +1,68 @@
-import {
-	CompareCookies,
-	CompareCookiesItem,
-} from '@/models/localStorage/CompareCookies';
+import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { assertNotNull } from '@/utils/assertions';
 
 const STORAGE_KEY = 'compareCookies';
 
-export const initalCompareCookies: CompareCookies = {
+export const initalCompare: Compare = {
 	items: [],
+	show: false,
 };
 
-export function getCompareCookies(): CompareCookies {
+export function updateCompare(updateCompare: Partial<Omit<Compare, 'items'>>) {
+	const compare = getCompare();
+	localStorage.setItem(
+		STORAGE_KEY,
+		JSON.stringify({ ...compare, ...updateCompare })
+	);
+}
+
+export function getCompare(): Compare {
 	const compare = localStorage.getItem(STORAGE_KEY);
 	if (!compare) {
-		return initalCompareCookies;
+		return initalCompare;
 	}
-	const compareJson: CompareCookies =
-		JSON.parse(compare) || initalCompareCookies;
+	const compareJson: Compare = JSON.parse(compare) || initalCompare;
 	const now = Date.now();
 
 	const compareItems = compareJson.items;
-
 	const validItems = compareItems.filter(
-		item => !item.expire || new Date(item.expire).getTime() > now
+		item => !item.expire || new Date(item.expire).getTime() >= now
 	);
-
 	return {
 		items: validItems,
+		show: compareJson.show,
+		active: compareJson.active,
 	};
 }
 
-// export function getCompareCookiesCategoryList():string[] {
-//     const compare = localStorage.getItem(STORAGE_KEY);
-//     if (!compare) {
-// 		return [];
-// 	}
-//     const compareJson: CompareCookies =
-//     JSON.parse(compare) || initalCompareCookies;
-
-//     const compareItems = compareJson.compareCookies;
-
-//     const compareCategoryList = compareItems.map(item => item.categoryCode)
-// }
-
-export function addCompareItem(item: CompareCookiesItem) {
-	const compare = getCompareCookies();
-
+export function addCompareItem(addItem: CompareItem) {
+	const compare = getCompare();
 	const foundIndex = compare.items.findIndex(item => {
 		if (
-			item.categoryCode === item.categoryCode &&
-			item.seriesCode === item.seriesCode &&
-			item.partNumber === item.partNumber
+			item.seriesCode === addItem.seriesCode &&
+			item.partNumber === addItem.partNumber
 		) {
 			return item;
 		}
 	});
-	if (foundIndex > 0) {
+
+	if (foundIndex !== -1) {
 		return;
 	}
 	localStorage.setItem(
 		STORAGE_KEY,
 		JSON.stringify({
-			items: [item, ...compare.items],
+			items: [addItem, ...compare.items],
+			show: true,
+			active: addItem.categoryCode,
 		})
 	);
 }
 
-export function removeCompareCookieItem(deleteItem: CompareCookiesItem) {
-	const compare = getCompareCookies();
+export function removeCompareItem(deleteItem: CompareItem) {
+	const compare = getCompare();
 	const foundIndex = compare.items.findIndex(item => {
 		if (
-			item.categoryCode === deleteItem.categoryCode &&
 			item.seriesCode === deleteItem.seriesCode &&
 			item.partNumber === deleteItem.partNumber
 		) {
@@ -89,12 +81,13 @@ export function removeCompareCookieItem(deleteItem: CompareCookiesItem) {
 		STORAGE_KEY,
 		JSON.stringify({
 			...compare,
+			active: '',
 		})
 	);
 }
 
-export function removeCompareCookies(categoryCode: string) {
-	const compare = getCompareCookies();
+export function removeCompare(categoryCode: string) {
+	const compare = getCompare();
 
 	const foundIndex = compare.items.findIndex(item => {
 		if (item.categoryCode === item.categoryCode) {
@@ -109,7 +102,9 @@ export function removeCompareCookies(categoryCode: string) {
 	localStorage.setItem(
 		STORAGE_KEY,
 		JSON.stringify({
+			...compare,
 			items: compare.items.filter(item => item.categoryCode !== categoryCode),
+			active: '',
 		})
 	);
 }

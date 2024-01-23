@@ -1,9 +1,12 @@
-export interface CompareCookies {
-	items: CompareCookiesItem[];
+export interface Compare {
+	items: CompareItem[];
+	show: boolean;
+	active?: string;
 }
 
-export interface CompareCookiesItem {
+export interface CompareItem {
 	categoryCode: string;
+	categoryName: string;
 	seriesCode: string;
 	partNumber: string;
 	expire: string;
