@@ -2,7 +2,6 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './CompareBalloon.module.scss';
 import { Button } from '@/components/pc/ui/buttons';
 import { useBoolState } from '@/hooks/state/useBoolState';
-import { CompareTabHeadItem } from './CompareTabHeadItem';
 import { useSelector } from '@/store/hooks';
 import {
 	selectCompare,
@@ -123,44 +122,7 @@ export const CompareBalloon: FC = () => {
 									<div>
 										{/* list */}
 										<div className={styles.tabSection}>
-											{/* <div className={styles.tabHead}> */}
-											{/* {tabHeadList &&
-													tabHeadList.length > 0 &&
-													tabHeadList.map((categoryCode, index) => {
-														return (
-															// <CompareTabHeadItem
-															// 	key={categoryCode}
-															// 	idx={index}
-															// 	activeTab={activeTab}
-															// 	categoryName={getCategoryName(categoryCode)}
-															// 	onClick={()=>handleTabClick(categoryCode)}
-															// />
-															<div
-																key={categoryCode}
-																className={classNames(
-																	styles.tabHeadItem,
-																	categoryCode === activeCategoryCode
-																		? styles.on
-																		: ''
-																)}
-																onClick={() => handleTabClick(categoryCode)}
-															>
-																<div className={styles.closeBtn}>닫기버튼</div>
-																<p
-																	className={classNames(
-																		styles.name,
-																		styles.ndrBold,
-																		styles.ndrEllipsis
-																	)}
-																>
-																	{getCategoryName(categoryCode)}
-																</p>
-															</div>
-														);
-													})} */}
-											{/* </div> */}
 											{/* <OverlayLoader show={loading} /> */}
-											{/* {tabContentList && tabContentList.length > 0 && ( */}
 											<CompareTabContent
 												compare={compare}
 												tabHeads={tabHeadList}
@@ -168,7 +130,6 @@ export const CompareBalloon: FC = () => {
 												activeCategoryCode={activeCategoryCode}
 												onClick={handleTabClick}
 											/>
-											{/* )} */}
 											{/* content */}
 										</div>
 									</div>

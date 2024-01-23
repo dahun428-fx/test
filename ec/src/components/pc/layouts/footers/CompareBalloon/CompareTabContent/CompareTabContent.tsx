@@ -2,6 +2,9 @@ import { FC } from 'react';
 import styles from '../CompareBalloon.module.scss';
 import classNames from 'classnames';
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
+import { pagesPath } from '@/utils/$path';
+import { ProductImage } from '@/components/pc/ui/images/ProductImage';
+import { NagiLink } from '@/components/mobile/ui/links';
 
 type Props = {
 	compare: Compare;
@@ -25,6 +28,13 @@ export const CompareTabContent: FC<Props> = ({
 			compare.items.find(item => item.categoryCode === categoryCode)
 				?.categoryName || ''
 		);
+	};
+
+	const shorteningText = (text: string, length: number) => {
+		if (text.length > length) {
+			text = text.substring(0, length) + '...';
+		}
+		return text;
 	};
 	return (
 		<div>
@@ -83,25 +93,49 @@ export const CompareTabContent: FC<Props> = ({
 					</div>
 					{/* <p>데이터가 없습니다.</p> */}
 					<ul>
-						<li className={styles.pcpItem}>
-							<div className={styles.pcpCloseBtn}></div>
-							<div className={styles.pcpItemTitle}>
-								<p className={styles.ndrBold}>제목</p>
-							</div>
-							<p className={classNames(styles.ndrEllipsis, styles.ndrThin)}>
-								브랜드이름
-							</p>
-							<div className={styles.pcpItemImg}>
-								<span></span>
-							</div>
-							<div
-								className={classNames(styles.pcpModelName, styles.pcpNewWindow)}
-							>
-								<a>
-									<p className={styles.ndrThin}>형번</p>
-								</a>
-							</div>
-						</li>
+						{tabContents && tabContents.length > 0 ? (
+							tabContents.map((item, index) => {
+								const seriesUrl = pagesPath.vona2.detail
+									._seriesCode(item.seriesCode)
+									.$url({ query: { HissuCode: item.partNumber } });
+
+								return (
+									<li className={styles.pcpItem} key={item.partNumber}>
+										<div className={styles.pcpCloseBtn}></div>
+										<div className={styles.pcpItemTitle}>
+											<p className={styles.ndrBold}>
+												{shorteningText(item.seriesName, 48)}
+											</p>
+										</div>
+										<p
+											className={classNames(styles.ndrEllipsis, styles.ndrThin)}
+										>
+											{item.brandName}
+										</p>
+										<div className={styles.pcpItemImg}>
+											<ProductImage
+												imageUrl={item.productImageUrl}
+												preset="t_search_view_a"
+												comment={item.seriesName}
+												size={135}
+											/>
+										</div>
+										<div
+											className={classNames(
+												styles.pcpModelName,
+												styles.pcpNewWindow
+											)}
+										>
+											<NagiLink href={seriesUrl}>
+												<p className={styles.ndrThin}>{item.partNumber}</p>
+											</NagiLink>
+										</div>
+									</li>
+								);
+							})
+						) : (
+							<p>데이터가 없습니다.</p>
+						)}
 					</ul>
 				</div>
 			</div>

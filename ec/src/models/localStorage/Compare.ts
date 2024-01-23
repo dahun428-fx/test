@@ -8,6 +8,10 @@ export interface CompareItem {
 	categoryCode: string;
 	categoryName: string;
 	seriesCode: string;
+	seriesName: string;
+	brandCode: string;
+	brandName: string;
+	productImageUrl: string;
 	partNumber: string;
 	expire: string;
 	categoryCode1?: string;

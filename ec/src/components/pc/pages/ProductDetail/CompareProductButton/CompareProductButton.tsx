@@ -11,6 +11,8 @@ import {
 import { useDispatch } from 'react-redux';
 import {
 	selectCategoryCodeList,
+	selectCompletedPartNumber,
+	selectPartNumber,
 	selectSeries,
 } from '@/store/modules/pages/productDetail';
 import { getBreadcrumbList } from '@/utils/domain/category';
@@ -20,20 +22,17 @@ import dayjs from 'dayjs';
 
 type Props = {
 	partNumber: string;
-	categoryName?: string;
-	seriesCode: string;
-	brandCode: string;
-	innerCode?: string;
-	categoryCodeList: string[];
+	// categoryName?: string;
+	// seriesCode: string;
+	// brandCode: string;
+	// innerCode?: string;
 };
 
 export const CompareProductButton: FC<Props> = ({
 	partNumber,
-	categoryName,
-	seriesCode,
-	brandCode,
-	innerCode,
-	// categoryCodeList,
+	// categoryName,
+	// seriesCode,
+	// brandCode,
 }) => {
 	const [compareList, setCompareList] = useState<Set<CompareItem>>(
 		new Set<CompareItem>()
@@ -41,6 +40,7 @@ export const CompareProductButton: FC<Props> = ({
 
 	const categoryCodeList = useSelector(selectCategoryCodeList);
 	const series = useSelector(selectSeries);
+	// const partNumber = useSelector(selectCompletedPartNumber);
 	const dispatch = useDispatch();
 
 	const compare = useSelector(selectCompare);
@@ -49,6 +49,11 @@ export const CompareProductButton: FC<Props> = ({
 		const categoryCode = series.categoryCode;
 		const categoryList = series.categoryList;
 		const categoryName = series.categoryName;
+		const seriesName = series.seriesName;
+		const seriesCode = series.seriesCode;
+		const brandCode = series.brandCode;
+		const brandName = series.brandName;
+		const productImageUrl = series.productImageList[0]?.url || '';
 		if (!categoryCode || categoryCodeList.length < 1 || !categoryName) {
 			return;
 		}
@@ -56,6 +61,10 @@ export const CompareProductButton: FC<Props> = ({
 			categoryCode,
 			categoryName,
 			seriesCode,
+			seriesName,
+			brandCode,
+			brandName,
+			productImageUrl,
 			partNumber,
 			categoryCode1: categoryList[1]?.categoryCode || 'other',
 			categoryName1: categoryList[1]?.categoryName || 'other',
