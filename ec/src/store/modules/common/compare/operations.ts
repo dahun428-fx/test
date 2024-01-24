@@ -23,3 +23,9 @@ export const updateCompareOperation = (dispatch: Dispatch) => {
 		dispatch(compareActions.updateCompare(compare));
 	};
 };
+
+export const removeItemOperation = (dispatch: Dispatch) => {
+	return (compareItem: CompareItem) => {
+		dispatch(compareActions.removeItem(compareItem));
+	};
+};

@@ -7,25 +7,33 @@ import { ProductImage } from '@/components/pc/ui/images/ProductImage';
 import { NagiLink } from '@/components/mobile/ui/links';
 
 type Props = {
-	compare: Compare;
 	tabHeads: string[];
 	tabContents: CompareItem[];
 	activeCategoryCode: string | undefined;
-	onClick: (categoryCode: string) => void;
+	totalCount: number;
+	selectedCount: number;
+	selectedItems: Set<CompareItem>;
+	handleTabClick: (categoryCode: string) => void;
+	handleSelectItem: (compareItem: CompareItem) => void;
+	handleSelectAllItem: () => void;
+	handleDeleteAllItem: () => void;
 };
 
 export const CompareTabContent: FC<Props> = ({
-	compare,
 	tabHeads,
 	tabContents,
 	activeCategoryCode,
-	onClick,
+	totalCount,
+	selectedCount,
+	selectedItems,
+	handleTabClick,
+	handleSelectItem,
+	handleSelectAllItem,
+	handleDeleteAllItem,
 }) => {
-	console.log('contents ====> ', tabContents);
-
 	const getCategoryName = (categoryCode: string) => {
 		return (
-			compare.items.find(item => item.categoryCode === categoryCode)
+			tabContents.find(item => item.categoryCode === categoryCode)
 				?.categoryName || ''
 		);
 	};
@@ -36,6 +44,15 @@ export const CompareTabContent: FC<Props> = ({
 		}
 		return text;
 	};
+
+	const isSelected = (compareItem: CompareItem) => {
+		return Array.from(selectedItems).some(
+			item =>
+				item.seriesCode === compareItem.seriesCode &&
+				item.partNumber === compareItem.partNumber
+		);
+	};
+
 	return (
 		<div>
 			<div className={styles.tabHead}>
@@ -49,7 +66,7 @@ export const CompareTabContent: FC<Props> = ({
 									styles.tabHeadItem,
 									categoryCode === activeCategoryCode ? styles.on : ''
 								)}
-								onClick={() => onClick(categoryCode)}
+								onClick={() => handleTabClick(categoryCode)}
 							>
 								<div className={styles.closeBtn}>닫기버튼</div>
 								<p
@@ -69,17 +86,19 @@ export const CompareTabContent: FC<Props> = ({
 				<div className={classNames(styles.pcpInfo, styles.ndrClearfix)}>
 					<div className={styles.left}>
 						<p>
-							총 <span></span>건
+							총 <span>{totalCount}</span>건
 						</p>
 						<p>
-							| <span></span>건 선택
+							| <span>{selectedCount}</span>건 선택
 						</p>
 					</div>
 					<div className={styles.right}>
-						<p>삭제</p>
+						<p>
+							<a onClick={handleDeleteAllItem}>삭제</a>
+						</p>
 						<p>|</p>
 						<p>
-							<a>전체선택</a>
+							<a onClick={handleSelectAllItem}>전체선택</a>
 						</p>
 					</div>
 				</div>
@@ -99,7 +118,14 @@ export const CompareTabContent: FC<Props> = ({
 									.$url({ query: { HissuCode: item.partNumber } });
 
 								return (
-									<li className={styles.pcpItem} key={item.partNumber}>
+									<li
+										className={classNames(
+											styles.pcpItem,
+											isSelected(item) ? styles.on : ''
+										)}
+										key={item.partNumber}
+										onClick={() => handleSelectItem(item)}
+									>
 										<div className={styles.pcpCloseBtn}></div>
 										<div className={styles.pcpItemTitle}>
 											<p className={styles.ndrBold}>

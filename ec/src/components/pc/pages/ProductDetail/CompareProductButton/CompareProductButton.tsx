@@ -88,6 +88,7 @@ export const CompareProductButton: FC<Props> = ({
 				.toDate()
 				.toUTCString(),
 			isPu: false,
+			chk: true,
 		};
 	};
 

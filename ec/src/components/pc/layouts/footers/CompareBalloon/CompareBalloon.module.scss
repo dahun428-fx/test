@@ -168,6 +168,11 @@ $newWindowImg: './assets/images/ic_newWindow_34.png';
 	}
 }
 .tabContentItem {
+	a {
+		text-decoration: none;
+		color: #333;
+		cursor: pointer;
+	}
 	.pcpInfo {
 		margin-top: 10px;
 		.left {
@@ -227,7 +232,7 @@ $newWindowImg: './assets/images/ic_newWindow_34.png';
 				p {
 					color: #ffffff;
 				}
-				::before {
+				&::before {
 					background: url($checkboxOnImg) no-repeat;
 				}
 				.pcpNewWindow {

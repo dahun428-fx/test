@@ -1,38 +1,27 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './CompareBalloon.module.scss';
 import { Button } from '@/components/pc/ui/buttons';
-import { useBoolState } from '@/hooks/state/useBoolState';
-import { useSelector } from '@/store/hooks';
-import {
-	selectCompare,
-	selectShowCompareBalloon,
-	updateCompareOperation,
-} from '@/store/modules/common/compare';
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
-import { useDispatch } from 'react-redux';
-import { getCompare, updateCompare } from '@/services/localStorage/compare';
-import { Router } from 'next/router';
-import { BlockLoader, OverlayLoader } from '@/components/pc/ui/loaders';
 import { CompareTabContent } from './CompareTabContent';
-import classNames from 'classnames';
-import { last } from '@/utils/collection';
 
 type Props = {
-	showStatus: boolean;
 	compare: Compare;
+	showStatus: boolean;
 	tabHeads: string[];
 	tabContents: CompareItem[];
 	activeCategoryCode: string | undefined;
 	handleTabClick: (categoryCode: string) => void;
+	handleClose: () => void;
 };
 
 export const CompareBalloon: FC<Props> = ({
-	showStatus,
 	compare,
+	showStatus,
 	tabHeads,
 	tabContents,
 	activeCategoryCode,
 	handleTabClick,
+	handleClose,
 }) => {
 	return (
 		<>
@@ -55,7 +44,7 @@ export const CompareBalloon: FC<Props> = ({
 												tabHeads={tabHeads}
 												tabContents={tabContents}
 												activeCategoryCode={activeCategoryCode}
-												onClick={handleTabClick}
+												handleTabClick={handleTabClick}
 											/>
 											{/* content */}
 										</div>
@@ -103,7 +92,12 @@ export const CompareBalloon: FC<Props> = ({
 								>
 									비교결과
 								</Button>
-								<Button size="m" type="button" theme="default">
+								<Button
+									size="m"
+									type="button"
+									theme="default"
+									onClick={handleClose}
+								>
 									닫기
 								</Button>
 							</div>

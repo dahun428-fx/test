@@ -27,5 +27,5 @@ export interface CompareItem {
 	minQuantity?: number;
 	innerCode?: string;
 	isPu: boolean;
-	chk?: number;
+	chk?: boolean;
 }

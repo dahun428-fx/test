@@ -4,6 +4,7 @@ import {
 	selectCompare,
 	selectShowCompareBalloon,
 	updateCompareOperation,
+	updateShowsCompareBalloonStatusOperation,
 } from '@/store/modules/common/compare';
 import { useSelector } from '@/store/hooks';
 import { useDispatch } from 'react-redux';
@@ -34,7 +35,7 @@ export const CompareBalloon: FC = () => {
 		return compare.items.filter(
 			item => item.categoryCode === activeCategoryCode
 		);
-	}, [activeCategoryCode]);
+	}, [compare.items, activeCategoryCode]);
 
 	const setCompare = useCallback(
 		(compare: Compare) => {
@@ -47,14 +48,19 @@ export const CompareBalloon: FC = () => {
 		setActiveCategoryCode(categoryCode);
 	};
 
+	const handleClose = () => {
+		updateCompare({ show: false });
+		updateShowsCompareBalloonStatusOperation(dispatch)(false);
+	};
+
 	const generateCompareData = useCallback(() => {
 		if (!initialized.current) {
-			updateCompare({ show: false });
 			let compare = getCompare();
-			setCompare(compare);
+			updateCompare({ show: false });
+			setCompare({ ...compare, show: false });
 			initialized.current = true;
 		}
-	}, [dispatch, compareShowStatus, compare]);
+	}, [dispatch, compare]);
 
 	useEffect(() => {
 		const handleGenerateData = () => {
@@ -66,9 +72,8 @@ export const CompareBalloon: FC = () => {
 	}, [generateCompareData]);
 
 	useEffect(() => {
-		if (!initialized.current) return;
-
 		const compare = getCompare();
+		if (!initialized.current || !compare.show) return;
 		if (!compare || compare.items.length < 1) {
 			return;
 		}
@@ -78,17 +83,18 @@ export const CompareBalloon: FC = () => {
 			? compare.active
 			: tabHeadList[tabHeadList.length - 1];
 		setActiveCategoryCode(activeCode);
-	}, [compare.active, tabHeadList]);
+	}, [compare.show, compare.active, tabHeadList]);
 
 	return (
 		<>
 			<Presenter
-				showStatus={compareShowStatus}
 				compare={compare}
+				showStatus={compareShowStatus}
 				tabHeads={tabHeadList}
 				tabContents={tabContentList}
 				activeCategoryCode={activeCategoryCode}
 				handleTabClick={handleTabClick}
+				handleClose={handleClose}
 			/>
 		</>
 	);

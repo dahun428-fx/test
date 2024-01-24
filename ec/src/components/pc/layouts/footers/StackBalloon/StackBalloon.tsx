@@ -52,7 +52,6 @@ export const StackBalloon: React.FC<Props> = ({
 	} = useStackBalloon();
 
 	const [t] = useTranslation();
-
 	const tabDoneStatus = cadDownloadStack.tabDone;
 
 	/**

@@ -17,6 +17,18 @@ const slice = createSlice({
 				items: [action.payload, ...state.items],
 			};
 		},
+		removeItem(state, action: PayloadAction<CompareItem>) {
+			const remainItems = state.items.filter(
+				item =>
+					item.seriesCode !== action.payload.seriesCode ||
+					item.partNumber !== action.payload.partNumber
+			);
+			return {
+				...state,
+				items: remainItems,
+				active: '',
+			};
+		},
 		updateCompare(state, action: PayloadAction<Compare>) {
 			return { ...state, ...action.payload };
 		},

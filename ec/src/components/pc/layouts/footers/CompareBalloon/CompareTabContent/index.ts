@@ -1,1 +1,1 @@
-export { CompareTabContent } from './CompareTabContent';
+export { CompareTabContent } from './CompareTabContent.container';
