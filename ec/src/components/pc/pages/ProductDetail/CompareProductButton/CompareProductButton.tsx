@@ -16,9 +16,11 @@ import {
 	selectSeries,
 } from '@/store/modules/pages/productDetail';
 import { getBreadcrumbList } from '@/utils/domain/category';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCompare, updateCompare } from '@/services/localStorage/compare';
 import dayjs from 'dayjs';
+import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
+import { assertNotNull } from '@/utils/assertions';
 
 type Props = {
 	partNumber: string;
@@ -27,6 +29,9 @@ type Props = {
 	// brandCode: string;
 	// innerCode?: string;
 };
+
+const COMPARE_HEAD_MAX_LENGTH = 3;
+const COMPARE_CONTENT_MAX_LENGTH = 5;
 
 export const CompareProductButton: FC<Props> = ({
 	partNumber,
@@ -38,14 +43,14 @@ export const CompareProductButton: FC<Props> = ({
 		new Set<CompareItem>()
 	);
 
-	const categoryCodeList = useSelector(selectCategoryCodeList);
 	const series = useSelector(selectSeries);
+	// const categoryCodeList = useSelector(selectCategoryCodeList);
 	// const partNumber = useSelector(selectCompletedPartNumber);
 	const dispatch = useDispatch();
 
 	const compare = useSelector(selectCompare);
 
-	const handleClick = () => {
+	const createParam = (series: Series): CompareItem => {
 		const categoryCode = series.categoryCode;
 		const categoryList = series.categoryList;
 		const categoryName = series.categoryName;
@@ -54,10 +59,9 @@ export const CompareProductButton: FC<Props> = ({
 		const brandCode = series.brandCode;
 		const brandName = series.brandName;
 		const productImageUrl = series.productImageList[0]?.url || '';
-		if (!categoryCode || categoryCodeList.length < 1 || !categoryName) {
-			return;
-		}
-		const data: CompareItem = {
+		assertNotNull(categoryCode);
+		assertNotNull(categoryName);
+		return {
 			categoryCode,
 			categoryName,
 			seriesCode,
@@ -85,23 +89,66 @@ export const CompareProductButton: FC<Props> = ({
 				.toUTCString(),
 			isPu: false,
 		};
+	};
 
+	const hasItem = (compareItem: CompareItem) => {
 		const foundIndex = Array.from(compareList).findIndex(item => {
 			if (
-				item.seriesCode === data.seriesCode &&
-				item.partNumber === data.partNumber
+				item.seriesCode === compareItem.seriesCode &&
+				item.partNumber === compareItem.partNumber
 			) {
 				return item;
 			}
 		});
-		if (foundIndex < 0) {
-			addItemOperation(dispatch)(data);
+		return foundIndex === -1 ? false : true;
+	};
+
+	const tabHeadLength: number = useMemo(() => {
+		const categoryCodeList = compare.items.map(item => item.categoryCode);
+		return categoryCodeList.reduce<string[]>(
+			(previous, current) =>
+				previous.includes(current) ? previous : [current, ...previous],
+			[]
+		).length;
+	}, [compare.items]);
+
+	const tabContentLength = useCallback(
+		(categoryCode: string): number => {
+			return compare.items.filter(item => {
+				if (item.categoryCode === categoryCode) {
+					return item;
+				}
+			}).length;
+		},
+		[compare.items]
+	);
+
+	const handleClick = () => {
+		if (tabHeadLength >= COMPARE_HEAD_MAX_LENGTH) {
+			return;
+		}
+		const compareItem = createParam(series);
+		console.log('tabHeadLength ===> ', tabHeadLength);
+		console.log(
+			'tabContentLength ===> ',
+			compareItem.categoryCode,
+			tabContentLength(compareItem.categoryCode)
+		);
+
+		if (
+			tabContentLength(compareItem.categoryCode) >= COMPARE_CONTENT_MAX_LENGTH
+		) {
+			return;
+		}
+
+		if (!hasItem(compareItem)) {
+			addItemOperation(dispatch)(compareItem);
 		} else {
 			updateCompareOperation(dispatch)({
 				...compare,
-				active: data.categoryCode,
+				active: compareItem.categoryCode,
 			});
-			updateCompare({ active: data.categoryCode });
+			updateCompare({ active: compareItem.categoryCode });
 		}
 		updateShowsCompareBalloonStatusOperation(dispatch)(true);
 	};

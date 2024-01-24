@@ -17,99 +17,26 @@ import { CompareTabContent } from './CompareTabContent';
 import classNames from 'classnames';
 import { last } from '@/utils/collection';
 
-export const CompareBalloon: FC = () => {
-	const [loading, startToLoading, endLoading] = useBoolState(true);
+type Props = {
+	showStatus: boolean;
+	compare: Compare;
+	tabHeads: string[];
+	tabContents: CompareItem[];
+	activeCategoryCode: string | undefined;
+	handleTabClick: (categoryCode: string) => void;
+};
 
-	const initialized = useRef(false);
-
-	const dispatch = useDispatch();
-
-	const compare = useSelector(selectCompare);
-	const compareShowStatus = useSelector(selectShowCompareBalloon);
-
-	// const [tabHeadList, setTabHeadList] = useState<string[]>();
-	const [activeCategoryCode, setActiveCategoryCode] = useState<string>();
-
-	const setCompare = useCallback(
-		(compare: Compare) => {
-			updateCompareOperation(dispatch)(compare);
-		},
-		[dispatch]
-	);
-
-	const updateCompareState = useCallback(
-		(compare: Compare) => {
-			updateCompare(compare);
-			setCompare(compare);
-		},
-		[setCompare]
-	);
-
-	const getCategoryName = (categoryCode: string) => {
-		return (
-			compare.items.find(item => item.categoryCode === categoryCode)
-				?.categoryName || ''
-		);
-	};
-
-	// console.log('activeCategoryCode ====> ', activeCategoryCode);
-	// const [loading, startToLoading, endLoading] = useBoolState(false);
-
-	const tabHeadList = useMemo(() => {
-		const categoryCodeList = compare.items.map(item => item.categoryCode);
-		return categoryCodeList.reduce<string[]>(
-			(previous, current) =>
-				previous.includes(current) ? previous : [current, ...previous],
-			[]
-		);
-	}, [compare.items]);
-
-	const tabContentList = useMemo(() => {
-		return compare.items.filter(
-			item => item.categoryCode === activeCategoryCode
-		);
-	}, [activeCategoryCode]);
-
-	useEffect(() => {
-		if (!initialized.current) return;
-
-		const compare = getCompare();
-		if (!compare || compare.items.length < 1) {
-			return;
-		}
-
-		console.log('compare active ====> ', compare.active);
-		const activeCode = compare.active
-			? compare.active
-			: tabHeadList[tabHeadList.length - 1];
-		setActiveCategoryCode(activeCode);
-	}, [compare.active, tabHeadList]);
-
-	const generateCompareData = useCallback(() => {
-		if (!initialized.current) {
-			updateCompare({ show: false });
-			let compare = getCompare();
-			setCompare(compare);
-			initialized.current = true;
-		}
-	}, [dispatch, compareShowStatus, compare]);
-
-	useEffect(() => {
-		const handleGenerateData = () => {
-			generateCompareData();
-		};
-		handleGenerateData();
-		Router.events.on('routeChangeComplete', handleGenerateData);
-		return () => Router.events.off('routeChangeComplete', handleGenerateData);
-	}, [generateCompareData]);
-
-	const handleTabClick = (categoryCode: string) => {
-		setActiveCategoryCode(categoryCode);
-	};
-
+export const CompareBalloon: FC<Props> = ({
+	showStatus,
+	compare,
+	tabHeads,
+	tabContents,
+	activeCategoryCode,
+	handleTabClick,
+}) => {
 	return (
 		<>
-			{compareShowStatus && (
+			{showStatus && (
 				<div className={styles.constrast}>
 					<div className={styles.selectPopup}>
 						<div className={styles.titleSection}>
@@ -125,8 +52,8 @@ export const CompareBalloon: FC = () => {
 											{/* <OverlayLoader show={loading} /> */}
 											<CompareTabContent
 												compare={compare}
-												tabHeads={tabHeadList}
-												tabContents={tabContentList}
+												tabHeads={tabHeads}
+												tabContents={tabContents}
 												activeCategoryCode={activeCategoryCode}
 												onClick={handleTabClick}
 											/>
@@ -162,14 +89,6 @@ export const CompareBalloon: FC = () => {
 											My 부품표
 										</Button>
 									</div>
-									{/* loading... */}
-									{/* <div className={styles.loading}>
-										<div className={styles.loadingBg}></div>
-										<div className={styles.loadingImage}></div>
-										<div className={styles.loadingText}>
-											잠시 기다려 주십시오.
-										</div>
-									</div> */}
 								</div>
 							</div>
 							<div className={styles.pcpCookieGuide}>

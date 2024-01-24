@@ -91,7 +91,6 @@ export const CompareTabContent: FC<Props> = ({
 						<div className={styles.pcpBlankItem}></div>
 						<div className={styles.pcpBlankItem}></div>
 					</div>
-					{/* <p>데이터가 없습니다.</p> */}
 					<ul>
 						{tabContents && tabContents.length > 0 ? (
 							tabContents.map((item, index) => {

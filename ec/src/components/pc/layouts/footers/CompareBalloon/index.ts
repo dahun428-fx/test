@@ -1,1 +1,1 @@
-export { CompareBalloon } from './CompareBalloon';
+export { CompareBalloon } from './CompareBalloon.container';

@@ -2,6 +2,8 @@ import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { assertNotNull } from '@/utils/assertions';
 
 const STORAGE_KEY = 'compareCookies';
+const COMPARE_HEAD_MAX_LENGTH = 3;
+const COMPARE_CONTENT_MAX_LENGTH = 5;
 
 export const initalCompare: Compare = {
 	items: [],
@@ -31,12 +33,13 @@ export function getCompare(): Compare {
 	return {
 		items: validItems,
 		show: compareJson.show,
-		active: compareJson.active,
+		active: validItems.length > 0 ? compareJson.active : '',
 	};
 }
 
 export function addCompareItem(addItem: CompareItem) {
 	const compare = getCompare();
+
 	const foundIndex = compare.items.findIndex(item => {
 		if (
 			item.seriesCode === addItem.seriesCode &&
@@ -49,6 +52,26 @@ export function addCompareItem(addItem: CompareItem) {
 	if (foundIndex !== -1) {
 		return;
 	}
+
+	const headLength = compare.items
+		.map(item => item.categoryCode)
+		.reduce<string[]>(
+			(previous, current) =>
+				previous.includes(current) ? previous : [current, ...previous],
+			[]
+		).length;
+
+	const contentLength = compare.items.filter(
+		item => item.categoryCode === addItem.categoryCode
+	).length;
+
+	if (
+		headLength >= COMPARE_HEAD_MAX_LENGTH ||
+		contentLength >= COMPARE_CONTENT_MAX_LENGTH
+	) {
+		return;
+	}
+
 	localStorage.setItem(
 		STORAGE_KEY,
 		JSON.stringify({
