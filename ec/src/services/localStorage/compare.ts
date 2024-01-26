@@ -1,5 +1,6 @@
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { assertNotNull } from '@/utils/assertions';
+import { EitherRequired } from '@/utils/type';
 
 const STORAGE_KEY = 'compareCookies';
 const COMPARE_HEAD_MAX_LENGTH = 3;
@@ -9,6 +10,59 @@ export const initalCompare: Compare = {
 	items: [],
 	show: false,
 };
+
+export function updateCompareItem(updateItem: CompareItem) {
+	const compare = getCompare();
+
+	const foundIndex = compare.items.findIndex(
+		item =>
+			item.seriesCode === updateItem.seriesCode &&
+			item.partNumber === updateItem.partNumber
+	);
+	if (foundIndex < 0) return;
+
+	const found = compare.items[foundIndex];
+	assertNotNull(found);
+	compare.items[foundIndex] = { ...found, ...updateItem };
+
+	localStorage.setItem(
+		STORAGE_KEY,
+		JSON.stringify({
+			...compare,
+		})
+	);
+}
+
+export function updateCheckedItemIfNeeded(selectedItems: CompareItem[]) {
+	const compare = localStorage.getItem(STORAGE_KEY);
+
+	if (!compare) {
+		return;
+	}
+	let compareJson: Compare = JSON.parse(compare) || initalCompare;
+
+	const chkeckedItems = compareJson.items.map(item => {
+		const foundIndex = selectedItems.findIndex(selectItem => {
+			if (
+				item.seriesCode === selectItem.seriesCode &&
+				item.partNumber === selectItem.partNumber
+			) {
+				return item;
+			}
+		});
+		if (foundIndex === -1) {
+			return { ...item, chk: false };
+		} else {
+			return { ...item, chk: true };
+		}
+	});
+	compareJson = {
+		...compareJson,
+		items: chkeckedItems,
+	};
+
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(compareJson));
+}
 
 export function updateCompare(updateCompare: Partial<Omit<Compare, 'items'>>) {
 	const compare = getCompare();

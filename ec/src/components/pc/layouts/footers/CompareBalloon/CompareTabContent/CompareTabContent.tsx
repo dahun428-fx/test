@@ -7,6 +7,7 @@ import { ProductImage } from '@/components/pc/ui/images/ProductImage';
 import { NagiLink } from '@/components/mobile/ui/links';
 
 type Props = {
+	compare: Compare;
 	tabHeads: string[];
 	tabContents: CompareItem[];
 	activeCategoryCode: string | undefined;
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export const CompareTabContent: FC<Props> = ({
+	compare,
 	tabHeads,
 	tabContents,
 	activeCategoryCode,
@@ -33,7 +35,7 @@ export const CompareTabContent: FC<Props> = ({
 }) => {
 	const getCategoryName = (categoryCode: string) => {
 		return (
-			tabContents.find(item => item.categoryCode === categoryCode)
+			compare.items.find(item => item.categoryCode === categoryCode)
 				?.categoryName || ''
 		);
 	};

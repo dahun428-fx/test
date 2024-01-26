@@ -1,25 +1,51 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+	MutableRefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 import { CompareTabContent as Presenter } from './CompareTabContent';
-import { Compare, CompareItem } from '@/models/localStorage/Compare';
-import { removeItemOperation } from '@/store/modules/common/compare';
-import { useDispatch } from 'react-redux';
-import { removeCompareItem } from '@/services/localStorage/compare';
+import { CompareItem } from '@/models/localStorage/Compare';
+import {
+	removeItemOperation,
+	selectCompare,
+	updateCompareOperation,
+} from '@/store/modules/common/compare';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCompare, removeCompareItem } from '@/services/localStorage/compare';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 
 type Props = {
-	tabHeads: string[];
-	tabContents: CompareItem[];
-	activeCategoryCode: string | undefined;
-	handleTabClick: (categoryCode: string) => void;
+	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
+	selectedActiveTab: MutableRefObject<string>;
 };
 
 export const CompareTabContent = React.memo<Props>(
-	({ tabHeads, tabContents, activeCategoryCode, handleTabClick }) => {
+	({ selectedItemsForCheck, selectedActiveTab }) => {
 		const dispatch = useDispatch();
+
+		const compare = useSelector(selectCompare);
 
 		const [selectedItems, setSelectedItems] = useState<Set<CompareItem>>(
 			new Set()
 		);
+		const [activeCategoryCode, setActiveCategoryCode] = useState<string>('');
+
+		const tabHeadList = useMemo(() => {
+			const categoryCodeList = compare.items.map(item => item.categoryCode);
+			return categoryCodeList.reduce<string[]>(
+				(previous, current) =>
+					previous.includes(current) ? previous : [current, ...previous],
+				[]
+			);
+		}, [compare, compare.items]);
+
+		const tabContentList = useMemo(() => {
+			return compare.items.filter(
+				item => item.categoryCode === activeCategoryCode
+			);
+		}, [compare, compare.items, activeCategoryCode]);
 
 		const activeSelectedItems = useMemo(() => {
 			return Array.from(selectedItems).filter(
@@ -28,16 +54,19 @@ export const CompareTabContent = React.memo<Props>(
 		}, [selectedItems, activeCategoryCode]);
 
 		const totalCount = useMemo(() => {
-			return tabContents.length;
-		}, [tabContents]);
+			return tabContentList.length;
+		}, [tabContentList]);
 
 		const selectedCount = useMemo(() => {
 			return activeSelectedItems.length;
 		}, [selectedItems, activeCategoryCode]);
 
+		const handleTabClick = (categoryCode: string) => {
+			setActiveCategoryCode(categoryCode);
+		};
+
 		const handleSelectItem = useCallback(
 			(compareItem: CompareItem) => {
-				console.log('handleSelectItem ====> ');
 				const isSelected = selectedItems.has(compareItem);
 				if (isSelected) {
 					selectedItems.delete(compareItem);
@@ -50,9 +79,8 @@ export const CompareTabContent = React.memo<Props>(
 		);
 
 		const handleSelectAllItem = useCallback(() => {
-			// console.log('tabContents ====> ', tabContents);
-			console.log('handleSelectAllItem ====> ');
-			const isAllSelected = activeSelectedItems.length === tabContents.length;
+			const isAllSelected =
+				activeSelectedItems.length === tabContentList.length;
 			if (isAllSelected) {
 				setSelectedItems(
 					new Set(
@@ -63,10 +91,15 @@ export const CompareTabContent = React.memo<Props>(
 				);
 			} else {
 				setSelectedItems(
-					new Set([...Array.from(selectedItems), ...tabContents])
+					new Set([...Array.from(selectedItems), ...tabContentList])
 				);
 			}
-		}, [selectedItems, tabContents, activeCategoryCode, activeSelectedItems]);
+		}, [
+			selectedItems,
+			tabContentList,
+			activeCategoryCode,
+			activeSelectedItems,
+		]);
 
 		const handleDeleteAllItem = useCallback(() => {
 			if (activeSelectedItems.length < 1) {
@@ -80,17 +113,36 @@ export const CompareTabContent = React.memo<Props>(
 			setSelectedItems(new Set(selectedItems));
 		}, [selectedItems, activeSelectedItems]);
 
+		const getSelectedItems = useMemo(() => {
+			return Array.from(selectedItems);
+		}, [selectedItems, setSelectedItems]);
+
+		// console.log('compare items =========> ', compare.items);
 		useOnMounted(() => {
-			// setSelectedItems(new Set(compare.items.filter(item => item.chk)));
-			console.log('mount tabcontent');
-			return () => console.log('un mounted tabcontent');
+			let compare = getCompare();
+			updateCompareOperation(dispatch)(compare);
+			setSelectedItems(new Set(compare.items.filter(item => item.chk)));
+			setActiveCategoryCode(
+				compare.active
+					? compare.active
+					: tabHeadList[tabHeadList.length - 1] ?? ''
+			);
 		});
+
+		useEffect(() => {
+			selectedItemsForCheck.current = selectedItems;
+		}, [selectedItems]);
+
+		useEffect(() => {
+			selectedActiveTab.current = activeCategoryCode;
+		}, [activeCategoryCode]);
 
 		return (
 			<>
 				<Presenter
-					tabHeads={tabHeads}
-					tabContents={tabContents}
+					compare={compare}
+					tabHeads={tabHeadList}
+					tabContents={tabContentList}
 					activeCategoryCode={activeCategoryCode}
 					totalCount={totalCount}
 					selectedCount={selectedCount}

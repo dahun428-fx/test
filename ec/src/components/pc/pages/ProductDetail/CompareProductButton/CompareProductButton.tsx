@@ -17,7 +17,11 @@ import {
 } from '@/store/modules/pages/productDetail';
 import { getBreadcrumbList } from '@/utils/domain/category';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { getCompare, updateCompare } from '@/services/localStorage/compare';
+import {
+	getCompare,
+	updateCompare,
+	updateCompareItem,
+} from '@/services/localStorage/compare';
 import dayjs from 'dayjs';
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { assertNotNull } from '@/utils/assertions';
@@ -129,13 +133,6 @@ export const CompareProductButton: FC<Props> = ({
 			return;
 		}
 		const compareItem = createParam(series);
-		console.log('tabHeadLength ===> ', tabHeadLength);
-		console.log(
-			'tabContentLength ===> ',
-			compareItem.categoryCode,
-			tabContentLength(compareItem.categoryCode)
-		);
-
 		if (
 			tabContentLength(compareItem.categoryCode) >= COMPARE_CONTENT_MAX_LENGTH
 		) {
@@ -150,8 +147,10 @@ export const CompareProductButton: FC<Props> = ({
 				active: compareItem.categoryCode,
 			});
 			updateCompare({ active: compareItem.categoryCode });
+			updateCompareItem({ ...compareItem, chk: true });
 		}
 		updateShowsCompareBalloonStatusOperation(dispatch)(true);
+		updateCompare({ show: true });
 	};
 
 	useEffect(() => {

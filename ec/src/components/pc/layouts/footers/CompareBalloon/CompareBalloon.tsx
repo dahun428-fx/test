@@ -1,26 +1,21 @@
-import { FC, useEffect } from 'react';
+import { FC, MutableRefObject, useEffect } from 'react';
 import styles from './CompareBalloon.module.scss';
 import { Button } from '@/components/pc/ui/buttons';
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { CompareTabContent } from './CompareTabContent';
+import { useCompareBalloon } from './CompareBalloon.hooks';
 
 type Props = {
-	compare: Compare;
 	showStatus: boolean;
-	tabHeads: string[];
-	tabContents: CompareItem[];
-	activeCategoryCode: string | undefined;
-	handleTabClick: (categoryCode: string) => void;
+	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
+	selectedActiveTab: MutableRefObject<string>;
 	handleClose: () => void;
 };
 
 export const CompareBalloon: FC<Props> = ({
-	compare,
 	showStatus,
-	tabHeads,
-	tabContents,
-	activeCategoryCode,
-	handleTabClick,
+	selectedItemsForCheck,
+	selectedActiveTab,
 	handleClose,
 }) => {
 	return (
@@ -40,11 +35,8 @@ export const CompareBalloon: FC<Props> = ({
 										<div className={styles.tabSection}>
 											{/* <OverlayLoader show={loading} /> */}
 											<CompareTabContent
-												compare={compare}
-												tabHeads={tabHeads}
-												tabContents={tabContents}
-												activeCategoryCode={activeCategoryCode}
-												handleTabClick={handleTabClick}
+												selectedItemsForCheck={selectedItemsForCheck}
+												selectedActiveTab={selectedActiveTab}
 											/>
 											{/* content */}
 										</div>

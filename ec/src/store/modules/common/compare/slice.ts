@@ -15,6 +15,7 @@ const slice = createSlice({
 			return {
 				...state,
 				items: [action.payload, ...state.items],
+				active: action.payload.categoryCode,
 			};
 		},
 		removeItem(state, action: PayloadAction<CompareItem>) {
@@ -23,10 +24,17 @@ const slice = createSlice({
 					item.seriesCode !== action.payload.seriesCode ||
 					item.partNumber !== action.payload.partNumber
 			);
+			console.log('state removeItem ====> ', remainItems);
 			return {
 				...state,
 				items: remainItems,
 				active: '',
+			};
+		},
+		updateItems(state, action: PayloadAction<CompareItem[]>) {
+			return {
+				...state,
+				items: action.payload,
 			};
 		},
 		updateCompare(state, action: PayloadAction<Compare>) {
