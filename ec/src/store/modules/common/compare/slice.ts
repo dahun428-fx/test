@@ -24,7 +24,6 @@ const slice = createSlice({
 					item.seriesCode !== action.payload.seriesCode ||
 					item.partNumber !== action.payload.partNumber
 			);
-			console.log('state removeItem ====> ', remainItems);
 			return {
 				...state,
 				items: remainItems,

@@ -14,6 +14,7 @@ type Props = {
 	totalCount: number;
 	selectedCount: number;
 	selectedItems: Set<CompareItem>;
+
 	handleTabClick: (categoryCode: string) => void;
 	handleSelectItem: (compareItem: CompareItem) => void;
 	handleSelectAllItem: () => void;

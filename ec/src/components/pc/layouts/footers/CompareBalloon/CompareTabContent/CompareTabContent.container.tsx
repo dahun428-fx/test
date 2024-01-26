@@ -101,6 +101,9 @@ export const CompareTabContent = React.memo<Props>(
 			activeSelectedItems,
 		]);
 
+		console.log('selectedITems =====> ', selectedItems);
+		const handleDeleteItem = (compareItem: CompareItem) => {};
+
 		const handleDeleteAllItem = useCallback(() => {
 			if (activeSelectedItems.length < 1) {
 				return;
@@ -110,24 +113,26 @@ export const CompareTabContent = React.memo<Props>(
 				removeItemOperation(dispatch)(item);
 				removeCompareItem(item);
 			});
-			setSelectedItems(new Set(selectedItems));
+			// setSelectedItems(new Set(selectedItems));
 		}, [selectedItems, activeSelectedItems]);
 
-		const getSelectedItems = useMemo(() => {
-			return Array.from(selectedItems);
-		}, [selectedItems, setSelectedItems]);
-
-		// console.log('compare items =========> ', compare.items);
 		useOnMounted(() => {
+			console.log('on mounted');
 			let compare = getCompare();
 			updateCompareOperation(dispatch)(compare);
-			setSelectedItems(new Set(compare.items.filter(item => item.chk)));
+		});
+
+		useEffect(() => {
 			setActiveCategoryCode(
 				compare.active
 					? compare.active
 					: tabHeadList[tabHeadList.length - 1] ?? ''
 			);
-		});
+		}, [compare.active, tabHeadList]);
+
+		useEffect(() => {
+			setSelectedItems(new Set(compare.items.filter(item => item.chk)));
+		}, [compare.items]);
 
 		useEffect(() => {
 			selectedItemsForCheck.current = selectedItems;
