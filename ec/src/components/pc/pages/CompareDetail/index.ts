@@ -1,0 +1,1 @@
+export { CompareDetail } from './CompareDetail';
