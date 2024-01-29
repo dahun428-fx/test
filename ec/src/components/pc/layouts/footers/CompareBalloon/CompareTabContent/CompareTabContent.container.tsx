@@ -15,6 +15,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompare, removeCompareItem } from '@/services/localStorage/compare';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
+import { useRouter } from 'next/router';
+import { useConfirmModal } from '@/components/pc/ui/modals/ConfirmModal';
 
 type Props = {
 	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
@@ -24,8 +26,10 @@ type Props = {
 export const CompareTabContent = React.memo<Props>(
 	({ selectedItemsForCheck, selectedActiveTab }) => {
 		const dispatch = useDispatch();
-
+		const router = useRouter();
 		const compare = useSelector(selectCompare);
+
+		const { showConfirm } = useConfirmModal();
 
 		const [selectedItems, setSelectedItems] = useState<Set<CompareItem>>(
 			new Set()
@@ -65,6 +69,26 @@ export const CompareTabContent = React.memo<Props>(
 			setActiveCategoryCode(categoryCode);
 		};
 
+		const handleTabDelete = useCallback(async () => {
+			if (tabContentList.length < 1) return;
+			console.log('handledTabDelete ====>', tabContentList);
+
+			// const categoryName = getCategoryName(tabContentList[0]?.categoryCode)
+			const categoryName = tabContentList[0]?.categoryName;
+			const confirm = await showConfirm({
+				message: `${categoryName}의 모든 형번이 삭제됩니다. ${categoryName}을(를) 삭제하시겠습니까?`,
+				confirmButton: '예',
+				closeButton: '아니오',
+			});
+			if (!confirm) return;
+
+			tabContentList.forEach(async item => {
+				selectedItems.delete(item);
+				removeItemOperation(dispatch)(item);
+				removeCompareItem(item);
+			});
+		}, [tabContentList, selectedItems]);
+
 		const handleSelectItem = useCallback(
 			(compareItem: CompareItem) => {
 				const isSelected = selectedItems.has(compareItem);
@@ -101,23 +125,54 @@ export const CompareTabContent = React.memo<Props>(
 			activeSelectedItems,
 		]);
 
-		console.log('selectedITems =====> ', selectedItems);
-		const handleDeleteItem = (compareItem: CompareItem) => {};
+		const handleDeleteItem = useCallback(
+			async (compareItem: CompareItem) => {
+				if (activeSelectedItems.length < 1) {
+					return;
+				}
+				const confirm = await showConfirm({
+					message: '삭제하시겠습니까?',
+					confirmButton: '예',
+					closeButton: '아니오',
+				});
+				if (!confirm) return;
 
-		const handleDeleteAllItem = useCallback(() => {
+				selectedItems.delete(compareItem);
+				removeItemOperation(dispatch)(compareItem);
+				removeCompareItem(compareItem);
+			},
+			[selectedItems, activeSelectedItems]
+		);
+
+		const handleDeleteAllItem = useCallback(async () => {
 			if (activeSelectedItems.length < 1) {
 				return;
 			}
+			const confirm = await showConfirm({
+				message: `선택하신 ${activeSelectedItems.length}개의 형번이 삭제됩니다. 삭제하시겠습니까?`,
+				confirmButton: '예',
+				closeButton: '아니오',
+			});
+			if (!confirm) return;
+
 			activeSelectedItems.forEach(async item => {
 				selectedItems.delete(item);
 				removeItemOperation(dispatch)(item);
 				removeCompareItem(item);
 			});
-			// setSelectedItems(new Set(selectedItems));
 		}, [selectedItems, activeSelectedItems]);
 
+		const handlePartNumberClick = (
+			e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+		) => {
+			e.preventDefault();
+			e.stopPropagation();
+			if (e.currentTarget.href) {
+				router.push(e.currentTarget.href);
+			}
+		};
+
 		useOnMounted(() => {
-			console.log('on mounted');
 			let compare = getCompare();
 			updateCompareOperation(dispatch)(compare);
 		});
@@ -152,8 +207,11 @@ export const CompareTabContent = React.memo<Props>(
 					totalCount={totalCount}
 					selectedCount={selectedCount}
 					selectedItems={selectedItems}
+					handlePartNumberClick={handlePartNumberClick}
 					handleTabClick={handleTabClick}
+					handleTabDelete={handleTabDelete}
 					handleSelectItem={handleSelectItem}
+					handleDeleteItem={handleDeleteItem}
 					handleSelectAllItem={handleSelectAllItem}
 					handleDeleteAllItem={handleDeleteAllItem}
 				/>

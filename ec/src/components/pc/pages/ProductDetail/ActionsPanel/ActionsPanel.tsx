@@ -296,10 +296,6 @@ export const ActionsPanel: React.FC<Props> = ({
 											<CompareProductButton
 												{...{
 													partNumber,
-													// categoryName,
-													// seriesCode,
-													// brandCode,
-													// categoryCodeList,
 												}}
 											/>
 										)}

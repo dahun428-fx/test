@@ -14,9 +14,13 @@ type Props = {
 	totalCount: number;
 	selectedCount: number;
 	selectedItems: Set<CompareItem>;
-
+	handlePartNumberClick: (
+		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+	) => void;
 	handleTabClick: (categoryCode: string) => void;
+	handleTabDelete: () => void;
 	handleSelectItem: (compareItem: CompareItem) => void;
+	handleDeleteItem: (compareITem: CompareItem) => void;
 	handleSelectAllItem: () => void;
 	handleDeleteAllItem: () => void;
 };
@@ -29,8 +33,11 @@ export const CompareTabContent: FC<Props> = ({
 	totalCount,
 	selectedCount,
 	selectedItems,
+	handlePartNumberClick,
 	handleTabClick,
+	handleTabDelete,
 	handleSelectItem,
+	handleDeleteItem,
 	handleSelectAllItem,
 	handleDeleteAllItem,
 }) => {
@@ -71,7 +78,9 @@ export const CompareTabContent: FC<Props> = ({
 								)}
 								onClick={() => handleTabClick(categoryCode)}
 							>
-								<div className={styles.closeBtn}>닫기버튼</div>
+								<div className={styles.closeBtn} onClick={handleTabDelete}>
+									닫기버튼
+								</div>
 								<p
 									className={classNames(
 										styles.name,
@@ -129,7 +138,10 @@ export const CompareTabContent: FC<Props> = ({
 										key={item.partNumber}
 										onClick={() => handleSelectItem(item)}
 									>
-										<div className={styles.pcpCloseBtn}></div>
+										<div
+											className={styles.pcpCloseBtn}
+											onClick={() => handleDeleteItem(item)}
+										></div>
 										<div className={styles.pcpItemTitle}>
 											<p className={styles.ndrBold}>
 												{shorteningText(item.seriesName, 48)}
@@ -154,7 +166,10 @@ export const CompareTabContent: FC<Props> = ({
 												styles.pcpNewWindow
 											)}
 										>
-											<NagiLink href={seriesUrl}>
+											<NagiLink
+												href={seriesUrl}
+												onClick={e => handlePartNumberClick(e)}
+											>
 												<p className={styles.ndrThin}>{item.partNumber}</p>
 											</NagiLink>
 										</div>

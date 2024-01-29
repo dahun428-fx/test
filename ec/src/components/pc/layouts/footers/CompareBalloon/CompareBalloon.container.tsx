@@ -41,12 +41,6 @@ export const CompareBalloon: FC = () => {
 
 	useEffect(() => {
 		if (!compare.show) {
-			console.log(
-				'compare [compareBaloon container] ======> ',
-				compare,
-				selectedItemsForCheck.current,
-				selectedActiveTab.current
-			);
 			updateCheckedItemIfNeeded(Array.from(selectedItemsForCheck.current));
 			updateCompare({ active: selectedActiveTab.current });
 		}

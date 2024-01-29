@@ -2,7 +2,7 @@ import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { assertNotNull } from '@/utils/assertions';
 import { EitherRequired } from '@/utils/type';
 
-const STORAGE_KEY = 'compareCookies';
+const STORAGE_KEY = 'compare';
 const COMPARE_HEAD_MAX_LENGTH = 3;
 const COMPARE_CONTENT_MAX_LENGTH = 5;
 
