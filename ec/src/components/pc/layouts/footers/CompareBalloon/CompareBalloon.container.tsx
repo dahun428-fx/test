@@ -16,6 +16,9 @@ import {
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { Router } from 'next/router';
 
+/**
+ * 비교 푸터 팝업
+ */
 export const CompareBalloon: FC = () => {
 	const initialized = useRef(false);
 
@@ -24,9 +27,13 @@ export const CompareBalloon: FC = () => {
 	const compare = useSelector(selectCompare);
 	const compareShowStatus = useSelector(selectShowCompareBalloon);
 
-	const selectedItemsForCheck = useRef<Set<CompareItem>>(new Set());
-	const selectedActiveTab = useRef<string>('');
+	const selectedItemsForCheck = useRef<Set<CompareItem>>(new Set()); //CompareTabContent : selectedItem
+	const selectedActiveTab = useRef<string>(''); //CompareTabContent: activeCategoryCode
 
+	/**
+	 * 비교 팝업 업데이트 ( store )
+	 * setCompare => updateCompareOperation : store compare update 로직
+	 */
 	const setCompare = useCallback(
 		(compare: Compare) => {
 			updateCompareOperation(dispatch)(compare);
@@ -34,11 +41,21 @@ export const CompareBalloon: FC = () => {
 		[dispatch]
 	);
 
+	/**
+	 * 비교 팝업 닫기 ( store, localStorage : show => false )
+	 */
 	const handleClose = () => {
 		updateCompare({ show: false });
 		updateShowsCompareBalloonStatusOperation(dispatch)(false);
 	};
 
+	/**
+	 * 비교 팝업 업데이트 ( localStorage )
+	 * compare.show == false 일때,
+	 * selectedItemForCheck : 선택된 비교 아이템,
+	 * selectedActiveTab : 선택된 비교 탭,
+	 * localStorage 에 반영
+	 */
 	useEffect(() => {
 		if (!compare.show) {
 			updateCheckedItemIfNeeded(Array.from(selectedItemsForCheck.current));
@@ -46,6 +63,11 @@ export const CompareBalloon: FC = () => {
 		}
 	}, [compare.show]);
 
+	/**
+	 * 비교 팝업 초기화
+	 * 페이지 첫 로딩시에만 해당 로직 수행
+	 * => 비교팝업 닫기
+	 */
 	const generateCompareData = useCallback(() => {
 		if (!initialized.current) {
 			let compare = getCompare();
@@ -55,6 +77,9 @@ export const CompareBalloon: FC = () => {
 		}
 	}, [dispatch, compareShowStatus, compare, setCompare]);
 
+	/**
+	 * 페이지 변경 완료시에 비교 팝업 초기화 로직 수행 ( generateCompareData() )
+	 */
 	useEffect(() => {
 		const handleGenerateData = () => {
 			generateCompareData();

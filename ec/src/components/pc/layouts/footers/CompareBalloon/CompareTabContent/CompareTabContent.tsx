@@ -99,10 +99,12 @@ export const CompareTabContent: FC<Props> = ({
 					<div className={styles.left}>
 						<p>
 							총 <span>{totalCount}</span>건
-						</p>
-						<p>
-							| <span>{selectedCount}</span>건 선택
-						</p>
+						</p>{' '}
+						{tabContents.length > 0 && (
+							<p>
+								| <span>{selectedCount}</span>건 선택
+							</p>
+						)}
 					</div>
 					<div className={styles.right}>
 						<p>
@@ -123,7 +125,8 @@ export const CompareTabContent: FC<Props> = ({
 						<div className={styles.pcpBlankItem}></div>
 					</div>
 					<ul>
-						{tabContents && tabContents.length > 0 ? (
+						{tabContents &&
+							tabContents.length > 0 &&
 							tabContents.map((item, index) => {
 								const seriesUrl = pagesPath.vona2.detail
 									._seriesCode(item.seriesCode)
@@ -175,10 +178,7 @@ export const CompareTabContent: FC<Props> = ({
 										</div>
 									</li>
 								);
-							})
-						) : (
-							<p>데이터가 없습니다.</p>
-						)}
+							})}
 					</ul>
 				</div>
 			</div>

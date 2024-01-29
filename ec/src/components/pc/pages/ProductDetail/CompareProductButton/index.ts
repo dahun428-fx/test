@@ -1,1 +1,1 @@
-export { CompareProductButton } from './CompareProductButton';
+export { CompareProductButton } from './CompareProductButton.container';

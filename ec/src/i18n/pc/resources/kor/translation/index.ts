@@ -13,6 +13,7 @@ import { applicationErrorContents } from '../../../../../components/pc/error/App
 import { errorHandler } from '../../../../../components/pc/error/ErrorHandler.i18n.en';
 import { cadDownloadStatusBalloon } from '../../../../../components/pc/layouts/footers/CadDownloadStatusBalloon/CadDownloadStatusBalloon.i18n.en';
 import { stackBalloon } from '../../../../../components/pc/layouts/footers/StackBalloon/StackBalloon.i18n.ko'; //change to ko
+import { compareBalloon } from '../../../../../components/pc/layouts/footers/CompareBalloon/CompareBalloon.i18n.ko'; //change to ko
 import { footer } from '../../../../../components/pc/layouts/footers/Footer/Footer.i18n.en';
 import { headers } from '../../../../../components/pc/layouts/headers/headers.i18n.ko'; //change to ko
 import { addToCartModal } from '../../../../../components/pc/modals/AddToCartModal/AddToCartModal.i18n.en';
@@ -98,6 +99,7 @@ const translation: Translation = {
 				footers: {
 					cadDownloadStatusBalloon,
 					stackBalloon,
+					compareBalloon,
 					footer,
 				},
 				headers,

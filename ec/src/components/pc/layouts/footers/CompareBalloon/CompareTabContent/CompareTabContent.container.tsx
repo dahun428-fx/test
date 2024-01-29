@@ -17,12 +17,18 @@ import { getCompare, removeCompareItem } from '@/services/localStorage/compare';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import { useRouter } from 'next/router';
 import { useConfirmModal } from '@/components/pc/ui/modals/ConfirmModal';
+import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { Button } from '@/components/pc/ui/buttons';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
 	selectedActiveTab: MutableRefObject<string>;
 };
 
+/**
+ * 비교 팝업 탭 상세
+ */
 export const CompareTabContent = React.memo<Props>(
 	({ selectedItemsForCheck, selectedActiveTab }) => {
 		const dispatch = useDispatch();
@@ -30,12 +36,19 @@ export const CompareTabContent = React.memo<Props>(
 		const compare = useSelector(selectCompare);
 
 		const { showConfirm } = useConfirmModal();
+		const { showMessage } = useMessageModal();
+
+		const [t] = useTranslation();
 
 		const [selectedItems, setSelectedItems] = useState<Set<CompareItem>>(
 			new Set()
-		);
-		const [activeCategoryCode, setActiveCategoryCode] = useState<string>('');
+		); //선택된 상세
+		const [activeCategoryCode, setActiveCategoryCode] = useState<string>(''); //선택된 탭
 
+		/**
+		 * 비교 팝업 탭 출력
+		 * localStorage 에서 중복 없이 비교 팝업 탭을 불러온다.
+		 */
 		const tabHeadList = useMemo(() => {
 			const categoryCodeList = compare.items.map(item => item.categoryCode);
 			return categoryCodeList.reduce<string[]>(
@@ -45,40 +58,65 @@ export const CompareTabContent = React.memo<Props>(
 			);
 		}, [compare, compare.items]);
 
+		/**
+		 * 비교 팝업 탭 > 비교 팝업 항목 출력
+		 * localStorage 에서 활성화된 비교 팝업 탭에 따른 비교 항목들을 불러온다.
+		 */
 		const tabContentList = useMemo(() => {
 			return compare.items.filter(
 				item => item.categoryCode === activeCategoryCode
 			);
 		}, [compare, compare.items, activeCategoryCode]);
 
+		/**
+		 * 비교 팝업 탭 > 비교 팝업 선택된 항목
+		 * 선택된 탭 | 선택된 항목 => activeSelectedItems
+		 */
 		const activeSelectedItems = useMemo(() => {
 			return Array.from(selectedItems).filter(
 				item => item.categoryCode === activeCategoryCode
 			);
 		}, [selectedItems, activeCategoryCode]);
 
+		/**
+		 * 선택된 탭 > 총 건수
+		 */
 		const totalCount = useMemo(() => {
 			return tabContentList.length;
 		}, [tabContentList]);
 
+		/**
+		 * 선택된 탭 > 선택 항목 건수
+		 */
 		const selectedCount = useMemo(() => {
 			return activeSelectedItems.length;
 		}, [selectedItems, activeCategoryCode]);
 
+		/**
+		 * 비교 팝업 탭 클릭 이벤트
+		 */
 		const handleTabClick = (categoryCode: string) => {
 			setActiveCategoryCode(categoryCode);
 		};
 
+		/**
+		 * 비교 팝업 탭 삭제 이벤트
+		 */
 		const handleTabDelete = useCallback(async () => {
 			if (tabContentList.length < 1) return;
-			console.log('handledTabDelete ====>', tabContentList);
 
-			// const categoryName = getCategoryName(tabContentList[0]?.categoryCode)
 			const categoryName = tabContentList[0]?.categoryName;
 			const confirm = await showConfirm({
-				message: `${categoryName}의 모든 형번이 삭제됩니다. ${categoryName}을(를) 삭제하시겠습니까?`,
-				confirmButton: '예',
-				closeButton: '아니오',
+				message: t(
+					'components.ui.layouts.footers.compareBalloon.message.confirm.deleteOne',
+					{ categoryName }
+				),
+				confirmButton: t(
+					'components.ui.layouts.footers.compareBalloon.message.yes'
+				),
+				closeButton: t(
+					'components.ui.layouts.footers.compareBalloon.message.no'
+				),
 			});
 			if (!confirm) return;
 
@@ -89,6 +127,9 @@ export const CompareTabContent = React.memo<Props>(
 			});
 		}, [tabContentList, selectedItems]);
 
+		/**
+		 * 비교 팝업 항목 선택 이벤트
+		 */
 		const handleSelectItem = useCallback(
 			(compareItem: CompareItem) => {
 				const isSelected = selectedItems.has(compareItem);
@@ -102,6 +143,9 @@ export const CompareTabContent = React.memo<Props>(
 			[selectedItems]
 		);
 
+		/**
+		 * '전체선택' 버튼 클릭 이벤트
+		 */
 		const handleSelectAllItem = useCallback(() => {
 			const isAllSelected =
 				activeSelectedItems.length === tabContentList.length;
@@ -125,15 +169,24 @@ export const CompareTabContent = React.memo<Props>(
 			activeSelectedItems,
 		]);
 
+		/**
+		 * 개별 삭제 이벤트
+		 */
 		const handleDeleteItem = useCallback(
 			async (compareItem: CompareItem) => {
 				if (activeSelectedItems.length < 1) {
 					return;
 				}
 				const confirm = await showConfirm({
-					message: '삭제하시겠습니까?',
-					confirmButton: '예',
-					closeButton: '아니오',
+					message: t(
+						'components.ui.layouts.footers.compareBalloon.message.confirm.check'
+					),
+					confirmButton: t(
+						'components.ui.layouts.footers.compareBalloon.message.yes'
+					),
+					closeButton: t(
+						'components.ui.layouts.footers.compareBalloon.message.no'
+					),
 				});
 				if (!confirm) return;
 
@@ -144,14 +197,34 @@ export const CompareTabContent = React.memo<Props>(
 			[selectedItems, activeSelectedItems]
 		);
 
+		/**
+		 * '삭제' 버튼 클릭 이벤트
+		 */
 		const handleDeleteAllItem = useCallback(async () => {
 			if (activeSelectedItems.length < 1) {
+				showMessage({
+					message: t(
+						'components.ui.layouts.footers.compareBalloon.message.confirm.alert'
+					),
+					button: (
+						<Button>
+							{t('components.ui.layouts.footers.compareBalloon.message.ok')}
+						</Button>
+					),
+				});
 				return;
 			}
 			const confirm = await showConfirm({
-				message: `선택하신 ${activeSelectedItems.length}개의 형번이 삭제됩니다. 삭제하시겠습니까?`,
-				confirmButton: '예',
-				closeButton: '아니오',
+				message: t(
+					'components.ui.layouts.footers.compareBalloon.message.confirm.deleteAll',
+					{ length: activeSelectedItems.length }
+				),
+				confirmButton: t(
+					'components.ui.layouts.footers.compareBalloon.message.yes'
+				),
+				closeButton: t(
+					'components.ui.layouts.footers.compareBalloon.message.no'
+				),
 			});
 			if (!confirm) return;
 
@@ -162,6 +235,9 @@ export const CompareTabContent = React.memo<Props>(
 			});
 		}, [selectedItems, activeSelectedItems]);
 
+		/**
+		 * 각 항목 중 형번 클릭 이벤트
+		 */
 		const handlePartNumberClick = (
 			e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
 		) => {
@@ -172,11 +248,19 @@ export const CompareTabContent = React.memo<Props>(
 			}
 		};
 
+		/**
+		 * 렌더링 될 때, localStorage 의 compare 을 불러온다
+		 * > compareBalloon 과 다르게, compareTabContent 는 show 될 때, 새롭게 렌더링 됨.
+		 */
 		useOnMounted(() => {
 			let compare = getCompare();
 			updateCompareOperation(dispatch)(compare);
 		});
 
+		/**
+		 * 선택된 탭을 초기화
+		 * localStorage comapre active | tabHeadList last length
+		 */
 		useEffect(() => {
 			setActiveCategoryCode(
 				compare.active
@@ -185,14 +269,25 @@ export const CompareTabContent = React.memo<Props>(
 			);
 		}, [compare.active, tabHeadList]);
 
+		/**
+		 * localStorage compare item chk 변수 여부 판단하여 selectedItems 에 초기화
+		 */
 		useEffect(() => {
 			setSelectedItems(new Set(compare.items.filter(item => item.chk)));
 		}, [compare.items]);
 
+		/**
+		 * 부모 Component CompareBalloon 에 선택된 아이템 전달
+		 * => 비교 팝업 탭이 닫힐 때, Compare Item chk 일괄변경
+		 */
 		useEffect(() => {
 			selectedItemsForCheck.current = selectedItems;
 		}, [selectedItems]);
 
+		/**
+		 * 부모 Component CompareBalloon 에 선택된 탭 전달
+		 * => 비교 팝업 탭이 닫힐 때, compare active 변경
+		 */
 		useEffect(() => {
 			selectedActiveTab.current = activeCategoryCode;
 		}, [activeCategoryCode]);

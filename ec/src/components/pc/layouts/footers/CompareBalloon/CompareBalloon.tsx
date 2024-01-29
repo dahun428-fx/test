@@ -1,9 +1,9 @@
-import { FC, MutableRefObject, useEffect } from 'react';
+import { FC, MutableRefObject } from 'react';
 import styles from './CompareBalloon.module.scss';
 import { Button } from '@/components/pc/ui/buttons';
-import { Compare, CompareItem } from '@/models/localStorage/Compare';
+import { CompareItem } from '@/models/localStorage/Compare';
 import { CompareTabContent } from './CompareTabContent';
-import { useCompareBalloon } from './CompareBalloon.hooks';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	showStatus: boolean;
@@ -11,39 +11,38 @@ type Props = {
 	selectedActiveTab: MutableRefObject<string>;
 	handleClose: () => void;
 };
-
+/**
+ * 비교 푸터 팝업
+ */
 export const CompareBalloon: FC<Props> = ({
 	showStatus,
 	selectedItemsForCheck,
 	selectedActiveTab,
 	handleClose,
 }) => {
+	const [t] = useTranslation();
+
 	return (
 		<>
 			{showStatus && (
 				<div className={styles.constrast}>
 					<div className={styles.selectPopup}>
 						<div className={styles.titleSection}>
-							<h2>비교</h2>
+							<h2>{t('components.ui.layouts.footers.compareBalloon.title')}</h2>
 						</div>
-
 						<div className={styles.productList}>
 							<div className={styles.ndrClearfix}>
 								<div className={styles.productListBody}>
 									<div>
-										{/* list */}
 										<div className={styles.tabSection}>
-											{/* <OverlayLoader show={loading} /> */}
 											<CompareTabContent
 												selectedItemsForCheck={selectedItemsForCheck}
 												selectedActiveTab={selectedActiveTab}
 											/>
-											{/* content */}
 										</div>
 									</div>
 								</div>
 								<div className={styles.asideBtnSection}>
-									{/* 상단버튼 */}
 									<div className={styles.topBtnSection}>
 										<Button
 											size="m"
@@ -51,7 +50,7 @@ export const CompareBalloon: FC<Props> = ({
 											theme="conversion"
 											icon="order-now"
 										>
-											주문
+											{t('components.ui.layouts.footers.compareBalloon.order')}
 										</Button>
 										<Button
 											size="m"
@@ -59,7 +58,7 @@ export const CompareBalloon: FC<Props> = ({
 											theme="conversion"
 											icon="cart"
 										>
-											장바구니
+											{t('components.ui.layouts.footers.compareBalloon.cart')}
 										</Button>
 										<Button
 											size="m"
@@ -67,13 +66,15 @@ export const CompareBalloon: FC<Props> = ({
 											theme="default"
 											icon="add-my-component"
 										>
-											My 부품표
+											{t(
+												'components.ui.layouts.footers.compareBalloon.myComponent'
+											)}
 										</Button>
 									</div>
 								</div>
 							</div>
 							<div className={styles.pcpCookieGuide}>
-								<p>비교 형번은 당일 이후 자동 삭제됩니다.</p>
+								<p>{t('components.ui.layouts.footers.compareBalloon.guide')}</p>
 							</div>
 							<div className={styles.btnSection}>
 								<Button
@@ -82,7 +83,9 @@ export const CompareBalloon: FC<Props> = ({
 									theme="strong"
 									icon="right-arrow"
 								>
-									비교결과
+									{t(
+										'components.ui.layouts.footers.compareBalloon.compareResult'
+									)}
 								</Button>
 								<Button
 									size="m"
@@ -90,7 +93,7 @@ export const CompareBalloon: FC<Props> = ({
 									theme="default"
 									onClick={handleClose}
 								>
-									닫기
+									{t('components.ui.layouts.footers.compareBalloon.close')}
 								</Button>
 							</div>
 						</div>

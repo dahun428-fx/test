@@ -3,6 +3,7 @@ import { addToMyComponentsModal } from './AddToMyComponentsModal/AddToMyComponen
 import { basicInformation } from './BasicInformation/BasicInformation.i18n.en';
 import { catalog } from './Catalog/Catalog.i18n.en';
 import { catalogLink } from './CatalogLink/CatalogLink.i18n.en';
+import { compareProductButton } from './CompareProductButton/CompareProductButton.i18n.ko'; //change to ko
 import { daysToShip as daysToShipUI } from './DaysToShip/DaysToShip.i18n.en';
 import { faq } from './Faq/Faq.i18n.en';
 import { pageHeading } from './PageHeading/PageHeading.i18n.en';
@@ -72,4 +73,5 @@ export const productDetail: Translation = {
 	pageHeading,
 	basicInformation,
 	partNumberInputHeader,
+	compareProductButton,
 };
