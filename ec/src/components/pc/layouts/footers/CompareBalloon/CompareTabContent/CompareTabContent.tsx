@@ -158,7 +158,6 @@ export const CompareTabContent: FC<Props> = ({
 										<div className={styles.pcpItemImg}>
 											<ProductImage
 												imageUrl={item.productImageUrl}
-												preset="t_search_view_a"
 												comment={item.seriesName}
 												size={135}
 											/>

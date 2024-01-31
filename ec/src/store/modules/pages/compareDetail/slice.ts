@@ -1,25 +1,20 @@
-import { SearchPartNumberResponse$search } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
-import { SearchSeriesResponse$detail } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CompareDetailLoadStatus, CompareDetailState } from './types';
 
-const initialState = {};
-
-type CompareLoadPayload = {
-	seriesCode: string;
-	partNumber: string;
-	// seriesResponse: SearchSeriesResponse$detail;
-	// partNumberResponse: SearchPartNumberResponse$search;
+const initialState: CompareDetailState = {
+	status: CompareDetailLoadStatus.INITIAL,
 };
 
+type UpdatePayload = Partial<CompareDetailState>;
+
 const slice = createSlice({
-	name: '',
+	name: 'pages/compareDetail',
 	initialState,
 	reducers: {
-		load(state, action: PayloadAction<CompareLoadPayload>) {
+		update(state, action: PayloadAction<UpdatePayload>) {
 			return {
 				...state,
 				...action.payload,
-				// currentPartNumberResponse: action.payload.partNumberResponse,
 			};
 		},
 	},

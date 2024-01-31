@@ -1,328 +1,351 @@
-import { searchPartNumber$search } from '@/api/services/searchPartNumber';
-import { searchSeries$detail } from '@/api/services/searchSeries';
 import {
-	PartNumber,
-	PartNumberCadType,
-	SearchPartNumberResponse$search,
-	Spec,
-} from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
-import {
-	SearchSeriesResponse$detail,
-	Series,
-} from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
-import { CompareItem } from '@/models/localStorage/Compare';
-import { selectCompare } from '@/store/modules/common/compare';
-import { assertNotEmpty } from '@/utils/assertions';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+	CompareDetailLoadStatus,
+	SpecListType,
+} from '@/store/modules/pages/compareDetail';
+import styles from './CompareDetail.module.scss';
+import { Meta } from './Meta';
+import { Breadcrumbs } from '@/components/pc/ui/links/Breadcrumbs';
+import classNames from 'classnames';
+import { Button } from '../../ui/buttons';
+import { useTranslation } from 'react-i18next';
+import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
+import { ProductImage } from '@/components/mobile/ui/images/ProductImage';
+import { PartNumber } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
+import { pagesPath } from '@/utils/$path';
+import { NagiLink } from '../../ui/links';
+import { DaysToShip } from '../../ui/text/DaysToShip';
 
-export type Props = {
-	categoryCode: string;
+type SpecType = 'brand';
+type SpecParamType = {
+	title: string;
+	children: JSX.Element[] | string;
+	className: string | undefined;
+	key: string;
 };
+type Props = {
+	status: boolean;
+	specList: SpecListType[];
+	seriesList: Series[];
+	partNumberList: PartNumber[];
+	totalCount: number;
+	categoryName: string;
+};
+export const CompareDetail: React.FC<Props> = ({
+	status,
+	specList,
+	seriesList,
+	partNumberList,
+	totalCount,
+	categoryName,
+}) => {
+	console.log('status ===> ', status);
+	console.log('specList ===> ', specList);
+	const [t] = useTranslation();
+	const LIST_MAX_COUNT = 5;
 
-export const CompareDetail: React.FC<Props> = ({ categoryCode }) => {
-	const compare = useSelector(selectCompare);
-
-	const initialize = useRef(false);
-
-	const [compareItems, setCompareItems] = useState<CompareItem[]>([]);
-
-	useEffect(() => {
-		if (!!compare && compare.items.length > 0) {
-			console.log('compare ===> ', compare);
-			const items = compare.items.filter(
-				item => item.categoryCode === categoryCode
+	const imageHTMLPrint = () => {
+		let html = seriesList.map((item, index) => {
+			const productImageUrl = item.productImageList[0]?.url || '';
+			return (
+				<td key={`${item.seriesCode}_${index}`} className={styles.product}>
+					<div className={styles.tableCheckbox}></div>
+					<div className={styles.closeBtn}></div>
+					<div className={styles.tableImg}>
+						<ProductImage
+							imageUrl={productImageUrl}
+							preset="t_product_main"
+							comment={item.seriesName}
+						/>
+					</div>
+				</td>
 			);
-			setCompareItems(items);
+		});
+		if (LIST_MAX_COUNT > totalCount) {
+			const remainCount = LIST_MAX_COUNT - totalCount;
+			const rowSpan = specList.length + 3;
+			for (let i = 0; i < remainCount; i++) {
+				html.push(
+					<td
+						key={`empty_${i}`}
+						className={styles.product}
+						rowSpan={rowSpan}
+					></td>
+				);
+			}
 		}
-	}, [compare.items]);
+		return html;
+	};
 
-	useEffect(() => {
-		if (compareItems.length < 1) return;
-		if (initialize.current) return;
-		// setCompareItems(items);
-		try {
-			(async () => {
-				// const seriesResponse = await searchSeries$detail({
-				// 	seriesCode,
-				// });
+	const specHtmlPrint = () => {
+		return specList.map((item, index) => {
+			const { diffTypeCode, specTypeCode } = item;
+			const isDiffRow = diffTypeCode % 2 !== 0;
+			if (diffTypeCode > 2) {
+				const className = classNames(isDiffRow && styles.tableDiffRow);
+				switch (specTypeCode) {
+					case '9':
+						return (
+							<tr key={`brand_${index}`} className={className}>
+								<th>{`브랜드`}</th>
+								{seriesList.map((seriesItem, seriesIndex) => {
+									return (
+										<td key={`brand_${seriesItem.seriesCode}_${seriesIndex}`}>
+											{seriesItem.brandName}
+										</td>
+									);
+								})}
+							</tr>
+						);
+					case '0':
+						return (
+							<tr key={`price_${index}`} className={className}>
+								<th>{`수량할인`}</th>
+								{partNumberList.map((partNumberItem, partNumberIndex) => {
+									return (
+										<td key={`price_${partNumberItem.partNumber}`}>
+											{partNumberItem.volumeDiscountFlag ? '있음' : '-'}
+										</td>
+									);
+								})}
+							</tr>
+						);
+					case '1':
+						return (
+							<tr key={`shipping_date_${index}`} className={className}>
+								<th>{`출하일`}</th>
+								{partNumberList.map((partNumberItem, partNumberIndex) => {
+									return (
+										<td key={`shipping_date_${partNumberItem.partNumber}`}>
+											<DaysToShip
+												minDaysToShip={partNumberItem.minStandardDaysToShip}
+												maxDaysToShip={partNumberItem.maxStandardDaysToShip}
+											/>
+										</td>
+									);
+								})}
+							</tr>
+						);
+					case '2':
+						return;
 
-				let specItems: Spec[] = [];
-				let seriesItems: Series[] = [];
-				let partNumberItems: PartNumber[] = [];
-				for await (const item of compareItems) {
-					const seriesCode = item?.seriesCode;
-					const partNumber = item?.partNumber;
-					console.log(
-						'seriesCode ===> ',
-						seriesCode,
-						'partNumber===>',
-						partNumber
-					);
-					assertNotEmpty(seriesCode);
-					assertNotEmpty(partNumber);
-
-					const [partNumberResponse, seriesResponse] = await Promise.all([
-						searchPartNumber$search({
-							seriesCode,
-							partNumber,
-						}),
-						searchSeries$detail({
-							seriesCode,
-						}),
-					]);
-
-					// const partNumberResponse = await searchPartNumber$search({
-					// 	seriesCode,
-					// 	partNumber,
-					// });
-					const { specList, partNumberList, currencyCode } = partNumberResponse;
-					const { seriesList } = seriesResponse;
-
-					if (specList) {
-						specItems = [...specItems, ...specList];
-					}
-					seriesItems = [...seriesItems, ...seriesList];
-					partNumberItems = [...partNumberItems, ...partNumberList];
-					// console.log('specList ===> ', specList);
-					// console.log('partNumberList ===> ', partNumberList);
-					// console.log('currencyCode ===> ', currencyCode);
-					// console.log('seriesList ===> ', seriesList);
-					console.log('partNumberList ===> ', partNumberList);
+					default:
+						break;
 				}
-				specItems = await getSpecMerge(specItems);
-				let sortData0 = await fixSeriesSortList(seriesItems); //브랜드 데이터 비교
-				let sortData1 = await fixPartNumberSortList(partNumberItems); //수량할인, 출하일, CAD, RoHs 데이터 비교
-				let sortData2 = await sortSpecList(specItems, partNumberItems); //스펙 데이터 비교
-				let specList0 = [
-					...(sortData0[0] || []),
-					...(sortData1[0] || []),
-					...(sortData2[0] || []),
-				]; //데이터가 다른 스펙리스트 merge
-				let specList1 = [
-					...(sortData0[1] || []),
-					...(sortData1[1] || []),
-					...(sortData2[1] || []),
-				];
-				let specList = [...specList0, ...specList1];
-				// console.log('spec ===> ', specItems);
-				// console.log('series ===> ', seriesItems);
-				// console.log('partNumberItems ===> ', partNumberItems);
-				// console.log('sortData0====> ', sortData0);
-				console.log('sortData0 =====> ', sortData0);
-				console.log('sortData1 =====> ', sortData1);
-				console.log('sortData2 =====> ', sortData2);
-				console.log('specList0 =====> ', specList0);
-				console.log('specList1 =====> ', specList1);
-				console.log('specList =====> ', specList);
-			})();
-		} catch (error) {
-			console.log('error =====> ', error);
+			}
+		});
+	};
+
+	const priceDiscountHtml = (key: string) => {
+		return <tr key={key}></tr>;
+	};
+
+	const getTitle = (type: SpecType) => {
+		switch (type) {
+			case 'brand':
+				return '브랜드';
+			default:
+				return '';
 		}
-		initialize.current = true;
-	}, [compareItems]);
-
-	const getSpecMerge = async (specItems: Spec[]) => {
-		return specItems.reduce<Spec[]>((previous, current) => {
-			const foundIndex = previous.findIndex(
-				item => item.specCode === current.specCode
-			);
-			// console.log('foundIndex ===> ', foundIndex, current);
-			return foundIndex !== -1 ? previous : [...previous, current];
-		}, []);
 	};
-
-	type SpecListType = {
-		spec?: Spec;
-		diffTypeCode: number;
-		specTypeCode?: string;
-	};
-
-	const fixSeriesSortList = async (seriesItems: Series[]) => {
-		let specList0: SpecListType[] = []; //데이터가 다른 항목 저장 array
-		let specList1: SpecListType[] = []; //데이터가 같은 항목 저장 array
-
-		const size = seriesItems.length;
-		const brandCode = seriesItems[0]?.brandCode;
-		let index = 0;
-		for await (const item of seriesItems) {
-			if (item.brandCode !== brandCode) {
-				specList0 = [...specList0, { diffTypeCode: 3, specTypeCode: '9' }];
-				break;
-			} else if (index + 1 === size) {
-				specList1 = [...specList1, { diffTypeCode: 4, specTypeCode: '9' }];
-			}
-			index++;
+	const getChildren = (type: SpecType): JSX.Element[] | string => {
+		switch (type) {
+			case 'brand':
+				return brandHtml();
+			default:
+				return '';
 		}
-		return [specList0, specList1];
 	};
 
-	const fixPartNumberSortList = async (partNumberItems: PartNumber[]) => {
-		let specList0: SpecListType[] = []; //데이터가 다른 항목 저장 array
-		let specList1: SpecListType[] = []; //데이터가 같은 항목 저장 array
-		let diffdisFlag = false; //수량할인 데이터 가 다른지 여부 Flag
-		let diffDayToShip = false; //출하일 데이터 가 다른지 여부 Flag
-		let diffCadType = false; //CAD 데이터 가 다른지 여부 Flag
-		let diffRohsFlag = false; //RoHs 데이터 가 다른지 여부 Flag
-		let diffPriceFlag = false; //가격 데이터 가 다른지 여부 Flag
-
-		const size = partNumberItems.length;
-		let index = 0;
-
-		const partNumber = partNumberItems[0];
-		for await (const item of partNumberItems) {
-			//수량할인 정보비교
-			if (
-				!diffdisFlag &&
-				partNumber?.volumeDiscountFlag !== item.volumeDiscountFlag
-			) {
-				diffdisFlag = true;
-				specList0 = getSortdisFlag0(specList0);
-			} else if (!diffdisFlag && index + 1 === size) {
-				specList1 = getSortdisFlag1(specList1);
-			}
-			//출하일 정보비교
-			if (
-				(!diffDayToShip &&
-					partNumber?.minStandardDaysToShip !== item.minStandardDaysToShip) ||
-				partNumber?.maxStandardDaysToShip !== item.maxStandardDaysToShip
-			) {
-				diffDayToShip = true;
-				specList0 = getSortDayToShip0(specList0);
-			} else if (!diffDayToShip && index + 1 === size) {
-				specList1 = getSortDayToShip1(specList1);
-			}
-
-			//CAD 정보 비교
-			if (
-				!diffCadType &&
-				makeCadTypeListDisp(partNumber?.cadTypeList) !==
-					makeCadTypeListDisp(item.cadTypeList)
-			) {
-				diffCadType = true;
-				specList0 = getSortCad0(specList0);
-			} else if (!diffCadType && index + 1 === size) {
-				specList1 = getSortCad1(specList1);
-			}
-
-			//RoHs 정보 비교
-			if (!diffRohsFlag && partNumber?.rohsFlag !== item.rohsFlag) {
-				diffRohsFlag = true;
-				specList0 = getSortRohs0(specList0);
-			} else if (!diffRohsFlag && index + 1 === size) {
-				specList1 = getSortRohs1(specList1);
-			}
-
-			//가격비교
-			if (
-				!diffPriceFlag &&
-				partNumber?.standardUnitPrice !== item.standardUnitPrice
-			) {
-				diffPriceFlag = true;
-				specList0 = getSortPrice0(specList0);
-			} else if (!diffPriceFlag && index + 1 === size) {
-				specList1 = getSortPrice1(specList1);
-			}
-
-			index++;
-		}
-		return [specList0, specList1];
+	const createParam = (
+		type: SpecType,
+		isDiffRow: boolean,
+		key: string
+	): SpecParamType => {
+		return {
+			title: getTitle(type),
+			children: getChildren(type),
+			className: isDiffRow ? styles.tableDiffRow : '',
+			key: key,
+		};
 	};
 
-	const getSortdisFlag0 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 3, specTypeCode: '0' }];
-	};
-	const getSortdisFlag1 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 4, specTypeCode: '0' }];
-	};
-	const getSortCad0 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 3, specTypeCode: '2' }];
-	};
-	const getSortCad1 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 4, specTypeCode: '2' }];
-	};
-	const getSortDayToShip0 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 3, specTypeCode: '1' }];
-	};
-	const getSortDayToShip1 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 4, specTypeCode: '1' }];
-	};
-	const getSortRohs0 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 3, specTypeCode: '3' }];
-	};
-	const getSortRohs1 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 4, specTypeCode: '3' }];
-	};
-	const getSortPrice0 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 3, specTypeCode: '4' }];
-	};
-	const getSortPrice1 = (items: SpecListType[]): SpecListType[] => {
-		return [...items, { diffTypeCode: 4, specTypeCode: '4' }];
-	};
-
-	const makeCadTypeListDisp = (
-		cadTypeList: PartNumberCadType[] | undefined
-	): string => {
-		if (cadTypeList) {
-			return cadTypeList.join(' | ');
-		}
-		return '-';
-	};
-
-	const sortSpecList = async (
-		specItems: Spec[],
-		partNumberItems: PartNumber[]
+	const specChildrenHtmlPrint = (
+		title: string,
+		children: JSX.Element[] | string,
+		className: string | undefined,
+		key: string
 	) => {
-		let specList0: SpecListType[] = [];
-		let specList1: SpecListType[] = [];
-
-		const partNumber = partNumberItems[0];
-		const size = partNumberItems.length;
-		for await (const specItem of specItems) {
-			let index = 0;
-			const specCode = specItem.specCode;
-			for await (const partNumberItem of partNumberItems) {
-				if (
-					searchSpecValue(partNumber, specCode) !==
-					searchSpecValue(partNumberItem, specCode)
-				) {
-					specList0 = [...specList0, { ...specItem, diffTypeCode: 1 }];
-					break;
-				} else if (index + 1 === size) {
-					specList1 = [...specList1, { ...specItem, diffTypeCode: 0 }];
-				}
-				index++;
-			}
-		}
-		return [specList0, specList1];
+		return (
+			<tr key={key} className={className ?? ''}>
+				<th>{title}</th>
+				{children}
+			</tr>
+		);
 	};
 
-	const searchSpecValue = (
-		partNumberItem: PartNumber | undefined,
-		searchSpecCode: string
-	): string => {
-		if (!partNumberItem) {
-			return '-';
-		}
-		const foundIndex = partNumberItem.specValueList.findIndex(
-			item => item.specCode === searchSpecCode
-		);
-		return partNumberItem.specValueList[foundIndex]?.specValueDisp ?? '-';
+	const brandHtml = () => {
+		return seriesList.map((seriesItem, seriesIndex) => {
+			return (
+				<td key={`brandName_${seriesItem.seriesCode}_${seriesIndex}`}>
+					{seriesItem.brandName}
+				</td>
+			);
+		});
 	};
 
 	return (
-		<div>
-			{compareItems &&
-				compareItems.length > 0 &&
-				compareItems.map((item, index) => {
-					return (
-						<div key={index}>
-							{item.categoryCode1}
-							<span>{item.partNumber}</span>
+		<>
+			<Meta />
+			<div className={styles.page}>
+				<div className={styles.breadcrumbWrap}>
+					<Breadcrumbs breadcrumbList={[{ text: '비교결과' }]} />
+				</div>
+				<div className={styles.main}>
+					<div>
+						<div>
+							<h1 className={styles.heading}>{categoryName} 비교결과</h1>
 						</div>
-					);
-				})}
-		</div>
+						{status && (
+							<div className={styles.productList}>
+								<div
+									className={classNames(
+										styles.compareResult,
+										styles.ndrClearfix
+									)}
+								>
+									<div className={styles.topBtnSection}>
+										<Button
+											size="m"
+											type="button"
+											theme="conversion"
+											icon="order-now"
+										>
+											{t('components.ui.layouts.footers.compareBalloon.order')}
+										</Button>
+										<Button
+											size="m"
+											type="button"
+											theme="conversion"
+											icon="cart"
+										>
+											{t('components.ui.layouts.footers.compareBalloon.cart')}
+										</Button>
+										<Button
+											size="m"
+											type="button"
+											theme="default"
+											icon="add-my-component"
+										>
+											{t(
+												'components.ui.layouts.footers.compareBalloon.myComponent'
+											)}
+										</Button>
+									</div>
+									<div className={styles.productListBody}>
+										<div
+											className={classNames(
+												styles.mainSection,
+												styles.ndrClearfix
+											)}
+										>
+											<div
+												className={classNames(
+													styles.compareInfo,
+													styles.ndrClearfix
+												)}
+											>
+												<p className={styles.total}>
+													총 <span className={styles.total}>0</span>건
+												</p>
+												<p className={styles.totalSelect}>
+													|<span className={styles.totalSelect}>건 선택</span>
+												</p>
+											</div>
+											<div className={styles.right}>
+												<p
+													className={classNames(styles.ndrBlue, styles.ndrBold)}
+												>
+													<a>삭제</a>
+												</p>
+												<p>|</p>
+												<p
+													className={classNames(styles.ndrBlue, styles.ndrBold)}
+												>
+													전체선택
+												</p>
+											</div>
+
+											{/* 비교 표 */}
+											<div className={styles.compareTable}>
+												<table className={styles.tableInfo}>
+													<colgroup>
+														<col />
+														<col />
+														<col />
+														<col />
+														<col />
+														<col />
+													</colgroup>
+													<tbody>
+														<tr>
+															<th>이미지</th>
+															{imageHTMLPrint()}
+														</tr>
+														<tr>
+															<th>상품명</th>
+															{seriesList.map(item => {
+																return (
+																	<td className={styles.product}>
+																		<p className={styles.ndrThin}>
+																			{item.seriesName}
+																		</p>
+																	</td>
+																);
+															})}
+														</tr>
+														<tr>
+															<th>형번</th>
+
+															{partNumberList.map((item, index) => {
+																const seriesUrl = pagesPath.vona2.detail
+																	._seriesCode(
+																		seriesList[index]?.seriesCode || ''
+																	)
+																	.$url({
+																		query: { HissuCode: item.partNumber },
+																	});
+																return (
+																	<td className={styles.product}>
+																		<NagiLink href={seriesUrl}>
+																			<p
+																				className={classNames(
+																					styles.ndrThin,
+																					styles.productType,
+																					styles.productTypeNewWindow
+																				)}
+																			>
+																				{item.partNumber}
+																			</p>
+																		</NagiLink>
+																	</td>
+																);
+															})}
+														</tr>
+
+														{specHtmlPrint()}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+			</div>
+		</>
 	);
 };
+
 CompareDetail.displayName = 'CompareDetail';

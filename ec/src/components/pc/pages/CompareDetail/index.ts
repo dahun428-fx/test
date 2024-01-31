@@ -1,1 +1,1 @@
-export { CompareDetail } from './CompareDetail';
+export { CompareDetail } from './CompareDetail.container';
