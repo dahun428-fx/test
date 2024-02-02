@@ -19,6 +19,8 @@ import {
 } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { assertNotNull } from '@/utils/assertions';
+import { cadTypeListDisp } from '@/utils/cad';
+import { config } from '@/config';
 
 type Props = {
 	categoryCode: string;
@@ -153,8 +155,8 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			//CAD 정보 비교
 			if (
 				!diffCadType &&
-				makeCadTypeListDisp(partNumber?.cadTypeList) !==
-					makeCadTypeListDisp(item.cadTypeList)
+				cadTypeListDisp(partNumber?.cadTypeList) !==
+					cadTypeListDisp(item.cadTypeList)
 			) {
 				diffCadType = true;
 				specList0 = getSortCad0(specList0);
@@ -217,15 +219,6 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '4' }];
 	};
 
-	const makeCadTypeListDisp = (
-		cadTypeList: PartNumberCadType[] | undefined
-	): string => {
-		if (cadTypeList) {
-			return cadTypeList.join(' | ');
-		}
-		return '-';
-	};
-
 	const sortSpecList = (specItems: Spec[], partNumberItems: PartNumber[]) => {
 		let specList0: SpecListType[] = [];
 		let specList1: SpecListType[] = [];
@@ -253,7 +246,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 
 	const searchSpecValue = (
 		partNumberItem: PartNumber | undefined,
-		searchSpecCode: string
+		searchSpecCode: string | undefined
 	): string => {
 		if (!partNumberItem) {
 			return '-';
@@ -288,6 +281,8 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 				partNumberList={partNumberList}
 				totalCount={totalCount}
 				categoryName={categoryName}
+				searchSpecValue={searchSpecValue}
+				currencyCode={config.defaultCurrencyCode}
 			/>
 		</>
 	);

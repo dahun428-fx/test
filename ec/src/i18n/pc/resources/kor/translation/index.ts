@@ -22,6 +22,7 @@ import { orderNoListedProductModal } from '../../../../../components/pc/modals/O
 import { paymentMethodRequiredModal } from '../../../../../components/pc/modals/PaymentMethodRequiredModal/PaymentMethodRequiredContent.i18n.en';
 import { cadPreview } from '../../../../../components/pc/pages/CadPreview/CadPreview.i18n.en';
 import { category } from '../../../../../components/pc/pages/Category/Category.i18n.en';
+import { compareDetail } from '../../../../../components/pc/pages/CompareDetail/CompareDetail.i18n.ko'; //change to ko
 import { home } from '../../../../../components/pc/pages/Home/Home.i18n.en';
 import { keywordSearch } from '../../../../../components/pc/pages/KeywordSearch/KeywordSearch.i18n.en';
 import { notFound } from '../../../../../components/pc/pages/NotFound/NotFound.i18n.en';
@@ -40,7 +41,7 @@ import { pagination } from '../../../../../components/pc/ui/paginations/i18n.en'
 import { panels } from '../../../../../components/pc/ui/panels/i18n.ko'; //change to ko
 import { radio } from '../../../../../components/pc/ui/radio/i18n.en';
 import { specs } from '../../../../../components/pc/ui/specs/specs.i18n.en';
-import { text } from '../../../../../components/pc/ui/text/i18n.en';
+import { text } from '../../../../../components/pc/ui/text/i18n.ko'; // change to ko
 import { toasts } from '../../../../../components/pc/ui/toasts/i18n.en';
 import { useLogin } from '../../../../../hooks/auth/useLogin.i18n.en';
 import { useTabTranslation } from '../../../../../hooks/i18n/useTabTranslation.i18n.en';
@@ -141,6 +142,7 @@ const translation: Translation = {
 		productDetail,
 		sitemap,
 		techView,
+		compareDetail,
 	},
 	utils: {
 		domain,

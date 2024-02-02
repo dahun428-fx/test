@@ -20,8 +20,7 @@ export type CompareDetailState = {
 	partNumberItems?: PartNumber[];
 	seriesItems?: Series[];
 };
-export type SpecListType = {
-	spec?: Spec;
+export type SpecListType = Partial<Spec> & {
 	diffTypeCode: number;
 	specTypeCode?: string;
 };

@@ -24,6 +24,7 @@ import { notNull } from '@/utils/predicate';
 import { resolve } from 'path';
 import { useCallback } from 'react';
 import { uuidv4 } from './uuid';
+import { PartNumberCadType } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 
 /**
  * Make anchor and append to body for downloading
@@ -672,3 +673,16 @@ export function getValidCadType(cadType?: string) {
 
 	return cadType;
 }
+
+export const cadTypeListDisp = (
+	cadTypeList: PartNumberCadType[] | undefined
+): string => {
+	if (cadTypeList) {
+		return cadTypeList
+			.map(item => {
+				return item.cadTypeDisp;
+			})
+			.join(' | ');
+	}
+	return '-';
+};
