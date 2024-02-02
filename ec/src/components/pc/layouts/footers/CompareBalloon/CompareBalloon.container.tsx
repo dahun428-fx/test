@@ -89,6 +89,33 @@ export const CompareBalloon: FC = () => {
 		return () => Router.events.off('routeChangeComplete', handleGenerateData);
 	}, [generateCompareData]);
 
+	/** todo */
+	const onClickOrderNow = () => {
+		console.log('order');
+		const items = Array.from(selectedItemsForCheck.current).filter(
+			item => item.categoryCode === selectedActiveTab.current
+		);
+		console.log('itesm ===> ', items);
+	};
+
+	/** todo */
+	const addToCart = () => {
+		console.log('add to cart');
+		const items = Array.from(selectedItemsForCheck.current).filter(
+			item => item.categoryCode === selectedActiveTab.current
+		);
+		console.log('itesm ===> ', items);
+	};
+
+	/** todo */
+	const addToMyComponents = () => {
+		console.log('addToMyComponents');
+		const items = Array.from(selectedItemsForCheck.current).filter(
+			item => item.categoryCode === selectedActiveTab.current
+		);
+		console.log('itesm ===> ', items);
+	};
+
 	return (
 		<>
 			<Presenter
@@ -96,6 +123,9 @@ export const CompareBalloon: FC = () => {
 				selectedItemsForCheck={selectedItemsForCheck}
 				selectedActiveTab={selectedActiveTab}
 				handleClose={handleClose}
+				onClickOrderNow={onClickOrderNow}
+				addToCart={addToCart}
+				addToMyComponents={addToMyComponents}
 			/>
 		</>
 	);

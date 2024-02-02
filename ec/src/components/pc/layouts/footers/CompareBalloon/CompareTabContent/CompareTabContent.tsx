@@ -5,6 +5,7 @@ import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { pagesPath } from '@/utils/$path';
 import { ProductImage } from '@/components/pc/ui/images/ProductImage';
 import { NagiLink } from '@/components/mobile/ui/links';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
 	compare: Compare;
@@ -41,6 +42,8 @@ export const CompareTabContent: FC<Props> = ({
 	handleSelectAllItem,
 	handleDeleteAllItem,
 }) => {
+	const [t] = useTranslation();
+
 	const getCategoryName = (categoryCode: string) => {
 		return (
 			compare.items.find(item => item.categoryCode === categoryCode)
@@ -78,9 +81,10 @@ export const CompareTabContent: FC<Props> = ({
 								)}
 								onClick={() => handleTabClick(categoryCode)}
 							>
-								<div className={styles.closeBtn} onClick={handleTabDelete}>
-									닫기버튼
-								</div>
+								<div
+									className={styles.closeBtn}
+									onClick={handleTabDelete}
+								></div>
 								<p
 									className={classNames(
 										styles.name,
@@ -98,21 +102,30 @@ export const CompareTabContent: FC<Props> = ({
 				<div className={classNames(styles.pcpInfo, styles.ndrClearfix)}>
 					<div className={styles.left}>
 						<p>
-							총 <span>{totalCount}</span>건
-						</p>{' '}
+							{t('components.ui.layouts.footers.compareBalloon.totalCount', {
+								totalCount: totalCount,
+							})}
+						</p>
+
 						{tabContents.length > 0 && (
 							<p>
-								| <span>{selectedCount}</span>건 선택
+								{t('components.ui.layouts.footers.compareBalloon.totalSelect', {
+									totalSelect: selectedCount,
+								})}
 							</p>
 						)}
 					</div>
 					<div className={styles.right}>
 						<p>
-							<a onClick={handleDeleteAllItem}>삭제</a>
+							<a onClick={handleDeleteAllItem}>
+								{t('components.ui.layouts.footers.compareBalloon.delete')}
+							</a>
 						</p>
 						<p>|</p>
 						<p>
-							<a onClick={handleSelectAllItem}>전체선택</a>
+							<a onClick={handleSelectAllItem}>
+								{t('components.ui.layouts.footers.compareBalloon.selectAll')}
+							</a>
 						</p>
 					</div>
 				</div>
