@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { PartNumber } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { CompareDetailTable } from './CompareDetailTable';
+import { useCallback, useRef, useState } from 'react';
 
 type Props = {
 	status: boolean;
@@ -33,6 +34,80 @@ export const CompareDetail: React.FC<Props> = ({
 	searchSpecValue,
 }) => {
 	const [t] = useTranslation();
+	type CompareTargetType = {
+		index?: number;
+		seriesCode?: string;
+		partNumber?: string;
+	};
+	const compareList = useRef<CompareTargetType[]>([]);
+	const [selectedCompareDetailItems, setSelectedCompareDetailItems] = useState<
+		Set<number>
+	>(new Set());
+
+	const setCompareList = (
+		index?: number,
+		seriesCode?: string | null,
+		partNumber?: string | null
+	) => {
+		if (index === undefined) return;
+
+		const target = compareList.current[index];
+		if (seriesCode) {
+			compareList.current[index] = {
+				index,
+				...target,
+				seriesCode,
+			};
+		}
+		if (partNumber) {
+			compareList.current[index] = {
+				index,
+				...target,
+				partNumber,
+			};
+		}
+	};
+
+	console.log('compareList ===> ', compareList);
+	console.log('selectedCompareDetailItems ===> ', selectedCompareDetailItems);
+	const handleSelectItem = useCallback(
+		(item: number) => {
+			const isSelected = selectedCompareDetailItems.has(item);
+			if (isSelected) {
+				selectedCompareDetailItems.delete(item);
+			} else {
+				selectedCompareDetailItems.add(item);
+			}
+			setSelectedCompareDetailItems(
+				new Set(Array.from(selectedCompareDetailItems))
+			);
+		},
+		[selectedCompareDetailItems]
+	);
+	const handleSelectAllItem = () => {
+		const isAllSelected = selectedCompareDetailItems.size === totalCount;
+		if (isAllSelected) {
+			setSelectedCompareDetailItems(new Set());
+		} else {
+			for (let i = 0; i < totalCount; i++) {
+				selectedCompareDetailItems.add(i);
+			}
+			setSelectedCompareDetailItems(new Set(selectedCompareDetailItems));
+		}
+	};
+
+	const handleDeleteItem = (index: number) => {
+		console.log(
+			'handleDeleteItem ===> ',
+			index,
+			'====> ',
+			compareList.current[index]
+		);
+	};
+
+	const handleDeleteAllItem = () => {
+		console.log('handleDeleteAllItem');
+	};
 
 	return (
 		<>
@@ -116,13 +191,17 @@ export const CompareDetail: React.FC<Props> = ({
 												<p
 													className={classNames(styles.ndrBlue, styles.ndrBold)}
 												>
-													<a>{t('pages.compareDetail.delete')}</a>
+													<a onClick={handleDeleteAllItem}>
+														{t('pages.compareDetail.delete')}
+													</a>
 												</p>
 												<p>|</p>
 												<p
 													className={classNames(styles.ndrBlue, styles.ndrBold)}
 												>
-													{t('pages.compareDetail.selectAll')}
+													<a onClick={handleSelectAllItem}>
+														{t('pages.compareDetail.selectAll')}
+													</a>
 												</p>
 											</div>
 
@@ -134,6 +213,10 @@ export const CompareDetail: React.FC<Props> = ({
 												seriesList={seriesList}
 												specList={specList}
 												totalCount={totalCount}
+												setCompareList={setCompareList}
+												handleSelectItem={handleSelectItem}
+												handleDeleteItem={handleDeleteItem}
+												selectedCompareDetailItems={selectedCompareDetailItems}
 											/>
 										</div>
 									</div>

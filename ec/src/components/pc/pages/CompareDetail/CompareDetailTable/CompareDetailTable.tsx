@@ -12,6 +12,7 @@ import { NagiLink } from '@/components/pc/ui/links';
 import { pagesPath } from '@/utils/$path';
 import { ProductImage } from '@/components/pc/ui/images/ProductImage';
 import { useTranslation } from 'react-i18next';
+import { useCallback, useRef, useState } from 'react';
 
 type Props = {
 	specList: SpecListType[];
@@ -19,10 +20,18 @@ type Props = {
 	seriesList: Series[];
 	currencyCode: string;
 	totalCount: number;
+	selectedCompareDetailItems: Set<number>;
 	searchSpecValue: (
 		partNumber: PartNumber | undefined,
 		specCode: string | undefined
 	) => string;
+	setCompareList: (
+		index?: number,
+		seriesCode?: string | null,
+		partNumber?: string | null
+	) => void;
+	handleSelectItem: (item: number) => void;
+	handleDeleteItem: (item: number) => void;
 };
 
 const LIST_MAX_COUNT = 5;
@@ -33,15 +42,27 @@ export const CompareDetailTable: React.VFC<Props> = ({
 	specList,
 	totalCount,
 	currencyCode,
+	selectedCompareDetailItems,
 	searchSpecValue,
+	setCompareList,
+	handleSelectItem,
 }) => {
 	const [t] = useTranslation();
 
 	const imageHTMLPrint = () => {
 		let html = seriesList.map((item, index) => {
 			const productImageUrl = item.productImageList[0]?.url || '';
+
 			return (
-				<td key={`${item.seriesCode}_${index}`} className={styles.product}>
+				<td
+					key={`${item.seriesCode}_${index}`}
+					className={classNames(
+						styles.product,
+						selectedCompareDetailItems.has(index) && styles.on
+					)}
+					// onClick={e => onClickHandler(e)}
+					onClick={() => handleSelectItem(index)}
+				>
 					<div className={styles.tableCheckbox}></div>
 					<div className={styles.closeBtn}></div>
 					<div className={styles.tableImg}>
@@ -203,10 +224,15 @@ export const CompareDetailTable: React.VFC<Props> = ({
 					<tr>
 						<th>{t('pages.compareDetail.productName')}</th>
 						{seriesList.map((item, index) => {
+							setCompareList(index, item.seriesCode, null);
 							return (
 								<td
 									key={`productName_${item.seriesCode}_${index}`}
-									className={styles.product}
+									className={classNames(
+										styles.product,
+										selectedCompareDetailItems.has(index) && styles.on
+									)}
+									onClick={() => handleSelectItem(index)}
 								>
 									<p className={styles.ndrThin}>{item.seriesName}</p>
 								</td>
@@ -222,10 +248,15 @@ export const CompareDetailTable: React.VFC<Props> = ({
 								.$url({
 									query: { HissuCode: item.partNumber },
 								});
+							setCompareList(index, null, item.partNumber);
 							return (
 								<td
 									key={`partNumber_${item.partNumber}`}
-									className={styles.product}
+									className={classNames(
+										styles.product,
+										selectedCompareDetailItems.has(index) && styles.on
+									)}
+									onClick={() => handleSelectItem(index)}
 								>
 									<NagiLink href={seriesUrl}>
 										<p

@@ -75,4 +75,11 @@
 		float: right;
 		margin-right: 10px;
 	}
+	a {
+		color: #004bb1;
+		cursor: pointer;
+		&:visited {
+			color: #851f99;
+		}
+	}
 }

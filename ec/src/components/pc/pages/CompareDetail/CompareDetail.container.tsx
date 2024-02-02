@@ -47,7 +47,11 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 					compare,
 					categoryCode,
 				});
-				setCategoryName(compare.items[0]?.categoryName || '');
+
+				setCategoryName(
+					compare.items.filter(item => item.categoryCode === categoryCode)[0]
+						?.categoryName || ''
+				);
 				initialize.current = true;
 			}
 		}
@@ -55,12 +59,6 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 
 	useEffect(() => {
 		if (status === CompareDetailLoadStatus.LOADED_MAIN) {
-			console.log(
-				'loaded ===> ',
-				specResponses,
-				partNumberResponses,
-				seriesResponses
-			);
 			assertNotNull(specResponses);
 			assertNotNull(seriesResponses);
 			assertNotNull(partNumberResponses);
