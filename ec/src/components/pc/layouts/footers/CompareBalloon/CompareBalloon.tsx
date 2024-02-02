@@ -10,6 +10,9 @@ type Props = {
 	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
 	selectedActiveTab: MutableRefObject<string>;
 	handleClose: () => void;
+	onClickOrderNow: () => void;
+	addToCart: () => void;
+	addToMyComponents: () => void;
 };
 /**
  * 비교 푸터 팝업
@@ -19,6 +22,9 @@ export const CompareBalloon: FC<Props> = ({
 	selectedItemsForCheck,
 	selectedActiveTab,
 	handleClose,
+	onClickOrderNow,
+	addToCart,
+	addToMyComponents,
 }) => {
 	const [t] = useTranslation();
 
@@ -49,6 +55,7 @@ export const CompareBalloon: FC<Props> = ({
 											type="button"
 											theme="conversion"
 											icon="order-now"
+											onClick={onClickOrderNow}
 										>
 											{t('components.ui.layouts.footers.compareBalloon.order')}
 										</Button>
@@ -57,6 +64,7 @@ export const CompareBalloon: FC<Props> = ({
 											type="button"
 											theme="conversion"
 											icon="cart"
+											onClick={addToCart}
 										>
 											{t('components.ui.layouts.footers.compareBalloon.cart')}
 										</Button>
@@ -65,6 +73,7 @@ export const CompareBalloon: FC<Props> = ({
 											type="button"
 											theme="default"
 											icon="add-my-component"
+											onClick={addToMyComponents}
 										>
 											{t(
 												'components.ui.layouts.footers.compareBalloon.myComponent'

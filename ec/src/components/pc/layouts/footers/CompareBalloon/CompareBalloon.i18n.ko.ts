@@ -20,4 +20,8 @@ export const compareBalloon: Translation = {
 			alert: '삭제하실 형번을 선택해주세요.',
 		},
 	},
+	totalCount: '총 {{totalCount}} 건',
+	totalSelect: ' | {{totalSelect}} 건 선택',
+	delete: '삭제',
+	selectAll: '전체선택',
 };
