@@ -129,7 +129,7 @@ export function addCompareItem(addItem: CompareItem) {
 	localStorage.setItem(
 		STORAGE_KEY,
 		JSON.stringify({
-			items: [addItem, ...compare.items],
+			items: [...compare.items, addItem],
 			show: true,
 			active: addItem.categoryCode,
 		})
