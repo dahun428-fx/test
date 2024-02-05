@@ -6,6 +6,7 @@ import { pagesPath } from '@/utils/$path';
 import { ProductImage } from '@/components/pc/ui/images/ProductImage';
 import { NagiLink } from '@/components/mobile/ui/links';
 import { useTranslation } from 'react-i18next';
+import { BlockLoader } from '@/components/pc/ui/loaders';
 
 type Props = {
 	compare: Compare;
@@ -15,6 +16,7 @@ type Props = {
 	totalCount: number;
 	selectedCount: number;
 	selectedItems: Set<CompareItem>;
+	loading: boolean;
 	handlePartNumberClick: (
 		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
 	) => void;
@@ -29,6 +31,7 @@ type Props = {
 export const CompareTabContent: FC<Props> = ({
 	compare,
 	tabHeads,
+	loading,
 	tabContents,
 	activeCategoryCode,
 	totalCount,
@@ -137,61 +140,68 @@ export const CompareTabContent: FC<Props> = ({
 						<div className={styles.pcpBlankItem}></div>
 						<div className={styles.pcpBlankItem}></div>
 					</div>
-					<ul>
-						{tabContents &&
-							tabContents.length > 0 &&
-							tabContents.map((item, index) => {
-								const seriesUrl = pagesPath.vona2.detail
-									._seriesCode(item.seriesCode)
-									.$url({ query: { HissuCode: item.partNumber } });
+					{loading ? (
+						<BlockLoader />
+					) : (
+						<ul>
+							{tabContents &&
+								tabContents.length > 0 &&
+								tabContents.map((item, index) => {
+									const seriesUrl = pagesPath.vona2.detail
+										._seriesCode(item.seriesCode)
+										.$url({ query: { HissuCode: item.partNumber } });
 
-								return (
-									<li
-										className={classNames(
-											styles.pcpItem,
-											isSelected(item) ? styles.on : ''
-										)}
-										key={item.partNumber}
-										onClick={() => handleSelectItem(item)}
-									>
-										<div
-											className={styles.pcpCloseBtn}
-											onClick={() => handleDeleteItem(item)}
-										></div>
-										<div className={styles.pcpItemTitle}>
-											<p className={styles.ndrBold}>
-												{shorteningText(item.seriesName, 48)}
-											</p>
-										</div>
-										<p
-											className={classNames(styles.ndrEllipsis, styles.ndrThin)}
-										>
-											{item.brandName}
-										</p>
-										<div className={styles.pcpItemImg}>
-											<ProductImage
-												imageUrl={item.productImageUrl}
-												comment={item.seriesName}
-												size={135}
-											/>
-										</div>
-										<div
+									return (
+										<li
 											className={classNames(
-												styles.pcpModelName,
-												styles.pcpNewWindow
+												styles.pcpItem,
+												isSelected(item) ? styles.on : ''
 											)}
+											key={item.partNumber}
+											onClick={() => handleSelectItem(item)}
 										>
-											<NagiLink
-												href={seriesUrl}
-												onClick={e => handlePartNumberClick(e)}
+											<div
+												className={styles.pcpCloseBtn}
+												onClick={() => handleDeleteItem(item)}
+											></div>
+											<div className={styles.pcpItemTitle}>
+												<p className={styles.ndrBold}>
+													{shorteningText(item.seriesName, 48)}
+												</p>
+											</div>
+											<p
+												className={classNames(
+													styles.ndrEllipsis,
+													styles.ndrThin
+												)}
 											>
-												<p className={styles.ndrThin}>{item.partNumber}</p>
-											</NagiLink>
-										</div>
-									</li>
-								);
-							})}
-					</ul>
+												{item.brandName}
+											</p>
+											<div className={styles.pcpItemImg}>
+												<ProductImage
+													imageUrl={item.productImageUrl}
+													comment={item.seriesName}
+													size={135}
+												/>
+											</div>
+											<div
+												className={classNames(
+													styles.pcpModelName,
+													styles.pcpNewWindow
+												)}
+											>
+												<NagiLink
+													href={seriesUrl}
+													onClick={e => handlePartNumberClick(e)}
+												>
+													<p className={styles.ndrThin}>{item.partNumber}</p>
+												</NagiLink>
+											</div>
+										</li>
+									);
+								})}
+						</ul>
+					)}
 				</div>
 			</div>
 		</div>

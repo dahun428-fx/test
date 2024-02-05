@@ -4,6 +4,7 @@ import { Button } from '@/components/pc/ui/buttons';
 import { CompareItem } from '@/models/localStorage/Compare';
 import { CompareTabContent } from './CompareTabContent';
 import { useTranslation } from 'react-i18next';
+import { BlockLoader, PageLoader } from '@/components/pc/ui/loaders';
 
 type Props = {
 	showStatus: boolean;
@@ -38,6 +39,7 @@ export const CompareBalloon: FC<Props> = ({
 						<div className={styles.titleSection}>
 							<h2>{t('components.ui.layouts.footers.compareBalloon.title')}</h2>
 						</div>
+
 						<div className={styles.productList}>
 							<div className={styles.ndrClearfix}>
 								<div className={styles.productListBody}>

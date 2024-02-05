@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CompareDetailPage as Presenter } from './CompareDetail';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCompare } from '@/store/modules/common/compare';
 import {
 	CompareDetailLoadStatus,
 	SpecList,
@@ -22,15 +21,13 @@ import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail'
 import { assertNotNull } from '@/utils/assertions';
 import { cadTypeListDisp } from '@/utils/cad';
 import { config } from '@/config';
-import { removeCompareItem } from '@/services/localStorage/compare';
+import { getCompare, removeCompareItem } from '@/services/localStorage/compare';
 
 type Props = {
 	categoryCode: string;
 };
 
 export const CompareDetail: FC<Props> = ({ categoryCode }) => {
-	const initialize = useRef(false);
-	const compare = useSelector(selectCompare);
 	const status = useSelector(selectCompareDetailLoadStatus);
 	const specResponses = useSelector(selectSpecListResponses);
 	const partNumberResponses = useSelector(selectPartNumberResponses);
@@ -46,22 +43,23 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	>(new Set());
 
 	useEffect(() => {
-		if (compare && compare.items.length > 0) {
-			if (!initialize.current) {
+		if (status === CompareDetailLoadStatus.INITIAL) {
+			let compare = getCompare();
+			const has = compare.items.some(
+				item => item.categoryCode === categoryCode
+			);
+			if (has) {
 				loadCompareOperation(dispatch)({
 					compare,
 					categoryCode,
 				});
-				const compareList = compare.items.filter(item => {
-					if (item.categoryCode === categoryCode && item.chk) return item;
+				const targetCompare = compare.items.find(item => {
+					return item.categoryCode === categoryCode;
 				});
-				setCategoryName(compareList[0]?.categoryName || '');
-				initialize.current = true;
+				setCategoryName(targetCompare?.categoryName || '');
 			}
 		}
-	}, [dispatch, categoryCode, compare]);
-
-	// console.log('compareItems ===> ', compareItems);
+	}, [dispatch, categoryCode, status]);
 
 	useEffect(() => {
 		if (status === CompareDetailLoadStatus.LOADED_MAIN) {
@@ -87,7 +85,6 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			];
 			const specList = [...specList0, ...specList1];
 			setSpecList(specList);
-			console.log('compareDetailItems =======> ', compareDetailItems);
 			updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
 		}
 	}, [specResponses, partNumberResponses, seriesResponses, status]);
@@ -262,15 +259,13 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	};
 
 	const readyToStatus = useMemo(() => {
-		if (
-			status === CompareDetailLoadStatus.READY &&
-			compareDetailItems.length > 0 &&
-			specList.length > 0
-		) {
+		if (status === CompareDetailLoadStatus.READY) {
+			return true;
+		} else if (compareDetailItems.length < 1) {
 			return true;
 		}
 		return false;
-	}, [status, compareDetailItems, specList]);
+	}, [status, compareDetailItems]);
 
 	const totalCount = useMemo(() => {
 		return compareDetailItems.length;
@@ -315,6 +310,10 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		if (seriesCode && partNumber) {
 			removeCompareDetailItemOperation(dispatch)(item);
 			removeCompareItem(seriesCode, partNumber);
+			selectedCompareDetailItems.delete(idx);
+			setSelectedCompareDetailItems(
+				new Set(Array.from(selectedCompareDetailItems))
+			);
 		}
 	};
 
@@ -323,9 +322,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			return;
 		}
 
-		selectedCompareDetailItems.forEach(item => {
+		selectedCompareDetailItems.forEach(idx => {
 			const detail = compareDetailItems.find(
-				detailItem => detailItem.idx === item
+				detailItem => detailItem.idx === idx
 			);
 			if (!detail) return;
 			const seriesCode = detail.seriesList[0]?.seriesCode;
@@ -334,7 +333,11 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 				removeCompareDetailItemOperation(dispatch)(detail);
 				removeCompareItem(seriesCode, partNumber);
 			}
+			selectedCompareDetailItems.delete(idx);
 		});
+		setSelectedCompareDetailItems(
+			new Set(Array.from(selectedCompareDetailItems))
+		);
 	};
 
 	return (

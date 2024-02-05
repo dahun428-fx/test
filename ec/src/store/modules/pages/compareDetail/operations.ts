@@ -28,7 +28,7 @@ export function updateStatusOperation(dispatch: Dispatch) {
 export function loadCompareOperation(dispatch: Dispatch) {
 	return async ({ compare, categoryCode }: CompareLoadPayload) => {
 		const compareItems = compare.items.filter(
-			item => item.categoryCode === categoryCode
+			item => item.categoryCode === categoryCode && item.chk
 		);
 		assertNotEmpty(compareItems);
 

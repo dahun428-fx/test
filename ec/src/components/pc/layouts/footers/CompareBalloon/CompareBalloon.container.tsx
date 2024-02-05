@@ -19,6 +19,10 @@ import { url } from '@/utils/url';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 import { Button } from '@/components/pc/ui/buttons';
 import { useTranslation } from 'react-i18next';
+import {
+	CompareDetailLoadStatus,
+	updateStatusOperation,
+} from '@/store/modules/pages/compareDetail';
 
 /**
  * 비교 푸터 팝업
@@ -66,7 +70,7 @@ export const CompareBalloon: FC = () => {
 	 * localStorage 에 반영
 	 */
 	useEffect(() => {
-		if (!compare.show) {
+		if (!compare.show && initialized.current) {
 			updateCheckedItemIfNeeded(Array.from(selectedItemsForCheck.current));
 			updateCompare({ active: selectedActiveTab.current });
 		}
@@ -96,7 +100,7 @@ export const CompareBalloon: FC = () => {
 		handleGenerateData();
 		Router.events.on('routeChangeComplete', handleGenerateData);
 		return () => Router.events.off('routeChangeComplete', handleGenerateData);
-	}, [generateCompareData]);
+	}, [generateCompareData, router.asPath]);
 
 	/** todo */
 	const onClickOrderNow = () => {
@@ -125,6 +129,11 @@ export const CompareBalloon: FC = () => {
 		console.log('itesm ===> ', items);
 	};
 
+	/**
+	 * 비교결과 페이지 오픈
+	 * 체크된 상품 확인 ( updateCheckedItemIfNeeded ), 비교결과 페이지 초기화 ( updateStatusOperation -> Initial )
+	 * 페이지 이동 ( router push )
+	 */
 	const openCompareDetailPage = useCallback(() => {
 		if (selectedItemsForCheck.current.size < 1) {
 			showMessage({
@@ -139,8 +148,11 @@ export const CompareBalloon: FC = () => {
 			});
 			return;
 		}
-
-		router.push(`${url.compare}/${selectedActiveTab.current}`);
+		updateCheckedItemIfNeeded(Array.from(selectedItemsForCheck.current));
+		updateStatusOperation(dispatch)(CompareDetailLoadStatus.INITIAL);
+		initialized.current = false;
+		const pageUrl = `${url.compare}/${selectedActiveTab.current}`;
+		router.push(pageUrl);
 	}, [selectedActiveTab.current, selectedItemsForCheck.current]);
 
 	return (

@@ -20,6 +20,7 @@ import { useConfirmModal } from '@/components/pc/ui/modals/ConfirmModal';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 import { Button } from '@/components/pc/ui/buttons';
 import { useTranslation } from 'react-i18next';
+import { useBoolState } from '@/hooks/state/useBoolState';
 
 type Props = {
 	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
@@ -39,6 +40,8 @@ export const CompareTabContent = React.memo<Props>(
 		const { showMessage } = useMessageModal();
 
 		const [t] = useTranslation();
+
+		const [loading, startToLoading, endLoading] = useBoolState(true);
 
 		const [selectedItems, setSelectedItems] = useState<Set<CompareItem>>(
 			new Set()
@@ -258,8 +261,11 @@ export const CompareTabContent = React.memo<Props>(
 		useOnMounted(() => {
 			let compare = getCompare();
 			updateCompareOperation(dispatch)(compare);
+			startToLoading();
+			setTimeout(() => {
+				endLoading();
+			}, 1000);
 		});
-
 		/**
 		 * 선택된 탭을 초기화
 		 * localStorage comapre active | tabHeadList last length
@@ -305,6 +311,7 @@ export const CompareTabContent = React.memo<Props>(
 					totalCount={totalCount}
 					selectedCount={selectedCount}
 					selectedItems={selectedItems}
+					loading={loading}
 					handlePartNumberClick={handlePartNumberClick}
 					handleTabClick={handleTabClick}
 					handleTabDelete={handleTabDelete}

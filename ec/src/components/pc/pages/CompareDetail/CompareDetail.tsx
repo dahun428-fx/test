@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { PartNumber } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { CompareDetailTable } from './CompareDetailTable';
 import { useCallback, useState } from 'react';
+import { PageLoader } from '../../ui/loaders';
 
 type Props = {
 	status: boolean;
@@ -63,7 +64,9 @@ export const CompareDetailPage: React.FC<Props> = ({
 								})}
 							</h1>
 						</div>
-						{status && (
+						{!status ? (
+							<PageLoader />
+						) : (
 							<div className={styles.productList}>
 								<div
 									className={classNames(
@@ -119,7 +122,7 @@ export const CompareDetailPage: React.FC<Props> = ({
 												</p>
 												<p className={styles.totalSelect}>
 													{t('pages.compareDetail.totalSelect', {
-														totalSelect: 0,
+														totalSelect: selectedCompareDetailItems.size,
 													})}
 												</p>
 											</div>
