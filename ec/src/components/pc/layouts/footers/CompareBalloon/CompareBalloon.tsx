@@ -13,6 +13,7 @@ type Props = {
 	onClickOrderNow: () => void;
 	addToCart: () => void;
 	addToMyComponents: () => void;
+	openCompareDetailPage: () => void;
 };
 /**
  * 비교 푸터 팝업
@@ -25,6 +26,7 @@ export const CompareBalloon: FC<Props> = ({
 	onClickOrderNow,
 	addToCart,
 	addToMyComponents,
+	openCompareDetailPage,
 }) => {
 	const [t] = useTranslation();
 
@@ -91,6 +93,7 @@ export const CompareBalloon: FC<Props> = ({
 									type="button"
 									theme="strong"
 									icon="right-arrow"
+									onClick={openCompareDetailPage}
 								>
 									{t(
 										'components.ui.layouts.footers.compareBalloon.compareResult'

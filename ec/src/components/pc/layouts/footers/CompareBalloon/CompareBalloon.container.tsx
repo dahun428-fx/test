@@ -14,7 +14,8 @@ import {
 	updateCompare,
 } from '@/services/localStorage/compare';
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
-import { Router } from 'next/router';
+import { Router, useRouter } from 'next/router';
+import { url } from '@/utils/url';
 
 /**
  * 비교 푸터 팝업
@@ -29,6 +30,8 @@ export const CompareBalloon: FC = () => {
 
 	const selectedItemsForCheck = useRef<Set<CompareItem>>(new Set()); //CompareTabContent : selectedItem
 	const selectedActiveTab = useRef<string>(''); //CompareTabContent: activeCategoryCode
+
+	const router = useRouter();
 
 	/**
 	 * 비교 팝업 업데이트 ( store )
@@ -116,6 +119,10 @@ export const CompareBalloon: FC = () => {
 		console.log('itesm ===> ', items);
 	};
 
+	const openCompareDetailPage = useCallback(() => {
+		router.push(`${url.compare}/${selectedActiveTab.current}`);
+	}, [selectedActiveTab.current]);
+
 	return (
 		<>
 			<Presenter
@@ -126,6 +133,7 @@ export const CompareBalloon: FC = () => {
 				onClickOrderNow={onClickOrderNow}
 				addToCart={addToCart}
 				addToMyComponents={addToMyComponents}
+				openCompareDetailPage={openCompareDetailPage}
 			/>
 		</>
 	);
