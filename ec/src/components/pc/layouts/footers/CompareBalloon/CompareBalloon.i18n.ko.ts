@@ -19,6 +19,7 @@ export const compareBalloon: Translation = {
 			check: '삭제하시겠습니까?',
 			alert: '삭제하실 형번을 선택해주세요.',
 		},
+		notSelected: '비교하실 형번을 선택 하세요.',
 	},
 	totalCount: '총 {{totalCount}} 건',
 	totalSelect: ' | {{totalSelect}} 건 선택',

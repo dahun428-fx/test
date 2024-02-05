@@ -16,6 +16,9 @@ import {
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { Router, useRouter } from 'next/router';
 import { url } from '@/utils/url';
+import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { Button } from '@/components/pc/ui/buttons';
+import { useTranslation } from 'react-i18next';
 
 /**
  * 비교 푸터 팝업
@@ -30,6 +33,9 @@ export const CompareBalloon: FC = () => {
 
 	const selectedItemsForCheck = useRef<Set<CompareItem>>(new Set()); //CompareTabContent : selectedItem
 	const selectedActiveTab = useRef<string>(''); //CompareTabContent: activeCategoryCode
+
+	const { showMessage } = useMessageModal();
+	const [t] = useTranslation();
 
 	const router = useRouter();
 
@@ -120,8 +126,22 @@ export const CompareBalloon: FC = () => {
 	};
 
 	const openCompareDetailPage = useCallback(() => {
+		if (selectedItemsForCheck.current.size < 1) {
+			showMessage({
+				message: t(
+					'components.ui.layouts.footers.compareBalloon.message.notSelected'
+				),
+				button: (
+					<Button>
+						{t('components.ui.layouts.footers.compareBalloon.message.ok')}
+					</Button>
+				),
+			});
+			return;
+		}
+
 		router.push(`${url.compare}/${selectedActiveTab.current}`);
-	}, [selectedActiveTab.current]);
+	}, [selectedActiveTab.current, selectedItemsForCheck.current]);
 
 	return (
 		<>
