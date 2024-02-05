@@ -124,6 +124,8 @@ export const url = {
 	/** Sitemap */
 	// TODO: Remove this config when mobile footer link sitemap convert to used pagePaths
 	sitemap: `${config.web.ec.origin}/vona2/sitemap/`,
+	/** 비교결과 페이지 */
+	compare: `${config.web.ec.origin}/vona2/compare/`,
 	/** 미스미 브랜드 */
 	makerTop: `${config.web.ec.origin}/maker/`,
 	/** RAPiD Design */
