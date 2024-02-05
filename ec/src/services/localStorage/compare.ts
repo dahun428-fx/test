@@ -136,12 +136,12 @@ export function addCompareItem(addItem: CompareItem) {
 	);
 }
 
-export function removeCompareItem(deleteItem: CompareItem) {
+export function removeCompareItem(seriesCode:string, partNumber:string) {
 	const compare = getCompare();
 	const foundIndex = compare.items.findIndex(item => {
 		if (
-			item.seriesCode === deleteItem.seriesCode &&
-			item.partNumber === deleteItem.partNumber
+			item.seriesCode === seriesCode &&
+			item.partNumber === partNumber
 		) {
 			return item;
 		}

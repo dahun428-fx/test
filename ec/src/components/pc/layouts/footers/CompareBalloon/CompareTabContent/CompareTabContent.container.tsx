@@ -123,7 +123,8 @@ export const CompareTabContent = React.memo<Props>(
 			tabContentList.forEach(async item => {
 				selectedItems.delete(item);
 				removeItemOperation(dispatch)(item);
-				removeCompareItem(item);
+				const { seriesCode, partNumber } = item;
+				removeCompareItem(seriesCode, partNumber);
 			});
 		}, [tabContentList, selectedItems]);
 
@@ -192,7 +193,8 @@ export const CompareTabContent = React.memo<Props>(
 
 				selectedItems.delete(compareItem);
 				removeItemOperation(dispatch)(compareItem);
-				removeCompareItem(compareItem);
+				const { seriesCode, partNumber } = compareItem;
+				removeCompareItem(seriesCode, partNumber);
 			},
 			[selectedItems, activeSelectedItems]
 		);
@@ -231,7 +233,8 @@ export const CompareTabContent = React.memo<Props>(
 			activeSelectedItems.forEach(async item => {
 				selectedItems.delete(item);
 				removeItemOperation(dispatch)(item);
-				removeCompareItem(item);
+				const { seriesCode, partNumber } = item;
+				removeCompareItem(seriesCode, partNumber);
 			});
 		}, [selectedItems, activeSelectedItems]);
 

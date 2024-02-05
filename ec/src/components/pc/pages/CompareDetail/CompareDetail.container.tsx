@@ -1,11 +1,13 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { CompareDetail as Presenter } from './CompareDetail';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CompareDetailPage as Presenter } from './CompareDetail';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCompare } from '@/store/modules/common/compare';
 import {
 	CompareDetailLoadStatus,
-	SpecListType,
+	SpecList,
 	loadCompareOperation,
+	removeCompareDetailItemOperation,
+	selectCompareDetailItems,
 	selectCompareDetailLoadStatus,
 	selectPartNumberResponses,
 	selectSeriesResponses,
@@ -14,13 +16,13 @@ import {
 } from '@/store/modules/pages/compareDetail';
 import {
 	PartNumber,
-	PartNumberCadType,
 	Spec,
 } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { assertNotNull } from '@/utils/assertions';
 import { cadTypeListDisp } from '@/utils/cad';
 import { config } from '@/config';
+import { removeCompareItem } from '@/services/localStorage/compare';
 
 type Props = {
 	categoryCode: string;
@@ -33,12 +35,15 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	const specResponses = useSelector(selectSpecListResponses);
 	const partNumberResponses = useSelector(selectPartNumberResponses);
 	const seriesResponses = useSelector(selectSeriesResponses);
+	const compareDetailItems = useSelector(selectCompareDetailItems);
 	const dispatch = useDispatch();
 
 	const [categoryName, setCategoryName] = useState('');
-	const [specList, setSpecList] = useState<SpecListType[]>([]);
-	const [seriesList, setSeriesList] = useState<Series[]>([]);
-	const [partNumberList, setPartNumberList] = useState<PartNumber[]>([]);
+	const [specList, setSpecList] = useState<SpecList[]>([]);
+
+	const [selectedCompareDetailItems, setSelectedCompareDetailItems] = useState<
+		Set<number>
+	>(new Set());
 
 	useEffect(() => {
 		if (compare && compare.items.length > 0) {
@@ -48,20 +53,23 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 					categoryCode,
 				});
 
-				setCategoryName(
-					compare.items.filter(item => item.categoryCode === categoryCode)[0]
-						?.categoryName || ''
+				const compareList = compare.items.filter(
+					item => item.categoryCode === categoryCode
 				);
+				setCategoryName(compareList[0]?.categoryName || '');
 				initialize.current = true;
 			}
 		}
 	}, [dispatch, categoryCode, compare]);
+
+	// console.log('compareItems ===> ', compareItems);
 
 	useEffect(() => {
 		if (status === CompareDetailLoadStatus.LOADED_MAIN) {
 			assertNotNull(specResponses);
 			assertNotNull(seriesResponses);
 			assertNotNull(partNumberResponses);
+			assertNotNull(compareDetailItems);
 			const specItems = getSpecMerge(specResponses);
 			const seriesItems = seriesResponses;
 			const partNumberItems = partNumberResponses;
@@ -80,8 +88,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			];
 			const specList = [...specList0, ...specList1];
 			setSpecList(specList);
-			setSeriesList(seriesItems);
-			setPartNumberList(partNumberItems);
+			console.log('compareDetailItems =======> ', compareDetailItems);
 			updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
 		}
 	}, [specResponses, partNumberResponses, seriesResponses, status]);
@@ -96,8 +103,8 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	};
 
 	const fixSeriesSortList = (seriesItems: Series[]) => {
-		let specList0: SpecListType[] = []; //데이터가 다른 항목 저장 array
-		let specList1: SpecListType[] = []; //데이터가 같은 항목 저장 array
+		let specList0: SpecList[] = []; //데이터가 다른 항목 저장 array
+		let specList1: SpecList[] = []; //데이터가 같은 항목 저장 array
 
 		const size = seriesItems.length;
 		const brandCode = seriesItems[0]?.brandCode;
@@ -115,8 +122,8 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	};
 
 	const fixPartNumberSortList = (partNumberItems: PartNumber[]) => {
-		let specList0: SpecListType[] = []; //데이터가 다른 항목 저장 array
-		let specList1: SpecListType[] = []; //데이터가 같은 항목 저장 array
+		let specList0: SpecList[] = []; //데이터가 다른 항목 저장 array
+		let specList1: SpecList[] = []; //데이터가 같은 항목 저장 array
 		let diffdisFlag = false; //수량할인 데이터 가 다른지 여부 Flag
 		let diffDayToShip = false; //출하일 데이터 가 다른지 여부 Flag
 		let diffCadType = false; //CAD 데이터 가 다른지 여부 Flag
@@ -186,40 +193,40 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return [specList0, specList1];
 	};
 
-	const getSortdisFlag0 = (items: SpecListType[]): SpecListType[] => {
+	const getSortdisFlag0 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 3, specTypeCode: '0' }];
 	};
-	const getSortdisFlag1 = (items: SpecListType[]): SpecListType[] => {
+	const getSortdisFlag1 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '0' }];
 	};
-	const getSortCad0 = (items: SpecListType[]): SpecListType[] => {
+	const getSortCad0 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 3, specTypeCode: '2' }];
 	};
-	const getSortCad1 = (items: SpecListType[]): SpecListType[] => {
+	const getSortCad1 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '2' }];
 	};
-	const getSortDayToShip0 = (items: SpecListType[]): SpecListType[] => {
+	const getSortDayToShip0 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 3, specTypeCode: '1' }];
 	};
-	const getSortDayToShip1 = (items: SpecListType[]): SpecListType[] => {
+	const getSortDayToShip1 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '1' }];
 	};
-	const getSortRohs0 = (items: SpecListType[]): SpecListType[] => {
+	const getSortRohs0 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 3, specTypeCode: '3' }];
 	};
-	const getSortRohs1 = (items: SpecListType[]): SpecListType[] => {
+	const getSortRohs1 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '3' }];
 	};
-	const getSortPrice0 = (items: SpecListType[]): SpecListType[] => {
+	const getSortPrice0 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 3, specTypeCode: '4' }];
 	};
-	const getSortPrice1 = (items: SpecListType[]): SpecListType[] => {
+	const getSortPrice1 = (items: SpecList[]): SpecList[] => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '4' }];
 	};
 
 	const sortSpecList = (specItems: Spec[], partNumberItems: PartNumber[]) => {
-		let specList0: SpecListType[] = [];
-		let specList1: SpecListType[] = [];
+		let specList0: SpecList[] = [];
+		let specList1: SpecList[] = [];
 
 		const partNumber = partNumberItems[0];
 		const size = partNumberItems.length;
@@ -258,28 +265,93 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	const readyToStatus = useMemo(() => {
 		if (
 			status === CompareDetailLoadStatus.READY &&
-			seriesList.length > 0 &&
+			compareDetailItems.length > 0 &&
 			specList.length > 0
 		) {
 			return true;
 		}
 		return false;
-	}, [status, seriesList, specList]);
+	}, [status, compareDetailItems, specList]);
 
 	const totalCount = useMemo(() => {
-		return seriesList.length;
-	}, [seriesList]);
+		return compareDetailItems.length;
+	}, [compareDetailItems]);
+
+	const handleSelectItem = useCallback(
+		(item: number) => {
+			const isSelected = selectedCompareDetailItems.has(item);
+			if (isSelected) {
+				selectedCompareDetailItems.delete(item);
+			} else {
+				selectedCompareDetailItems.add(item);
+			}
+			setSelectedCompareDetailItems(
+				new Set(Array.from(selectedCompareDetailItems))
+			);
+		},
+		[selectedCompareDetailItems]
+	);
+	const handleSelectAllItem = () => {
+		const isAllSelected = selectedCompareDetailItems.size === totalCount;
+		if (isAllSelected) {
+			setSelectedCompareDetailItems(new Set());
+		} else {
+			compareDetailItems.map(item => {
+				selectedCompareDetailItems.add(item.idx);
+			});
+			setSelectedCompareDetailItems(new Set(selectedCompareDetailItems));
+		}
+	};
+
+	const handleDeleteItem = (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		idx: number
+	) => {
+		e.preventDefault();
+		e.stopPropagation();
+		const item = compareDetailItems.find(item => item.idx === idx);
+		if (!item) return;
+		const seriesCode = item.seriesList[0]?.seriesCode;
+		const partNumber = item.partNumberList[0]?.partNumber;
+		if (seriesCode && partNumber) {
+			removeCompareDetailItemOperation(dispatch)(item);
+			removeCompareItem(seriesCode, partNumber);
+		}
+	};
+
+	const handleDeleteAllItem = () => {
+		if (selectedCompareDetailItems.size < 1) {
+			return;
+		}
+
+		selectedCompareDetailItems.forEach(item => {
+			const detail = compareDetailItems.find(
+				detailItem => detailItem.idx === item
+			);
+			if (!detail) return;
+			const seriesCode = detail.seriesList[0]?.seriesCode;
+			const partNumber = detail.partNumberList[0]?.partNumber;
+			if (seriesCode && partNumber) {
+				removeCompareDetailItemOperation(dispatch)(detail);
+				removeCompareItem(seriesCode, partNumber);
+			}
+		});
+	};
 
 	return (
 		<>
 			<Presenter
 				status={readyToStatus}
 				specList={specList}
-				seriesList={seriesList}
-				partNumberList={partNumberList}
 				totalCount={totalCount}
 				categoryName={categoryName}
+				selectedCompareDetailItems={selectedCompareDetailItems}
+				compareDetailItems={compareDetailItems}
 				searchSpecValue={searchSpecValue}
+				handleSelectItem={handleSelectItem}
+				handleSelectAllItem={handleSelectAllItem}
+				handleDeleteItem={handleDeleteItem}
+				handleDeleteAllItem={handleDeleteAllItem}
 				currencyCode={config.defaultCurrencyCode}
 			/>
 		</>

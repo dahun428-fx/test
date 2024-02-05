@@ -1,113 +1,49 @@
-import { SpecListType } from '@/store/modules/pages/compareDetail';
+import { CompareDetail, SpecList } from '@/store/modules/pages/compareDetail';
 import styles from './CompareDetail.module.scss';
 import { Meta } from './Meta';
 import { Breadcrumbs } from '@/components/pc/ui/links/Breadcrumbs';
 import classNames from 'classnames';
 import { Button } from '../../ui/buttons';
 import { useTranslation } from 'react-i18next';
-import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { PartNumber } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { CompareDetailTable } from './CompareDetailTable';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 type Props = {
 	status: boolean;
-	specList: SpecListType[];
-	seriesList: Series[];
-	partNumberList: PartNumber[];
+	specList: SpecList[];
 	totalCount: number;
 	categoryName: string;
 	currencyCode: string;
+	compareDetailItems: CompareDetail[];
+	selectedCompareDetailItems: Set<number>;
 	searchSpecValue: (
 		partNumber: PartNumber | undefined,
 		specCode: string | undefined
 	) => string;
+	handleSelectItem: (idx: number) => void;
+	handleSelectAllItem: () => void;
+	handleDeleteItem: (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		idx: number
+	) => void;
+	handleDeleteAllItem: () => void;
 };
-export const CompareDetail: React.FC<Props> = ({
+export const CompareDetailPage: React.FC<Props> = ({
 	status,
 	specList,
-	seriesList,
-	partNumberList,
 	totalCount,
 	categoryName,
 	currencyCode,
+	selectedCompareDetailItems,
+	compareDetailItems,
 	searchSpecValue,
+	handleSelectItem,
+	handleSelectAllItem,
+	handleDeleteItem,
+	handleDeleteAllItem,
 }) => {
 	const [t] = useTranslation();
-	type CompareTargetType = {
-		index?: number;
-		seriesCode?: string;
-		partNumber?: string;
-	};
-	const compareList = useRef<CompareTargetType[]>([]);
-	const [selectedCompareDetailItems, setSelectedCompareDetailItems] = useState<
-		Set<number>
-	>(new Set());
-
-	const setCompareList = (
-		index?: number,
-		seriesCode?: string | null,
-		partNumber?: string | null
-	) => {
-		if (index === undefined) return;
-
-		const target = compareList.current[index];
-		if (seriesCode) {
-			compareList.current[index] = {
-				index,
-				...target,
-				seriesCode,
-			};
-		}
-		if (partNumber) {
-			compareList.current[index] = {
-				index,
-				...target,
-				partNumber,
-			};
-		}
-	};
-
-	console.log('compareList ===> ', compareList);
-	console.log('selectedCompareDetailItems ===> ', selectedCompareDetailItems);
-	const handleSelectItem = useCallback(
-		(item: number) => {
-			const isSelected = selectedCompareDetailItems.has(item);
-			if (isSelected) {
-				selectedCompareDetailItems.delete(item);
-			} else {
-				selectedCompareDetailItems.add(item);
-			}
-			setSelectedCompareDetailItems(
-				new Set(Array.from(selectedCompareDetailItems))
-			);
-		},
-		[selectedCompareDetailItems]
-	);
-	const handleSelectAllItem = () => {
-		const isAllSelected = selectedCompareDetailItems.size === totalCount;
-		if (isAllSelected) {
-			setSelectedCompareDetailItems(new Set());
-		} else {
-			for (let i = 0; i < totalCount; i++) {
-				selectedCompareDetailItems.add(i);
-			}
-			setSelectedCompareDetailItems(new Set(selectedCompareDetailItems));
-		}
-	};
-
-	const handleDeleteItem = (index: number) => {
-		console.log(
-			'handleDeleteItem ===> ',
-			index,
-			'====> ',
-			compareList.current[index]
-		);
-	};
-
-	const handleDeleteAllItem = () => {
-		console.log('handleDeleteAllItem');
-	};
 
 	return (
 		<>
@@ -208,12 +144,10 @@ export const CompareDetail: React.FC<Props> = ({
 											{/* 비교 표 */}
 											<CompareDetailTable
 												currencyCode={currencyCode}
-												partNumberList={partNumberList}
 												searchSpecValue={searchSpecValue}
-												seriesList={seriesList}
 												specList={specList}
+												compareDetailItems={compareDetailItems}
 												totalCount={totalCount}
-												setCompareList={setCompareList}
 												handleSelectItem={handleSelectItem}
 												handleDeleteItem={handleDeleteItem}
 												selectedCompareDetailItems={selectedCompareDetailItems}
@@ -230,4 +164,4 @@ export const CompareDetail: React.FC<Props> = ({
 	);
 };
 
-CompareDetail.displayName = 'CompareDetail';
+CompareDetailPage.displayName = 'CompareDetail';

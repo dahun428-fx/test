@@ -12,3 +12,6 @@ export function selectSeriesResponses(state: AppState) {
 export function selectSpecListResponses(state: AppState) {
 	return state.compareDetail.specItems;
 }
+export function selectCompareDetailItems(state: AppState) {
+	return state.compareDetail.compareDetailItems;
+}

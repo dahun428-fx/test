@@ -1,8 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CompareDetailLoadStatus, CompareDetailState } from './types';
+import {
+	CompareDetail,
+	CompareDetailLoadStatus,
+	CompareDetailState,
+} from './types';
 
 const initialState: CompareDetailState = {
 	status: CompareDetailLoadStatus.INITIAL,
+	compareDetailItems: [],
 };
 
 type UpdatePayload = Partial<CompareDetailState>;
@@ -15,6 +20,15 @@ const slice = createSlice({
 			return {
 				...state,
 				...action.payload,
+			};
+		},
+		removeItem(state, action: PayloadAction<CompareDetail>) {
+			const remainItems = state.compareDetailItems.filter(
+				item => item.idx !== action.payload.idx
+			);
+			return {
+				...state,
+				compareDetailItems: remainItems,
 			};
 		},
 	},
