@@ -52,10 +52,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 					compare,
 					categoryCode,
 				});
-
-				const compareList = compare.items.filter(
-					item => item.categoryCode === categoryCode
-				);
+				const compareList = compare.items.filter(item => {
+					if (item.categoryCode === categoryCode && item.chk) return item;
+				});
 				setCategoryName(compareList[0]?.categoryName || '');
 				initialize.current = true;
 			}
