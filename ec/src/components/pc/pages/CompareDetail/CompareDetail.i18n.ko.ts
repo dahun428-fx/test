@@ -20,4 +20,20 @@ export const compareDetail: Translation = {
 	productName: '상품명',
 	partNumber: '형번',
 	unitPrice,
+	message: {
+		yes: '',
+		no: '',
+		alert: {
+			delete: {
+				noSelected: '삭제하실 형번을 선택하세요.',
+			},
+			close: '닫기',
+		},
+		confirm: {
+			deleteOne: '삭제하시겠습니까?',
+			deleteMany: '선택하신 {{count}}개의 형번을 삭제 하시겠습니까?',
+			yes: '예',
+			no: '아니오',
+		},
+	},
 };

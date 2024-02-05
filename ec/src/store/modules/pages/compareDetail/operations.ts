@@ -6,16 +6,16 @@ import {
 	Spec,
 } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { Compare } from '@/models/localStorage/Compare';
-import { assertNotEmpty, assertNotNull } from '@/utils/assertions';
+import { assertNotEmpty } from '@/utils/assertions';
 import { searchPartNumber$search } from '@/api/services/searchPartNumber';
 import { searchSeries$detail } from '@/api/services/searchSeries';
-import { CompareDetail, CompareDetailLoadStatus, SpecList } from './types';
+import { CompareDetail, CompareDetailLoadStatus } from './types';
 
 type CompareLoadPayload = {
 	compare: Compare;
 	categoryCode: string;
 };
-export function removeCompareDetailItemOperation(dispatch: Dispatch) {
+export function removeItemOperation(dispatch: Dispatch) {
 	return (item: CompareDetail) => {
 		dispatch(actions.removeItem(item));
 	};
@@ -58,12 +58,12 @@ export function loadCompareOperation(dispatch: Dispatch) {
 				let seriesItems: Series[] = [];
 				let partNumberItems: PartNumber[] = [];
 				const compareDetailItems = response.map((item, index) => {
-					const { specList, partNumberList, currencyCode } =
-						item.partNumberResponse;
+					const { specList, partNumberList } = item.partNumberResponse;
 					const { seriesList } = item.seriesResponse;
-					if (specList) {
-						specItems = [...specItems, ...specList];
-					}
+
+					assertNotEmpty(specList);
+
+					specItems = [...specItems, ...specList];
 					seriesItems = [...seriesItems, ...seriesList];
 					partNumberItems = [...partNumberItems, ...partNumberList];
 					return {
@@ -72,11 +72,6 @@ export function loadCompareOperation(dispatch: Dispatch) {
 						partNumberList,
 					};
 				});
-
-				assertNotNull(specItems);
-				assertNotNull(seriesItems);
-				assertNotNull(partNumberItems);
-				assertNotNull(compareDetailItems);
 
 				dispatch(
 					actions.update({

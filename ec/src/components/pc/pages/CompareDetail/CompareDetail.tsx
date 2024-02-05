@@ -29,6 +29,9 @@ type Props = {
 		idx: number
 	) => void;
 	handleDeleteAllItem: () => void;
+	onClickOrderNow: () => void;
+	addToCart: () => void;
+	addToMyComponents: () => void;
 };
 export const CompareDetailPage: React.FC<Props> = ({
 	status,
@@ -43,6 +46,9 @@ export const CompareDetailPage: React.FC<Props> = ({
 	handleSelectAllItem,
 	handleDeleteItem,
 	handleDeleteAllItem,
+	onClickOrderNow,
+	addToCart,
+	addToMyComponents,
 }) => {
 	const [t] = useTranslation();
 
@@ -80,6 +86,7 @@ export const CompareDetailPage: React.FC<Props> = ({
 											type="button"
 											theme="conversion"
 											icon="order-now"
+											onClick={onClickOrderNow}
 										>
 											{t('components.ui.layouts.footers.compareBalloon.order')}
 										</Button>
@@ -88,6 +95,7 @@ export const CompareDetailPage: React.FC<Props> = ({
 											type="button"
 											theme="conversion"
 											icon="cart"
+											onClick={addToCart}
 										>
 											{t('components.ui.layouts.footers.compareBalloon.cart')}
 										</Button>
@@ -96,6 +104,7 @@ export const CompareDetailPage: React.FC<Props> = ({
 											type="button"
 											theme="default"
 											icon="add-my-component"
+											onClick={addToMyComponents}
 										>
 											{t(
 												'components.ui.layouts.footers.compareBalloon.myComponent'

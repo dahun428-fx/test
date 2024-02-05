@@ -5,7 +5,7 @@ import {
 	CompareDetailLoadStatus,
 	SpecList,
 	loadCompareOperation,
-	removeCompareDetailItemOperation,
+	removeItemOperation,
 	selectCompareDetailItems,
 	selectCompareDetailLoadStatus,
 	selectPartNumberResponses,
@@ -22,6 +22,10 @@ import { assertNotNull } from '@/utils/assertions';
 import { cadTypeListDisp } from '@/utils/cad';
 import { config } from '@/config';
 import { getCompare, removeCompareItem } from '@/services/localStorage/compare';
+import { useConfirmModal } from '../../ui/modals/ConfirmModal';
+import { useTranslation } from 'react-i18next';
+import { useMessageModal } from '../../ui/modals/MessageModal';
+import { Button } from '../../ui/buttons';
 
 type Props = {
 	categoryCode: string;
@@ -33,7 +37,13 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	const partNumberResponses = useSelector(selectPartNumberResponses);
 	const seriesResponses = useSelector(selectSeriesResponses);
 	const compareDetailItems = useSelector(selectCompareDetailItems);
+
 	const dispatch = useDispatch();
+
+	const { showConfirm } = useConfirmModal();
+	const { showMessage } = useMessageModal();
+
+	const [t] = useTranslation();
 
 	const [categoryName, setCategoryName] = useState('');
 	const [specList, setSpecList] = useState<SpecList[]>([]);
@@ -66,7 +76,6 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			assertNotNull(specResponses);
 			assertNotNull(seriesResponses);
 			assertNotNull(partNumberResponses);
-			assertNotNull(compareDetailItems);
 			const specItems = getSpecMerge(specResponses);
 			const seriesItems = seriesResponses;
 			const partNumberItems = partNumberResponses;
@@ -285,6 +294,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		},
 		[selectedCompareDetailItems]
 	);
+
 	const handleSelectAllItem = () => {
 		const isAllSelected = selectedCompareDetailItems.size === totalCount;
 		if (isAllSelected) {
@@ -293,34 +303,68 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			compareDetailItems.map(item => {
 				selectedCompareDetailItems.add(item.idx);
 			});
-			setSelectedCompareDetailItems(new Set(selectedCompareDetailItems));
-		}
-	};
-
-	const handleDeleteItem = (
-		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-		idx: number
-	) => {
-		e.preventDefault();
-		e.stopPropagation();
-		const item = compareDetailItems.find(item => item.idx === idx);
-		if (!item) return;
-		const seriesCode = item.seriesList[0]?.seriesCode;
-		const partNumber = item.partNumberList[0]?.partNumber;
-		if (seriesCode && partNumber) {
-			removeCompareDetailItemOperation(dispatch)(item);
-			removeCompareItem(seriesCode, partNumber);
-			selectedCompareDetailItems.delete(idx);
 			setSelectedCompareDetailItems(
 				new Set(Array.from(selectedCompareDetailItems))
 			);
 		}
 	};
 
-	const handleDeleteAllItem = () => {
+	const handleDeleteItem = useCallback(
+		async (e: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
+			e.preventDefault();
+			e.stopPropagation();
+
+			const item = compareDetailItems.find(item => item.idx === idx);
+			if (!item) {
+				showMessage({
+					message: t('pages.compareDetail.message.alert.delete.noSelected'),
+					button: (
+						<Button>{t('pages.compareDetail.message.alert.close')}</Button>
+					),
+				});
+
+				return;
+			}
+
+			const confirm = await showConfirm({
+				message: t('pages.compareDetail.message.confirm.deleteOne'),
+				confirmButton: t('pages.compareDetail.message.confirm.yes'),
+				closeButton: t('pages.compareDetail.message.confirm.no'),
+			});
+			if (!confirm) return;
+
+			const seriesCode = item.seriesList[0]?.seriesCode;
+			const partNumber = item.partNumberList[0]?.partNumber;
+			if (seriesCode && partNumber) {
+				removeItemOperation(dispatch)(item);
+				removeCompareItem(seriesCode, partNumber);
+				selectedCompareDetailItems.delete(idx);
+				setSelectedCompareDetailItems(
+					new Set(Array.from(selectedCompareDetailItems))
+				);
+			}
+		},
+		[selectedCompareDetailItems, compareDetailItems]
+	);
+
+	const handleDeleteAllItem = useCallback(async () => {
 		if (selectedCompareDetailItems.size < 1) {
+			showMessage({
+				message: t('pages.compareDetail.message.alert.delete.noSelected'),
+				button: <Button>{t('pages.compareDetail.message.alert.close')}</Button>,
+			});
+
 			return;
 		}
+
+		const confirm = await showConfirm({
+			message: t('pages.compareDetail.message.confirm.deleteMany', {
+				count: selectedCompareDetailItems.size,
+			}),
+			confirmButton: t('pages.compareDetail.message.confirm.yes'),
+			closeButton: t('pages.compareDetail.message.confirm.no'),
+		});
+		if (!confirm) return;
 
 		selectedCompareDetailItems.forEach(idx => {
 			const detail = compareDetailItems.find(
@@ -330,7 +374,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 			const seriesCode = detail.seriesList[0]?.seriesCode;
 			const partNumber = detail.partNumberList[0]?.partNumber;
 			if (seriesCode && partNumber) {
-				removeCompareDetailItemOperation(dispatch)(detail);
+				removeItemOperation(dispatch)(detail);
 				removeCompareItem(seriesCode, partNumber);
 			}
 			selectedCompareDetailItems.delete(idx);
@@ -338,7 +382,26 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		setSelectedCompareDetailItems(
 			new Set(Array.from(selectedCompareDetailItems))
 		);
-	};
+	}, [selectedCompareDetailItems, compareDetailItems]);
+
+	/** todo */
+	const onClickOrderNow = useCallback(() => {
+		console.log('order');
+		console.log('items ===> ', selectedCompareDetailItems);
+	}, [selectedCompareDetailItems]);
+
+	/** todo */
+	const addToCart = useCallback(() => {
+		console.log('add to cart');
+
+		console.log('items ===> ', selectedCompareDetailItems);
+	}, [selectedCompareDetailItems]);
+
+	/** todo */
+	const addToMyComponents = useCallback(() => {
+		console.log('addToMyComponents');
+		console.log('items ===> ', selectedCompareDetailItems);
+	}, [selectedCompareDetailItems]);
 
 	return (
 		<>
@@ -354,6 +417,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 				handleSelectAllItem={handleSelectAllItem}
 				handleDeleteItem={handleDeleteItem}
 				handleDeleteAllItem={handleDeleteAllItem}
+				onClickOrderNow={onClickOrderNow}
+				addToCart={addToCart}
+				addToMyComponents={addToMyComponents}
 				currencyCode={config.defaultCurrencyCode}
 			/>
 		</>
