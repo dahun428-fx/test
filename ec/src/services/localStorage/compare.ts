@@ -107,6 +107,9 @@ export function addCompareItem(addItem: CompareItem) {
 		return;
 	}
 
+	const hasSameHead = compare.items.some(
+		item => item.categoryCode === addItem.categoryCode
+	);
 	const headLength = compare.items
 		.map(item => item.categoryCode)
 		.reduce<string[]>(
@@ -120,7 +123,7 @@ export function addCompareItem(addItem: CompareItem) {
 	).length;
 
 	if (
-		headLength >= COMPARE_HEAD_MAX_LENGTH ||
+		(headLength >= COMPARE_HEAD_MAX_LENGTH && !hasSameHead) ||
 		contentLength >= COMPARE_CONTENT_MAX_LENGTH
 	) {
 		return;
@@ -136,13 +139,10 @@ export function addCompareItem(addItem: CompareItem) {
 	);
 }
 
-export function removeCompareItem(seriesCode:string, partNumber:string) {
+export function removeCompareItem(seriesCode: string, partNumber: string) {
 	const compare = getCompare();
 	const foundIndex = compare.items.findIndex(item => {
-		if (
-			item.seriesCode === seriesCode &&
-			item.partNumber === partNumber
-		) {
+		if (item.seriesCode === seriesCode && item.partNumber === partNumber) {
 			return item;
 		}
 	});

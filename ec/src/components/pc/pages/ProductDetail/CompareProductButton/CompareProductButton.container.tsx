@@ -124,7 +124,12 @@ export const CompareProductButton: FC<Props> = ({ partNumber }) => {
 		const compareItem = createParam(series);
 
 		if (!hasItem(compareItem)) {
-			if (tabHeadLength >= COMPARE_HEAD_MAX_LENGTH) {
+			console.log('not has items!', compareItem.categoryCode);
+			const hasTabHead = compare.items.some(
+				item => item.categoryCode === compareItem.categoryCode
+			);
+
+			if (tabHeadLength >= COMPARE_HEAD_MAX_LENGTH && !hasTabHead) {
 				showMessage({
 					message: t(
 						'pages.productDetail.compareProductButton.message.headMax',
