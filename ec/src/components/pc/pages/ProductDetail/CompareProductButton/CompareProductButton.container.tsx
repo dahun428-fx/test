@@ -157,15 +157,16 @@ export const CompareProductButton: FC<Props> = ({ partNumber }) => {
 				return;
 			}
 			addItemOperation(dispatch)(compareItem);
+			showCompareBalloon(compareItem);
 		} else {
+			console.log('has items!', compareItem.categoryCode);
 			updateCompareOperation(dispatch)({
 				...compare,
-				active: compareItem.categoryCode,
 			});
 			updateCompare({ active: compareItem.categoryCode });
 			updateCompareItem({ ...compareItem, chk: true });
+			showCompareBalloon(compareItem);
 		}
-		showCompareBalloon();
 	};
 
 	useEffect(() => {

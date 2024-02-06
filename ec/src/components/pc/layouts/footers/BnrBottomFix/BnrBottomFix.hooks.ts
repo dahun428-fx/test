@@ -2,6 +2,7 @@ import { updateCadDownloadStack } from '@/services/localStorage/cadDownloadStack
 import { updateCompare } from '@/services/localStorage/compare';
 import { useSelector } from '@/store/hooks';
 import {
+	selectCompareItemsLength,
 	selectShowCompareBalloon,
 	updateShowsCompareBalloonStatusOperation,
 } from '@/store/modules/common/compare';
@@ -37,6 +38,7 @@ export const useCompare = () => {
 	const dispatch = useDispatch();
 
 	const compareShowStatus = useSelector(selectShowCompareBalloon);
+	const compareItemLen = useSelector(selectCompareItemsLength);
 	const setCompareShowStatus = useCallback(
 		(show: boolean) => {
 			updateShowsCompareBalloonStatusOperation(dispatch)(show);
@@ -45,6 +47,7 @@ export const useCompare = () => {
 		[dispatch]
 	);
 	return {
+		compareItemLen,
 		compareShowStatus,
 		setCompareShowStatus,
 	};

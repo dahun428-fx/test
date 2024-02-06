@@ -55,7 +55,7 @@ export function loadCompareOperation(dispatch: Dispatch) {
 		promise
 			.then(async response => {
 				let specItems: Spec[] = [];
-				let seriesItems: Series[] = [];
+				let seriesItems: Partial<Series>[] = [];
 				let partNumberItems: PartNumber[] = [];
 				const compareDetailItems = response.map((item, index) => {
 					const { specList, partNumberList } = item.partNumberResponse;
@@ -64,11 +64,12 @@ export function loadCompareOperation(dispatch: Dispatch) {
 					assertNotEmpty(specList);
 
 					specItems = [...specItems, ...specList];
-					seriesItems = [...seriesItems, ...seriesList];
+					seriesItems = [...seriesItems, ...seriesParam(seriesList)];
 					partNumberItems = [...partNumberItems, ...partNumberList];
+					const partialSeries = seriesParam(seriesList);
 					return {
 						idx: index,
-						seriesList,
+						seriesList: partialSeries,
 						partNumberList,
 					};
 				});
@@ -86,6 +87,27 @@ export function loadCompareOperation(dispatch: Dispatch) {
 			.catch(noop);
 	};
 }
+
+const seriesParam = (seriesList: Series[]): Partial<Series>[] => {
+	return seriesList.map(item => {
+		const {
+			brandCode,
+			brandName,
+			seriesCode,
+			seriesName,
+			volumeDiscountFlag,
+			productImageList,
+		} = item;
+		return {
+			brandCode,
+			brandName,
+			seriesCode,
+			seriesName,
+			volumeDiscountFlag,
+			productImageList,
+		};
+	});
+};
 
 function noop() {
 	// noop

@@ -32,11 +32,11 @@ type Props = {
 };
 
 export const CompareDetail: FC<Props> = ({ categoryCode }) => {
-	const status = useSelector(selectCompareDetailLoadStatus);
-	const specResponses = useSelector(selectSpecListResponses);
-	const partNumberResponses = useSelector(selectPartNumberResponses);
-	const seriesResponses = useSelector(selectSeriesResponses);
-	const compareDetailItems = useSelector(selectCompareDetailItems);
+	const status = useSelector(selectCompareDetailLoadStatus); // 로딩 상태
+	const specResponses = useSelector(selectSpecListResponses); // specList from store
+	const partNumberResponses = useSelector(selectPartNumberResponses); //partNumberList from store
+	const seriesResponses = useSelector(selectSeriesResponses); //seriesList from store
+	const compareDetailItems = useSelector(selectCompareDetailItems); //compareItems from store
 
 	const dispatch = useDispatch();
 
@@ -52,6 +52,10 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		Set<number>
 	>(new Set());
 
+	/**
+	 * 현재 로딩 상태가 INITIAL ( 0 ) 일 경우,
+	 * localStorage 에서 compare 값을 가져와서 비교결과 페이지에 출력한다.
+	 */
 	useEffect(() => {
 		if (status === CompareDetailLoadStatus.INITIAL) {
 			let compare = getCompare();
@@ -71,6 +75,10 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		}
 	}, [dispatch, categoryCode, status]);
 
+	/**
+	 * 현재 로딩 상태가 LOADED_MAIN ( 2 ) 일 경우,
+	 * store 에 저장되어 있는 데이터를 가져와서 정제한다.
+	 */
 	useEffect(() => {
 		if (status === CompareDetailLoadStatus.LOADED_MAIN) {
 			assertNotNull(specResponses);
@@ -98,6 +106,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		}
 	}, [specResponses, partNumberResponses, seriesResponses, status]);
 
+	/**
+	 * 	specList 중복제거
+	 */
 	const getSpecMerge = (specItems: Spec[]) => {
 		return specItems.reduce<Spec[]>((previous, current) => {
 			const foundIndex = previous.findIndex(
@@ -107,7 +118,10 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		}, []);
 	};
 
-	const fixSeriesSortList = (seriesItems: Series[]) => {
+	/**
+	 * specList에 seriesList 값 추가 : 브랜드 데이터 비교
+	 */
+	const fixSeriesSortList = (seriesItems: Partial<Series>[]) => {
 		let specList0: SpecList[] = []; //데이터가 다른 항목 저장 array
 		let specList1: SpecList[] = []; //데이터가 같은 항목 저장 array
 
@@ -126,6 +140,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return [specList0, specList1];
 	};
 
+	/**
+	 * specList에 partNumberList 값 추가 : 수량할인, 출하일, CAD, RoHs 데이터 비교
+	 */
 	const fixPartNumberSortList = (partNumberItems: PartNumber[]) => {
 		let specList0: SpecList[] = []; //데이터가 다른 항목 저장 array
 		let specList1: SpecList[] = []; //데이터가 같은 항목 저장 array
@@ -229,6 +246,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return [...items, { diffTypeCode: 4, specTypeCode: '4' }];
 	};
 
+	/**
+	 * specList 순서 변경
+	 */
 	const sortSpecList = (specItems: Spec[], partNumberItems: PartNumber[]) => {
 		let specList0: SpecList[] = [];
 		let specList1: SpecList[] = [];
@@ -254,6 +274,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return [specList0, specList1];
 	};
 
+	/**
+	 * partNumber 에 specList 에 해당하는 값이 존재하는지 여부 확인
+	 */
 	const searchSpecValue = (
 		partNumberItem: PartNumber | undefined,
 		searchSpecCode: string | undefined
@@ -267,6 +290,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return partNumberItem.specValueList[foundIndex]?.specValueDisp ?? '-';
 	};
 
+	/**
+	 * 화면 출력 여부
+	 */
 	const readyToStatus = useMemo(() => {
 		if (status === CompareDetailLoadStatus.READY) {
 			return true;
@@ -280,6 +306,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		return compareDetailItems.length;
 	}, [compareDetailItems]);
 
+	/**
+	 * 유저 클릭 이벤트
+	 */
 	const handleSelectItem = useCallback(
 		(item: number) => {
 			const isSelected = selectedCompareDetailItems.has(item);
@@ -295,6 +324,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		[selectedCompareDetailItems]
 	);
 
+	/**
+	 * '전체 선택' 클릭 이벤트
+	 */
 	const handleSelectAllItem = () => {
 		const isAllSelected = selectedCompareDetailItems.size === totalCount;
 		if (isAllSelected) {
@@ -309,6 +341,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		}
 	};
 
+	/**
+	 * 개별 삭제 이벤트
+	 */
 	const handleDeleteItem = useCallback(
 		async (e: React.MouseEvent<HTMLDivElement, MouseEvent>, idx: number) => {
 			e.preventDefault();
@@ -347,6 +382,9 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		[selectedCompareDetailItems, compareDetailItems]
 	);
 
+	/**
+	 * '삭제' 클릭 이벤트
+	 */
 	const handleDeleteAllItem = useCallback(async () => {
 		if (selectedCompareDetailItems.size < 1) {
 			showMessage({

@@ -45,12 +45,18 @@ export const CompareDetailTable: React.VFC<Props> = ({
 }) => {
 	const [t] = useTranslation();
 
+	/**
+	 * 이미지 관련 HTML 출력 함수
+	 * 비교결과가 있을 경우, productImageList[0] 출력
+	 * 비교결과가 없을 경우, 비어있는 <td></td> 출력
+	 */
 	const imageHTMLPrint = () => {
 		let html = compareDetailItems.map((compareDetailItem, index) => {
 			const idx = compareDetailItem.idx;
 			const item = compareDetailItem.seriesList[0];
 			if (!item) return;
-			const productImageUrl = item.productImageList[0]?.url || '';
+			const productImageUrl =
+				(item.productImageList && item.productImageList[0]?.url) || '';
 
 			return (
 				<td
@@ -91,6 +97,11 @@ export const CompareDetailTable: React.VFC<Props> = ({
 		}
 		return html;
 	};
+
+	/**
+	 * 비교결과 Spec 관련 HTML 출력
+	 * SpecList 에 해당하는 값이 Series | PartNumber 에 존재하는 경우 출력된다.
+	 */
 	const specHtmlPrint = () => {
 		return specList.map((item, index) => {
 			const { diffTypeCode, specTypeCode } = item;

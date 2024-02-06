@@ -9,3 +9,6 @@ export function selectShowCompareBalloon(state: AppState) {
 export function selectCompareActiveCategoryCode(state: AppState) {
 	return state.compare.active;
 }
+export function selectCompareItemsLength(state: AppState) {
+	return state.compare.items.length;
+}

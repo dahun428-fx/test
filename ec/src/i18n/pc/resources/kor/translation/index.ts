@@ -15,6 +15,7 @@ import { cadDownloadStatusBalloon } from '../../../../../components/pc/layouts/f
 import { stackBalloon } from '../../../../../components/pc/layouts/footers/StackBalloon/StackBalloon.i18n.ko'; //change to ko
 import { compareBalloon } from '../../../../../components/pc/layouts/footers/CompareBalloon/CompareBalloon.i18n.ko'; //change to ko
 import { footer } from '../../../../../components/pc/layouts/footers/Footer/Footer.i18n.en';
+import { bnrBottomFix } from '../../../../../components/pc/layouts/footers/BnrBottomFix/BnrBottomFix.i18n.ko'; //change to ko
 import { headers } from '../../../../../components/pc/layouts/headers/headers.i18n.ko'; //change to ko
 import { addToCartModal } from '../../../../../components/pc/modals/AddToCartModal/AddToCartModal.i18n.en';
 import { loginModal } from '../../../../../components/pc/modals/LoginModal/LoginModal.i18n.en';
@@ -101,6 +102,7 @@ const translation: Translation = {
 					cadDownloadStatusBalloon,
 					stackBalloon,
 					compareBalloon,
+					bnrBottomFix,
 					footer,
 				},
 				headers,

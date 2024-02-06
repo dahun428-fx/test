@@ -1,5 +1,5 @@
 import { Translation } from '@/i18n/types';
-//components.ui.layouts.footers.stackBalloon.message.progress
+
 export const stackBalloon: Translation = {
 	title: 'CAD 다운로드',
 	downloadPending: '다운로드 대기',

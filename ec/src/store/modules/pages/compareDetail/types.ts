@@ -16,7 +16,7 @@ export { CompareDetailLoadStatus };
 
 export type CompareDetail = {
 	idx: number;
-	seriesList: Series[];
+	seriesList: Partial<Series>[];
 	partNumberList: PartNumber[];
 };
 
@@ -24,7 +24,7 @@ export type CompareDetailState = {
 	status: CompareDetailLoadStatus;
 	specItems?: Spec[];
 	partNumberItems?: PartNumber[];
-	seriesItems?: Series[];
+	seriesItems?: Partial<Series>[];
 	compareDetailItems: CompareDetail[];
 };
 export type SpecList = Partial<Spec> & {
