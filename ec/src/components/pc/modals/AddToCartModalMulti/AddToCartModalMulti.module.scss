@@ -1,0 +1,182 @@
+.addToCartModal {
+	width: 950px;
+	padding: 16px;
+}
+
+.title {
+	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
+	margin-bottom: 16px;
+	padding-bottom: 12px;
+	font-weight: normal;
+	font-size: 1.3125rem;
+	line-height: 1.3;
+	text-indent: 0;
+	border-bottom: 2px solid #ccc;
+}
+
+.productHead {
+	margin-bottom: 16px;
+}
+
+.productMain {
+	color: #444;
+}
+
+.brandName {
+	color: #666;
+	font-size: 0.8125rem;
+}
+
+.productName {
+	margin-top: 8px;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.partNumber {
+	margin-top: 8px;
+}
+
+.partNumberLabel {
+	margin-right: 8px;
+	color: #666;
+}
+
+.action {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: 32px;
+}
+
+.viewCart {
+	margin-left: 32px;
+}
+
+.cartCount {
+	margin: 0 4px;
+	color: #c00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}
+
+.priceLeadTime {
+	padding: 8px 16px;
+	background-color: #f5f5f5;
+}
+
+.quoteOnWos {
+	margin-top: 8px;
+}
+
+.recommend {
+	margin-top: 32px;
+	border-top: solid 1px #bfbfbf;
+}
+
+.productList {
+	position: relative;
+	margin: 10px 0;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.productListHeader {
+	border-top: 1px solid #bfbfbf;
+	background-color: #e6e6e6;
+	font-weight: bold;
+}
+
+.productListTable {
+	display: table;
+	width: 100%;
+	border-bottom: 1px solid #bfbfbf;
+	vertical-align: top;
+}
+
+.productListBody {
+	margin-bottom: 10px;
+
+	.productListTable {
+		position: relative;
+		background-color: #fff;
+		cursor: pointer;
+
+		.main {
+			display: table;
+			width: 100%;
+			margin: 8px 0;
+			font-size: 13px;
+		}
+	}
+}
+
+@mixin tdVal {
+	display: table-cell;
+	padding: 0 9px;
+	text-align: center;
+	vertical-align: middle;
+	.productListHeader & {
+		vertical-align: bottom;
+		padding-top: 9px;
+		padding-bottom: 10px;
+	}
+	em {
+		font-size: 18px;
+		font-style: normal;
+		font-weight: bold;
+		line-height: 1.3;
+		color: #333;
+	}
+}
+
+.TDmodel {
+	@include tdVal();
+	width: 198px;
+	.model {
+		display: table;
+	}
+	.modelImg {
+		display: table-cell;
+		vertical-align: middle;
+		padding-right: 10px;
+	}
+	.modelBody {
+		display: table-cell;
+		vertical-align: middle;
+		padding-left: 10px;
+	}
+}
+.TDshipDay {
+	@include tdVal();
+	width: 88px;
+}
+.TDunitPrice {
+	@include tdVal();
+	width: 80px;
+	.productListBody & {
+		text-align: right;
+	}
+}
+.TDquantity {
+	@include tdVal();
+	width: 60px;
+}
+.TDtotal {
+	@include tdVal();
+	width: 88px;
+	.productListBody & {
+		text-align: right;
+	}
+}
+.TDremarks {
+	@include tdVal();
+	width: 192px;
+}
+
+.tableRemarks,
+.tableDiscount {
+	margin: 10px 0;
+}

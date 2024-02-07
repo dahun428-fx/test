@@ -23,6 +23,20 @@ import {
 	CompareDetailLoadStatus,
 	updateStatusOperation,
 } from '@/store/modules/pages/compareDetail';
+import { checkPrice } from '@/api/services/checkPrice';
+import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
+import { assertNotNull } from '@/utils/assertions';
+import { addToCart as addToCartApi } from '@/api/services/addToCart';
+import {
+	refreshAuth,
+	selectAuthenticated,
+	selectIsEcUser,
+	selectUserPermissions,
+} from '@/store/modules/auth';
+import { store } from '@/store';
+import { useLoginModal } from '@/components/pc/modals/LoginModal';
+import { usePaymentMethodRequiredModal } from '@/components/pc/modals/PaymentMethodRequiredModal';
+import { useAddToCartModalMulti } from '@/components/pc/modals/AddToCartModalMulti/AddToCartModalMulti.hooks';
 
 /**
  * 비교 푸터 팝업
@@ -31,6 +45,9 @@ export const CompareBalloon: FC = () => {
 	const initialized = useRef(false);
 
 	const dispatch = useDispatch();
+	const showLoginModal = useLoginModal();
+	const showAddToCartModal = useAddToCartModalMulti();
+	const showPaymentMethodRequiredModal = usePaymentMethodRequiredModal();
 
 	const compare = useSelector(selectCompare);
 	const compareShowStatus = useSelector(selectShowCompareBalloon);
@@ -111,14 +128,83 @@ export const CompareBalloon: FC = () => {
 		console.log('itesm ===> ', items);
 	};
 
+	const check = useCallback(async () => {}, []);
+
 	/** todo */
-	const addToCart = () => {
-		console.log('add to cart');
-		const items = Array.from(selectedItemsForCheck.current).filter(
-			item => item.categoryCode === selectedActiveTab.current
-		);
-		console.log('itesm ===> ', items);
-	};
+	const addToCart = useCallback(async () => {
+		try {
+			const items = Array.from(selectedItemsForCheck.current).filter(
+				item => item.categoryCode === selectedActiveTab.current
+			);
+			if (items.length < 1) return;
+
+			// NOTE: Get the latest user info when executing add to cart
+			// await refreshAuth(store.dispatch)();
+
+			// if (!selectAuthenticated(store.getState())) {
+			// 	const result = await showLoginModal();
+			// 	if (result !== 'LOGGED_IN') {
+			// 		return;
+			// 	}
+			// }
+
+			// if (selectIsEcUser(store.getState())) {
+			// 	showPaymentMethodRequiredModal();
+			// 	return;
+			// }
+
+			// if (!selectUserPermissions(store.getState()).hasCartPermission) {
+			// 	showMessage(t('common.cart.noPermission'));
+			// 	return;
+			// }
+
+			// console.log('add to cart');
+
+			// const seriesCode = items[0]?.seriesCode;
+			// const firstBrandCode = items[0]?.brandCode;
+			// assertNotNull(seriesCode);
+			// assertNotNull(firstBrandCode);
+
+			// const productList = items.map(item => {
+			// 	return {
+			// 		partNumber: item.partNumber,
+			// 		quantity: 1,
+			// 		brandCode: item.brandCode,
+			// 	};
+			// });
+
+			// const response = await checkPrice({ productList });
+
+			// if (response.priceList[0] === undefined) {
+			// 	return;
+			// }
+
+			// const { priceList } = response;
+
+			// const cartItems = priceList.map(item => {
+			// 	return {
+			// 		seriesCode,
+			// 		brandCode: item.brandCode || firstBrandCode,
+			// 		partNumber: item.partNumber,
+			// 		quantity: item.quantity,
+			// 		innerCode: item.innerCode,
+			// 		unitPrice: item.unitPrice,
+			// 		standardUnitPrice: item.standardUnitPrice,
+			// 		daysToShip: item.daysToShip,
+			// 		shipType: item.shipType,
+			// 		piecesPerPackage: item.piecesPerPackage,
+			// 	};
+			// });
+
+			// const addToCartResponse = await addToCartApi({
+			// 	cartItemList: cartItems,
+			// });
+
+			// console.log('itesm ===> ', items, response, addToCartResponse);
+
+			showAddToCartModal();
+		} catch (error) {}
+	}, [selectedItemsForCheck.current]);
 
 	/** todo */
 	const addToMyComponents = () => {

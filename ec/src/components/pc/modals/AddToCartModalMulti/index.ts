@@ -1,0 +1,1 @@
+export { AddToCartModalMulti } from './AddToCartModalMulti';

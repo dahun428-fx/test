@@ -10,11 +10,23 @@ import { assertNotEmpty } from '@/utils/assertions';
 import { searchPartNumber$search } from '@/api/services/searchPartNumber';
 import { searchSeries$detail } from '@/api/services/searchSeries';
 import { CompareDetail, CompareDetailLoadStatus } from './types';
+import { AppStore } from '@/store';
 
 type CompareLoadPayload = {
 	compare: Compare;
 	categoryCode: string;
 };
+
+// export function checkPriceOperation({getState, dispatch} : AppStore) {
+
+// 	async function check() :Promise<void> {
+// 		const storeState = getState();
+
+// 	}
+
+// 	return check;
+// }
+
 export function removeItemOperation(dispatch: Dispatch) {
 	return (item: CompareDetail) => {
 		dispatch(actions.removeItem(item));
