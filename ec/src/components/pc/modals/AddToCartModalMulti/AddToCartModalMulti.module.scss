@@ -1,3 +1,8 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
+
+$icCopy: './assets/img/ic_copy.png';
+
 .addToCartModal {
 	width: 950px;
 	padding: 16px;
@@ -53,6 +58,7 @@
 
 .viewCart {
 	margin-left: 32px;
+	width: 215px;
 }
 
 .cartCount {
@@ -102,7 +108,6 @@
 	.productListTable {
 		position: relative;
 		background-color: #fff;
-		cursor: pointer;
 
 		.main {
 			display: table;
@@ -179,4 +184,140 @@
 .tableRemarks,
 .tableDiscount {
 	margin: 10px 0;
+}
+.modalFunction {
+	margin-top: 40px;
+	text-align: center;
+	> ul {
+		font-size: 0;
+		margin-top: 10px;
+		margin-left: -20px;
+		text-align: center;
+		> li {
+			display: inline-block;
+			margin: 0 10px 2px;
+			vertical-align: top;
+			font-size: 12px;
+		}
+	}
+	.btnClose {
+		width: 215px;
+	}
+}
+
+.icCopy {
+	display: inline-block;
+	padding: 3px 0px 3px 22px;
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	background-image: url($icCopy);
+	color: #004bb1;
+	cursor: pointer;
+	&:visited {
+		color: #851f99;
+	}
+}
+
+.copyBalloon {
+	// display: none;
+	position: absolute;
+	top: 45px;
+	right: -15px;
+	margin-top: 3px;
+	padding: 5px;
+	border: 2px solid #67a5dd;
+	border-radius: 2px;
+	box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 3px 0px;
+	background: #fff;
+	z-index: 1;
+}
+
+.tableRemarks {
+	th {
+		background-color: #e6e6e6;
+	}
+}
+
+.mTable {
+	width: 100%;
+	margin: 10px 0;
+	border-collapse: collapse;
+	> thead,
+	> tbody {
+		> tr {
+			> th,
+			> td {
+				border: 1px solid #bfbfbf;
+				text-indent: 0;
+				word-wrap: break-word;
+			}
+			> td {
+				background-color: #fff;
+			}
+		}
+	}
+	> thead {
+		background-color: #999;
+		> tr {
+			> th {
+				padding: 12px 10px;
+				background-color: #ccc;
+				color: #333;
+				text-align: center;
+				font-weight: bold;
+			}
+		}
+	}
+
+	> tbody {
+		> tr {
+			> th,
+			> td {
+				padding: 7px 10px;
+				text-align: center;
+			}
+			> th {
+				background-color: #f1f1f1;
+			}
+		}
+	}
+}
+.help {
+	@include linkHelp;
+}
+.colStorkeType {
+	margin: 0;
+	padding: 15px 10px;
+	background-color: #f0f0f0;
+	border: 0;
+}
+
+.error {
+	margin: 0 9px 10px;
+	padding: 7px 10px;
+	background-color: #fff2bf;
+	.errorText {
+		overflow: hidden;
+	}
+	.info {
+		margin-top: 0.5em;
+		padding-left: 18px;
+		&::before {
+			content: '';
+			display: inline-block;
+			margin: 0.22em 4px 0 -18px;
+			width: 14px;
+			height: 14px;
+			background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTcyOTg4RUZFNkVEMTFFOEEwQUFGMDM5MTk0ODZFNDkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTcyOTg4RjBFNkVEMTFFOEEwQUFGMDM5MTk0ODZFNDkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NzI5ODhFREU2RUQxMUU4QTBBQUYwMzkxOTQ4NkU0OSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1NzI5ODhFRUU2RUQxMUU4QTBBQUYwMzkxOTQ4NkU0OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmSx6YEAAADZSURBVHjaYgybcokBCYgAcREQ+wCxGlTsBhBvAuJJQPwGppAFSVMwEM8FYn4GVKAPxflAnATEa0GCTEiaVmPRhAz4oGqCYRpFgXgeEDMiq1qZrQvGaIARqlYMpDEXahqxAKS2AORHP2yy4VMv49PsA9KogS6K7EQcBqgzkWEbCPxigsYTqeAeEzRySQVbQRqnAPEnXH7EEiUgtRNAgfMKmiJWw+ISjx//Q9W+ggUOKBmFAfFnPM4DyYWiJzkQWAPESkDcDsRXgPg3EH8F4vNA3AKVWwtTDBBgAOS+MOjj4hN4AAAAAElFTkSuQmCC')
+				0 0.2em no-repeat;
+			background-position: 0 0;
+			vertical-align: top;
+		}
+		> a {
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
 }

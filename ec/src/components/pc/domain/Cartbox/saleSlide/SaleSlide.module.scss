@@ -1,0 +1,56 @@
+@use 'src/styles/pc/variables';
+@use 'src/styles/pc/_variables_original' as *;
+
+.table {
+	width: 100%;
+	margin: 10px 0;
+	border-collapse: collapse;
+
+	> thead,
+	> tbody {
+		> tr {
+			> th,
+			> td {
+				border: 1px solid #bfbfbf;
+				text-indent: 0;
+				word-wrap: break-word;
+			}
+
+			> td {
+				background-color: #fff;
+			}
+		}
+	}
+	> thead {
+		background-color: #999;
+		> tr {
+			&.mc-sub > th {
+				background-color: #ccc;
+				color: #333;
+			}
+			> th {
+				padding: 12px 10px;
+				background-color: #ccc;
+				color: #333;
+				text-align: center;
+				font-weight: bold;
+			}
+		}
+	}
+
+	> tbody {
+		> tr {
+			> th,
+			> td {
+				padding: 7px 10px;
+				text-align: center;
+			}
+			> th {
+				background-color: #f1f1f1;
+			}
+		}
+	}
+}
+.help {
+	@include linkHelp;
+}

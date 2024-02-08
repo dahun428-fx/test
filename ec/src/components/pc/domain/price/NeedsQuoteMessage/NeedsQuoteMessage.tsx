@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { TFunction } from 'i18next';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import styles from './NeedsQuoteMessage.module.scss';
 import { Button } from '@/components/pc/ui/buttons';
 import { Flag } from '@/models/api/Flag';
@@ -12,6 +12,7 @@ import {
 	needsQuote,
 	priceNeedsQuote,
 } from '@/utils/domain/price';
+import { url } from '@/utils/url';
 
 type Price = Pick<
 	RawPrice,
@@ -93,7 +94,13 @@ function getQuoteMessage(price: Price, t: TFunction) {
 
 	if (priceNeedsQuote(price)) {
 		return {
-			message: t('components.domain.price.needsQuoteMessage.price'),
+			message: (
+				<Trans i18nKey="components.domain.price.needsQuoteMessage.price">
+					<a href={url.wos.staticContents.helpPage('ko')}></a>
+					<br></br>
+				</Trans>
+			),
+			// message: t('components.domain.price.needsQuoteMessage.price'),
 		};
 	}
 

@@ -7,7 +7,7 @@
 //=============================================================================
 import { cadDownload } from '../../../../../components/pc/domain/CadDownload/CadDownload.i18n.ko'; // change to ko
 import { category as categoryDomain } from '../../../../../components/pc/domain/category/category.i18n.en';
-import { price } from '../../../../../components/pc/domain/price/price.i18n.en';
+import { price } from '../../../../../components/pc/domain/price/price.i18n.ko'; //change to ko
 import { series } from '../../../../../components/pc/domain/series/series.i18n.en';
 import { applicationErrorContents } from '../../../../../components/pc/error/ApplicationErrorContents.i18n.en';
 import { errorHandler } from '../../../../../components/pc/error/ErrorHandler.i18n.en';
@@ -43,6 +43,7 @@ import { panels } from '../../../../../components/pc/ui/panels/i18n.ko'; //chang
 import { radio } from '../../../../../components/pc/ui/radio/i18n.en';
 import { specs } from '../../../../../components/pc/ui/specs/specs.i18n.en';
 import { text } from '../../../../../components/pc/ui/text/i18n.ko'; // change to ko
+import { cartbox } from '../../../../../components/pc/domain/Cartbox/Cartbox.i18n.ko'; //change to ko
 import { toasts } from '../../../../../components/pc/ui/toasts/i18n.en';
 import { useLogin } from '../../../../../hooks/auth/useLogin.i18n.en';
 import { useTabTranslation } from '../../../../../hooks/i18n/useTabTranslation.i18n.en';
@@ -77,6 +78,7 @@ const translation: Translation = {
 			category: categoryDomain,
 			price,
 			series,
+			cartbox,
 		},
 		error: {
 			applicationErrorContents,

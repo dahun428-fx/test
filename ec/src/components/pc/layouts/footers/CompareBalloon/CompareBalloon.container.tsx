@@ -139,7 +139,7 @@ export const CompareBalloon: FC = () => {
 			if (items.length < 1) return;
 
 			// NOTE: Get the latest user info when executing add to cart
-			// await refreshAuth(store.dispatch)();
+			await refreshAuth(store.dispatch)();
 
 			// if (!selectAuthenticated(store.getState())) {
 			// 	const result = await showLoginModal();

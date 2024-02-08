@@ -23,7 +23,8 @@ import { padZero } from '@/utils/string';
  * WOS 言語コード候補
  * - 現法によって異なります。
  */
-type WosLanguageCode = 'en';
+// type WosLanguageCode = 'en';
+type WosLanguageCode = 'ko';
 
 /** CADENAS callback path */
 const cadenasCallbackPath = '/vona2/3dpreview/cadenas.html';
@@ -121,6 +122,8 @@ export const url = {
 	rohs: `${config.web.ec.origin}/contents/environment/rohs/`,
 	/** Terms of Use */
 	terms: `${config.web.ec.origin}/contents/terms/`,
+	/** 분납 bara */
+	bara: `${config.web.ec.origin}/contents/guide/category/ecatalog/bara.html`,
 	/** Sitemap */
 	// TODO: Remove this config when mobile footer link sitemap convert to used pagePaths
 	sitemap: `${config.web.ec.origin}/vona2/sitemap/`,
@@ -762,6 +765,8 @@ export const url = {
 			/** Payment method guide */
 			paymentMethodGuide: (lang: WosLanguageCode) =>
 				`${config.web.wos.staticContents.baseUrl}/${lang}/help/SO006_01m.html`,
+			helpPage: (lang: WosLanguageCode) =>
+				`${config.web.wos.staticContents.baseUrl}/${lang}/help/`,
 		},
 	},
 } as const;
