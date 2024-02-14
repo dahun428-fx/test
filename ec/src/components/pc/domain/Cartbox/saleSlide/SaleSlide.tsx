@@ -46,11 +46,9 @@ export const SaleSlide: React.VFC<Props> = ({
 					<tr>
 						<th className={styles.help}>
 							{t('components.domain.cartbox.saleSlide.quantity')}
-							{/* <Trans i18nKey="components.domain.cartbox.saleSlide.quantity"> */}
 							<a href={url.slideDiscountGuide} target="guide">
 								<span>?</span>
 							</a>
-							{/* </Trans> */}
 						</th>
 						<th>{t('components.domain.cartbox.saleSlide.standardPrice')}</th>
 						<th>{t('components.domain.cartbox.saleSlide.daysToShip')}</th>

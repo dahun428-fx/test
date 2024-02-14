@@ -48,7 +48,7 @@ export const useAddToCartModalMulti = (series?: Series) => {
 	const [t] = useTranslation();
 
 	const currencyCode = config.defaultCurrencyCode;
-	console.log('currencyCode===>', currencyCode);
+	console.log('addToCartModalMulti===>', series);
 	useEffect(() => {
 		const list = [
 			{
@@ -740,7 +740,7 @@ export const useAddToCartModalMulti = (series?: Series) => {
 	const clipBoardSuccessShow = (target: HTMLAnchorElement) => {
 		const html = document.createElement('div');
 		const p = document.createElement('p');
-		const text = '수량/형번을 클립보드에 복사했습니다';
+		const text = t('components.modals.addToCartModal.clipBoardMessage');
 		const textEl = document.createTextNode(text);
 		html.className = styles.copyBalloon || '';
 		p.appendChild(textEl);
@@ -765,6 +765,7 @@ export const useAddToCartModalMulti = (series?: Series) => {
 				handleClipBoardCopy={handleClipBoardCopy}
 				isEcUser={isEcUser}
 				displayStandardPriceFlag={series?.displayStandardPriceFlag}
+				series={series}
 			/>
 		);
 	}, [showModal, cartItemList, priceList]);

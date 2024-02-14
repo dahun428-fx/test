@@ -139,7 +139,7 @@ $icCopy: './assets/img/ic_copy.png';
 
 .TDmodel {
 	@include tdVal();
-	width: 198px;
+	width: 120px;
 	.model {
 		display: table;
 	}
@@ -167,7 +167,7 @@ $icCopy: './assets/img/ic_copy.png';
 }
 .TDquantity {
 	@include tdVal();
-	width: 60px;
+	width: 85px;
 }
 .TDtotal {
 	@include tdVal();

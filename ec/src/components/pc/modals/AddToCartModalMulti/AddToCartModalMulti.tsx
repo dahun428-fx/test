@@ -18,15 +18,18 @@ import { Flag } from '@/models/api/Flag';
 import { SaleSlide } from '../../domain/Cartbox/saleSlide';
 import { ExpressService } from '../../domain/Cartbox/expressService';
 import { CartboxMessage } from '../../domain/Cartbox/cartboxMessage';
+import { SeriesInfoText } from '../../domain/series/SeriesInfoText';
 
 export type Series = {
 	seriesCode: string;
 	brandCode: string;
 	brandName: string;
 	displayStandardPriceFlag?: Flag;
+	seriesInfoText?: string[];
 };
 
 type Props = {
+	series?: Series;
 	currencyCode: string;
 	priceList: Price[];
 	cartItemList: CartItem[];
@@ -44,6 +47,7 @@ type Props = {
 };
 
 export const AddToCartModalMulti: React.VFC<Props> = ({
+	series,
 	priceList,
 	currencyCode,
 	cartItemList,
@@ -57,7 +61,6 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 	handleClipBoardCopy,
 }) => {
 	const [t] = useTranslation();
-	console.log('cartItemList ===> ', cartItemList);
 	return (
 		<CurrencyProvider ccyCode={currencyCode}>
 			<div
@@ -67,27 +70,40 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 				)}
 			>
 				<h2 className={styles.title}>
-					제품 {cartItemList.length}건을 장바구니에 추가하였습니다.
+					{t('components.modals.addToCartModalMulti.title', {
+						Len: cartItemList.length,
+					})}
 				</h2>
-
+				{series && notEmpty(series.seriesInfoText) && (
+					<SeriesInfoText seriesInfoText={series.seriesInfoText} />
+				)}
 				<div className={styles.productList}>
 					<div className={styles.productListHeader}>
 						<div className={styles.productListTable}>
-							<div className={styles.TDmodel}>형번</div>
-							<div className={styles.TDshipDay}>출하일</div>
-							<div className={styles.TDunitPrice}>단가</div>
-							<div className={styles.TDquantity}>수량</div>
-							<div className={styles.TDtotal}>합계(VAT별도)</div>
+							<div className={styles.TDmodel}>
+								{t('components.modals.addToCartModalMulti.partNumber')}
+							</div>
+							<div className={styles.TDshipDay}>
+								{t('components.modals.addToCartModalMulti.shipDay')}
+							</div>
+							<div className={styles.TDunitPrice}>
+								{t('components.modals.addToCartModalMulti.unitPrice')}
+							</div>
+							<div className={styles.TDquantity}>
+								{t('components.modals.addToCartModalMulti.quantity')}
+							</div>
+							<div className={styles.TDtotal}>
+								{t('components.modals.addToCartModalMulti.totalPrice')}
+							</div>
 							<div className={styles.TDremarks}></div>
 						</div>
 					</div>
 					<div className={styles.productListBody}>
 						{cartItemList.length > 0 &&
 							cartItemList.map((item, index) => {
-								console.log('item ===> ', item);
 								const imageUrl = item.productImageUrl;
 								const price = priceList[index] || item;
-
+								const stockQuantity = priceList[index]?.stockQuantity;
 								return (
 									<div key={index} className={styles.productListTable}>
 										<div className={styles.main}>
@@ -122,7 +138,31 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 												<span className={styles.quantity}>
 													{price.quantity}
 												</span>
-												{isPack(price) && <p>({price.piecesPerPackage}개입)</p>}
+												{isPack(price) && (
+													<p>
+														{t('components.modals.addToCartModalMulti.pack', {
+															piecesPerPackage: price.piecesPerPackage,
+														})}
+													</p>
+												)}
+												{stockQuantity ? (
+													stockQuantity > 0 ? (
+														<p>
+															{t(
+																'components.modals.addToCartModalMulti.stock',
+																{ stockQuantity }
+															)}
+														</p>
+													) : (
+														<p>
+															{t(
+																'components.modals.addToCartModalMulti.notStock'
+															)}
+														</p>
+													)
+												) : (
+													''
+												)}
 											</div>
 
 											<div className={styles.TDtotal}>
@@ -137,11 +177,14 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 													className={styles.icCopy}
 													onClick={e => handleClipBoardCopy(e, item.partNumber)}
 												>
-													클립보드에 형번/수량 복사
+													{t('components.modals.addToCartModalMulti.clipBoard')}
 												</a>
 												{notEmpty(item.expressList) && (
 													<div className={styles.tableRemarks}>
-														<ExpressService expressList={item.expressList} />
+														<ExpressService
+															expressList={item.expressList}
+															isModal={true}
+														/>
 													</div>
 												)}
 												{!isEcUser &&
@@ -161,26 +204,15 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 											<NeedsQuoteMessage
 												price={price}
 												className={styles.quoteOnWos}
-												// isPurchaseLinkUser={isPurchaseLinkUser}
-												isPurchaseLinkUser={false}
+												isPurchaseLinkUser={isPurchaseLinkUser}
 												isDisabled={authenticated && !hasQuotePermission}
 												quoteOnWOS={() => quoteOnWOS(price, item)}
 											/>
 										)}
-
-										{/* {notEmpty(item.orderDeadline) && ( */}
 										<CartboxMessage
 											cartItem={item}
 											currencyCode={currencyCode}
 										/>
-										{/* )}
-										{item.lowVolumeCharge && (
-											<div className={styles.error}>
-												<div className={styles.errorText}>
-													<p className={styles.info}></p>
-												</div>
-											</div>
-										)} */}
 									</div>
 								);
 							})}
@@ -195,14 +227,17 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 								size="m"
 								href={url.myPage.cart}
 							>
-								장바구니 보기
+								{t('components.modals.addToCartModalMulti.myCart')}
 							</LinkButton>
 						</li>
 						<li>
-							<Button className={styles.btnClose}>닫기</Button>
+							<Button className={styles.btnClose}>
+								{t('components.modals.addToCartModalMulti.close')}
+							</Button>
 						</li>
 					</ul>
 				</div>
+				{/* todo : recommend 추가 */}
 			</div>
 		</CurrencyProvider>
 	);

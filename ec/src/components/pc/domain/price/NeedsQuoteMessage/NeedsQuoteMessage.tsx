@@ -100,7 +100,6 @@ function getQuoteMessage(price: Price, t: TFunction) {
 					<br></br>
 				</Trans>
 			),
-			// message: t('components.domain.price.needsQuoteMessage.price'),
 		};
 	}
 
