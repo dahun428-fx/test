@@ -12,3 +12,6 @@ export function selectCompareActiveCategoryCode(state: AppState) {
 export function selectCompareItemsLength(state: AppState) {
 	return state.compare.items.length;
 }
+export function selectComparePriceCache(state: AppState) {
+	return state.compare.priceCache;
+}

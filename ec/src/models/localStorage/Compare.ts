@@ -1,7 +1,12 @@
+import { CompareLoadStatus } from '@/store/modules/common/compare/types';
+import { Price } from '../api/msm/ect/price/CheckPriceResponse';
+
 export interface Compare {
 	items: CompareItem[];
 	show: boolean;
 	active?: string;
+	status?: CompareLoadStatus;
+	priceCache?: Record<`${Price['partNumber']}\t${Price['quantity']}`, Price>;
 }
 
 export interface CompareItem {
@@ -14,6 +19,7 @@ export interface CompareItem {
 	productImageUrl: string;
 	partNumber: string;
 	expire: string;
+	created: number;
 	categoryCode1?: string;
 	categoryName1?: string;
 	categoryCode2?: string;

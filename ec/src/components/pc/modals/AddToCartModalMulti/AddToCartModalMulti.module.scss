@@ -219,7 +219,6 @@ $icCopy: './assets/img/ic_copy.png';
 }
 
 .copyBalloon {
-	// display: none;
 	position: absolute;
 	top: 45px;
 	right: -15px;
@@ -230,6 +229,29 @@ $icCopy: './assets/img/ic_copy.png';
 	box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 3px 0px;
 	background: #fff;
 	z-index: 1;
+	&::after,
+	&::before {
+		position: absolute;
+		bottom: 100%;
+		left: 15px;
+		width: 0;
+		height: 0;
+		border: solid transparent;
+		content: '';
+		pointer-events: none;
+	}
+	&::after {
+		margin-left: -7px;
+		border-width: 7px;
+		border-color: rgba(255, 255, 255, 0);
+		border-bottom-color: #fff;
+	}
+	&::before {
+		margin-left: -10px;
+		border-width: 10px;
+		border-color: rgba(122, 93, 13, 0);
+		border-bottom-color: #67a5dd;
+	}
 }
 
 .tableRemarks {

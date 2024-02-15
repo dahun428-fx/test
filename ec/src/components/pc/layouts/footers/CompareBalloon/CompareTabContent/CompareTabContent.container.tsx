@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { useBoolState } from '@/hooks/state/useBoolState';
 
 type Props = {
+	loading: boolean;
 	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
 	selectedActiveTab: MutableRefObject<string>;
 };
@@ -31,7 +32,7 @@ type Props = {
  * 비교 팝업 탭 상세
  */
 export const CompareTabContent = React.memo<Props>(
-	({ selectedItemsForCheck, selectedActiveTab }) => {
+	({ selectedItemsForCheck, selectedActiveTab, loading }) => {
 		const dispatch = useDispatch();
 		const router = useRouter();
 		const compare = useSelector(selectCompare);
@@ -40,8 +41,6 @@ export const CompareTabContent = React.memo<Props>(
 		const { showMessage } = useMessageModal();
 
 		const [t] = useTranslation();
-
-		const [loading, startToLoading, endLoading] = useBoolState(true);
 
 		const [selectedItems, setSelectedItems] = useState<Set<CompareItem>>(
 			new Set()
@@ -69,6 +68,7 @@ export const CompareTabContent = React.memo<Props>(
 			return compare.items.filter(
 				item => item.categoryCode === activeCategoryCode
 			);
+			// .sort((a, b)=> (a.expire) - b.expire);
 		}, [compare, compare.items, activeCategoryCode]);
 
 		/**
@@ -129,6 +129,7 @@ export const CompareTabContent = React.memo<Props>(
 				const { seriesCode, partNumber } = item;
 				removeCompareItem(seriesCode, partNumber);
 			});
+			setSelectedItems(selectedItems);
 		}, [tabContentList, selectedItems]);
 
 		/**
@@ -177,7 +178,12 @@ export const CompareTabContent = React.memo<Props>(
 		 * 개별 삭제 이벤트
 		 */
 		const handleDeleteItem = useCallback(
-			async (compareItem: CompareItem) => {
+			async (
+				e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+				compareItem: CompareItem
+			) => {
+				e.preventDefault();
+				e.stopPropagation();
 				if (activeSelectedItems.length < 1) {
 					return;
 				}
@@ -198,6 +204,7 @@ export const CompareTabContent = React.memo<Props>(
 				removeItemOperation(dispatch)(compareItem);
 				const { seriesCode, partNumber } = compareItem;
 				removeCompareItem(seriesCode, partNumber);
+				setSelectedItems(selectedItems);
 			},
 			[selectedItems, activeSelectedItems]
 		);
@@ -261,10 +268,9 @@ export const CompareTabContent = React.memo<Props>(
 		useOnMounted(() => {
 			let compare = getCompare();
 			updateCompareOperation(dispatch)(compare);
-			startToLoading();
-			setTimeout(() => {
-				endLoading();
-			}, 1000);
+			setSelectedItems(
+				new Set(Array.from(compare.items.filter(item => item.chk)))
+			);
 		});
 		/**
 		 * 선택된 탭을 초기화
@@ -281,9 +287,14 @@ export const CompareTabContent = React.memo<Props>(
 		/**
 		 * localStorage compare item chk 변수 여부 판단하여 selectedItems 에 초기화
 		 */
-		useEffect(() => {
-			setSelectedItems(new Set(compare.items.filter(item => item.chk)));
-		}, [compare.items]);
+		// useEffect(() => {
+		// 	if (compare.show) {
+		// 		console.log('change compare items');
+		// 		setSelectedItems(
+		// 			new Set(Array.from(compare.items.filter(item => item.chk)))
+		// 		);
+		// 	}
+		// }, [compare.items]);
 
 		/**
 		 * 부모 Component CompareBalloon 에 선택된 아이템 전달

@@ -6,6 +6,7 @@ import { TFunction } from 'i18next';
 import { Price } from '@/components/pc/ui/text/Price';
 import { Trans, useTranslation } from 'react-i18next';
 import { url } from '@/utils/url';
+import { notEmpty } from '@/utils/predicate';
 
 type Props = {
 	cartItem: CartItem;
@@ -53,7 +54,7 @@ CartboxMessage.displayName = 'CartboxMessage';
 
 function getMessage(cartItem: CartItem, currencyCode: string, t: TFunction) {
 	const orderDeadline = () => {
-		if (cartItem.orderDeadline) {
+		if (notEmpty(cartItem.orderDeadline)) {
 			return {
 				message: t('components.domain.cartbox.cartboxMessage.orderDeadline', {
 					orderDeadline: cartItem.orderDeadline,
@@ -65,7 +66,10 @@ function getMessage(cartItem: CartItem, currencyCode: string, t: TFunction) {
 	};
 
 	const baraCharge = () => {
-		if (cartItem.lowVolumeCharge) {
+		if (
+			cartItem.lowVolumeCharge &&
+			Object.keys(cartItem.lowVolumeCharge).length !== 0
+		) {
 			const isNetRicoh = useSelector(selectIsNetRicoh);
 			const text =
 				cartItem.lowVolumeCharge.chargeType === '2'

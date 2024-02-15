@@ -18,78 +18,80 @@ export const SaleSlide: React.VFC<Props> = ({
 	volumeDiscountList,
 	currencyCode,
 }) => {
-	if (
-		!volumeDiscountList ||
-		volumeDiscountList.length < 1 ||
-		volumeDiscountList[0]?.daysToShip === REQUIRED_QUOTE_DAYS
-	) {
-		return null;
-	}
-
 	const [t] = useTranslation();
 
-	return (
-		<>
-			<table
-				className={classNames(isModal ? styles.table : '')}
-				summary={t('components.domain.cartbox.saleSlide.quantityDiscount')}
-			>
-				{isModal && (
-					<colgroup>
-						<col width="34%" />
-						<col width="33%" />
-						<col width="33%" />
-					</colgroup>
-				)}
+	if (volumeDiscountList && volumeDiscountList.length > 0) {
+		if (
+			volumeDiscountList.length > 1 ||
+			volumeDiscountList[0]?.daysToShip !== REQUIRED_QUOTE_DAYS
+		) {
+			return (
+				<>
+					<table
+						className={classNames(isModal ? styles.table : '')}
+						summary={t('components.domain.cartbox.saleSlide.quantityDiscount')}
+					>
+						{isModal && (
+							<colgroup>
+								<col width="34%" />
+								<col width="33%" />
+								<col width="33%" />
+							</colgroup>
+						)}
 
-				<thead>
-					<tr>
-						<th className={styles.help}>
-							{t('components.domain.cartbox.saleSlide.quantity')}
-							<a href={url.slideDiscountGuide} target="guide">
-								<span>?</span>
-							</a>
-						</th>
-						<th>{t('components.domain.cartbox.saleSlide.standardPrice')}</th>
-						<th>{t('components.domain.cartbox.saleSlide.daysToShip')}</th>
-					</tr>
-				</thead>
-				<tbody>
-					{volumeDiscountList.map((item, index) => {
-						return (
-							<tr key={index}>
-								{item.minQuantity === item.maxQuantity ? (
-									<td>{item.minQuantity === 0 ? 1 : item.minQuantity}</td>
-								) : (
-									<td>
-										{item.minQuantity === 0 ? 1 : item.minQuantity}
-										{`~`}
-										{item.maxQuantity || ''}
-									</td>
-								)}
-								<td>
-									<Price
-										value={item.unitPrice}
-										ccyCode={currencyCode}
-										theme="standard"
-										emptySentence="-"
-									/>
-								</td>
-								{item.daysToShip === 99 ? (
-									<td>{t('components.domain.cartbox.saleSlide.quote')}</td>
-								) : (
-									<td>
-										<DaysToShip minDaysToShip={item.daysToShip} />
-									</td>
-								)}
+						<thead>
+							<tr>
+								<th className={styles.help}>
+									{t('components.domain.cartbox.saleSlide.quantity')}
+									<a href={url.slideDiscountGuide} target="guide">
+										<span>?</span>
+									</a>
+								</th>
+								<th>
+									{t('components.domain.cartbox.saleSlide.standardPrice')}
+								</th>
+								<th>{t('components.domain.cartbox.saleSlide.daysToShip')}</th>
 							</tr>
-						);
-					})}
-				</tbody>
-			</table>
-			<p>{t('components.domain.cartbox.saleSlide.info')}</p>
-		</>
-	);
+						</thead>
+						<tbody>
+							{volumeDiscountList.map((item, index) => {
+								return (
+									<tr key={index}>
+										{item.minQuantity === item.maxQuantity ? (
+											<td>{item.minQuantity === 0 ? 1 : item.minQuantity}</td>
+										) : (
+											<td>
+												{item.minQuantity === 0 ? 1 : item.minQuantity}
+												{`~`}
+												{item.maxQuantity || ''}
+											</td>
+										)}
+										<td>
+											<Price
+												value={item.unitPrice}
+												ccyCode={currencyCode}
+												theme="standard"
+												emptySentence="-"
+											/>
+										</td>
+										{item.daysToShip === 99 ? (
+											<td>{t('components.domain.cartbox.saleSlide.quote')}</td>
+										) : (
+											<td>
+												<DaysToShip minDaysToShip={item.daysToShip} />
+											</td>
+										)}
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+					<p>{t('components.domain.cartbox.saleSlide.info')}</p>
+				</>
+			);
+		}
+	}
+	return null;
 };
 
 SaleSlide.displayName = 'SaleSlide';

@@ -17,16 +17,6 @@ type CompareLoadPayload = {
 	categoryCode: string;
 };
 
-// export function checkPriceOperation({getState, dispatch} : AppStore) {
-
-// 	async function check() :Promise<void> {
-// 		const storeState = getState();
-
-// 	}
-
-// 	return check;
-// }
-
 export function removeItemOperation(dispatch: Dispatch) {
 	return (item: CompareDetail) => {
 		dispatch(actions.removeItem(item));

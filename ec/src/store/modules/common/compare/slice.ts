@@ -1,11 +1,17 @@
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CompareLoadStatus } from './types';
+import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
 
 const initialState: Compare = {
 	items: [],
 	show: false,
 	active: '',
+	status: CompareLoadStatus.INITIAL,
+	priceCache: {},
 };
+
+type UpdatedPayload = Partial<Compare>;
 
 const slice = createSlice({
 	name: 'compare',
@@ -36,8 +42,19 @@ const slice = createSlice({
 				items: action.payload,
 			};
 		},
-		updateCompare(state, action: PayloadAction<Compare>) {
+		updateCompare(state, action: PayloadAction<UpdatedPayload>) {
 			return { ...state, ...action.payload };
+		},
+		updateComparePriceCache(state, action: PayloadAction<Price>) {
+			const price = action.payload;
+			return {
+				...state,
+				quantity: price.quantity,
+				priceCache: {
+					...state.priceCache,
+					[`${price.partNumber}\t${price.quantity}`]: price,
+				},
+			};
 		},
 		show(state) {
 			return { ...state, show: true };

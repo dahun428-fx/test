@@ -23,7 +23,10 @@ type Props = {
 	handleTabClick: (categoryCode: string) => void;
 	handleTabDelete: () => void;
 	handleSelectItem: (compareItem: CompareItem) => void;
-	handleDeleteItem: (compareITem: CompareItem) => void;
+	handleDeleteItem: (
+		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		compareItem: CompareItem
+	) => void;
 	handleSelectAllItem: () => void;
 	handleDeleteAllItem: () => void;
 };
@@ -162,7 +165,7 @@ export const CompareTabContent: FC<Props> = ({
 										>
 											<div
 												className={styles.pcpCloseBtn}
-												onClick={() => handleDeleteItem(item)}
+												onClick={e => handleDeleteItem(e, item)}
 											></div>
 											<div className={styles.pcpItemTitle}>
 												<p className={styles.ndrBold}>

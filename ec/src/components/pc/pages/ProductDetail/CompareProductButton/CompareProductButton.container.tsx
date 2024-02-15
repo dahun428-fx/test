@@ -9,6 +9,7 @@ import {
 	addItemOperation,
 	selectCompare,
 	updateCompareOperation,
+	updateCompareStatusOperation,
 	updateShowsCompareBalloonStatusOperation,
 } from '@/store/modules/common/compare';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
@@ -20,6 +21,7 @@ import { assertNotNull } from '@/utils/assertions';
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import dayjs from 'dayjs';
 import { Button } from '@/components/pc/ui/buttons';
+import { CompareLoadStatus } from '@/store/modules/common/compare/types';
 
 type Props = {
 	partNumber: string;
@@ -85,6 +87,7 @@ export const CompareProductButton: FC<Props> = ({ partNumber }) => {
 				.toUTCString(),
 			isPu: false,
 			chk: true,
+			created: Date.now(),
 		};
 	};
 
@@ -124,7 +127,6 @@ export const CompareProductButton: FC<Props> = ({ partNumber }) => {
 		const compareItem = createParam(series);
 
 		if (!hasItem(compareItem)) {
-			console.log('not has items!', compareItem.categoryCode);
 			const hasTabHead = compare.items.some(
 				item => item.categoryCode === compareItem.categoryCode
 			);
@@ -162,9 +164,9 @@ export const CompareProductButton: FC<Props> = ({ partNumber }) => {
 				return;
 			}
 			addItemOperation(dispatch)(compareItem);
+			updateCompareStatusOperation(dispatch)(CompareLoadStatus.LOADING);
 			showCompareBalloon(compareItem);
 		} else {
-			console.log('has items!', compareItem.categoryCode);
 			updateCompareOperation(dispatch)({
 				...compare,
 			});

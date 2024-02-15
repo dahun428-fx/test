@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { BlockLoader, PageLoader } from '@/components/pc/ui/loaders';
 
 type Props = {
+	loading: boolean;
 	showStatus: boolean;
 	selectedItemsForCheck: MutableRefObject<Set<CompareItem>>;
 	selectedActiveTab: MutableRefObject<string>;
@@ -20,6 +21,7 @@ type Props = {
  * 비교 푸터 팝업
  */
 export const CompareBalloon: FC<Props> = ({
+	loading,
 	showStatus,
 	selectedItemsForCheck,
 	selectedActiveTab,
@@ -46,6 +48,7 @@ export const CompareBalloon: FC<Props> = ({
 									<div>
 										<div className={styles.tabSection}>
 											<CompareTabContent
+												loading={loading}
 												selectedItemsForCheck={selectedItemsForCheck}
 												selectedActiveTab={selectedActiveTab}
 											/>

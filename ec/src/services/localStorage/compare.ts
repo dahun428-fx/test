@@ -1,4 +1,5 @@
 import { Compare, CompareItem } from '@/models/localStorage/Compare';
+import { CompareLoadStatus } from '@/store/modules/common/compare/types';
 import { assertNotNull } from '@/utils/assertions';
 import { EitherRequired } from '@/utils/type';
 
@@ -81,9 +82,9 @@ export function getCompare(): Compare {
 	const now = Date.now();
 
 	const compareItems = compareJson.items;
-	const validItems = compareItems.filter(
-		item => !item.expire || new Date(item.expire).getTime() >= now
-	);
+	const validItems = compareItems
+		.filter(item => !item.expire || new Date(item.expire).getTime() >= now)
+		.sort((a, b) => a.created - b.created);
 	return {
 		items: validItems,
 		show: compareJson.show,

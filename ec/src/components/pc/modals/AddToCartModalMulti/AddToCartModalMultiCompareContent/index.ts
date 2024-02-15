@@ -1,0 +1,1 @@
+export { AddToCartModalMultiCompareContent } from './AddToCartModalMultiCompareContent';
