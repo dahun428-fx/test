@@ -1,8 +1,6 @@
 @use 'src/styles/pc/variables';
 @use 'src/styles/pc/_variables_original' as *;
 
-$icCopy: './assets/img/ic_copy.png';
-
 .addToCartModal {
 	width: 950px;
 	padding: 16px;
@@ -202,19 +200,6 @@ $icCopy: './assets/img/ic_copy.png';
 	}
 	.btnClose {
 		width: 215px;
-	}
-}
-
-.icCopy {
-	display: inline-block;
-	padding: 3px 0px 3px 22px;
-	background-repeat: no-repeat;
-	background-position: 0 50%;
-	background-image: url($icCopy);
-	color: #004bb1;
-	cursor: pointer;
-	&:visited {
-		color: #851f99;
 	}
 }
 
