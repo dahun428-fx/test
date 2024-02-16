@@ -31,6 +31,9 @@ const slice = createSlice({
 				compareDetailItems: remainItems,
 			};
 		},
+		clear() {
+			return { ...initialState };
+		},
 	},
 });
 

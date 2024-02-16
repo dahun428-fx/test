@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	CompareDetailLoadStatus,
 	SpecList,
+	clearCompareDetailOperation,
 	loadCompareOperation,
 	removeItemOperation,
 	selectCompareDetailItems,
@@ -26,6 +27,10 @@ import { useConfirmModal } from '../../ui/modals/ConfirmModal';
 import { useTranslation } from 'react-i18next';
 import { useMessageModal } from '../../ui/modals/MessageModal';
 import { Button } from '../../ui/buttons';
+import { useAddToCartModalMulti } from '../../modals/AddToCartModalMulti/AddToCartModalMulti.hooks';
+import { useAddToMyComponentsModalMulti } from '../../modals/AddToMyComponentsModalMulti/AddToMyComponentsModalMulti.hooks';
+import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
+import { Router } from 'next/router';
 
 type Props = {
 	categoryCode: string;
@@ -42,6 +47,8 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 
 	const { showConfirm } = useConfirmModal();
 	const { showMessage } = useMessageModal();
+	const showAddToCartModal = useAddToCartModalMulti();
+	const showAddToMyComponentsModal = useAddToMyComponentsModalMulti();
 
 	const [t] = useTranslation();
 
@@ -52,6 +59,11 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		Set<number>
 	>(new Set());
 
+	useOnMounted(() => {
+		clearCompareDetailOperation(dispatch)();
+		window.scrollTo({ top: 0, left: 0 });
+	});
+
 	/**
 	 * 현재 로딩 상태가 INITIAL ( 0 ) 일 경우,
 	 * localStorage 에서 compare 값을 가져와서 비교결과 페이지에 출력한다.
@@ -60,7 +72,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		if (status === CompareDetailLoadStatus.INITIAL) {
 			let compare = getCompare();
 			const has = compare.items.some(
-				item => item.categoryCode === categoryCode
+				item => item.categoryCode === categoryCode && item.chk
 			);
 			if (has) {
 				loadCompareOperation(dispatch)({
@@ -73,7 +85,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 				setCategoryName(targetCompare?.categoryName || '');
 			}
 		}
-	}, [dispatch, categoryCode, status]);
+	}, [dispatch, loadCompareOperation, status]);
 
 	/**
 	 * 현재 로딩 상태가 LOADED_MAIN ( 2 ) 일 경우,
@@ -429,10 +441,19 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	}, [selectedCompareDetailItems]);
 
 	/** todo */
-	const addToCart = useCallback(() => {
+	const addToCart = useCallback(async () => {
 		console.log('add to cart');
 
 		console.log('items ===> ', selectedCompareDetailItems);
+
+		try {
+			updateStatusOperation(dispatch)(CompareDetailLoadStatus.LOADING);
+		} catch (error) {
+		} finally {
+			setTimeout(() => {
+				updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
+			}, 1500);
+		}
 	}, [selectedCompareDetailItems]);
 
 	/** todo */
