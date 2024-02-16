@@ -47,6 +47,7 @@ import { AssertionError } from 'assert';
 import { PriceCheckResult } from './types';
 import { useAddToMyComponentsModalMulti } from '@/components/pc/modals/AddToMyComponentsModalMulti/AddToMyComponentsModalMulti.hooks';
 import { addMyComponents } from '@/api/services/addMyComponents';
+import { moveToOrderMulti } from '@/utils/domain/order';
 
 /**
  * 비교 푸터 팝업
@@ -144,15 +145,6 @@ export const CompareBalloon: FC = () => {
 		return () => Router.events.off('routeChangeComplete', handleGenerateData);
 	}, [generateCompareData, router.asPath]);
 
-	/** todo */
-	const onClickOrderNow = () => {
-		console.log('order');
-		const items = Array.from(selectedItemsForCheck.current).filter(
-			item => item.categoryCode === selectedActiveTab.current
-		);
-		console.log('itesm ===> ', items);
-	};
-
 	const check = useCallback(
 		async (items: CompareItem[]): Promise<PriceCheckResult> => {
 			try {
@@ -182,6 +174,76 @@ export const CompareBalloon: FC = () => {
 	);
 
 	/** todo */
+	const handleOrderNow = useCallback(async () => {
+		try {
+			startToLoading();
+
+			const items = Array.from(selectedItemsForCheck.current).filter(
+				item => item.categoryCode === selectedActiveTab.current
+			);
+
+			if (items.length < 1) {
+				showMessage({
+					message: t(
+						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+					),
+					button: (
+						<Button>
+							{t('components.ui.layouts.footers.compareBalloon.message.ok')}
+						</Button>
+					),
+				});
+				return;
+			}
+
+			await refreshAuth(dispatch)();
+
+			const authenticated = selectAuthenticated(store.getState());
+			if (!authenticated) {
+				const result = await showLoginModal();
+				if (result !== 'LOGGED_IN') {
+					return;
+				}
+			}
+
+			const isEcUser = selectIsEcUser(store.getState());
+			const { hasOrderPermission } = selectUserPermissions(store.getState());
+
+			if (isEcUser) {
+				await showPaymentMethodRequiredModal();
+				return;
+			}
+
+			if (!hasOrderPermission) {
+				await showMessage(t('common.order.noPermission'));
+				return;
+			}
+
+			const quantity = 1;
+
+			const productList = items.map(item => {
+				return {
+					partNumber: item.partNumber,
+					brandCode: item.brandCode,
+					quantity,
+				};
+			});
+
+			moveToOrderMulti(productList);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			endLoading();
+		}
+	}, [
+		selectedItemsForCheck.current,
+		dispatch,
+		showLoginModal,
+		showMessage,
+		showPaymentMethodRequiredModal,
+		t,
+	]);
+
 	const addToCart = useCallback(async () => {
 		try {
 			startToLoading();
@@ -189,7 +251,19 @@ export const CompareBalloon: FC = () => {
 			const items = Array.from(selectedItemsForCheck.current).filter(
 				item => item.categoryCode === selectedActiveTab.current
 			);
-			if (items.length < 1) return;
+			if (items.length < 1) {
+				showMessage({
+					message: t(
+						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+					),
+					button: (
+						<Button>
+							{t('components.ui.layouts.footers.compareBalloon.message.ok')}
+						</Button>
+					),
+				});
+				return;
+			}
 
 			// NOTE: Get the latest user info when executing add to cart
 			await refreshAuth(store.dispatch)();
@@ -263,16 +337,26 @@ export const CompareBalloon: FC = () => {
 		}
 	}, [selectedItemsForCheck.current, getPrices, priceCache, check]);
 
-	/** todo */
 	const addToMyComponents = useCallback(async () => {
 		try {
 			startToLoading();
 
-			console.log('addToMyComponents');
 			const items = Array.from(selectedItemsForCheck.current).filter(
 				item => item.categoryCode === selectedActiveTab.current
 			);
-			console.log('itesm ===> ', items);
+			if (items.length < 1) {
+				showMessage({
+					message: t(
+						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+					),
+					button: (
+						<Button>
+							{t('components.ui.layouts.footers.compareBalloon.message.ok')}
+						</Button>
+					),
+				});
+				return;
+			}
 
 			await refreshAuth(store.dispatch)();
 
@@ -330,6 +414,7 @@ export const CompareBalloon: FC = () => {
 
 			showAddToMyComponentsModal(addMyComponentsResponse, validPriceList, true);
 		} catch (error) {
+			console.log(error);
 		} finally {
 			endLoading();
 		}
@@ -369,7 +454,7 @@ export const CompareBalloon: FC = () => {
 				selectedItemsForCheck={selectedItemsForCheck}
 				selectedActiveTab={selectedActiveTab}
 				handleClose={handleClose}
-				onClickOrderNow={onClickOrderNow}
+				onClickOrderNow={handleOrderNow}
 				addToCart={addToCart}
 				addToMyComponents={addToMyComponents}
 				openCompareDetailPage={openCompareDetailPage}

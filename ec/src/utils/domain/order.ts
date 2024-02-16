@@ -23,6 +23,10 @@ export function moveToOrder(payload: Payload) {
 	post(url.directOrder, payload);
 }
 
+export function moveToOrderMulti(payload: Payload[]) {
+	postMulti(url.directOrder, payload);
+}
+
 /** Move to quote page */
 export function moveToQuote(payload: Payload) {
 	post(url.directQuotation, payload);
@@ -61,4 +65,35 @@ function post(url: string, payload: Payload) {
 			prjPath: '',
 		},
 	]);
+}
+
+function postMulti(url: string, payload: Payload[]) {
+	const data: QuoteOrderPayload[] = payload.map(item => {
+		return {
+			productName: item.seriesName ?? '',
+			productId: item.seriesCode ?? '',
+			productPageUrl: normalizeUrl(location.href),
+			productImgUrl: '',
+			partNumber: item.partNumber,
+			innerCd: item.innerCode ?? '',
+			makerCd: item.brandCode,
+			makerName: item.brandName ?? '',
+			amount: String(item.quantity ?? ''),
+			campaignEndDate: '',
+			pack: String(item.piecesPerPackage ?? ''),
+			unitPrice: String(item.unitPrice ?? ''),
+			catalogPrice: String(item.standardUnitPrice ?? ''),
+			totalPriceWithTaxes: String(item.totalPriceIncludingTax ?? ''),
+			days: String(item?.daysToShip ?? ''),
+			stoke: item.expressType ?? '',
+			estimateOutF: '',
+			productType: '',
+			siteId: '',
+			errorCd: '',
+			errorMessage: '',
+			errorDivision: '',
+			prjPath: '',
+		};
+	});
+	postFormData<QuoteOrderPayload>(url, data);
 }
