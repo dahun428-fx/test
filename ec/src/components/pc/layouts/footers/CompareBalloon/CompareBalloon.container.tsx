@@ -45,6 +45,8 @@ import { useBoolState } from '@/hooks/state/useBoolState';
 import { CompareLoadStatus } from '@/store/modules/common/compare/types';
 import { AssertionError } from 'assert';
 import { PriceCheckResult } from './types';
+import { useAddToMyComponentsModalMulti } from '@/components/pc/modals/AddToMyComponentsModalMulti/AddToMyComponentsModalMulti.hooks';
+import { addMyComponents } from '@/api/services/addMyComponents';
 
 /**
  * 비교 푸터 팝업
@@ -55,6 +57,7 @@ export const CompareBalloon: FC = () => {
 	const dispatch = useDispatch();
 	const showLoginModal = useLoginModal();
 	const showAddToCartModal = useAddToCartModalMulti();
+	const showAddToMyComponentsModal = useAddToMyComponentsModalMulti();
 	const showPaymentMethodRequiredModal = usePaymentMethodRequiredModal();
 
 	const compare = useSelector(selectCompare);
@@ -261,13 +264,76 @@ export const CompareBalloon: FC = () => {
 	}, [selectedItemsForCheck.current, getPrices, priceCache, check]);
 
 	/** todo */
-	const addToMyComponents = () => {
-		console.log('addToMyComponents');
-		const items = Array.from(selectedItemsForCheck.current).filter(
-			item => item.categoryCode === selectedActiveTab.current
-		);
-		console.log('itesm ===> ', items);
-	};
+	const addToMyComponents = useCallback(async () => {
+		try {
+			startToLoading();
+
+			console.log('addToMyComponents');
+			const items = Array.from(selectedItemsForCheck.current).filter(
+				item => item.categoryCode === selectedActiveTab.current
+			);
+			console.log('itesm ===> ', items);
+
+			await refreshAuth(store.dispatch)();
+
+			if (!selectAuthenticated(store.getState())) {
+				const result = await showLoginModal();
+				if (result !== 'LOGGED_IN') {
+					return;
+				}
+			}
+
+			if ((await check(items)) === 'error') {
+				return;
+			}
+
+			const firstBrandCode = items[0]?.brandCode;
+			assertNotNull(firstBrandCode);
+
+			const checkedPriceList = getPrices(items);
+			if (!checkedPriceList || checkedPriceList.length < 1) {
+				return;
+			}
+
+			const validPriceList = checkedPriceList.reduce<Price[]>(
+				(previous, current) => {
+					if (current) {
+						return [...previous, current];
+					} else {
+						return previous;
+					}
+				},
+				[]
+			);
+
+			const myComponentsItemList = validPriceList.map(item => {
+				const target = items.find(
+					compareItem => compareItem.partNumber === item.partNumber
+				);
+				return {
+					seriesCode: target?.seriesCode || '',
+					brandCode: item.brandCode || firstBrandCode,
+					partNumber: item.partNumber,
+					quantity: item.quantity,
+					innerCode: item.innerCode,
+					unitPrice: item.unitPrice,
+					standardUnitPrice: item.standardUnitPrice,
+					daysToShip: item.daysToShip,
+					shipType: item.shipType,
+					piecesPerPackage: item.piecesPerPackage,
+				};
+			});
+			assertNotEmpty(myComponentsItemList);
+			const addMyComponentsResponse = await addMyComponents({
+				myComponentsItemList: myComponentsItemList,
+			});
+
+			showAddToMyComponentsModal(addMyComponentsResponse, validPriceList, true);
+		} catch (error) {
+		} finally {
+			endLoading();
+		}
+	}, [selectedItemsForCheck.current]);
 
 	/**
 	 * 비교결과 페이지 오픈

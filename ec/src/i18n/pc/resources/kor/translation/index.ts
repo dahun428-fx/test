@@ -19,6 +19,7 @@ import { bnrBottomFix } from '../../../../../components/pc/layouts/footers/BnrBo
 import { headers } from '../../../../../components/pc/layouts/headers/headers.i18n.ko'; //change to ko
 import { addToCartModal } from '../../../../../components/pc/modals/AddToCartModal/AddToCartModal.i18n.en';
 import { addToCartModalMulti } from '../../../../../components/pc/modals/AddToCartModalMulti/AddToCartModalMulti.i18n.ko'; //change to ko
+import { addToMyComponentsModalMulti } from '../../../../../components/pc/modals/AddToMyComponentsModalMulti/AddToMyComponentsModalMulti.i18n.ko'; //change to ko
 import { loginModal } from '../../../../../components/pc/modals/LoginModal/LoginModal.i18n.en';
 import { orderNoListedProductModal } from '../../../../../components/pc/modals/OrderNoListedProductModal/OrderNoListedProductModal.i18n.en';
 import { paymentMethodRequiredModal } from '../../../../../components/pc/modals/PaymentMethodRequiredModal/PaymentMethodRequiredContent.i18n.en';
@@ -88,6 +89,7 @@ const translation: Translation = {
 		modals: {
 			addToCartModal,
 			addToCartModalMulti,
+			addToMyComponentsModalMulti,
 			loginModal,
 			orderNoListedProductModal,
 			paymentMethodRequiredModal,

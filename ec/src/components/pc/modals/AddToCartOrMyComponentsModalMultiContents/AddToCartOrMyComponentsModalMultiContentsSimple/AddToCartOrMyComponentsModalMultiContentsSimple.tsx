@@ -1,9 +1,9 @@
 import { CartItem } from '@/models/api/msm/ect/cart/AddCartResponse';
 import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
-import styles from '../AddToCartModalMulti.module.scss';
+import styles from './AddToCartOrMyComponentsModalMultiContentsSimple.module.scss';
 import { ProductImage } from '@/components/pc/ui/images/ProductImage';
 import { DaysToShip } from '@/components/pc/ui/text/DaysToShip';
-import { UnitPrice } from '../UnitPrice';
+import { UnitPrice } from '../../AddToCartModalMulti/UnitPrice';
 import { useTranslation } from 'react-i18next';
 import { isDiscounted, isPack } from '@/utils/domain/price';
 import { TotalPrice } from '@/components/pc/domain/price/PriceLeadTime/TotalPrice';
@@ -13,10 +13,11 @@ import { Flag } from '@/models/api/Flag';
 import { SaleSlide } from '@/components/pc/domain/Cartbox/saleSlide';
 import { NeedsQuoteMessage } from '@/components/pc/domain/price/NeedsQuoteMessage';
 import { CartboxMessage } from '@/components/pc/domain/Cartbox/cartboxMessage';
+import { MyComponentsItem } from '@/models/api/msm/ect/myComponents/AddMyComponentsResponse';
 
 type Props = {
-	item: CartItem;
-	price: Price | CartItem;
+	item: CartItem | MyComponentsItem;
+	price: Price | CartItem | MyComponentsItem;
 	currencyCode: string;
 	isPurchaseLinkUser: boolean;
 	authenticated: boolean;
@@ -25,14 +26,19 @@ type Props = {
 	displayStandardPriceFlag?: Flag;
 	imageUrl?: string;
 	stockQuantity?: number;
-	quoteOnWOS: (price: Price, cartItem: CartItem) => Promise<void>;
+	quoteOnWOS?: (
+		price: Price,
+		cartItem: CartItem | MyComponentsItem
+	) => Promise<void>;
 	handleClipBoardCopy: (
 		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
 		partNumber: string
 	) => void;
 };
 
-export const AddToModalMultiSimpleContent: React.VFC<Props> = ({
+export const AddToCartOrMyComponentsModalMultiContentsSimple: React.VFC<
+	Props
+> = ({
 	item,
 	price,
 	currencyCode,
@@ -47,6 +53,11 @@ export const AddToModalMultiSimpleContent: React.VFC<Props> = ({
 	handleClipBoardCopy,
 }) => {
 	const [t] = useTranslation();
+
+	const adjustPrice = {
+		...price,
+		piecesPerPackage: Number(price.piecesPerPackage),
+	};
 
 	return (
 		<div className={styles.productListTable}>
@@ -78,10 +89,10 @@ export const AddToModalMultiSimpleContent: React.VFC<Props> = ({
 				</div>
 				<div className={styles.TDquantity}>
 					<span className={styles.quantity}>{price.quantity}</span>
-					{isPack(price) && (
+					{isPack(adjustPrice) && (
 						<p>
 							{t('components.modals.addToCartModalMulti.pack', {
-								piecesPerPackage: price.piecesPerPackage,
+								piecesPerPackage: adjustPrice.piecesPerPackage,
 							})}
 						</p>
 					)}
@@ -132,17 +143,18 @@ export const AddToModalMultiSimpleContent: React.VFC<Props> = ({
 						)}
 				</div>
 			</div>
-			<CartboxMessage cartItem={item} currencyCode={currencyCode} />
-			{notEmpty(item.seriesCode) && price && (
+			<CartboxMessage item={item} currencyCode={currencyCode} />
+			{notEmpty(item.seriesCode) && price && quoteOnWOS && (
 				<NeedsQuoteMessage
 					price={price}
 					className={styles.quoteOnWos}
 					isPurchaseLinkUser={isPurchaseLinkUser}
 					isDisabled={authenticated && !hasQuotePermission}
-					quoteOnWOS={() => quoteOnWOS(price, item)}
+					quoteOnWOS={() => quoteOnWOS(adjustPrice, item)}
 				/>
 			)}
 		</div>
 	);
 };
-AddToModalMultiSimpleContent.displayName = 'AddToModalMultiSimpleContent';
+AddToCartOrMyComponentsModalMultiContentsSimple.displayName =
+	'AddToCartOrMyComponentsModalMultiContentsSimple';

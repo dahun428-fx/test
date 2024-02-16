@@ -10,8 +10,9 @@ import { url } from '@/utils/url';
 import { notEmpty } from '@/utils/predicate';
 import { Flag } from '@/models/api/Flag';
 import { SeriesInfoText } from '../../domain/series/SeriesInfoText';
-import { AddToCartModalMultiCompareContent } from './AddToCartModalMultiCompareContent';
-import { AddToModalMultiSimpleContent } from './AddToCartModalMultiSimpleContent';
+import { AddToCartOrMyComponentsModalMultiContentsCompare } from '../AddToCartOrMyComponentsModalMultiContents/AddToCartOrMyComponentsModalMultiContentsCompare';
+import { AddToCartOrMyComponentsModalMultiContentsSimple } from '../AddToCartOrMyComponentsModalMultiContents/AddToCartOrMyComponentsModalMultiContentsSimple';
+import { MyComponentsItem } from '@/models/api/msm/ect/myComponents/AddMyComponentsResponse';
 
 export type Series = {
 	seriesCode: string;
@@ -33,7 +34,10 @@ type Props = {
 	displayStandardPriceFlag?: Flag;
 	isCompare?: boolean;
 	close?: () => void;
-	quoteOnWOS: (price: Price, cartItem: CartItem) => Promise<void>;
+	quoteOnWOS: (
+		price: Price,
+		item: CartItem | MyComponentsItem
+	) => Promise<void>;
 	handleClipBoardCopy: (
 		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
 		partNumber: string
@@ -101,7 +105,7 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 								const stockQuantity = priceList[index]?.stockQuantity;
 								if (isCompare) {
 									return (
-										<AddToCartModalMultiCompareContent
+										<AddToCartOrMyComponentsModalMultiContentsCompare
 											key={index}
 											{...{
 												authenticated,
@@ -119,7 +123,7 @@ export const AddToCartModalMulti: React.VFC<Props> = ({
 									);
 								} else {
 									return (
-										<AddToModalMultiSimpleContent
+										<AddToCartOrMyComponentsModalMultiContentsSimple
 											key={index}
 											{...{
 												item,

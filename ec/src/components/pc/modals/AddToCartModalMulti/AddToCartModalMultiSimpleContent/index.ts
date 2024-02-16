@@ -1,1 +1,0 @@
-export { AddToModalMultiSimpleContent } from './AddToCartModalMultiSimpleContent';

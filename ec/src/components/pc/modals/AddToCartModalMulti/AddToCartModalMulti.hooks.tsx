@@ -12,7 +12,6 @@ import {
 } from '@/store/modules/auth';
 import { store } from '@/store';
 import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
-import { ga } from '@/logs/analytics/google';
 import { useDispatch } from 'react-redux';
 import { useLoginModal } from '../LoginModal';
 import { usePaymentMethodRequiredModal } from '../PaymentMethodRequiredModal';
@@ -25,6 +24,7 @@ import {
 import { moveToQuote } from '@/utils/domain/order';
 import { regacyPartNumberCopy } from '@/utils/clipboardCopy';
 import styles from './AddToCartModalMulti.module.scss';
+import { MyComponentsItem } from '@/models/api/msm/ect/myComponents/AddMyComponentsResponse';
 
 export const useAddToCartModalMulti = (series?: Series) => {
 	const dispatch = useDispatch();
@@ -48,7 +48,7 @@ export const useAddToCartModalMulti = (series?: Series) => {
 	const currencyCode = config.defaultCurrencyCode;
 
 	const quoteOnWOS = useCallback(
-		async (price: Price, cartItem: CartItem) => {
+		async (price: Price, item: CartItem | MyComponentsItem) => {
 			if (!price || price.quantity === undefined) {
 				return;
 			}
@@ -84,9 +84,9 @@ export const useAddToCartModalMulti = (series?: Series) => {
 
 			moveToQuote({
 				...price,
-				seriesCode: cartItem.seriesCode,
-				brandName: cartItem.brandName,
-				brandCode: cartItem.brandCode,
+				seriesCode: item.seriesCode,
+				brandName: item.brandName,
+				brandCode: item.brandCode,
 				quantity: price.quantity,
 			});
 		},

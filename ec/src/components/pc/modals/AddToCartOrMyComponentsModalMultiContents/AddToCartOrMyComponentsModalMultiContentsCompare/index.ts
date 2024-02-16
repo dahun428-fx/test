@@ -1,0 +1,1 @@
+export { AddToCartOrMyComponentsModalMultiContentsCompare } from './AddToCartOrMyComponentsModalMultiContentsCompare';

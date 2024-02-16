@@ -7,25 +7,23 @@ import { Price } from '@/components/pc/ui/text/Price';
 import { Trans, useTranslation } from 'react-i18next';
 import { url } from '@/utils/url';
 import { notEmpty } from '@/utils/predicate';
+import { MyComponentsItem } from '@/models/api/msm/ect/myComponents/AddMyComponentsResponse';
 
 type Props = {
-	cartItem: CartItem;
+	item: CartItem | MyComponentsItem;
 	currencyCode: string;
 };
 
-export const CartboxMessage: React.VFC<Props> = ({
-	cartItem,
-	currencyCode,
-}) => {
+export const CartboxMessage: React.VFC<Props> = ({ item, currencyCode }) => {
 	const [t] = useTranslation();
 
 	const { message: orderDeadlineMessage } = getMessage(
-		cartItem,
+		item,
 		currencyCode,
 		t
 	).orderDeadline();
 	const { message: baraChargeMessage } = getMessage(
-		cartItem,
+		item,
 		currencyCode,
 		t
 	).baraCharge();
@@ -52,12 +50,16 @@ export const CartboxMessage: React.VFC<Props> = ({
 
 CartboxMessage.displayName = 'CartboxMessage';
 
-function getMessage(cartItem: CartItem, currencyCode: string, t: TFunction) {
+function getMessage(
+	item: CartItem | MyComponentsItem,
+	currencyCode: string,
+	t: TFunction
+) {
 	const orderDeadline = () => {
-		if (notEmpty(cartItem.orderDeadline)) {
+		if (notEmpty(item.orderDeadline)) {
 			return {
 				message: t('components.domain.cartbox.cartboxMessage.orderDeadline', {
-					orderDeadline: cartItem.orderDeadline,
+					orderDeadline: item.orderDeadline,
 				}),
 			};
 		} else {
@@ -67,12 +69,12 @@ function getMessage(cartItem: CartItem, currencyCode: string, t: TFunction) {
 
 	const baraCharge = () => {
 		if (
-			cartItem.lowVolumeCharge &&
-			Object.keys(cartItem.lowVolumeCharge).length !== 0
+			item.lowVolumeCharge &&
+			Object.keys(item.lowVolumeCharge).length !== 0
 		) {
 			const isNetRicoh = useSelector(selectIsNetRicoh);
 			const text =
-				cartItem.lowVolumeCharge.chargeType === '2'
+				item.lowVolumeCharge.chargeType === '2'
 					? t('components.domain.cartbox.cartboxMessage.chargeRaw1')
 					: t('components.domain.cartbox.cartboxMessage.chargeRaw2');
 
@@ -82,12 +84,12 @@ function getMessage(cartItem: CartItem, currencyCode: string, t: TFunction) {
 						<Trans i18nKey="components.domain.cartbox.cartboxMessage.baraChargeNetRicoh">
 							<span>{{ text }}</span>
 							<Price
-								value={cartItem.standardUnitPrice}
+								value={item.standardUnitPrice}
 								ccyCode={currencyCode}
 								theme="standard"
 							/>
 							<Price
-								value={cartItem.lowVolumeCharge.charge}
+								value={item.lowVolumeCharge.charge}
 								ccyCode={currencyCode}
 								theme="standard"
 							/>
@@ -100,13 +102,13 @@ function getMessage(cartItem: CartItem, currencyCode: string, t: TFunction) {
 					<Trans i18nKey="components.domain.cartbox.cartboxMessage.baraCharge">
 						<span>{{ text }}</span>
 						<Price
-							value={cartItem.standardUnitPrice}
+							value={item.standardUnitPrice}
 							ccyCode={currencyCode}
 							theme="standard"
 						/>
 						<a href={url.bara} target="guide"></a>
 						<Price
-							value={cartItem.lowVolumeCharge.charge}
+							value={item.lowVolumeCharge.charge}
 							ccyCode={currencyCode}
 							theme="standard"
 						/>
