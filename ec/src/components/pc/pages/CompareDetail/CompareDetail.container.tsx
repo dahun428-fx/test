@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { CompareDetailPage as Presenter } from './CompareDetail';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -30,7 +30,6 @@ import { Button } from '../../ui/buttons';
 import { useAddToCartModalMulti } from '../../modals/AddToCartModalMulti/AddToCartModalMulti.hooks';
 import { useAddToMyComponentsModalMulti } from '../../modals/AddToMyComponentsModalMulti/AddToMyComponentsModalMulti.hooks';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
-import { Router } from 'next/router';
 import {
 	refreshAuth,
 	selectAuthenticated,
@@ -49,6 +48,8 @@ import { AssertionError } from '@/errors/app/AssertionError';
 import { CompareItem } from '@/models/localStorage/Compare';
 import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
 import { addToCart as addToCartApi } from '@/api/services/addToCart';
+import { addMyComponents } from '@/api/services/addMyComponents';
+import { moveToOrderMulti } from '@/utils/domain/order';
 
 type Props = {
 	categoryCode: string;
@@ -454,6 +455,11 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		);
 	}, [selectedCompareDetailItems, compareDetailItems]);
 
+	/**
+	 * 가격 체크 이벤트
+	 * checkPriceOperation 함수로 compare => priceCache 값 여부를 확인하고,
+	 * 없을 경우 price api 를 실행한다.
+	 */
 	const check = useCallback(
 		async (items: CompareItem[]): Promise<PriceCheckResult> => {
 			try {
@@ -471,37 +477,121 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		[showMessage]
 	);
 
+	/**
+	 * 가격 가져오기 이벤트
+	 * store 에서 compare => priceCache 값 여부를 확인하여
+	 * 해당 데이터를 불러온다.
+	 */
 	const getPrices = useCallback(
 		(compareItems: CompareItem[]) => {
 			const cache = selectComparePriceCache(store.getState());
+			const quantity = 1;
 			if (!cache) return [];
 			return compareItems.map(item => {
-				return cache[`${item.partNumber}\t${1}`] ?? null;
+				return cache[`${item.partNumber}\t${quantity}`] ?? null;
 			});
 		},
 		[store]
 	);
 
-	/** todo */
-	const onClickOrderNow = useCallback(() => {
-		console.log('order');
-		console.log('items ===> ', selectedCompareDetailItems);
-	}, [selectedCompareDetailItems]);
+	/**
+	 * 선택한 비교결과 아이템 확인 이벤트
+	 * 사용자가 선택한 compareDetailItem 을 store => compare 와 비교하여, 해당 값을 리턴한다
+	 */
+	const getSelectedItems: CompareItem[] = useMemo(() => {
+		const targetItems = Array.from(compareDetailItems).filter(item => {
+			if (selectedCompareDetailItems.has(item.idx)) return item;
+		});
+		let compare = getCompare();
 
-	/** todo */
+		const items = compare.items.filter(item => {
+			const foundIndex = targetItems.findIndex(
+				target => target.partNumberList[0]?.partNumber === item.partNumber
+			);
+			if (foundIndex !== -1) {
+				return item;
+			}
+		});
+		return items;
+	}, [compareDetailItems, selectedCompareDetailItems]);
+
+	/**
+	 * 주문 버튼 클릭 이벤트
+	 */
+	const handleOrderNow = useCallback(async () => {
+		try {
+			updateStatusOperation(dispatch)(CompareDetailLoadStatus.LOADING);
+
+			if (selectedCompareDetailItems.size < 1) {
+				showMessage({
+					message: t('pages.compareDetail.message.check'),
+					button: (
+						<Button>{t('pages.compareDetail.message.alert.close')}</Button>
+					),
+				});
+				return;
+			}
+
+			const items = getSelectedItems;
+
+			assertNotEmpty(items);
+
+			await refreshAuth(dispatch)();
+
+			if (!selectAuthenticated(store.getState())) {
+				const result = await showLoginModal();
+				if (result !== 'LOGGED_IN') {
+					return;
+				}
+			}
+
+			if (selectIsEcUser(store.getState())) {
+				showPaymentMethodRequiredModal();
+				return;
+			}
+
+			if (!selectUserPermissions(store.getState()).hasCartPermission) {
+				showMessage(t('common.cart.noPermission'));
+				return;
+			}
+
+			const quantity = 1;
+
+			const productList = items.map(item => {
+				return {
+					partNumber: item.partNumber,
+					brandCode: item.brandCode,
+					quantity,
+				};
+			});
+
+			moveToOrderMulti(productList);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
+		}
+	}, [
+		selectedCompareDetailItems,
+		compareDetailItems,
+		getSelectedItems,
+		getPrices,
+		check,
+		t,
+	]);
+
+	/**
+	 * 장바구니 버튼 클릭 이벤트
+	 */
 	const addToCart = useCallback(async () => {
 		try {
 			updateStatusOperation(dispatch)(CompareDetailLoadStatus.LOADING);
 
 			if (selectedCompareDetailItems.size < 1) {
 				showMessage({
-					message: t(
-						'components.ui.layouts.footers.compareBalloon.message.notSelected'
-					),
+					message: t('pages.compareDetail.message.check'),
 					button: (
-						<Button>
-							{t('components.ui.layouts.footers.compareBalloon.message.ok')}
-						</Button>
+						<Button>{t('pages.compareDetail.message.alert.close')}</Button>
 					),
 				});
 				return;
@@ -581,30 +671,107 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		} finally {
 			updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
 		}
-	}, [selectedCompareDetailItems, compareDetailItems, getPrices, check]);
+	}, [
+		selectedCompareDetailItems,
+		compareDetailItems,
+		getSelectedItems,
+		getPrices,
+		check,
+		t,
+	]);
 
-	/** todo */
-	const addToMyComponents = useCallback(() => {
-		console.log('addToMyComponents');
-		console.log('items ===> ', selectedCompareDetailItems);
-	}, [selectedCompareDetailItems]);
+	/**
+	 * My부품표 버튼 클릭 이벤트
+	 */
+	const addToMyComponents = useCallback(async () => {
+		try {
+			updateStatusOperation(dispatch)(CompareDetailLoadStatus.LOADING);
 
-	const getSelectedItems: CompareItem[] = useMemo(() => {
-		const targetItems = Array.from(compareDetailItems).filter(item => {
-			if (selectedCompareDetailItems.has(item.idx)) return item;
-		});
-		let compare = getCompare();
-
-		const items = compare.items.filter(item => {
-			const foundIndex = targetItems.findIndex(
-				target => target.partNumberList[0]?.partNumber === item.partNumber
-			);
-			if (foundIndex !== -1) {
-				return item;
+			if (selectedCompareDetailItems.size < 1) {
+				showMessage({
+					message: t('pages.compareDetail.message.check'),
+					button: (
+						<Button>{t('pages.compareDetail.message.alert.close')}</Button>
+					),
+				});
+				return;
 			}
-		});
-		return items;
-	}, [compareDetailItems, selectedCompareDetailItems]);
+
+			const items = getSelectedItems;
+
+			assertNotEmpty(items);
+
+			// NOTE: Get the latest user info when executing add to cart
+			await refreshAuth(store.dispatch)();
+
+			if (!selectAuthenticated(store.getState())) {
+				const result = await showLoginModal();
+				if (result !== 'LOGGED_IN') {
+					return;
+				}
+			}
+
+			if ((await check(items)) === 'error') {
+				return;
+			}
+
+			const firstBrandCode = items[0]?.brandCode;
+			assertNotNull(firstBrandCode);
+
+			const checkedPriceList = getPrices(items);
+			if (!checkedPriceList || checkedPriceList.length < 1) {
+				return;
+			}
+
+			const validPriceList = checkedPriceList.reduce<Price[]>(
+				(previous, current) => {
+					if (current) {
+						return [...previous, current];
+					} else {
+						return previous;
+					}
+				},
+				[]
+			);
+
+			const myComponentsItemList = validPriceList.map(item => {
+				const target = items.find(
+					compareItem => compareItem.partNumber === item.partNumber
+				);
+				return {
+					seriesCode: target?.seriesCode || '',
+					brandCode: item.brandCode || firstBrandCode,
+					partNumber: item.partNumber,
+					quantity: item.quantity,
+					innerCode: item.innerCode,
+					unitPrice: item.unitPrice,
+					standardUnitPrice: item.standardUnitPrice,
+					daysToShip: item.daysToShip,
+					shipType: item.shipType,
+					piecesPerPackage: item.piecesPerPackage,
+				};
+			});
+
+			assertNotEmpty(myComponentsItemList);
+
+			const addMyComponentsResponse = await addMyComponents({
+				myComponentsItemList: myComponentsItemList,
+			});
+
+			showAddToMyComponentsModal(addMyComponentsResponse, validPriceList, true);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
+		}
+	}, [
+		selectedCompareDetailItems,
+		compareDetailItems,
+		getSelectedItems,
+		getPrices,
+		check,
+		t,
+	]);
 
 	return (
 		<>
@@ -620,7 +787,7 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 				handleSelectAllItem={handleSelectAllItem}
 				handleDeleteItem={handleDeleteItem}
 				handleDeleteAllItem={handleDeleteAllItem}
-				onClickOrderNow={onClickOrderNow}
+				onClickOrderNow={handleOrderNow}
 				addToCart={addToCart}
 				addToMyComponents={addToMyComponents}
 				currencyCode={config.defaultCurrencyCode}

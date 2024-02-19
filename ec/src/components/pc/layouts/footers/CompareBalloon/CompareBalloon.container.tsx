@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 import { CompareBalloon as Presenter } from './CompareBalloon';
 import {
 	checkPriceOperation,
@@ -26,7 +26,6 @@ import {
 	CompareDetailLoadStatus,
 	updateStatusOperation,
 } from '@/store/modules/pages/compareDetail';
-import { checkPrice } from '@/api/services/checkPrice';
 import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
 import { assertNotEmpty, assertNotNull } from '@/utils/assertions';
 import { addToCart as addToCartApi } from '@/api/services/addToCart';
@@ -40,7 +39,6 @@ import { store } from '@/store';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
 import { usePaymentMethodRequiredModal } from '@/components/pc/modals/PaymentMethodRequiredModal';
 import { useAddToCartModalMulti } from '@/components/pc/modals/AddToCartModalMulti/AddToCartModalMulti.hooks';
-import { CartItem } from '@/models/api/msm/ect/cart/AddCartRequest';
 import { useBoolState } from '@/hooks/state/useBoolState';
 import { CompareLoadStatus } from '@/store/modules/common/compare/types';
 import { AssertionError } from 'assert';
@@ -145,6 +143,11 @@ export const CompareBalloon: FC = () => {
 		return () => Router.events.off('routeChangeComplete', handleGenerateData);
 	}, [generateCompareData, router.asPath]);
 
+	/**
+	 * 가격 체크 이벤트
+	 * checkPriceOperation 함수로 compare => priceCache 값 여부를 확인하고,
+	 * 없을 경우 price api 를 실행한다.
+	 */
 	const check = useCallback(
 		async (items: CompareItem[]): Promise<PriceCheckResult> => {
 			try {
@@ -162,18 +165,26 @@ export const CompareBalloon: FC = () => {
 		[showMessage]
 	);
 
+	/**
+	 * 가격 가져오기 이벤트
+	 * store 에서 compare => priceCache 값 여부를 확인하여
+	 * 해당 데이터를 불러온다.
+	 */
 	const getPrices = useCallback(
 		(compareItems: CompareItem[]) => {
 			const cache = selectComparePriceCache(store.getState());
+			const quantity = 1;
 			if (!cache) return [];
 			return compareItems.map(item => {
-				return cache[`${item.partNumber}\t${1}`] ?? null;
+				return cache[`${item.partNumber}\t${quantity}`] ?? null;
 			});
 		},
 		[store]
 	);
 
-	/** todo */
+	/**
+	 * 주문 버튼 클릭 이벤트
+	 */
 	const handleOrderNow = useCallback(async () => {
 		try {
 			startToLoading();
@@ -198,24 +209,20 @@ export const CompareBalloon: FC = () => {
 
 			await refreshAuth(dispatch)();
 
-			const authenticated = selectAuthenticated(store.getState());
-			if (!authenticated) {
+			if (!selectAuthenticated(store.getState())) {
 				const result = await showLoginModal();
 				if (result !== 'LOGGED_IN') {
 					return;
 				}
 			}
 
-			const isEcUser = selectIsEcUser(store.getState());
-			const { hasOrderPermission } = selectUserPermissions(store.getState());
-
-			if (isEcUser) {
-				await showPaymentMethodRequiredModal();
+			if (selectIsEcUser(store.getState())) {
+				showPaymentMethodRequiredModal();
 				return;
 			}
 
-			if (!hasOrderPermission) {
-				await showMessage(t('common.order.noPermission'));
+			if (!selectUserPermissions(store.getState()).hasCartPermission) {
+				showMessage(t('common.cart.noPermission'));
 				return;
 			}
 
@@ -244,6 +251,9 @@ export const CompareBalloon: FC = () => {
 		t,
 	]);
 
+	/**
+	 * 장바구니 버튼 클릭 이벤트
+	 */
 	const addToCart = useCallback(async () => {
 		try {
 			startToLoading();
@@ -337,6 +347,9 @@ export const CompareBalloon: FC = () => {
 		}
 	}, [selectedItemsForCheck.current, getPrices, priceCache, check]);
 
+	/**
+	 * My부품표 버튼 클릭 이벤트
+	 */
 	const addToMyComponents = useCallback(async () => {
 		try {
 			startToLoading();
@@ -418,7 +431,7 @@ export const CompareBalloon: FC = () => {
 		} finally {
 			endLoading();
 		}
-	}, [selectedItemsForCheck.current]);
+	}, [selectedItemsForCheck.current, getPrices, priceCache, check]);
 
 	/**
 	 * 비교결과 페이지 오픈
