@@ -19,7 +19,7 @@ import {
 	Spec,
 } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
-import { assertNotNull } from '@/utils/assertions';
+import { assertNotEmpty, assertNotNull } from '@/utils/assertions';
 import { cadTypeListDisp } from '@/utils/cad';
 import { config } from '@/config';
 import { getCompare, removeCompareItem } from '@/services/localStorage/compare';
@@ -31,6 +31,24 @@ import { useAddToCartModalMulti } from '../../modals/AddToCartModalMulti/AddToCa
 import { useAddToMyComponentsModalMulti } from '../../modals/AddToMyComponentsModalMulti/AddToMyComponentsModalMulti.hooks';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import { Router } from 'next/router';
+import {
+	refreshAuth,
+	selectAuthenticated,
+	selectIsEcUser,
+	selectUserPermissions,
+} from '@/store/modules/auth';
+import { store } from '@/store';
+import { useLoginModal } from '../../modals/LoginModal';
+import { usePaymentMethodRequiredModal } from '../../modals/PaymentMethodRequiredModal';
+import { PriceCheckResult } from './types';
+import {
+	checkPriceOperation,
+	selectComparePriceCache,
+} from '@/store/modules/common/compare';
+import { AssertionError } from '@/errors/app/AssertionError';
+import { CompareItem } from '@/models/localStorage/Compare';
+import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
+import { addToCart as addToCartApi } from '@/api/services/addToCart';
 
 type Props = {
 	categoryCode: string;
@@ -49,6 +67,8 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 	const { showMessage } = useMessageModal();
 	const showAddToCartModal = useAddToCartModalMulti();
 	const showAddToMyComponentsModal = useAddToMyComponentsModalMulti();
+	const showLoginModal = useLoginModal();
+	const showPaymentMethodRequiredModal = usePaymentMethodRequiredModal();
 
 	const [t] = useTranslation();
 
@@ -434,6 +454,34 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 		);
 	}, [selectedCompareDetailItems, compareDetailItems]);
 
+	const check = useCallback(
+		async (items: CompareItem[]): Promise<PriceCheckResult> => {
+			try {
+				await checkPriceOperation(store)(items);
+			} catch (error) {
+				if (error instanceof AssertionError) {
+					if (error.message[0]) {
+						showMessage(error.message[0]);
+						return 'error';
+					}
+				}
+			}
+			return 'success';
+		},
+		[showMessage]
+	);
+
+	const getPrices = useCallback(
+		(compareItems: CompareItem[]) => {
+			const cache = selectComparePriceCache(store.getState());
+			if (!cache) return [];
+			return compareItems.map(item => {
+				return cache[`${item.partNumber}\t${1}`] ?? null;
+			});
+		},
+		[store]
+	);
+
 	/** todo */
 	const onClickOrderNow = useCallback(() => {
 		console.log('order');
@@ -442,25 +490,121 @@ export const CompareDetail: FC<Props> = ({ categoryCode }) => {
 
 	/** todo */
 	const addToCart = useCallback(async () => {
-		console.log('add to cart');
-
-		console.log('items ===> ', selectedCompareDetailItems);
-
 		try {
 			updateStatusOperation(dispatch)(CompareDetailLoadStatus.LOADING);
+
+			if (selectedCompareDetailItems.size < 1) {
+				showMessage({
+					message: t(
+						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+					),
+					button: (
+						<Button>
+							{t('components.ui.layouts.footers.compareBalloon.message.ok')}
+						</Button>
+					),
+				});
+				return;
+			}
+
+			const items = getSelectedItems;
+
+			assertNotEmpty(items);
+
+			// NOTE: Get the latest user info when executing add to cart
+			await refreshAuth(store.dispatch)();
+
+			if (!selectAuthenticated(store.getState())) {
+				const result = await showLoginModal();
+				if (result !== 'LOGGED_IN') {
+					return;
+				}
+			}
+
+			if (selectIsEcUser(store.getState())) {
+				showPaymentMethodRequiredModal();
+				return;
+			}
+
+			if (!selectUserPermissions(store.getState()).hasCartPermission) {
+				showMessage(t('common.cart.noPermission'));
+				return;
+			}
+
+			if ((await check(items)) === 'error') {
+				return;
+			}
+
+			const firstBrandCode = items[0]?.brandCode;
+			assertNotNull(firstBrandCode);
+
+			const checkedPriceList = getPrices(items);
+			if (!checkedPriceList || checkedPriceList.length < 1) {
+				return;
+			}
+
+			const validPriceList = checkedPriceList.reduce<Price[]>(
+				(previous, current) => {
+					if (current) {
+						return [...previous, current];
+					} else {
+						return previous;
+					}
+				},
+				[]
+			);
+			const cartItems = validPriceList.map(item => {
+				const target = items.find(
+					compareItem => compareItem.partNumber === item.partNumber
+				);
+				return {
+					seriesCode: target?.seriesCode || '',
+					brandCode: item.brandCode || firstBrandCode,
+					partNumber: item.partNumber,
+					quantity: item.quantity,
+					innerCode: item.innerCode,
+					unitPrice: item.unitPrice,
+					standardUnitPrice: item.standardUnitPrice,
+					daysToShip: item.daysToShip,
+					shipType: item.shipType,
+					piecesPerPackage: item.piecesPerPackage,
+				};
+			});
+			assertNotEmpty(cartItems);
+			const addToCartResponse = await addToCartApi({
+				cartItemList: cartItems,
+			});
+
+			showAddToCartModal(addToCartResponse, validPriceList, true);
 		} catch (error) {
+			console.log(error);
 		} finally {
-			setTimeout(() => {
-				updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
-			}, 1500);
+			updateStatusOperation(dispatch)(CompareDetailLoadStatus.READY);
 		}
-	}, [selectedCompareDetailItems]);
+	}, [selectedCompareDetailItems, compareDetailItems, getPrices, check]);
 
 	/** todo */
 	const addToMyComponents = useCallback(() => {
 		console.log('addToMyComponents');
 		console.log('items ===> ', selectedCompareDetailItems);
 	}, [selectedCompareDetailItems]);
+
+	const getSelectedItems: CompareItem[] = useMemo(() => {
+		const targetItems = Array.from(compareDetailItems).filter(item => {
+			if (selectedCompareDetailItems.has(item.idx)) return item;
+		});
+		let compare = getCompare();
+
+		const items = compare.items.filter(item => {
+			const foundIndex = targetItems.findIndex(
+				target => target.partNumberList[0]?.partNumber === item.partNumber
+			);
+			if (foundIndex !== -1) {
+				return item;
+			}
+		});
+		return items;
+	}, [compareDetailItems, selectedCompareDetailItems]);
 
 	return (
 		<>

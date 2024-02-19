@@ -185,7 +185,7 @@ export const CompareBalloon: FC = () => {
 			if (items.length < 1) {
 				showMessage({
 					message: t(
-						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+						'components.ui.layouts.footers.compareBalloon.message.check'
 					),
 					button: (
 						<Button>
@@ -254,7 +254,7 @@ export const CompareBalloon: FC = () => {
 			if (items.length < 1) {
 				showMessage({
 					message: t(
-						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+						'components.ui.layouts.footers.compareBalloon.message.check'
 					),
 					button: (
 						<Button>
@@ -347,7 +347,7 @@ export const CompareBalloon: FC = () => {
 			if (items.length < 1) {
 				showMessage({
 					message: t(
-						'components.ui.layouts.footers.compareBalloon.message.notSelected'
+						'components.ui.layouts.footers.compareBalloon.message.check'
 					),
 					button: (
 						<Button>
@@ -442,7 +442,7 @@ export const CompareBalloon: FC = () => {
 		updateCheckedItemIfNeeded(Array.from(selectedItemsForCheck.current));
 		updateStatusOperation(dispatch)(CompareDetailLoadStatus.INITIAL);
 		initialized.current = false;
-		const pageUrl = `${url.compare}/${selectedActiveTab.current}`;
+		const pageUrl = `${url.compare}${selectedActiveTab.current}`;
 		router.push(pageUrl);
 	}, [selectedActiveTab.current, selectedItemsForCheck.current]);
 

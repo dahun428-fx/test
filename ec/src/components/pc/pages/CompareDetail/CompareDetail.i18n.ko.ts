@@ -21,8 +21,8 @@ export const compareDetail: Translation = {
 	partNumber: '형번',
 	unitPrice,
 	message: {
-		yes: '',
-		no: '',
+		yes: '예',
+		no: '아니오',
 		alert: {
 			delete: {
 				noSelected: '삭제하실 형번을 선택하세요.',
@@ -35,5 +35,6 @@ export const compareDetail: Translation = {
 			yes: '예',
 			no: '아니오',
 		},
+		check: '형번을 선택 하세요.',
 	},
 };
