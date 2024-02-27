@@ -232,6 +232,18 @@ export const selectCategoryCodeList = createSelector(selectSeries, series => {
 	return categoryCodeList;
 });
 
+/** Category info List from top to bottom */
+export const selectCategoryInfoList = createSelector(
+	selectSeries,
+	({ categoryCode = '', categoryName = '', categoryList }) => {
+		const categoryInfoList = categoryList.map(
+			({ categoryCode, categoryName }) => ({ categoryCode, categoryName })
+		);
+
+		return [...categoryInfoList, { categoryCode, categoryName }];
+	}
+);
+
 /**
  * Part number spec list for search similar
  * @param partNumber
@@ -556,3 +568,7 @@ export const selectProductPriceInfo = createSelector(
 		);
 	}
 );
+
+export function selectUnitLibraryResponse(state: AppState) {
+	return state.productDetail.unitLibraryResponse;
+}

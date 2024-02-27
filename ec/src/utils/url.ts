@@ -215,7 +215,11 @@ export const url = {
 	productDetail: (seriesCode: string) => {
 		const baseUrl = pagesPath.vona2.detail._seriesCode(seriesCode);
 		return {
-			default: convertToURLString(baseUrl.$url()),
+			default: (
+				query?: Record<string, string | string[] | number | undefined>
+			) => {
+				return convertToURLString(baseUrl.$url({ query }));
+			},
 			/** キーワード検索結果画面からの遷移 */
 			fromKeywordSearch: (keyword: string) => {
 				return {
@@ -538,6 +542,22 @@ export const url = {
 		}/vona2/pdf_generate/product_info/${encodeURIComponent(partNumber)}/`;
 	},
 
+	catalogDownload(
+		seriesCode: string,
+		partNumber: string,
+		innerCode?: string,
+		url?: string
+	) {
+		return toUrl(
+			`${config.web.ec.origin}/vona2/pdf_generate_pu/product_catalog`,
+			{
+				seriesCode,
+				partNumber,
+				innerCode: innerCode ?? '',
+				url: url ?? '',
+			}
+		);
+	},
 	//===========================================================================
 	// MyPage
 	//===========================================================================
@@ -814,4 +834,26 @@ export function getUrlPath(url: UrlObject) {
 	) as unknown as string[];
 
 	return `${interpolated ?? resolved}`;
+}
+
+/**
+ * Ensures that a given URL has a trailing slash ("/") at the end.
+ * @param {string} url - The URL to be adjusted.
+ * @returns {string} The adjusted URL with a trailing slash.
+ */
+export function adjustTrailingSlash(url: string) {
+	return url.endsWith('/') ? url : `${url}/`;
+}
+
+export function adjustTrailingSlashForSeo(url: string) {
+	const queryStringIndex = url.indexOf('?');
+
+	if (queryStringIndex < 0) {
+		return adjustTrailingSlash(url);
+	}
+
+	const baseUrl = url.substring(0, queryStringIndex);
+	const queryParams = url.substring(queryStringIndex);
+
+	return adjustTrailingSlash(baseUrl) + queryParams;
 }

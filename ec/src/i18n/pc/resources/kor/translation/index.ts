@@ -23,7 +23,7 @@ import { addToMyComponentsModalMulti } from '../../../../../components/pc/modals
 import { loginModal } from '../../../../../components/pc/modals/LoginModal/LoginModal.i18n.en';
 import { orderNoListedProductModal } from '../../../../../components/pc/modals/OrderNoListedProductModal/OrderNoListedProductModal.i18n.en';
 import { paymentMethodRequiredModal } from '../../../../../components/pc/modals/PaymentMethodRequiredModal/PaymentMethodRequiredContent.i18n.en';
-import { cadPreview } from '../../../../../components/pc/pages/CadPreview/CadPreview.i18n.en';
+import { cadPreview } from '../../../../../components/pc/pages/CadPreview/CadPreview.i18n.ko'; // change to ko
 import { category } from '../../../../../components/pc/pages/Category/Category.i18n.en';
 import { compareDetail } from '../../../../../components/pc/pages/CompareDetail/CompareDetail.i18n.ko'; //change to ko
 import { home } from '../../../../../components/pc/pages/Home/Home.i18n.en';
@@ -33,6 +33,7 @@ import { productDetail } from '../../../../../components/pc/pages/ProductDetail/
 import { sitemap } from '../../../../../components/pc/pages/Sitemap/Sitemap.i18n.en';
 import { techView } from '../../../../../components/pc/pages/TechView/TechView.i18n.en';
 import { maker } from '../../../../../components/pc/pages/maker/maker.i18n.en';
+import { technicalContact } from '../../../../../components/pc/ui/contact/TechnicalContact.i18n.ko'; //change to ko
 import { displayTypeSwitch } from '../../../../../components/pc/ui/controls/select/DisplayTypeSwitch/DisplayTypeSwitch.i18n.en';
 import { economyLabel } from '../../../../../components/pc/ui/labels/EconomyLabel.i18n';
 import { saleLabel } from '../../../../../components/pc/ui/labels/SaleLabel.i18n.en';
@@ -48,8 +49,8 @@ import { text } from '../../../../../components/pc/ui/text/i18n.ko'; // change t
 import { cartbox } from '../../../../../components/pc/domain/Cartbox/Cartbox.i18n.ko'; //change to ko
 import { toasts } from '../../../../../components/pc/ui/toasts/i18n.en';
 import { useLogin } from '../../../../../hooks/auth/useLogin.i18n.en';
-import { useTabTranslation } from '../../../../../hooks/i18n/useTabTranslation.i18n.en';
-import { domain } from '../../../../../utils/domain/i18n.en';
+import { useTabTranslation } from '../../../../../hooks/i18n/useTabTranslation.i18n.ko'; //change to ko
+import { domain } from '../../../../../utils/domain/i18n.ko'; //change to ko
 import type { Translation } from '@/i18n/types';
 
 const translation: Translation = {
@@ -95,6 +96,9 @@ const translation: Translation = {
 			paymentMethodRequiredModal,
 		},
 		ui: {
+			contact: {
+				technicalContact,
+			},
 			controls: {
 				displayTypeSwitch,
 			},

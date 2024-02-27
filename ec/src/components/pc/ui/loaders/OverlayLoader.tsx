@@ -5,24 +5,32 @@ import styles from './Overlayloader.module.scss';
 type Props = {
 	show?: boolean;
 	returnElementRef?: RefObject<HTMLElement>;
+	noFocusChange?: boolean;
 };
 
 /**
  * Overlay loader component
  */
-export const OverlayLoader: React.VFC<Props> = ({ show, returnElementRef }) => {
+export const OverlayLoader: React.VFC<Props> = ({
+	show,
+	returnElementRef,
+	noFocusChange,
+}) => {
 	const ref = useRef<HTMLDivElement>(null);
 
 	// When shows loader, it takes away focus.
 	// And, when will hide loader which has focus, it returns focus the specified element.
 	useEffect(() => {
-		if (show) {
+		if (show && !noFocusChange) {
 			ref.current?.focus();
-		} else if (ref.current === document.activeElement) {
+		} else if (
+			!show &&
+			!noFocusChange &&
+			ref.current === document.activeElement
+		) {
 			returnElementRef?.current?.focus();
 		}
-	}, [returnElementRef, show]);
-
+	}, [returnElementRef, show, noFocusChange]);
 	return (
 		<CSSTransition
 			in={show}

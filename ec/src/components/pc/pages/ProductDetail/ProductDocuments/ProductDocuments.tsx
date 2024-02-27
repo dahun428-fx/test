@@ -1,29 +1,29 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './ProductDocuments.module.scss';
-import { CatalogLink } from '@/components/pc/pages/ProductDetail/CatalogLink';
+import {
+	CatalogLink,
+	CatalogLinkTitle,
+} from '@/components/pc/pages/ProductDetail/CatalogLink';
 import { SdsLinkListModal } from '@/components/pc/pages/ProductDetail/SdsLinkListModal';
 import { Link } from '@/components/pc/ui/links';
 import { ModalOpener, ModalProvider } from '@/components/pc/ui/modals';
-import { Flag } from '@/models/api/Flag';
-import { DigitalBook, Msds } from '@/models/api/msm/ect/series/shared';
+import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 
 type Props = {
-	msdsList?: Msds[];
-	digitalBookPdfUrl?: string;
-	digitalBookList?: DigitalBook[];
-	misumiFlag: Flag;
-	pdfNoticeText?: string;
-};
+	series: Series;
+} & CatalogLinkTitle;
 
-export const ProductDocuments: React.VFC<Props> = ({
-	msdsList = [],
-	digitalBookPdfUrl,
-	digitalBookList = [],
-	misumiFlag,
-	pdfNoticeText,
-}) => {
+export const ProductDocuments: React.VFC<Props> = ({ series, linkTitle }) => {
 	const { t } = useTranslation();
+
+	const {
+		msdsList = [],
+		digitalBookPdfUrl,
+		digitalBookList = [],
+		misumiFlag,
+		pdfNoticeText,
+	} = series;
 
 	if (!msdsList.length && !digitalBookPdfUrl) {
 		return null;
@@ -38,6 +38,7 @@ export const ProductDocuments: React.VFC<Props> = ({
 						misumiFlag={misumiFlag}
 						pdfNoticeText={pdfNoticeText}
 						digitalBookList={digitalBookList}
+						linkTitle={linkTitle}
 					/>
 				</li>
 			)}

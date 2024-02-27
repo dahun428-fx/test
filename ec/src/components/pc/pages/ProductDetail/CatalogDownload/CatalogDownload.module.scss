@@ -1,0 +1,9 @@
+.hiddenIframe {
+	display: none;
+}
+
+.downloading[class] {
+	&:hover {
+		cursor: progress;
+	}
+}

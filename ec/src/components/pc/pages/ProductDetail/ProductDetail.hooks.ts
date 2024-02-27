@@ -6,17 +6,17 @@ import { ga } from '@/logs/analytics/google';
 import { ClassCode } from '@/logs/constants';
 import { ectLogger } from '@/logs/ectLogger';
 import { Flag } from '@/models/api/Flag';
-import { TemplateType } from '@/models/api/constants/TemplateType';
 import {
-	selectCategoryCodeList,
 	selectPartNumberResponse,
 	selectSeries,
 } from '@/store/modules/pages/productDetail';
-import { selectTemplateType } from '@/store/modules/pages/productDetail/selectors/shared';
+import { selectCategoryInfoList } from '@/store/modules/pages/productDetail/selectors/shared';
 import { first } from '@/utils/collection';
 import { Cookie, setCookie } from '@/utils/cookie';
 import { getPartNumberPageSize } from '@/utils/domain/partNumber';
 import { normalizeUrl } from '@/utils/url';
+import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
+import { getOneParams } from '@/utils/query';
 
 /**
  * Page size hook
@@ -39,100 +39,113 @@ export const usePageSize = <T extends number = number>() => {
 };
 
 /**
+ * Scroll to hash hook
+ */
+export const useScrollToHash = () => {
+	const scrollToHash = () => {
+		const { hash } = window.location;
+		if (hash) {
+			const targetElement = document.querySelector(hash);
+			if (targetElement) {
+				// NOTE: 1s as the default delay for product lazy loading
+				setTimeout(() => {
+					targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}, 1000);
+			}
+		}
+	};
+	useOnMounted(scrollToHash);
+};
+
+export type Templates =
+	| 'simple'
+	| 'pu'
+	| 'complex'
+	| 'patternH'
+	| 'wysiwyg'
+	| 'discontinued';
+/**
  * Track page view hook
  */
-export const useTrackPageView = () => {
+export const useTrackPageView = (template: Templates = 'complex') => {
 	const series = useSelector(selectSeries);
+	const router = useRouter();
+	const { HissuCode: hissuCode } = getOneParams(router.query, 'HissuCode');
 	const {
 		currencyCode,
 		partNumberList = [],
 		completeFlag,
 	} = useSelector(selectPartNumberResponse) ?? {};
-	const categoryCodeList = useSelector(selectCategoryCodeList);
-	const templateType = useSelector(selectTemplateType);
+	const categoryList = useSelector(selectCategoryInfoList);
 
 	useEffect(() => {
-		if (!templateType) {
-			return;
-		}
-		const { categoryList, categoryCode = '', categoryName = '' } = series;
-
-		const partNumber = Flag.isTrue(completeFlag)
-			? first(partNumberList)
-			: undefined;
+		const { partNumber, innerCode } =
+			partNumberList.find(pn => pn.partNumber === hissuCode) ?? {};
 
 		ectLogger.visit({
 			brandCode: series.brandCode,
 			seriesCode: series.seriesCode,
 			classCode: ClassCode.DETAIL,
-			partNumber: partNumber?.partNumber,
 			url: normalizeUrl(location.href),
+			shunsakuCode: '',
+			specSearchDispType: '',
 		});
 
-		ga.pageView
-			.productDetail({
-				seriesCode: series.seriesCode,
-				seriesName: series.seriesName,
-				misumiFlag: series.misumiFlag,
-				departmentCode: series.categoryList[0]?.categoryCode ?? '',
-				categoryList: [...categoryList, { categoryCode, categoryName }],
-				brandCode: series.brandCode,
-				brandName: series.brandName,
-				partNumber: partNumber?.partNumber,
-				innerCode: partNumber?.innerCode,
-			})
-			.then();
+		const gaPageView =
+			template === 'simple'
+				? ga.pageView.productDetail.simple
+				: ga.pageView.productDetail;
 
-		if (templateType === TemplateType.SIMPLE) {
-			aa.pageView.productDetail
-				.simple({
-					seriesCode: series.seriesCode,
-					brandCode: series.brandCode,
-					categoryCodeList,
-					partNumber: partNumber?.partNumber,
-				})
-				.then(() => {
-					// pageView 送信が成功(= AA script load 完了)した後に実行する必要のあるイベント送信
-					// - 2023/1/11 現在、AA script は結局 2023/3 リリース時点では同期ロードすることになったのだが、
-					//   非同期ロードするようになった時に修正する箇所を減らすための実装
-					if (Flag.isTrue(completeFlag)) {
-						aa.events.sendPartNumberGeneratedOnce();
-					}
-				});
-		} else {
-			aa.pageView
-				.productDetail({
-					seriesCode: series.seriesCode,
-					brandCode: series.brandCode,
-					categoryCodeList,
-				})
-				.then(() => {
-					// pageView 送信が成功(= AA script load 完了)した後に実行する必要のあるイベント送信
-					// - 2023/1/11 現在、AA script は結局 2023/3 リリース時点では同期ロードすることになったのだが、
-					//   非同期ロードするようになった時に修正する箇所を減らすための実装
-					if (Flag.isTrue(completeFlag)) {
-						aa.events.sendPartNumberGeneratedOnce();
-					}
-				});
-		}
+		gaPageView({
+			seriesCode: series.seriesCode,
+			seriesName: series.seriesName,
+			brandCode: series.brandCode,
+			brandName: series.brandName,
+			categoryList,
+			partNumber,
+			innerCode,
+			departmentCode: series.departmentCode,
+			misumiFlag: series.misumiFlag,
+		});
+
+		/** todo : aa tag */
+		// aa.pageView
+		// 	.productDetail({
+		// 		seriesCode: series.seriesCode,
+		// 		seriesName: series.seriesName,
+		// 		brandCode: series.brandCode,
+		// 		brandName: series.brandName,
+		// 		categoryList,
+		// 		partNumber,
+		// 		departmentCode: series.departmentCode,
+		// 		misumiFlag: series.misumiFlag,
+		// 		template,
+		// 	})
+		// 	.then(() => {
+		// 		// pageView 送信が成功(= AA script load 完了)した後に実行する必要のあるイベント送信
+		// 		// - 2023/1/11 現在、AA script は結局 2023/3 リリース時点では同期ロードすることになったのだが、
+		// 		//   非同期ロードするようになった時に修正する箇所を減らすための実装
+		// 		const completedPartNumber = first(partNumberList);
+
+		// 		if (Flag.isTrue(completeFlag) && completedPartNumber) {
+		// 			aa.events.sendPartNumberGeneratedOnce(completedPartNumber.partNumber);
+		// 		}
+		// 	});
 
 		ga.ecommerce.viewItem({
 			seriesCode: series.seriesCode,
-			partNumber: partNumber?.partNumber,
-			innerCode: partNumber?.innerCode,
+			partNumber,
+			innerCode,
 			currencyCode,
 		});
 
 		// Needs to send after view item
 		if (Flag.isTrue(completeFlag)) {
-			ga.events.partNumberGenerated({
-				partNumber: partNumber?.partNumber,
-				innerCode: partNumber?.innerCode,
-			});
+			ga.events.partNumberGenerated({ partNumber, innerCode });
 			ectLogger.partNumber.complete({
 				brandCode: series.brandCode,
 				seriesCode: series.seriesCode,
-				partNumber: partNumber?.partNumber,
+				partNumber,
 			});
 		}
 

@@ -27,6 +27,8 @@ import { sendQuote } from './sendQuote';
 import { sendResultTotalCounts } from './sendResultTotalCounts';
 import { sendSelectSortType } from './sendSelectSortType';
 import { sendViewCombo } from './sendViewCombo';
+import { detailPUCatalogDL } from './detailPUCatalogDL';
+import { tabClick } from './tabClick';
 
 export const events = {
 	sendAddToMyComponents,
@@ -54,4 +56,6 @@ export const events = {
 	sendClickFullTextPDF,
 	sendClickTechInfoPDF,
 	sendSelectSortType,
+	tabClick,
+	detailPUCatalogDL,
 } as const;

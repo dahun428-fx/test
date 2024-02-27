@@ -247,5 +247,6 @@ export const TabType = {
 	TOOL_FS_A: '7',
 	TOOL_FS_B: '8',
 	VONA: '9',
+	PU: '10',
 } as const;
 export type TabType = typeof TabType[keyof typeof TabType];

@@ -1,0 +1,34 @@
+@use 'src/styles/pc/icon';
+
+.opener {
+	flex: none;
+	padding: 2px 8px;
+	color: #004098;
+	word-break: keep-all;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+
+	.openerIcon {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin-left: 8px;
+		vertical-align: sub;
+		background: url('#{icon.get-path("right-arrow")}') no-repeat;
+
+		&[aria-expanded='true'] {
+			transform: rotate(-90deg);
+		}
+
+		&[aria-expanded='false'] {
+			transform: rotate(90deg);
+		}
+	}
+}
+
+.isOpen {
+	background-color: #ecf3fc;
+}

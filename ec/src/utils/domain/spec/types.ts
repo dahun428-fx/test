@@ -1,3 +1,4 @@
+import { PUSpecViewType } from '@/components/pc/pages/ProductDetail/templates/PU/SpecFilter/SpecFilter.types';
 import { Flag } from '@/models/api/Flag';
 import { OpenCloseType } from '@/models/api/constants/OpenCloseType';
 import {
@@ -6,12 +7,16 @@ import {
 	SupplementType,
 } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { SpecViewType as SeriesSpecViewType } from '@/models/api/msm/ect/series/SearchSeriesResponse';
+type ValueOf<T> = T[keyof T];
 
 export type NormalizedSpec = {
 	specCode: string;
 	specName: string;
 	specUnit?: string;
-	specViewType: PartNumberSpecViewType | SeriesSpecViewType;
+	specViewType:
+		| PartNumberSpecViewType
+		| SeriesSpecViewType
+		| ValueOf<typeof PUSpecViewType>;
 	supplementType?: SupplementType;
 	specImageUrl?: string;
 	detailHtml?: string;

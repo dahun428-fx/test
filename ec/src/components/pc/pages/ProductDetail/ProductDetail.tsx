@@ -6,6 +6,7 @@ import type { Props as ComplexProps } from './templates/Complex';
 import type { Props as PatternHProps } from './templates/PatternH';
 import type { Props as SimpleProps } from './templates/Simple';
 import type { Props as WysiwygProps } from './templates/Wysiwyg';
+import type { Props as PUProps } from './templates/PU';
 import { PageLoader } from '@/components/pc/ui/loaders';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import { cameleer } from '@/logs/cameleer';
@@ -19,6 +20,14 @@ import {
 	loadOperation,
 	selectTemplateType,
 } from '@/store/modules/pages/productDetail';
+
+const PU = dynamic<PUProps>(
+	() =>
+		import('@/components/pc/pages/ProductDetail/templates/PU').then(
+			module => module.PU
+		),
+	{ ssr: false }
+);
 
 const Simple = dynamic<SimpleProps>(
 	() =>
@@ -126,6 +135,8 @@ export const ProductDetail: React.VFC<Props> = ({
 			return <PatternH seriesCode={seriesCode} partNumber={partNumber} />;
 		case TemplateType.WYSIWYG:
 			return <Wysiwyg seriesCode={seriesCode} partNumber={partNumber} />;
+		case TemplateType.PU:
+			return <PU seriesCode={seriesCode} partNumber={partNumber} />;
 		case TemplateType.COMPLEX:
 		default:
 			return <Complex seriesCode={seriesCode} partNumber={partNumber} />;

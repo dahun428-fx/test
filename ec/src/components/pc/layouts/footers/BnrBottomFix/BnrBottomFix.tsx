@@ -38,7 +38,7 @@ export const BnrBottomFix: React.FC = () => {
 
 	return (
 		<>
-			<div className={classNames(styles.wrap, styles.show)}>
+			<div className={classNames(styles.wrap, styles.show)} id="bottomFix">
 				<div className={styles.content}>
 					<div className={styles.left}>
 						<ul>

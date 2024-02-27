@@ -285,18 +285,6 @@ export const CompareTabContent = React.memo<Props>(
 		}, [compare.active, tabHeadList]);
 
 		/**
-		 * localStorage compare item chk 변수 여부 판단하여 selectedItems 에 초기화
-		 */
-		// useEffect(() => {
-		// 	if (compare.show) {
-		// 		console.log('change compare items');
-		// 		setSelectedItems(
-		// 			new Set(Array.from(compare.items.filter(item => item.chk)))
-		// 		);
-		// 	}
-		// }, [compare.items]);
-
-		/**
 		 * 부모 Component CompareBalloon 에 선택된 아이템 전달
 		 * => 비교 팝업 탭이 닫힐 때, Compare Item chk 일괄변경
 		 */

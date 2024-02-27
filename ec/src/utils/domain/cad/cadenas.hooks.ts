@@ -16,7 +16,7 @@ export const useGetCadenasFileUrl = () => {
 	const getCadenasFileUrl = useCallback(
 		async (
 			url: string,
-			token: CancelToken
+			token?: CancelToken
 		): Promise<GetGenerationStatusResponse | undefined> => {
 			let retryCount = 0;
 			let response: GetGenerationStatusResponse | undefined;

@@ -1,0 +1,99 @@
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	box-sizing: border-box;
+	padding: 8px 0;
+	border-top: 1px solid #ccc;
+}
+
+.horizontalPadding {
+	padding-right: 16px;
+	padding-left: 16px;
+}
+
+.partNumberHeader {
+	display: flex;
+	align-items: center;
+}
+
+.partNumber {
+	font-weight: bold;
+	font-size: 1.0625rem;
+}
+
+.partNumberComplex {
+	font-weight: bold;
+	font-size: 1.25rem;
+	word-break: break-word;
+}
+
+.textWrapper {
+	display: flex;
+	align-items: center;
+	margin-left: 4px;
+}
+
+.unfixed {
+	color: #fff;
+	background-color: #c00;
+}
+
+.buttonClear {
+	display: inline-block;
+	box-sizing: border-box;
+	margin-left: 10px;
+	padding: 4px 8px;
+	color: #004098;
+	font-weight: bold;
+	font-size: 0.6875rem;
+	line-height: 1.5;
+	white-space: nowrap;
+	text-align: center;
+	text-decoration: none;
+	background-color: transparent;
+	border: none;
+	border-radius: 4px;
+
+	&:hover {
+		background-color: #ecf3fc;
+		opacity: 0.8;
+	}
+}
+
+.blinkEffect {
+	animation: blink 1s linear 2 forwards;
+}
+
+@keyframes blink {
+	0% {
+		background-color: #fff;
+	}
+
+	50% {
+		background-color: #fbface;
+	}
+
+	100% {
+		background-color: #fff;
+	}
+}
+
+.buttonGroup {
+	display: flex;
+	flex-shrink: 0;
+	gap: 8px;
+}
+
+.productDetailButton[class] {
+	margin-right: 0;
+}
+
+.cadDownloadButton[class] {
+	margin-left: 0;
+}
+
+.nonBoder {
+	border-top: none;
+}

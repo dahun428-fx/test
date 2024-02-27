@@ -2,7 +2,8 @@ import { actionsPanel } from './ActionsPanel/ActionsPanel.i18n.en';
 import { addToMyComponentsModal } from './AddToMyComponentsModal/AddToMyComponentsModal.i18n.en';
 import { basicInformation } from './BasicInformation/BasicInformation.i18n.en';
 import { catalog } from './Catalog/Catalog.i18n.en';
-import { catalogLink } from './CatalogLink/CatalogLink.i18n.en';
+import { catalogDownload } from './CatalogDownload/CatalogDownload.i18n.ko'; //change to ko
+import { catalogLink } from './CatalogLink/CatalogLink.i18n.ko'; //change to ko
 import { compareProductButton } from './CompareProductButton/CompareProductButton.i18n.ko'; //change to ko
 import { daysToShip as daysToShipUI } from './DaysToShip/DaysToShip.i18n.en';
 import { faq } from './Faq/Faq.i18n.en';
@@ -27,6 +28,8 @@ import { complex } from './templates/Complex/Complex.i18n.en';
 import { patternH } from './templates/PatternH/PatternH.i18n.en';
 import { simple } from './templates/Simple/Simple.i18n.en';
 import { wysiwyg } from './templates/Wysiwyg/Wysiwyg.i18n.en';
+import { pu } from './templates/PU/PU.i18n.ko'; //change to ko
+import { divisionBannerBox } from './DivisionBannerBox/DivisionBannerBox.i18n.ko'; //change to ko
 import { Translation } from '@/i18n/types';
 
 export const productDetail: Translation = {
@@ -58,6 +61,7 @@ export const productDetail: Translation = {
 	productDetailsDownloadButton,
 	productAttributes,
 	interestRecommend,
+	catalogDownload,
 	catalogLink,
 	partNumberHeader,
 	partNumberSpecList,
@@ -74,4 +78,6 @@ export const productDetail: Translation = {
 	basicInformation,
 	partNumberInputHeader,
 	compareProductButton,
+	pu,
+	divisionBannerBox,
 };

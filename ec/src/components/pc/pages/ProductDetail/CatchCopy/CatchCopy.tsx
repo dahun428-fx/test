@@ -4,13 +4,14 @@ import styles from './CatchCopy.module.scss';
 
 type Props = {
 	catchCopy?: string;
+	catchCopyLength?: number;
 };
 const CATCH_COPY_MAX_LENGTH = 100;
 
 /**
  * catch copy
  */
-export const CatchCopy: React.VFC<Props> = ({ catchCopy }) => {
+export const CatchCopy: React.VFC<Props> = ({ catchCopy, catchCopyLength }) => {
 	const catchCopyContent = useMemo(() => {
 		if (!catchCopy) {
 			return '';
@@ -22,14 +23,21 @@ export const CatchCopy: React.VFC<Props> = ({ catchCopy }) => {
 				allowedTags: [], // Remove all HTML tags
 				allowedAttributes: {},
 			});
-			if (cleanedCatchCopy.length > CATCH_COPY_MAX_LENGTH) {
-				return cleanedCatchCopy.substring(0, CATCH_COPY_MAX_LENGTH) + '...';
+			if (
+				cleanedCatchCopy.length > (catchCopyLength || CATCH_COPY_MAX_LENGTH)
+			) {
+				return (
+					cleanedCatchCopy.substring(
+						0,
+						catchCopyLength || CATCH_COPY_MAX_LENGTH
+					) + '...'
+				);
 			}
 			return cleanedCatchCopy;
 		} catch {
 			return '';
 		}
-	}, [catchCopy]);
+	}, [catchCopy, catchCopyLength]);
 
 	return <p className={styles.catchCopy}>{catchCopyContent}</p>;
 };

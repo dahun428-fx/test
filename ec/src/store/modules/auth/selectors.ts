@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { CustomerType } from '@/models/api/msm/ect/userInfo/GetUserInfoResponse';
 import { AppState } from '@/store';
 import { stat } from 'fs';
+import { UserPermission } from './types';
 
 /** auth module */
 export function selectAuth(state: AppState) {

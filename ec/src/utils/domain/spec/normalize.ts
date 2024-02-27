@@ -20,6 +20,8 @@ import {
 } from '@/utils/domain/spec';
 import { notEmpty, notNull } from '@/utils/predicate';
 import { PartiallyRequired } from '@/utils/type';
+import { PartNumberSpec as CategoryPartNumberSpec } from '@/models/api/msm/ect/categoryPartNumber/SearchCategoryPartNumberResponse';
+import { ParametricUnitPartNumberSpec } from '@/components/pc/pages/ProductDetail/templates/PU/SpecFilter/SpecFilter.types';
 
 /**
  * Normalize any spec types.
@@ -89,6 +91,34 @@ function normalizeSpecValueList(
 	}));
 }
 
+/**
+ * Normalize Alteration spec types.
+ * @param spec {AlterationSpec}
+ * @return {NormalizedSpec}
+ */
+export function normalizeAlteration(
+	spec: PartNumberSpec | AlterationSpec | SeriesSpec
+): NormalizedSpec {
+	return {
+		...normalize(spec),
+		specValueList: normalizeAlterationSpecValueList(spec),
+	};
+}
+
+function normalizeAlterationSpecValueList(
+	spec: Omit<PartNumberSpec | AlterationSpec | SeriesSpec, 'numericSpec'>
+) {
+	return spec.specValueList.map(value => ({
+		defaultFlag: Flag.FALSE,
+		hiddenFlag: Flag.FALSE,
+		...value,
+		childSpecValueList: (value.childSpecValueList ?? []).map(child => ({
+			hiddenFlag: Flag.FALSE,
+			...child,
+		})),
+	}));
+}
+
 function getSelectedFlagOrElse(
 	spec: PartNumberSpec | AlterationSpec | SeriesSpec,
 	another: Flag
@@ -103,7 +133,18 @@ export function isAvailableNumericSpec(
 }
 
 export function useNormalizeSpec(
-	spec: PartNumberSpec | AlterationSpec | SeriesSpec
+	spec:
+		| PartNumberSpec
+		| CategoryPartNumberSpec
+		| AlterationSpec
+		| SeriesSpec
+		| ParametricUnitPartNumberSpec,
+	allowNormalizeAlteration?: boolean
 ) {
-	return useMemo(() => normalize(spec), [spec]);
+	return useMemo(() => {
+		if (allowNormalizeAlteration) {
+			return normalizeAlteration(spec as PartNumberSpec);
+		}
+		return normalize(spec as PartNumberSpec);
+	}, [allowNormalizeAlteration, spec]);
 }

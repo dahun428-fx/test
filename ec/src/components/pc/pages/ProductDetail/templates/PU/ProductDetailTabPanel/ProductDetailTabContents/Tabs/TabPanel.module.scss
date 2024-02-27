@@ -1,0 +1,31 @@
+.container {
+	width: 100%;
+	// JS で計算されたサイズに style attribute で上書きされる
+	max-height: 50vh;
+	overflow: auto;
+}
+
+.hideHorizontalScroll {
+	overflow-x: hidden;
+}
+
+// NOTE: DOM を保持したいために .hidden を用意していますが、通常は JS で表示制御を行ってください。
+.hidden {
+	display: none;
+}
+
+.topScrollBarContainer {
+	width: 99%;
+	height: 10px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+.topScrollBar {
+	width: 99%;
+	height: 1px;
+}
+
+.cad {
+	min-height: 600px;
+}

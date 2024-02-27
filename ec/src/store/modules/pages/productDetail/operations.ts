@@ -27,6 +27,7 @@ import { Flag } from '@/models/api/Flag';
 import { TemplateType } from '@/models/api/constants/TemplateType';
 import { SearchPartNumberRequest } from '@/models/api/msm/ect/partNumber/SearchPartNumberRequest';
 import { SearchPartNumberResponse$search } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
+import { searchPartNumber$search as parametricUnitSearchPartNumber } from '@/api/services/parametricUnit';
 import { SearchSeriesResponse$detail } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { AppStore } from '@/store';
 import { selectUser } from '@/store/modules/auth';
@@ -177,7 +178,32 @@ export function clearPartNumberFilter(store: AppStore) {
 type SearchOption = {
 	clearCurrentCondition?: boolean;
 	cancelToken?: CancelToken;
+	templateType?: TemplateType;
 };
+
+/**
+ * Search part number.
+ * Updates "currentPartNumberResponse".
+ * @param options SearchOption
+ * @returns SearchPartNumberResponse
+ */
+async function searchPartNumberSearch(
+	request: SearchPartNumberRequest,
+	options: SearchOption
+) {
+	let response;
+	switch (options.templateType) {
+		case TemplateType.PU:
+			response = await parametricUnitSearchPartNumber(
+				request,
+				options.cancelToken
+			);
+			break;
+		default:
+			response = await searchPartNumber$search(request, options.cancelToken);
+	}
+	return response;
+}
 
 /**
  * Search part number by condition.
@@ -188,7 +214,7 @@ export function searchPartNumberOperation(store: AppStore) {
 		condition: SearchPartNumberRequest,
 		options: SearchOption = {}
 	) => {
-		let request = {
+		let request: SearchPartNumberRequest = {
 			specSortFlag: Flag.FALSE,
 			allSpecFlag: Flag.FALSE,
 			...condition,
@@ -206,11 +232,13 @@ export function searchPartNumberOperation(store: AppStore) {
 			const previousCompletedPartNumber = selectCompletedPartNumber(
 				store.getState()
 			);
-			let response = await searchPartNumber$search(
-				request,
-				options.cancelToken
-			);
 
+			// WARN: cannot get latest response if 'fixedInfo' is set in case of PU template api
+			if (options.templateType === TemplateType.PU) {
+				delete request['fixedInfo'];
+			}
+
+			let response = await searchPartNumberSearch(request, options);
 			// NOTE: Retry request when at least 1 spec of partNumberSpecList, daysToShipList, cadTypeList
 			// 		 from response contains selectedFlag = 1  and hiddenFlag = 1
 			if (shouldRetrySpecSearch(response)) {
@@ -247,7 +275,7 @@ export function searchPartNumberOperation(store: AppStore) {
 					daysToShip: selectedDaysToShip?.daysToShip,
 					cadType: selectedCadTypeList,
 				};
-				response = await searchPartNumber$search(request, options.cancelToken);
+				response = await searchPartNumberSearch(request, options);
 			}
 
 			store.dispatch(
@@ -258,6 +286,15 @@ export function searchPartNumberOperation(store: AppStore) {
 					sort: condition.sort,
 				})
 			);
+
+			if (Flag.isTrue(response.completeFlag)) {
+				const [partNumber] = response.partNumberList;
+				store.dispatch(
+					actions.update({
+						quantity: partNumber?.minQuantity ?? partNumber?.orderUnit ?? 1,
+					})
+				);
+			}
 
 			if (
 				Flag.isTrue(response.completeFlag) &&

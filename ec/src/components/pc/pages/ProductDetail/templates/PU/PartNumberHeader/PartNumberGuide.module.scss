@@ -1,0 +1,36 @@
+.title {
+	margin-right: 8px;
+	font-size: 0.8125rem;
+	white-space: nowrap;
+}
+
+.messageWrapper {
+	color: #333;
+	font-size: 0.8125rem;
+}
+
+.messageNotFound {
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	font-size: 1.0625rem;
+}
+
+.messageItem {
+	font-size: 0.8125rem;
+}
+
+.partNumberListLink {
+	color: #004098;
+
+	&:hover {
+		color: #3366ac;
+		text-decoration: none;
+	}
+}
+
+.alertMessage {
+	color: #c00;
+	font-weight: bold;
+	font-size: 0.9375rem;
+}

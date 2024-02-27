@@ -1,0 +1,8 @@
+.container {
+	position: sticky;
+	z-index: 1;
+	display: flex;
+	padding-top: 32px; // sticky分の上部余白をpaddingで埋めてスクロールコンテンツの背景透過を阻止する
+	background-color: #fff;
+	border-bottom: 2px solid #004098;
+}

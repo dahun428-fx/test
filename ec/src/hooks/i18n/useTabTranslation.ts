@@ -66,6 +66,14 @@ export const useTabTranslation = () => {
 					return t('hooks.i18n.useTabTranslation.partNumberList');
 				case 'pdf':
 					return t('hooks.i18n.useTabTranslation.pdf');
+				case 'chemicaldb':
+					return t('hooks.i18n.useTabTranslation.chemicaldb');
+				case 'cadPreview':
+					return t('hooks.i18n.useTabTranslation.cadPreview');
+				case 'productSummary':
+					return t('hooks.i18n.useTabTranslation.productSummary');
+				case 'instructions':
+					return t('hooks.i18n.useTabTranslation.instructions');
 			}
 		},
 		[t]

@@ -1,0 +1,76 @@
+.frame {
+	display: flex;
+	flex-direction: column;
+
+	&[aria-expanded='true'] .heading {
+		background-image: url(./assets/images/arrow-up.svg);
+	}
+
+	&[aria-expanded='false'] .heading {
+		background-image: url(./assets/images/arrow-down.svg);
+	}
+
+	// NOTE: Specificity is basically prohibited.
+	&[aria-expanded] .heading {
+		display: inline-block;
+		width: 100%;
+		padding-left: 24px;
+		background-repeat: no-repeat;
+		background-position: left top 2px;
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.headerWrapper {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.header {
+	display: inline-flex;
+	min-height: 24.5px;
+	font-weight: bold;
+	font-size: 0.8125rem;
+	line-height: 1.3;
+}
+
+.groupHeader {
+	width: 100%;
+	font-weight: bold;
+	font-size: 0.8125rem;
+
+	&::before {
+		position: absolute;
+		top: 9px;
+		left: -12px;
+		display: block;
+		width: 6px;
+		height: 1px;
+		background-color: #999;
+		content: '';
+	}
+}
+
+.supplementOpener {
+	padding: 8px 12px;
+	color: #004098;
+	font-weight: bold;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:hover {
+		background: #ecf3fc;
+	}
+}
+
+.contents {
+	margin-top: 12px;
+	overflow: hidden;
+	transition: max-height 400ms;
+}

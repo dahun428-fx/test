@@ -110,7 +110,6 @@ export const useOrderInfo = (): OrderInfo | null => {
 
 	useEffect(() => {
 		if (authenticated) {
-			console.log('useOrderInfo excute ====> ');
 			getOrderInfo({}).then(response => setRawOrderInfo(response));
 		}
 	}, [authenticated]);

@@ -12,6 +12,7 @@ type Props = {
 	isDetail?: boolean;
 	isComplex?: boolean;
 	isWysiwyg?: boolean;
+	isPu?: boolean;
 	childClassName?: string;
 };
 

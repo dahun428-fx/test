@@ -23,13 +23,19 @@ export function searchPartNumber(
 }
 
 /**
- * Search part number @search
+ * Parametric Unit Search part number @search
  * @param request
  * @param cancelToken
  */
 export function searchPartNumber$search(
 	request: SearchPartNumberRequest,
-	cancelToken?: CancelToken
+	cancelToken?: CancelToken,
+	options?: {
+		userAgent?: string;
+	}
 ): Promise<SearchPartNumberResponse$search> {
-	return searchPartNumber(request, cancelToken, { fields: ['@search'] });
+	return searchPartNumber(request, cancelToken, {
+		...options,
+		fields: ['@search'],
+	});
 }

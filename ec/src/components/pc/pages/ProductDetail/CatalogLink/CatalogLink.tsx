@@ -7,12 +7,16 @@ import { Flag } from '@/models/api/Flag';
 import { DigitalBook } from '@/models/api/msm/ect/series/shared';
 import { openSubWindow } from '@/utils/window';
 
+export type CatalogLinkTitle = {
+	linkTitle?: 'catalog' | 'pdf';
+};
+
 type Props = {
 	digitalBookPdfUrl: string;
 	misumiFlag: Flag;
 	pdfNoticeText?: string;
 	digitalBookList?: DigitalBook[];
-};
+} & CatalogLinkTitle;
 
 /**
  * Catalog link
@@ -20,6 +24,7 @@ type Props = {
 export const CatalogLink: React.VFC<Props> = ({
 	digitalBookPdfUrl,
 	misumiFlag,
+	linkTitle = 'catalog',
 	pdfNoticeText,
 	digitalBookList = [],
 }) => {
@@ -47,7 +52,7 @@ export const CatalogLink: React.VFC<Props> = ({
 				onClick={handleClick}
 				rel="noreferrer"
 			>
-				{t('pages.productDetail.catalogLink.catalog')}
+				{t(`pages.productDetail.catalogLink.${linkTitle}`)}
 				{/* Display page only misumi products */}
 				{Flag.isTrue(misumiFlag) && page && (
 					<span className={styles.page}>

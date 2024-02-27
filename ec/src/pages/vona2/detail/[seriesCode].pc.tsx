@@ -7,6 +7,7 @@ import { sessionManager } from '@/api/managers/sessionManager';
 import { searchPartNumber$search } from '@/api/services/searchPartNumber';
 import { searchSeries$detail } from '@/api/services/searchSeries';
 import type { Props as ProductDetailProps } from '@/components/pc/pages/ProductDetail';
+import { searchPartNumber$search as parametricUnitSearchPartNumber } from '@/api/services/parametricUnit';
 import { MsmApiError } from '@/errors/api/MsmApiError';
 import { Flag } from '@/models/api/Flag';
 import { TemplateType } from '@/models/api/constants/TemplateType';
@@ -19,6 +20,7 @@ import { assertNotNull } from '@/utils/assertions';
 import { getTemplateType } from '@/utils/domain/series';
 import { log, logError } from '@/utils/server';
 import { url } from '@/utils/url';
+import { omit } from '@/utils/object';
 
 export type OptionalQuery = SharedOptionalQuery;
 
@@ -72,20 +74,46 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
 		log('Product Detail', resolvedUrl);
 
-		const [seriesResponse, partNumberResponse] = await Promise.all([
-			searchSeries$detail({ seriesCode, pageSize: 1 }),
-			searchPartNumber$search({
-				seriesCode,
-				partNumber,
-				pageSize: getPageSize(req.headers.cookie, tab),
-				specSortFlag: Flag.FALSE,
-				allSpecFlag: Flag.TRUE,
-				page,
-				cadType,
-				daysToShip,
-				...categorySpec,
-			}),
-		]);
+		if (page === 1 && tab === 'codeList') {
+			return {
+				props: {},
+				redirect: {
+					statusCode: 301,
+					destination: url
+						.productDetail(seriesCode)
+						.default(omit(query, 'Page', 'Tab')),
+				},
+			};
+		}
+
+		if (page === 1) {
+			return {
+				props: {},
+				redirect: {
+					statusCode: 301,
+					destination: url
+						.productDetail(seriesCode)
+						.default(omit(query, 'Page')),
+				},
+			};
+		}
+
+		if (tab === 'codeList') {
+			return {
+				props: {},
+				redirect: {
+					statusCode: 301,
+					destination: url
+						.productDetail(seriesCode)
+						.default(omit(query, 'Tab')),
+				},
+			};
+		}
+
+		const seriesResponse = await searchSeries$detail({
+			seriesCode,
+			pageSize: 1,
+		});
 
 		if (!seriesResponse.seriesList.length) {
 			return { notFound: true };
@@ -95,6 +123,27 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 		assertNotNull(series);
 
 		const templateType = getTemplateType(series.templateType, template);
+
+		let searchPartNumberRequest;
+		switch (templateType) {
+			case TemplateType.PU:
+				searchPartNumberRequest = parametricUnitSearchPartNumber;
+				break;
+			default:
+				searchPartNumberRequest = searchPartNumber$search;
+		}
+
+		const partNumberResponse = await searchPartNumberRequest({
+			seriesCode,
+			partNumber,
+			pageSize: getPageSize(req.headers.cookie, tab),
+			specSortFlag: Flag.FALSE,
+			allSpecFlag: Flag.TRUE,
+			page,
+			cadType,
+			daysToShip,
+			...categorySpec,
+		});
 
 		// 単純系、複雑系の場合は型番検索結果がない場合は 404 とする
 		if (
@@ -116,7 +165,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 					return {
 						redirect: {
 							statusCode: 301,
-							destination: url.productDetail(redirectTo).default,
+							destination: url.productDetail(redirectTo).default(),
 						},
 					};
 				}

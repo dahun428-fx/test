@@ -42,3 +42,15 @@ export type UserPermissions = ReturnType<typeof selectUserPermissions>;
 
 /** auth state */
 export type AuthState = AuthenticatedState | UnauthenticatedState;
+
+export type UserPermission =
+	| 'QUOTE'
+	| 'ORDER'
+	| 'USER_ADMIN'
+	| 'ISSUE_DELIVERY_NOTE'
+	| 'LEAD_TIME_PRODUCT_INQUIRY'
+	| 'RETURN_OUT_OF_POLICY'
+	| 'CUSTOMER_REFERENCE_NUMBER_NATIVE'
+	| 'FREIGHT_FREE_CUSTOMER_FLAG'
+	| 'ORDERING_SYSTEM'
+	| 'ORDER_APPROVE_FLAG';

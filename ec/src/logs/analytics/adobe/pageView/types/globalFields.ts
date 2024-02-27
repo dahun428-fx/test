@@ -138,6 +138,12 @@ type Functions = {
 
 	/** select sort type */
 	sc_f_products_list_sort?: (sortType: string) => void;
+	sc_tab_click_log?: (tabNumber: string) => void;
+	sc_f_detailpunit_pndl?: (
+		seriesCode: string,
+		seriesName: string,
+		partNumber: string
+	) => void;
 };
 
 export type AdobeAnalyticsFields = GlobalVariables & Functions;

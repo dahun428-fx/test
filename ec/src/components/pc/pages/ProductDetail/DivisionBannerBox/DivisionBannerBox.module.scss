@@ -1,0 +1,37 @@
+@use 'src/styles/pc/icon';
+
+.container {
+	margin-top: 32px;
+	overflow: hidden;
+}
+
+.divisionBannerBoxList {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: -16px;
+	margin-left: -16px;
+
+	> div {
+		flex-grow: 0;
+		flex-shrink: 0;
+		width: 259px;
+		margin-top: 16px;
+		margin-left: 16px;
+	}
+}
+
+.content {
+	display: contents;
+
+	> div {
+		flex-grow: 0;
+		flex-shrink: 0;
+		width: 259px;
+		margin-top: 16px;
+		margin-left: 16px;
+	}
+}
+
+.rightBannerContainer {
+	margin-top: 16px;
+}

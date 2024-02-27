@@ -54,7 +54,6 @@ export const CadenasFormatSelect: VFC<Props> = ({ cadData, onChange }) => {
 		selectedVersionOption,
 	]);
 
-	console.log('selectedCadOption', selectedCadOption);
 	return (
 		<>
 			<div className={styles.table}>

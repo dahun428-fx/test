@@ -1,0 +1,30 @@
+.checkbox {
+	display: flex;
+	align-items: center;
+	padding: 7px 11px;
+	font-size: 0.8125rem;
+	line-height: 1;
+	white-space: nowrap;
+	background-color: #fff;
+	border: 1px solid #004098;
+	border-radius: 4px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #ecf3fc;
+	}
+
+	&[aria-checked='true'] {
+		background-color: #ecf3fc;
+		border-color: #004098;
+	}
+}
+
+// aria-disabled のセレクタでスタイリングしたいところだが、disabled のように見えて、
+// これは実際には選択できるため aria-disabled とは合わない。
+// 表示のバリエーションの1つと捉えた命名をするしかなかった。
+.weak {
+	color: #999;
+	background-color: #f5f5f5;
+	border-color: #ccc;
+}

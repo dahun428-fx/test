@@ -143,7 +143,6 @@ export const useCadenasFormatSelect = (cadData: DownloadCadResponse) => {
 	useOnMounted(() => {
 		const cadDataFormatCookie = getCookie(Cookie.CAD_DATA_FORMAT);
 		let cadDataFormat: SelectedCadDataFormat | undefined;
-		console.log('cadDataFormatCookie====> ', cadDataFormatCookie);
 		if (cadDataFormatCookie) {
 			try {
 				cadDataFormat = JSON.parse(decodeURIComponent(cadDataFormatCookie));

@@ -13,6 +13,7 @@ import { showMoreAttention } from './showMoreAttention';
 import { similarProduct } from './similarProduct';
 import { specSearchTimes } from './specSearchTimes';
 import { keywordSearch } from '@/logs/analytics/google/events/keywordSearch';
+import { productsPUCatalogDL } from './productsPUCatalogDL';
 
 export const events = {
 	loggedIn,
@@ -31,4 +32,5 @@ export const events = {
 	clickShowAlterationSpecs,
 	specSearchTimes,
 	keywordSearch,
+	productsPUCatalogDL,
 } as const;

@@ -1,4 +1,7 @@
+import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { TFunction, TFunctionResult } from 'i18next';
+import { removeTags } from '../string';
+import { Category as SeriesCategory } from '@/models/api/msm/ect/category/SearchCategoryResponse';
 
 const Category = {
 	/** mech (top category code)  */
@@ -44,13 +47,24 @@ const TopCategoryGroup = {
 } as const;
 type TopCategoryGroup = typeof TopCategoryGroup[keyof typeof TopCategoryGroup];
 
+export function getDepartmentKeywordsFix(t: TFunction) {
+	return t('utils.domain.desciption.fix');
+}
 export function getDepartmentKeywords(departmentCode: string, t: TFunction) {
 	const departments: Record<string, TFunctionResult> = {
 		mech: t('utils.domain.departmentCode.mech'),
-		el: t('utils.domain.departmentCode.el'),
-		fs: t('utils.domain.departmentCode.fs'),
-		mold: t('utils.domain.departmentCode.mold'),
+		mech_screw: t('utils.domain.departmentCode.mech_screw'),
+		mech_material: t('utils.domain.departmentCode.mech_material'),
+		el_wire: t('utils.domain.departmentCode.el_wire'),
+		el_control: t('utils.domain.departmentCode.el_control'),
+		fs_machining: t('utils.domain.departmentCode.fs_machining'),
+		fs_processing: t('utils.domain.departmentCode.fs_processing'),
+		fs_logistics: t('utils.domain.departmentCode.fs_logistics'),
+		fs_health: t('utils.domain.departmentCode.fs_health'),
+		fs_lab: t('utils.domain.departmentCode.fs_lab'),
 		press: t('utils.domain.departmentCode.press'),
+		mold: t('utils.domain.departmentCode.mold'),
+		injection: t('utils.domain.departmentCode.injection'),
 	};
 	return (departments[departmentCode] as string) ?? '';
 }
@@ -115,3 +129,85 @@ export function getDescriptionMessage(
 	);
 	return messages[groupIndex] ?? '';
 }
+
+export const seriesDescContent = (
+	series: Series,
+	specifiedPartNumber?: string
+) => {
+	let resultText = '';
+	if (specifiedPartNumber) {
+		resultText = `${series.brandName}의 ${series.seriesName} (${specifiedPartNumber}) 입니다.`;
+	} else {
+		resultText = `${series.brandName}의 ${series.seriesName} 입니다.`;
+	}
+
+	const catchCopy = series.catchCopy;
+	if (catchCopy) {
+		const stripContent = removeTags(catchCopy);
+		resultText = `${resultText} ${stripContent}`;
+	}
+	const withoutSpaceLength = resultText.replaceAll(' ', '').length;
+	const limit = 100;
+
+	if (withoutSpaceLength >= limit) {
+		let strTotalCount = 0;
+		let blankCount = 0;
+		let len = resultText.length;
+		let index = 0;
+
+		while (index < len) {
+			if (strTotalCount >= limit) {
+				break;
+			}
+			let str = resultText.substring(index, index + 1);
+			if (str.match(/\s+/)) {
+				blankCount++;
+			} else {
+				strTotalCount++;
+			}
+			index++;
+		}
+		let lastIndex = strTotalCount + blankCount;
+		resultText = `${resultText.substring(0, lastIndex)}...`;
+	}
+
+	return resultText;
+};
+
+export const seriesKeywordsContent = (series: Series, t: TFunction) => {
+	if (!series) {
+		return '';
+	}
+
+	const { seriesName, brandName, departmentCode } = series;
+
+	const categoryNameList = seoKeywordsCategory(series);
+
+	const seoKeywords = getDepartmentKeywords(departmentCode, t);
+	const suffix = '한국미스미, 미스미, MISUMI';
+	const resultText = `${seriesName}, ${brandName}, ${categoryNameList}, ${seoKeywords}, ${suffix}`;
+
+	const set = new Set<string>();
+	resultText.split(',').forEach(item => {
+		item = item.trim();
+		set.add(item);
+	});
+	return Array.from(set).join(', ');
+};
+
+const seoKeywordsCategory = (series: Series) => {
+	const { categoryName, categoryCode } = series;
+	const categoryList: Pick<SeriesCategory, 'categoryCode' | 'categoryName'>[] =
+		[...series.categoryList];
+
+	if (categoryCode && categoryName) {
+		categoryList.push({
+			categoryCode,
+			categoryName,
+		});
+	}
+	return categoryList
+		.map(category => category.categoryName)
+		.reverse()
+		.join(',');
+};

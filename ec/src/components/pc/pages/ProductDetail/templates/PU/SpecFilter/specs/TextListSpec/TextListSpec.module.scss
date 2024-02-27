@@ -1,0 +1,45 @@
+.filter {
+	width: 230px;
+	height: 37px;
+	margin-bottom: 16px;
+}
+
+.noCandidate {
+	color: #c00;
+}
+
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
+
+	// SpecFrame の transition / ResizeObserver と絶妙に競合するため、この指定を入れています。
+	&[data-transition='true'] {
+		transition: max-height 400ms;
+	}
+}
+
+.tile {
+	margin-right: 8px;
+	margin-bottom: 8px;
+}
+
+.showMore {
+	width: 100%;
+	margin-top: 8px;
+	padding: 2px !important;
+	background: #999 !important;
+	border-radius: 0 !important;
+
+	&::before {
+		background-color: #000 !important;
+	}
+}
+
+.expand::before {
+	transform: rotate(90deg);
+}
+
+.shrink::before {
+	transform: rotate(-90deg);
+}

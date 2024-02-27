@@ -5,7 +5,7 @@ import { config } from '@/config';
 class Document extends RawDocument {
 	render() {
 		return (
-			<Html lang="en">
+			<Html lang="ko">
 				<Head>
 					<link rel="shortcut icon" href="/favicon.ico" />
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge" />

@@ -245,7 +245,6 @@ export const useCadenasFormatSelect = (
 	);
 
 	useOnMounted(() => {
-		console.log('is details download : ', isDetailsDownload);
 		if (isDetailsDownload) {
 			const cadDataFormatCookie = getCookie(Cookie.CAD_DATA_FORMAT);
 			let cadDataFormat: SelectedCadDataFormat | undefined;

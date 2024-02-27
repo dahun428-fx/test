@@ -48,6 +48,12 @@ export const wysiwygTabIds = [
 	'overviewAndSpecifications',
 	/** 特徴・使用例 Features and Example */
 	'featuresAndExample',
+	/** 商品概要 Product Summary */
+	'productSummary',
+	/** 技術情報 Technical Information */
+	'technicalInformation',
+	/** 使用方法 Instructions */
+	'instructions',
 ] as const;
 type WysiwygTabId = typeof wysiwygTabIds[number];
 
@@ -65,6 +71,8 @@ export const tabIds = [
 	'catalog',
 	/** PDF (for pattern H?) */
 	'pdf',
+	'chemicaldb',
+	'cadPreview',
 ] as const;
 export type TabId = typeof tabIds[number];
 
@@ -82,14 +90,16 @@ type Tab = {
 /** WYSIWYG tab config */
 type WysiwygTabConfig = Record<TabType, Readonly<WysiwygTab[]>>;
 
+export type TabTypeValue = Readonly<
+	[Tab | WysiwygTab, ...(Tab | WysiwygTab)[]]
+>; // 少なくとも length 1 以上という型定義
+
 /** Tab config */
-type TabConfig = Record<
-	TabType,
-	Readonly<[Tab | WysiwygTab, ...(Tab | WysiwygTab)[]]> // 少なくとも length 1 以上という型定義
->;
+type TabConfig = Record<TabType, TabTypeValue>;
 
 /**
  * WYSIWYG tab config
+ * TODO: Define tab type PU
  */
 export const wysiwygTabConfig: WysiwygTabConfig = {
 	[TabType.MECH_A]: [
@@ -261,6 +271,28 @@ export const wysiwygTabConfig: WysiwygTabConfig = {
 			htmlNameList: ['productDescriptionHtml'],
 		},
 	],
+	[TabType.PU]: [
+		{
+			tabId: 'productSummary',
+			htmlNameList: ['productDescriptionHtml'],
+		},
+		{
+			tabId: 'drawingAndSpecifications',
+			htmlNameList: ['specificationsHtml', 'daysToShipHtml'],
+		},
+		{
+			tabId: 'deliveryAndPrice',
+			htmlNameList: ['priceListHtml', 'daysToShipHtml'],
+		},
+		{
+			tabId: 'technicalInformation',
+			htmlNameList: ['generalHtml'],
+		},
+		{
+			tabId: 'instructions',
+			htmlNameList: ['generalHtml'],
+		},
+	],
 } as const;
 
 function getNotNull(tab?: WysiwygTab) {
@@ -269,6 +301,7 @@ function getNotNull(tab?: WysiwygTab) {
 }
 
 /** Tab config */
+// TODO: Define tab type PU
 export const tabConfig: TabConfig = {
 	[TabType.MECH_A]: [
 		getNotNull(wysiwygTabConfig[TabType.MECH_A][0]),
@@ -338,5 +371,12 @@ export const tabConfig: TabConfig = {
 		getNotNull(wysiwygTabConfig[TabType.VONA][0]),
 		{ tabId: 'catalog' },
 		{ tabId: 'technicalInformation' },
+	],
+	[TabType.PU]: [
+		{ tabId: 'cadPreview' },
+		getNotNull(wysiwygTabConfig[TabType.PU][0]),
+		getNotNull(wysiwygTabConfig[TabType.PU][1]),
+		getNotNull(wysiwygTabConfig[TabType.PU][2]),
+		getNotNull(wysiwygTabConfig[TabType.PU][3]),
 	],
 } as const;

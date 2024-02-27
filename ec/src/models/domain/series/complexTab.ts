@@ -57,7 +57,7 @@ export type TabConfig = Record<
 	Readonly<[WysiwygTab, ...WysiwygTab[]]> // 少なくとも length 1 以上という型定義
 >;
 
-export const wysiwygTabConfig: TabConfig = {
+export const wysiwygTabConfig: Omit<TabConfig, '10'> = {
 	[TabType.MECH_A]: [
 		{
 			tabId: 'drawing',

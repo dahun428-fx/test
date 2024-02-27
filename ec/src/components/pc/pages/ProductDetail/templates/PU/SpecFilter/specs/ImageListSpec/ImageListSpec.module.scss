@@ -1,0 +1,35 @@
+.specList {
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+.listItem {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 31.6%;
+	margin-bottom: 4px;
+	margin-left: 4px;
+	padding: 4px 8px;
+	font-size: 0.8125rem;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.spec {
+	float: none;
+	line-height: 1;
+	text-align: center;
+}
+
+.specImage {
+	width: 100px;
+}
+
+.specText {
+	margin-left: 8px;
+}
+
+.radio {
+	padding: 4px 0 4px 28px !important;
+}

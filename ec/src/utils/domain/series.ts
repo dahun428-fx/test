@@ -6,6 +6,8 @@ import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail'
 import { TabType } from '@/models/api/msm/ect/series/shared';
 import { SearchTypeResponse } from '@/models/api/msm/ect/type/SearchTypeResponse';
 import { Cookie, getCookie } from '@/utils/cookie';
+import { TabId, tabConfig } from '@/models/domain/series/tab';
+import { Flag } from '@/models/api/Flag';
 
 type SeriesNameParams = {
 	seriesName: string;
@@ -112,8 +114,39 @@ export function getTemplateType(
 				return TemplateType.PATTERN_H;
 			case 'wysiwyg':
 				return TemplateType.WYSIWYG;
+			case 'pu':
+				return TemplateType.PU;
 			// NOTE: 誤った template の場合は、シリーズに設定されている templateType を採用する
 		}
 	}
 	return templateType;
 }
+
+function isTabView(tabId: TabId, series: Series) {
+	return !!(
+		tabId === 'codeList' ||
+		(tabId === 'cadPreview' && Flag.isTrue(series.cad3DPreviewFlag)) ||
+		(tabId === 'catalog' &&
+			(series.digitalBookList || series.externalPdfUrl)) ||
+		(tabId === 'technicalInformation' && series.technicalInfoUrl) ||
+		(tabId === 'pdf' && series.digitalBookPdfUrl)
+	);
+}
+
+export const getDetailTabInfo = (series: Series, invisibleList?: TabId[]) => {
+	const tabs = (tabConfig[series.tabType] ?? tabConfig[TabType.VONA]).map(
+		tab => ({
+			id: tab.tabId,
+			htmlNameList: 'htmlNameList' in tab ? tab.htmlNameList : [],
+		})
+	);
+
+	return tabs.filter(tab => {
+		if (invisibleList?.includes(tab.id)) {
+			return false;
+		}
+
+		const hasHtml = tab.htmlNameList.some(html => series[html]);
+		return hasHtml || isTabView;
+	});
+};

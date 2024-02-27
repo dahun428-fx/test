@@ -10,19 +10,35 @@ import { scrollToTab } from '@/components/pc/pages/ProductDetail/templates/Compl
 import { Price } from '@/components/pc/ui/text/Price';
 import { getEleWysiwygHtml } from '@/utils/domain/series';
 import { notEmpty } from '@/utils/predicate';
+import { TemplateType } from '@/models/api/constants/TemplateType';
+import { selectTemplateType } from '@/store/modules/pages/productDetail';
+import { useSelector } from '@/store/hooks';
+import { BrandCategory } from '@/components/pc/pages/ProductDetail/BrandCategory';
+import { EconomyLabel } from '@/components/pc/pages/ProductDetail/EconomyLabel';
+import { SeriesDiscount } from '@/components/pc/pages/ProductDetail/SeriesDiscount';
+import { BasicInformation } from '@/components/pc/pages/ProductDetail/BasicInformation';
 
-type Props = {
+export type BasicInfoType = {
+	basicInfoType?: 'full' | 'summary';
+};
+
+export type Props = {
 	showsDetailInfoLink?: boolean;
 	faqRef: RefObject<HTMLDivElement>;
 	className?: string;
-};
+} & BasicInfoType;
 
 /**
  * Product attributes on Product Detail
  */
-export const ProductAttributes: React.VFC<Props> = ({ faqRef, className }) => {
+export const ProductAttributes: React.VFC<Props> = ({
+	faqRef,
+	className,
+	basicInfoType = 'summary',
+}) => {
 	const [t] = useTranslation();
 	const { series, faqCount = 0, priceInfo } = useProductAttributes();
+	const templateType = useSelector(selectTemplateType);
 
 	const hasFaqCount = useMemo(() => {
 		return faqCount >= 1;
@@ -66,7 +82,13 @@ export const ProductAttributes: React.VFC<Props> = ({ faqRef, className }) => {
 				<div className={styles.containerNavigation}>
 					<FaqLink faqCount={faqCount} faqRef={faqRef} />
 				</div>
-
+				{templateType === TemplateType.PU && (
+					<div className={styles.brandWrap}>
+						<BrandCategory />
+						<EconomyLabel className={styles.economy} />
+						<SeriesDiscount />
+					</div>
+				)}
 				<div
 					className={classNames([
 						priceListWrapperStyle,
@@ -107,11 +129,19 @@ export const ProductAttributes: React.VFC<Props> = ({ faqRef, className }) => {
 								</span>
 							))}
 					</div>
+					{basicInfoType === 'full' && (
+						<BasicInformation
+							showHeadings={false}
+							templateType={templateType}
+						/>
+					)}
 				</div>
 
-				{showsBasicInformation && (
+				{showsBasicInformation && basicInfoType === 'summary' && (
 					<div className={styles.catchCopyDetailInfo}>
-						{!!series.catchCopy && <CatchCopy catchCopy={series.catchCopy} />}
+						{!!series.catchCopy && (
+							<CatchCopy catchCopy={series.catchCopy} catchCopyLength={39} />
+						)}
 						{showsBasicInformation && (
 							<a
 								onClick={event => handleDetailInfoLink(event)}

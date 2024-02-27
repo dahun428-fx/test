@@ -77,6 +77,17 @@ export function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
 }
 
 /**
+ * Omit the object's properties.
+ */
+export function omit<T, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
+	keys.forEach(key => {
+		delete obj[key];
+	});
+
+	return obj;
+}
+
+/**
  * It returns a copy of object which all empty properties (undefined, null, or an empty string) are removed
  * @param object
  * @returns

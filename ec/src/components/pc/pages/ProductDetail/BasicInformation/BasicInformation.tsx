@@ -4,8 +4,17 @@ import { useBasicInfo } from './BasicInformation.hooks';
 import styles from './BasicInformation.module.scss';
 import { LegacyStyledHtml } from '@/components/pc/domain/LegacyStyledHtml';
 import { SeriesInfoText } from '@/components/pc/domain/series/SeriesInfoText';
+import { TemplateType } from '@/models/api/constants/TemplateType';
 
-export const BasicInformation: VFC = () => {
+type Props = {
+	showHeadings?: boolean;
+	templateType?: TemplateType | null;
+};
+
+export const BasicInformation: VFC<Props> = ({
+	showHeadings = true,
+	templateType,
+}) => {
 	const [t] = useTranslation();
 
 	const {
@@ -22,12 +31,16 @@ export const BasicInformation: VFC = () => {
 
 	return (
 		<div className={styles.wrapper}>
-			<h2 className={styles.sectionHeading} id="detailInfo">
-				{t('pages.productDetail.basicInformation.detailInformation')}
-			</h2>
-			<h3 className={styles.heading}>
-				{t('pages.productDetail.basicInformation.basicInformation')}
-			</h3>
+			{showHeadings && (
+				<>
+					<h2 className={styles.sectionHeading} id="detailInfo">
+						{t('pages.productDetail.basicInformation.detailInformation')}
+					</h2>
+					<h3 className={styles.heading}>
+						{t('pages.productDetail.basicInformation.basicInformation')}
+					</h3>
+				</>
+			)}
 			{!!catchCopyHtml && (
 				<LegacyStyledHtml
 					html={catchCopyHtml}
@@ -42,7 +55,7 @@ export const BasicInformation: VFC = () => {
 					<LegacyStyledHtml html={eleWysiwygHtml} isDetail isWysiwyg />
 				</div>
 			)}
-			{!!technicalInfoUrl && (
+			{!!technicalInfoUrl && templateType !== TemplateType.PU && (
 				<div className={styles.infoBox}>
 					<a
 						href={technicalInfoUrl}
