@@ -30,6 +30,7 @@ import { simple } from './templates/Simple/Simple.i18n.en';
 import { wysiwyg } from './templates/Wysiwyg/Wysiwyg.i18n.en';
 import { pu } from './templates/PU/PU.i18n.ko'; //change to ko
 import { divisionBannerBox } from './DivisionBannerBox/DivisionBannerBox.i18n.ko'; //change to ko
+import { socialShare } from './SocialShare/SocialShare.i18n.ko'; //change to ko
 import { Translation } from '@/i18n/types';
 
 export const productDetail: Translation = {
@@ -80,4 +81,5 @@ export const productDetail: Translation = {
 	compareProductButton,
 	pu,
 	divisionBannerBox,
+	socialShare,
 };

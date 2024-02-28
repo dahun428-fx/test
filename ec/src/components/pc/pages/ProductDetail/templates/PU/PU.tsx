@@ -23,6 +23,7 @@ import { RelatedToProductContents } from '@/components/pc/pages/ProductDetail/Re
 import { TechnicalContact } from '@/components/pc/ui/contact';
 import { useSelector } from '@/store/hooks';
 import { selectSeries } from '@/store/modules/pages/productDetail';
+import { SocialShare } from '../../SocialShare';
 
 export type Props = {
 	seriesCode: string;
@@ -67,6 +68,7 @@ export const PU: React.VFC<Props> = ({ seriesCode, tab: rawTab }) => {
 						basicInfoType="full"
 					/>
 					<div className={styles.extraColumn}>
+						<SocialShare series={series} />
 						<ProductDocuments linkTitle={'catalog'} />
 						{/* incadlibrary */}
 						<DivisionBannerBox />
