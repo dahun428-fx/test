@@ -17,9 +17,9 @@ import { ProductDocuments } from '@/components/pc/pages/ProductDetail/ProductDoc
 import { ProductImagePanel } from '@/components/pc/pages/ProductDetail/ProductImagePanel';
 import { ProductNotice } from '@/components/pc/pages/ProductDetail/ProductNotice';
 import { RelatedToProductContents } from '@/components/pc/pages/ProductDetail/RelatedToProductContents/RelatedToProductContents';
-import { SeriesDiscount } from '@/components/pc/pages/ProductDetail/SeriesDiscount';
 import { SeriesInfoText } from '@/components/pc/pages/ProductDetail/SeriesInfoText';
 import { StandardSpecList } from '@/components/pc/pages/ProductDetail/StandardSpecList';
+import { Review } from '@/components/pc/pages/ProductDetail/Review';
 
 export type Props = {
 	seriesCode: string;
@@ -64,11 +64,11 @@ export const Complex: React.VFC<Props> = ({ seriesCode }) => {
 						</div>
 
 						<div className={styles.attributesPanel}>
-							<div className={styles.brandWrap}>
+							{/* <div className={styles.brandWrap}>
 								<BrandCategory />
 								<EconomyLabel className={styles.economy} />
 								<SeriesDiscount />
-							</div>
+							</div> */}
 							<PageHeading className={styles.heading} />
 							<div className={styles.introduction}>
 								<div className={styles.imageColumn}>
@@ -79,6 +79,7 @@ export const Complex: React.VFC<Props> = ({ seriesCode }) => {
 									<ProductAttributes
 										showsDetailInfoLink={showsDetailInfo}
 										faqRef={faqRef}
+										basicInfoType="full"
 										className={styles.attributes}
 									/>
 								</div>
@@ -104,6 +105,7 @@ export const Complex: React.VFC<Props> = ({ seriesCode }) => {
 					</div>
 					<div>
 						<ProductNotice />
+						<Review />
 					</div>
 
 					<RelatedToProductContents seriesCode={seriesCode} faqRef={faqRef} />

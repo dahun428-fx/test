@@ -36,6 +36,10 @@ const site: Site = {
 				origin: 'http://localhost:3001',
 			},
 		},
+		review: {
+			//for local development
+			origin: 'https://review-kr.misumi-ec.com:3000',
+		},
 	},
 	web: {
 		ec: {

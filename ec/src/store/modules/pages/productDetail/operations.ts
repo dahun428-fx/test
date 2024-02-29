@@ -29,7 +29,7 @@ import { SearchPartNumberRequest } from '@/models/api/msm/ect/partNumber/SearchP
 import { SearchPartNumberResponse$search } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { searchPartNumber$search as parametricUnitSearchPartNumber } from '@/api/services/parametricUnit';
 import { SearchSeriesResponse$detail } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
-import { AppStore } from '@/store';
+import { AppStore, store } from '@/store';
 import { selectUser } from '@/store/modules/auth';
 import { selectSeries } from '@/store/modules/pages/productDetail/selectors/shared';
 import { assertNotNull } from '@/utils/assertions';
@@ -42,6 +42,17 @@ import { getTemplateType } from '@/utils/domain/series';
 import { shouldRetrySpecSearch, selected } from '@/utils/domain/spec';
 import { fromEntries } from '@/utils/object';
 import { notNull } from '@/utils/predicate';
+import {
+	searchProductReviews,
+	searchReviewConfig,
+	searchReviewInfo,
+} from '@/api/services/review/review';
+import { isAvailaleReviewState } from '@/utils/domain/review';
+import { first } from '@/utils/collection';
+import {
+	ReviewConfig,
+	ReviewSortType,
+} from '@/models/api/review/SearchReviewResponse';
 
 type LoadPayload = {
 	seriesCode: string;
@@ -68,6 +79,7 @@ export function loadOperation(dispatch: Dispatch) {
 		assertNotNull(series);
 
 		const templateType = getTemplateType(series.templateType, template);
+		const user = selectUser(store.getState());
 
 		dispatch(
 			actions.load({
@@ -100,6 +112,40 @@ export function loadOperation(dispatch: Dispatch) {
 				.then(relatedPartNumberResponse =>
 					dispatch(actions.update({ relatedPartNumberResponse }))
 				)
+				.catch(noop);
+		}
+
+		//review config
+		const reviewConfig: ReviewConfig = await searchReviewConfig()
+			.then(reviewResponse => {
+				const config = first(reviewResponse?.data);
+				dispatch(
+					actions.updateReview({
+						reviewConfig: config,
+					})
+				);
+				return config;
+			})
+			.catch(noop);
+
+		if (isAvailaleReviewState(reviewConfig)) {
+			//review data
+			searchProductReviews({
+				order_type: ReviewSortType.ORDER_BY_RATE,
+				page_length: reviewConfig.reviewState > 1 ? 3 : 9,
+				page_no: 1,
+				reg_id: user?.userCode ?? '',
+				series_code: seriesCode,
+			})
+				.then(reviewResponse => {
+					dispatch(actions.updateReview({ reviewData: reviewResponse?.data }));
+				})
+				.catch(noop);
+			searchReviewInfo(seriesCode)
+				.then(reviewResponse => {
+					const reviewInfo = first(reviewResponse?.data);
+					dispatch(actions.updateReview({ reviewInfo: reviewInfo }));
+				})
 				.catch(noop);
 		}
 

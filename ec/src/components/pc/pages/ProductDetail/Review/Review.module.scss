@@ -1,0 +1,43 @@
+.headerWrap {
+	position: relative;
+	box-sizing: border-box;
+	margin: 40px 0 20px;
+	padding: 0 0 8px 0;
+	border-bottom: solid 1px #888;
+}
+
+.title {
+	display: inline-block;
+	padding: 0 10px 0 15px;
+	border: 0;
+	vertical-align: middle;
+	position: relative;
+	box-sizing: border-box;
+	line-height: 1.8;
+	font-weight: 700;
+	font-size: 22px;
+	color: #333;
+	margin-top: 8px;
+}
+
+.rating {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.ratingText {
+	color: #888;
+	margin-top: 5px;
+}
+
+.totalCountRating {
+	margin-top: 2px;
+	margin-right: 8px;
+	color: #fec33c;
+	font-size: 22px;
+	letter-spacing: -0.095em;
+	font-weight: bold;
+	vertical-align: middle;
+	letter-spacing: normal;
+}

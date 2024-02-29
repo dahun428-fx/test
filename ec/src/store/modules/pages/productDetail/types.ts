@@ -14,6 +14,7 @@ import {
 	Series,
 } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { SearchUnitLibraryResponse } from '@/models/api/msm/ect/unitLibrary/SearchUnitLibraryResponse';
+import { ReviewResponse } from '@/models/api/review/SearchReviewResponse';
 
 export type ProductDetailState = {
 	/** product detail page display template type */
@@ -59,6 +60,9 @@ export type ProductDetailState = {
 
 	/** part number for Pattern H */
 	inputPartNumber?: string;
+
+	/** User review */
+	reviewResponse?: ReviewResponse;
 } & ComplexState &
 	MobileState;
 

@@ -1,0 +1,1 @@
+export { RatingText } from './RatingText';

@@ -5,6 +5,7 @@ import { Sort } from '@/models/api/msm/ect/partNumber/SearchPartNumberRequest';
 import { SearchPartNumberResponse$search } from '@/models/api/msm/ect/partNumber/SearchPartNumberResponse$search';
 import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
 import { SearchSeriesResponse$detail } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
+import { ReviewResponse } from '@/models/api/review/SearchReviewResponse';
 
 const initialState: ProductDetailState = {
 	templateType: null,
@@ -49,6 +50,15 @@ const slice = createSlice({
 				},
 			};
 			return state;
+		},
+		updateReview(state, action: PayloadAction<ReviewResponse>) {
+			return {
+				...state,
+				reviewResponse: {
+					...state.reviewResponse,
+					...action.payload,
+				},
+			};
 		},
 		clear() {
 			return initialState;

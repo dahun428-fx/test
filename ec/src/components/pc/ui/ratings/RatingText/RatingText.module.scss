@@ -1,0 +1,18 @@
+.link {
+	display: inline;
+	color: #004bb1;
+	font-size: 12px;
+	text-decoration: underline;
+
+	&:hover {
+		color: #ff730a;
+	}
+
+	& :visited {
+		color: #851f99;
+	}
+}
+
+.block {
+	display: block;
+}

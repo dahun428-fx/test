@@ -17,6 +17,7 @@ import { BrandCategory } from '@/components/pc/pages/ProductDetail/BrandCategory
 import { EconomyLabel } from '@/components/pc/pages/ProductDetail/EconomyLabel';
 import { SeriesDiscount } from '@/components/pc/pages/ProductDetail/SeriesDiscount';
 import { BasicInformation } from '@/components/pc/pages/ProductDetail/BasicInformation';
+import { ReviewProductRating } from '@/components/pc/pages/ProductDetail/Review/ReviewProductRating';
 
 export type BasicInfoType = {
 	basicInfoType?: 'full' | 'summary';
@@ -80,9 +81,11 @@ export const ProductAttributes: React.VFC<Props> = ({
 				/>
 
 				<div className={styles.containerNavigation}>
-					<FaqLink faqCount={faqCount} faqRef={faqRef} />
+					<ReviewProductRating />
+					{/* <FaqLink faqCount={faqCount} faqRef={faqRef} /> */}
 				</div>
-				{templateType === TemplateType.PU && (
+				{(templateType === TemplateType.PU ||
+					templateType === TemplateType.COMPLEX) && (
 					<div className={styles.brandWrap}>
 						<BrandCategory />
 						<EconomyLabel className={styles.economy} />

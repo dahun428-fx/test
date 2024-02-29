@@ -1,0 +1,38 @@
+.containerWrap {
+	position: absolute;
+	bottom: 20px;
+	right: 0px;
+}
+.sort {
+	padding-right: 30px;
+
+	& > span {
+		display: inline-block;
+		margin-left: 8px;
+		padding-left: 10px;
+		border-left: 1px solid #d4d4d4;
+		cursor: pointer;
+		color: #333;
+		font-size: 12px;
+		line-height: 1em;
+
+		&:first-child {
+			margin-left: 0;
+			padding-left: 0;
+			border-left: 0;
+		}
+
+		&:hover {
+			font-weight: bold;
+			text-decoration: underline;
+		}
+	}
+	.active {
+		font-weight: bold;
+		text-decoration: underline;
+	}
+}
+.writeButton {
+	display: inline-block;
+	width: 100px;
+}

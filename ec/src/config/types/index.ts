@@ -146,6 +146,8 @@ export type Site = {
 			/** CMS */
 			cms: Api;
 		};
+		/** review-api */
+		review: Api;
 	};
 	web: {
 		/**

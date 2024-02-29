@@ -1,0 +1,115 @@
+.star {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-indent: 200%;
+	background: {
+		image: url(./assets/stars-sprite.png);
+		repeat: no-repeat;
+		size: auto 80px;
+	}
+
+	&[data-size='m'] {
+		width: 98px;
+		height: 18px;
+		background-size: auto 80px;
+	}
+
+	&[data-size='l'] {
+		width: 133px;
+		height: 25px;
+		background-size: auto;
+	}
+}
+
+/** For size M */
+.mstar0 {
+	background-position: -96px 0;
+}
+
+.mstar0dot5 {
+	background-position: -76px -18px;
+}
+
+.mstar1 {
+	background-position: -76px 0;
+}
+
+.mstar1dot5 {
+	background-position: -57px -18px;
+}
+
+.mstar2 {
+	background-position: -57px 0;
+}
+
+.mstar2dot5 {
+	background-position: -37px -18px;
+}
+
+.mstar3 {
+	background-position: -37px 0;
+}
+
+.mstar3dot5 {
+	background-position: -18px -18px;
+}
+
+.mstar4 {
+	background-position: -18px 0;
+}
+
+.mstar4dot5 {
+	background-position: 0 -18px;
+}
+
+.mstar5 {
+	background-position: 0 0;
+}
+
+/** For size L */
+.lstar0 {
+	background-position: -135px -40px;
+}
+
+.lstar0dot5 {
+	background-position: -108px -65px;
+}
+
+.lstar1 {
+	background-position: -108px -40px;
+}
+
+.lstar1dot5 {
+	background-position: -81px -65px;
+}
+
+.lstar2 {
+	background-position: -81px -40px;
+}
+
+.lstar2dot5 {
+	background-position: -54px -65px;
+}
+
+.lstar3 {
+	background-position: -54px -40px;
+}
+
+.lstar3dot5 {
+	background-position: -27px -65px;
+}
+
+.lstar4 {
+	background-position: -27px -40px;
+}
+
+.lstar4dot5 {
+	background-position: 0 -65px;
+}
+
+.lstar5 {
+	background-position: 0 -40px;
+}
