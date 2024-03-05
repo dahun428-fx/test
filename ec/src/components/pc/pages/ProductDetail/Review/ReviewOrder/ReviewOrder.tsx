@@ -7,8 +7,11 @@ import { getPageSize } from '@/utils/domain/review';
 import { useSelector } from '@/store/hooks';
 import { selectAuth } from '@/store/modules/auth';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
+import { useCallback, useMemo, useState } from 'react';
+import classNames from 'classnames';
 
 type Props = {
+	seriesCode: string;
 	loading: boolean;
 	authenticated: boolean;
 	reviewState: number;
@@ -18,6 +21,7 @@ type Props = {
 };
 
 export const ReviewOrder: React.VFC<Props> = ({
+	seriesCode,
 	reviewState,
 	authenticated,
 	onReload,
@@ -25,6 +29,10 @@ export const ReviewOrder: React.VFC<Props> = ({
 }) => {
 	const auth = useSelector(selectAuth);
 	const showLoginModal = useLoginModal();
+
+	const [sortActive, setSortActive] = useState<ReviewSortType>(
+		ReviewSortType.ORDER_BY_RATE
+	);
 
 	const [t] = useTranslation();
 
@@ -52,26 +60,59 @@ export const ReviewOrder: React.VFC<Props> = ({
 			order_type: sortType,
 			reg_id: auth.userCode ?? '',
 		});
+
+		setSortActive(sortType);
 	};
+
+	const onClickReviewWriteHandler = useCallback(() => {
+		console.log('onClickReviewWriteHandler', seriesCode);
+	}, [seriesCode]);
 
 	return (
 		<div className={styles.containerWrap}>
 			<span className={styles.sort}>
-				<span onClick={() => onClickSort(ReviewSortType.ORDER_BY_RATE)}>
+				<span
+					onClick={() => onClickSort(ReviewSortType.ORDER_BY_RATE)}
+					className={classNames(
+						sortActive === ReviewSortType.ORDER_BY_RATE ? styles.active : ''
+					)}
+				>
 					{t('pages.productDetail.review.reviewOrder.orderByRate')}
 				</span>
 				{reviewState !== 1 && (
-					<span onClick={() => onClickSort(ReviewSortType.ORDER_BY_RECOMMEND)}>
+					<span
+						onClick={() => onClickSort(ReviewSortType.ORDER_BY_RECOMMEND)}
+						className={classNames(
+							sortActive === ReviewSortType.ORDER_BY_RECOMMEND
+								? styles.active
+								: ''
+						)}
+					>
 						{t('pages.productDetail.review.reviewOrder.orderByRecommend')}
 					</span>
 				)}
-				<span onClick={() => onClickSort(ReviewSortType.ORDER_BY_DATE)}>
+				<span
+					onClick={() => onClickSort(ReviewSortType.ORDER_BY_DATE)}
+					className={classNames(
+						sortActive === ReviewSortType.ORDER_BY_DATE ? styles.active : ''
+					)}
+				>
 					{t('pages.productDetail.review.reviewOrder.orderByDate')}
 				</span>
-				<span onClick={() => onClickSort(ReviewSortType.ORDER_BY_LOW_RATE)}>
+				<span
+					onClick={() => onClickSort(ReviewSortType.ORDER_BY_LOW_RATE)}
+					className={classNames(
+						sortActive === ReviewSortType.ORDER_BY_LOW_RATE ? styles.active : ''
+					)}
+				>
 					{t('pages.productDetail.review.reviewOrder.orderByLowRate')}
 				</span>
-				<span onClick={() => onClickSort(ReviewSortType.MY_REVIEW)}>
+				<span
+					onClick={() => onClickSort(ReviewSortType.MY_REVIEW)}
+					className={classNames(
+						sortActive === ReviewSortType.MY_REVIEW ? styles.active : ''
+					)}
+				>
 					{t('pages.productDetail.review.reviewOrder.myReview')}
 				</span>
 			</span>
@@ -80,6 +121,7 @@ export const ReviewOrder: React.VFC<Props> = ({
 				theme="strong"
 				className={styles.writeButton}
 				icon="apply-sample"
+				onClick={onClickReviewWriteHandler}
 			>
 				{t('pages.productDetail.review.reviewOrder.writeReview')}
 			</Button>

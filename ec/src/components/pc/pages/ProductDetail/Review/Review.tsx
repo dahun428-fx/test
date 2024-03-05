@@ -15,17 +15,23 @@ import { ReviewList } from './ReviewList';
 
 type Props = {
 	authenticated: boolean;
+	seriesCode: string;
 	loading: boolean;
 	reviewResponse: ReviewResponse;
+	page: number;
+	pageSize: number;
 	onReload: (
 		request: Omit<SearchReviewRequest, 'series_code'>
 	) => Promise<void>;
 };
 
 export const Review: React.VFC<Props> = ({
+	seriesCode,
 	reviewResponse,
 	authenticated,
 	loading,
+	page,
+	pageSize,
 	onReload,
 }) => {
 	const [t] = useTranslation();
@@ -77,6 +83,7 @@ export const Review: React.VFC<Props> = ({
 						}
 					/>
 					<ReviewOrder
+						seriesCode={seriesCode}
 						loading={loading}
 						authenticated={authenticated}
 						onReload={handleReload}
@@ -84,7 +91,14 @@ export const Review: React.VFC<Props> = ({
 					/>
 				</hgroup>
 			</div>
-			<ReviewList loading={loading} reviewDetails={reviewDetails ?? []} />
+			<ReviewList
+				page={page}
+				pageSize={pageSize}
+				loading={loading}
+				totalCount={reviewCount}
+				onReload={handleReload}
+				reviewDetails={reviewDetails ?? []}
+			/>
 		</section>
 	);
 };

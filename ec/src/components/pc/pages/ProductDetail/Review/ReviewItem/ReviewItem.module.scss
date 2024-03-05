@@ -1,3 +1,7 @@
+$iconLike: './assets/images/icon_like.png';
+$iconReport: './assets/images/icon_report.png';
+$iconMisumi: './assets/images/ic_misumi_reply.png';
+
 .id {
 	display: inline-block;
 	padding-left: 10px;
@@ -9,4 +13,100 @@
 	line-height: 0.85em;
 	margin: 0 10px;
 	border-left: solid 1px #c3c3c3;
+}
+
+@mixin btn {
+	display: inline-block;
+	text-align: center;
+	box-sizing: border-box;
+	vertical-align: middle;
+}
+.reviewTop {
+	position: relative;
+}
+
+.util {
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	.recommendDisplay {
+		color: #333;
+	}
+
+	.recommendActionButtonWrap {
+		margin-left: 8px;
+		padding-left: 10px;
+		border-left: solid 1px #d4d4d4;
+		line-height: 1em;
+		color: #004bb1;
+		cursor: pointer;
+		@include btn();
+		.like {
+			padding-left: 20px;
+			background: url($iconLike) no-repeat 0 50%;
+		}
+	}
+
+	.recommendActionComplete {
+		margin-left: 8px;
+		padding-left: 10px;
+		border-left: solid 1px #d4d4d4;
+		line-height: 1em;
+		color: black;
+	}
+
+	.reportActionButtonWrap {
+		margin-left: 8px;
+		padding-left: 10px;
+		border-left: solid 1px #d4d4d4;
+		line-height: 1em;
+		color: #004bb1;
+		cursor: pointer;
+		@include btn();
+
+		.report {
+			color: #666;
+			padding-left: 18px;
+			background: url($iconReport) no-repeat 0 50%;
+			text-decoration: underline;
+		}
+	}
+}
+
+.reviewText {
+	overflow: hidden;
+	margin-top: 20px;
+	color: #333;
+	font-size: 12px;
+	line-height: 24px;
+
+	.title {
+		color: #333;
+		font-size: 14px;
+		font-weight: bold;
+	}
+
+	.text {
+		overflow: hidden;
+		white-space: pre-wrap;
+	}
+}
+
+.reviewReply {
+	margin: 20px 0 0;
+	padding: 0 0 0 115px;
+	background: url($iconMisumi) no-repeat 20px 4px;
+	line-height: 24px;
+	white-space: pre-wrap;
+}
+
+.btnGroup {
+	margin-top: 20px;
+	text-align: right;
+	button {
+		&:first-child {
+			margin-right: 10px;
+		}
+	}
 }

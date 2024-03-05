@@ -58,15 +58,15 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 
 				const response = await searchProductReviews({
 					...searchReviewRequest,
-					...request,
 					page_no: page,
+					...request,
 				});
 
 				dispatch(actions.updateReview({ reviewData: response.data }));
 				setSearchReviewRequest(prev => ({
 					...prev,
-					...request,
 					page_no: page,
+					...request,
 				}));
 			} catch (error) {
 				//Noop
@@ -79,10 +79,13 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 
 	return (
 		<Presenter
+			seriesCode={searchReviewRequest.series_code}
 			loading={loading}
 			authenticated={auth.authenticated}
 			onReload={reload}
 			reviewResponse={reviewResponse}
+			page={searchReviewRequest.page_no ?? 1}
+			pageSize={searchReviewRequest.page_length ?? 3}
 		/>
 	);
 };
