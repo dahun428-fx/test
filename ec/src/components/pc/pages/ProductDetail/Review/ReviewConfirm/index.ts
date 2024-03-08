@@ -1,1 +1,1 @@
-export { ReviewConfirm } from './ReviewConfirm';
+export { ReviewConfirm } from './ReviewConfirm.container';

@@ -1,1 +1,1 @@
-export { ReviewInput } from './ReviewInput';
+export { ReviewInput } from './ReviewInput.container';

@@ -1,1 +1,1 @@
-export { ReviewReport } from './ReviewReport';
+export { ReviewReport } from './ReviewReport.container';
