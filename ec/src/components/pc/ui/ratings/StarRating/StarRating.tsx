@@ -49,11 +49,7 @@ export const StarRating: React.VFC<Props> = ({
 			decimalNumber = Number(rateArray[1]);
 		}
 
-		if (decimalNumber >= 8) {
-			// If the decimal part is X.8 or higher, round up the integer part and set the decimal part to 0
-			integerNumber++;
-			decimalNumber = 0;
-		} else if (decimalNumber >= 4) {
+		if (decimalNumber >= 4) {
 			// If the decimal part is X.4 or higher but less than X.8, set the decimal part to 5
 			decimalNumber = 5;
 		} else {
@@ -69,13 +65,6 @@ export const StarRating: React.VFC<Props> = ({
 
 	return (
 		<span
-			// title={
-			// 	rateNumber
-			// 		? t('components.ui.ratings.starRating.averageRating', {
-			// 				rateNumber,
-			// 		  })
-			// 		: t('components.ui.ratings.starRating.noOneRated')
-			// }
 			onClick={onClick}
 			className={classNames(styles.star, styles[reviewRateStyle], className)}
 			data-size={size}

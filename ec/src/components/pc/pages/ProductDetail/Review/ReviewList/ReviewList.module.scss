@@ -9,3 +9,22 @@
 	margin: 20px 0;
 	text-align: right;
 }
+.simple {
+	ul {
+		width: 1260px;
+		li {
+			display: inline-flex;
+			min-width: 380px;
+			margin-right: 40px;
+			padding: 10px 0;
+			border-bottom: dashed 1px #dcdcdc;
+			box-sizing: border-box;
+		}
+	}
+}
+.noList {
+	padding: 70px 0;
+	color: #888;
+	font-size: 14px;
+	text-align: center;
+}

@@ -14,6 +14,6 @@ const CadPreviewPage: NextPage = () => {
 CadPreviewPage.displayName = 'CadPreviewPage';
 export default CadPreviewPage;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const : GetServerSideProps
 	return { notFound: true };
 };

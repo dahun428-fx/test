@@ -211,6 +211,25 @@ export const url = {
 		};
 	},
 
+	reviewsReportInput: (reviewId: number) => {
+		// return `${config.web.ec.origin}/vona2/review/rep_input/?CODE=${reviewId}`;
+		return `http://localhost:3000/vona2/review/rep_input/?CODE=${reviewId}`;
+	},
+
+	reviewsInput: (seriesCode: string, reviewState: number) => {
+		// return `${config.web.ec.origin}/vona2/review/input/${seriesCode}`;
+		return `http://localhost:3000/vona2/review/input/${seriesCode}?TYPE=${reviewState}`;
+	},
+
+	reviewsConfirm: (
+		seriesCode: string,
+		reviewState: number,
+		reviewId: number
+	) => {
+		// return `${config.web.ec.origin}/vona2/review/confirm/${seriesCode}?TYPE=${reviewState}&CODE=${reviewId}`;
+		return `http://localhost:3000/vona2/review/confirm/${seriesCode}?TYPE=${reviewState}&CODE=${reviewId}`;
+	},
+
 	/** Product detail page from search results */
 	productDetail: (seriesCode: string) => {
 		const baseUrl = pagesPath.vona2.detail._seriesCode(seriesCode);

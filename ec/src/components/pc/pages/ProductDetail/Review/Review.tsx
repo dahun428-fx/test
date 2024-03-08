@@ -1,12 +1,12 @@
 import {
 	ReviewDetail,
 	ReviewResponse,
+	ReviewStateType,
 } from '@/models/api/review/SearchReviewResponse';
 import styles from './Review.module.scss';
 import { useTranslation } from 'react-i18next';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { Rating } from '@/components/pc/ui/ratings';
-import { totalCount } from '@/utils/domain/review';
 import { ReviewOrder } from './ReviewOrder';
 import { SearchReviewRequest } from '@/models/api/review/SearchReviewRequest';
 import { scrollToElement } from '@/utils/scrollIntoView';
@@ -17,9 +17,12 @@ type Props = {
 	authenticated: boolean;
 	seriesCode: string;
 	loading: boolean;
-	reviewResponse: ReviewResponse;
 	page: number;
 	pageSize: number;
+	rate: number;
+	totalCount: number;
+	reviewState: ReviewStateType;
+	reviewDetails: ReviewDetail[];
 	onReload: (
 		request: Omit<SearchReviewRequest, 'series_code'>
 	) => Promise<void>;
@@ -27,30 +30,17 @@ type Props = {
 
 export const Review: React.VFC<Props> = ({
 	seriesCode,
-	reviewResponse,
 	authenticated,
 	loading,
 	page,
 	pageSize,
+	rate,
+	totalCount,
+	reviewState,
+	reviewDetails,
 	onReload,
 }) => {
 	const [t] = useTranslation();
-
-	const rate = useMemo(() => {
-		return reviewResponse.reviewInfo?.score;
-	}, [reviewResponse]);
-
-	const reviewCount = useMemo(() => {
-		return totalCount(reviewResponse.reviewInfo);
-	}, [reviewResponse]);
-
-	const reviewState = useMemo(() => {
-		return reviewResponse.reviewConfig?.reviewState ?? 0;
-	}, [reviewResponse]);
-
-	const reviewDetails = useMemo(() => {
-		return reviewResponse.reviewData;
-	}, [reviewResponse]);
 
 	const handleReload = useCallback(
 		async request => {
@@ -75,8 +65,8 @@ export const Review: React.VFC<Props> = ({
 							<>
 								<span className={styles.totalCountRating}>{rate}</span>
 								<span className={styles.ratingText}>
-									{t('pages.productDetail.review.reviewCount', {
-										reviewCount,
+									{t('pages.productDetail.review.totalCount', {
+										totalCount,
 									})}
 								</span>
 							</>
@@ -95,7 +85,9 @@ export const Review: React.VFC<Props> = ({
 				page={page}
 				pageSize={pageSize}
 				loading={loading}
-				totalCount={reviewCount}
+				totalCount={totalCount}
+				seriesCode={seriesCode}
+				reviewState={reviewState}
 				onReload={handleReload}
 				reviewDetails={reviewDetails ?? []}
 			/>

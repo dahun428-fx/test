@@ -44,3 +44,27 @@ export function toNumeric(string: string | undefined) {
 export function appendZeroWidthSpaceToCommas(value: string) {
 	return value.replace(/,/g, ',&#8203;');
 }
+
+/**
+ * 渡された文字列の内容からHTMLをエスケープする
+ * @param {string} 文字列
+ * @return {string} HTMLエスケープ済み文字列
+ */
+export function htmlEscape(input: string) {
+	return input
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
+
+export function htmlDecode(input?: string) {
+	if (!input) return '';
+	return input
+		.replace(/&amp;/g, '&')
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'");
+}

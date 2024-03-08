@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './types';
 import { GetUserInfoResponse } from '@/models/api/msm/ect/userInfo/GetUserInfoResponse';
+import { GetCustomerInfoResponse } from '@/models/api/msm/ect/customerInfo/GetCustomerInfoResponse';
 
 const initialState: AuthState = {
 	authenticated: false,
@@ -8,12 +9,14 @@ const initialState: AuthState = {
 	userCode: null,
 	customerCode: null,
 	user: null,
+	customer: null,
 };
 
 type LoginPayload = {
 	userCode: string;
 	customerCode: string | null;
 	user: GetUserInfoResponse;
+	customer?: GetCustomerInfoResponse;
 };
 
 type RestorePayload = {
@@ -21,6 +24,7 @@ type RestorePayload = {
 	customerCode: string | null;
 	expiresIn?: number;
 	user: GetUserInfoResponse;
+	customer?: GetCustomerInfoResponse;
 };
 
 const slice = createSlice({

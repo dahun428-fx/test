@@ -4,7 +4,7 @@ import {
 	selectReviewResponse,
 	selectSeries,
 } from '@/store/modules/pages/productDetail';
-import { isAvailaleReviewState, totalCount } from '@/utils/domain/review';
+import { isAvailaleReviewState } from '@/utils/domain/review';
 
 export const ReviewProductRating: React.VFC = () => {
 	const series = useSelector(selectSeries);
@@ -18,7 +18,7 @@ export const ReviewProductRating: React.VFC = () => {
 		<Presenter
 			rate={reviewResponse.reviewInfo?.score ?? 0}
 			seriesCode={series.seriesCode}
-			totalReviews={totalCount(reviewResponse.reviewInfo)}
+			totalReviews={reviewResponse.reviewInfo?.reviewCnt ?? 0}
 		/>
 	);
 };

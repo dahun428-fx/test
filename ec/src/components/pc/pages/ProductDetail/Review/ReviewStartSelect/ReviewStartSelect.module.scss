@@ -1,0 +1,51 @@
+$iconStar: './assets/image/ic_star_write.png';
+
+@mixin base {
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: middle;
+	margin: 1px;
+}
+
+.starSet {
+	display: inline-block;
+	vertical-align: middle;
+
+	.chk {
+		vertical-align: middle;
+		display: inline-block;
+		cursor: pointer;
+
+		& > i {
+			@include base();
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-image: url($iconStar);
+			background-position: 0 0;
+			background-repeat: no-repeat;
+			background-size: 100%;
+			vertical-align: top;
+
+			.on {
+				background-position: 0 -50px;
+			}
+		}
+		input {
+			display: none;
+			&:checked {
+				& + i {
+					background-position: 0 -50px;
+				}
+			}
+		}
+	}
+}
+.score {
+	padding-left: 8px;
+	color: #fec33c;
+	font-size: 22px;
+	letter-spacing: -0.095em;
+	vertical-align: middle;
+	letter-spacing: normal;
+}

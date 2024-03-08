@@ -1,3 +1,4 @@
+import { GetCustomerInfoResponse } from '@/models/api/msm/ect/customerInfo/GetCustomerInfoResponse';
 import { selectUserPermissions } from './selectors';
 import { GetUserInfoResponse } from '@/models/api/msm/ect/userInfo/GetUserInfoResponse';
 
@@ -24,6 +25,7 @@ type AuthenticatedState = {
 	customerCode: string | null;
 	/** ユーザー情報 */
 	user: Readonly<GetUserInfoResponse>;
+	customer?: Readonly<GetCustomerInfoResponse>;
 };
 
 /**
@@ -35,6 +37,7 @@ type UnauthenticatedState = {
 	userCode: null;
 	customerCode: null;
 	user: null;
+	customer?: null;
 };
 
 /** ユーザー権限 */

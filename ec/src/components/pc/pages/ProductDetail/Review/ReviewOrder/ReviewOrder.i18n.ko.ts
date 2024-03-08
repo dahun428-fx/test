@@ -7,4 +7,8 @@ export const reviewOrder: Translation = {
 	orderByLowRate: '평점 낮은순',
 	myReview: '내글보기',
 	writeReview: '리뷰작성',
+	message: {
+		reviewMaxCount: '리뷰등록 가능 횟수를 초과하여 등록할 수 없습니다.',
+		close: '닫기',
+	},
 };

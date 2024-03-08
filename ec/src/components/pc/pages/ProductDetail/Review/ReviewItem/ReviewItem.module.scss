@@ -109,4 +109,27 @@ $iconMisumi: './assets/images/ic_misumi_reply.png';
 			margin-right: 10px;
 		}
 	}
+	&.simple {
+		margin-top: 0;
+		margin-left: 35px;
+	}
+}
+
+.btn {
+	display: inline-block;
+	margin-left: 10px;
+	padding-left: 10px;
+	border-left: solid 1px #535353;
+	line-height: 10px;
+	vertical-align: middle;
+	cursor: pointer;
+	color: #004bb1;
+	&:first-child {
+		margin: 0;
+		padding: 0;
+		border-left: 0;
+	}
+	&:visited {
+		color: #851f99;
+	}
 }

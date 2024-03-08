@@ -1,14 +1,19 @@
-import { ReviewDetail } from '@/models/api/review/SearchReviewResponse';
+import {
+	ReviewDetail,
+	ReviewStateType,
+} from '@/models/api/review/SearchReviewResponse';
 import styles from './ReviewList.module.scss';
-import { Rating } from '@/components/pc/ui/ratings';
 import { ReviewItem } from '../ReviewItem';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import { Pagination } from '@/components/pc/ui/paginations';
 import { SearchReviewRequest } from '@/models/api/review/SearchReviewRequest';
+import classNames from 'classnames';
 
 type Props = {
 	loading: boolean;
+	seriesCode: string;
+	reviewState: ReviewStateType;
 	reviewDetails: ReviewDetail[];
 	page: number;
 	pageSize: number;
@@ -20,15 +25,17 @@ type Props = {
 
 export const ReviewList: React.VFC<Props> = ({
 	reviewDetails,
+	reviewState,
 	onReload,
 	loading,
+	seriesCode,
 	page,
 	pageSize,
 	totalCount,
 }) => {
-	if (reviewDetails.length < 1) {
-		return null;
-	}
+	// if (reviewDetails.length < 1) {
+	// 	return null;
+	// }
 
 	const [t] = useTranslation();
 
@@ -48,14 +55,25 @@ export const ReviewList: React.VFC<Props> = ({
 
 	return (
 		<div className={styles.container}>
-			<div>
-				{!loading && (
+			{!loading && (
+				<div
+					className={classNames(
+						reviewState === ReviewStateType.REVIEW_ORIGIN_TYPE
+							? styles.origin
+							: styles.simple
+					)}
+				>
 					<ul>
-						{reviewDetails ? (
+						{reviewDetails && reviewDetails.length > 0 ? (
 							reviewDetails.map(item => {
 								return (
 									<li key={item.reviewId} className={styles.reviewItemWrap}>
-										<ReviewItem review={item} />
+										<ReviewItem
+											review={item}
+											reviewState={reviewState}
+											seriesCode={seriesCode}
+											onReload={onReload}
+										/>
 									</li>
 								);
 							})
@@ -65,8 +83,8 @@ export const ReviewList: React.VFC<Props> = ({
 							</p>
 						)}
 					</ul>
-				)}
-			</div>
+				</div>
+			)}
 			{reviewDetails && pagination()}
 		</div>
 	);

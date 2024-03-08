@@ -47,6 +47,46 @@ const generateApi = () => {
 	registerRewriteInterceptor($axios);
 
 	/**
+	 * DELETE => _delete (not reserved words : delete)
+	 * @param {string} url - path after domain
+	 * @param {T} request - request body
+	 * @param {RequestOptions} [options] - http request options
+	 * @returns {Promise<R>} api response
+	 * @template T, R
+	 */
+	async function _delete<
+		T extends ReviewApiRequest,
+		R extends ReviewApiResponse
+	>(url: string, request?: T, options?: RequestOptions): Promise<R> {
+		return $axios
+			.delete(url, {
+				params: { ...request },
+				cancelToken: options?.cancelToken,
+			})
+			.then(response => response.data);
+	}
+
+	/**
+	 * PUT
+	 * @param {string} url - path after domain
+	 * @param {T} request - request body
+	 * @param {RequestOptions} [options] - http request options
+	 * @returns {Promise<R>} api response
+	 * @template T, R
+	 */
+	async function put<T extends ReviewApiRequest, R extends ReviewApiResponse>(
+		url: string,
+		request: T,
+		options?: RequestOptions
+	): Promise<R> {
+		return $axios
+			.put<T, AxiosResponse<R>>(url, request, {
+				cancelToken: options?.cancelToken,
+			})
+			.then(response => response.data);
+	}
+
+	/**
 	 * POST
 	 * @param {string} url - path after domain
 	 * @param {T} request - request body
@@ -85,7 +125,7 @@ const generateApi = () => {
 			})
 			.then(response => response.data);
 	}
-	return { post, get };
+	return { post, get, put, _delete };
 };
 
 export const reviewApi = generateApi();

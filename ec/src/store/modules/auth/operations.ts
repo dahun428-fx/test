@@ -15,6 +15,7 @@ import {
 	removeCookie,
 	setCookie,
 } from '@/utils/cookie';
+import { getCustomerInfo } from '@/api/services/getCustomerInfo';
 
 /**
  * login operation
@@ -40,6 +41,7 @@ function login(dispatch: Dispatch) {
 		);
 
 		const user = await getUserInfo(sessionId);
+		const customer = await getCustomerInfo(sessionId);
 
 		setCookie(
 			Cookie.VONAEC_ALREADY_MEMBER,
@@ -55,7 +57,7 @@ function login(dispatch: Dispatch) {
 			setCookie(Cookie.MSM_USER_CODE, user.userCode);
 		}
 
-		dispatch(actions.login({ userCode, customerCode, user }));
+		dispatch(actions.login({ userCode, customerCode, user, customer }));
 		writeCookieUrl(createCookieUrlList);
 
 		aa.events.sendLoggedIn({ userCode });
@@ -101,6 +103,7 @@ export function refreshAuth(dispatch: Dispatch) {
 
 		try {
 			const user = await getUserInfo(sessionId);
+			const customer = await getCustomerInfo(sessionId);
 
 			// valid session or logged in
 			if (user.sessionStatus !== '1' && user.userCode) {
@@ -109,6 +112,7 @@ export function refreshAuth(dispatch: Dispatch) {
 						userCode: user.userCode,
 						customerCode: user.customerCode ?? null,
 						user,
+						customer,
 					})
 				);
 			} else {

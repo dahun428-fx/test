@@ -5,16 +5,20 @@ import {
 	selectReviewResponse,
 	selectSeries,
 } from '@/store/modules/pages/productDetail';
-import { isAvailaleReviewState } from '@/utils/domain/review';
+import {
+	getReviewPageSize,
+	isAvailaleReviewState,
+} from '@/utils/domain/review';
 import { useCallback, useMemo, useState } from 'react';
 import { useBoolState } from '@/hooks/state/useBoolState';
 import { SearchReviewRequest } from '@/models/api/review/SearchReviewRequest';
-import { selectAuth, selectUser } from '@/store/modules/auth';
+import { selectAuth } from '@/store/modules/auth';
 import { ReviewSortType } from '@/models/api/review/SearchReviewResponse';
-import { searchProductReviews } from '@/api/services/review/review';
-import { useLoginModal } from '@/components/pc/modals/LoginModal';
-import { scrollToElement } from '@/utils/scrollIntoView';
-import { DETAIL_REVIEW_AREA_ID } from './ReviewProductRating/ReviewProductRating';
+import {
+	searchProductReviews,
+	searchReviewInfo,
+} from '@/api/services/review/review';
+import { first } from '@/utils/collection';
 
 type Props = {
 	page?: number;
@@ -26,17 +30,11 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 	const reviewResponse = useSelector(selectReviewResponse);
 	const { seriesCode } = useSelector(selectSeries);
 
-	const showLoginModal = useLoginModal();
-
 	const [searchReviewRequest, setSearchReviewRequest] =
 		useState<SearchReviewRequest>({
 			order_type: ReviewSortType.ORDER_BY_RATE,
-			page_length:
-				reviewResponse?.reviewConfig &&
-				reviewResponse?.reviewConfig?.reviewState > 1
-					? 3
-					: 9,
-			page_no: 1,
+			page_length: getReviewPageSize(reviewResponse?.reviewConfig?.reviewState),
+			page_no: page,
 			reg_id: auth.userCode ?? '',
 			series_code: seriesCode,
 		});
@@ -47,22 +45,25 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 		setFalse: hideLoading,
 	} = useBoolState();
 
-	if (!reviewResponse || !isAvailaleReviewState(reviewResponse?.reviewConfig)) {
-		return null;
-	}
-
 	const reload = useCallback(
 		async (request: Omit<SearchReviewRequest, 'series_code'>) => {
 			try {
 				showLoading();
 
-				const response = await searchProductReviews({
+				const productReviewResponse = await searchProductReviews({
 					...searchReviewRequest,
 					page_no: page,
 					...request,
 				});
 
-				dispatch(actions.updateReview({ reviewData: response.data }));
+				const reviewInfoResponse = await searchReviewInfo(seriesCode);
+
+				dispatch(
+					actions.updateReview({ reviewData: productReviewResponse.data })
+				);
+				dispatch(
+					actions.updateReview({ reviewInfo: first(reviewInfoResponse.data) })
+				);
 				setSearchReviewRequest(prev => ({
 					...prev,
 					page_no: page,
@@ -77,15 +78,38 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 		[dispatch, hideLoading, page, searchReviewRequest, showLoading]
 	);
 
+	if (!reviewResponse || !isAvailaleReviewState(reviewResponse?.reviewConfig)) {
+		return null;
+	}
+
+	const rate = reviewResponse.reviewInfo?.score ?? 0;
+
+	const totalCount = useMemo(() => {
+		if (searchReviewRequest.order_type === ReviewSortType.MY_REVIEW) {
+			return reviewResponse.reviewData?.length ?? 0;
+		} else {
+			return reviewResponse.reviewInfo?.reviewCnt ?? 0;
+		}
+	}, [reviewResponse, searchReviewRequest]);
+
+	const reviewState = reviewResponse.reviewConfig?.reviewState ?? 0;
+
+	const reviewDetails = reviewResponse.reviewData ?? [];
+
 	return (
 		<Presenter
 			seriesCode={searchReviewRequest.series_code}
 			loading={loading}
 			authenticated={auth.authenticated}
 			onReload={reload}
-			reviewResponse={reviewResponse}
-			page={searchReviewRequest.page_no ?? 1}
-			pageSize={searchReviewRequest.page_length ?? 3}
+			page={searchReviewRequest.page_no ?? page}
+			pageSize={
+				searchReviewRequest.page_length ?? getReviewPageSize(reviewState)
+			}
+			rate={rate}
+			totalCount={totalCount} //info count --> total review count in seriesCode.
+			reviewState={reviewState}
+			reviewDetails={reviewDetails}
 		/>
 	);
 };

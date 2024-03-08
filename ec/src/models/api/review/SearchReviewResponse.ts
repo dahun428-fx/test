@@ -1,7 +1,7 @@
 import { ReviewApiResponse } from '@/models/api/review/ReviewApiResponse';
 
 export interface SearchReviewResponse extends ReviewApiResponse {
-	status?: string;
+	status?: ReviewResponseStatusType;
 	data?: any[];
 	message?: string;
 }
@@ -15,7 +15,7 @@ export interface ReviewResponse {
 export interface ReviewConfig {
 	maxReviewRecCnt: number;
 	noticeScore: number;
-	reviewState: number;
+	reviewState: ReviewStateType;
 	blindApproveMode: number;
 }
 
@@ -33,7 +33,7 @@ export interface ReviewInfo {
 	reviewCnt: number;
 	maxReviewRecCnt?: number;
 	noticeScore?: number;
-	reviewState: number;
+	reviewState: ReviewStateType;
 	blindApproveMode?: number;
 }
 
@@ -62,13 +62,33 @@ export interface ReviewDetail {
 	procDate?: string | null;
 	procContent?: string | null;
 	procUserNm?: string | null;
-	reviewState: number;
+	reviewState: ReviewStateType;
 	deleteState: string; //"Y" | "N"
 	deleteDate?: string | null;
 	deleteUserId?: string | null;
 	regName: string;
 	imageCnt?: number;
 	contactName?: string;
+}
+
+/**
+ * 상품 리뷰 신고 사유 리스트
+ * -example
+ * 	code: "1",
+ *  explain : "상품품질과 관련 없는 비방 내용",
+ *  remark: "",
+ *  seq : 1,
+ *  sn : 1,
+ *  useYn : "Y",
+ */
+export interface ReportDeclareDetail {
+	code: string;
+	explain: string;
+	groupCode: string;
+	remark: string;
+	seq: number;
+	sn: number;
+	useYn: string;
 }
 
 /**
@@ -88,3 +108,27 @@ export const ReviewSortType = {
 	MY_REVIEW: 0,
 };
 export type ReviewSortType = typeof ReviewSortType[keyof typeof ReviewSortType];
+
+/**
+ * 리뷰state타입
+ * default : 2,
+ * 1 => 생략 ( not show detail )
+ * 2 => 전체 ( orign )
+ * 0 => 사용하지않음
+ */
+export const ReviewStateType = {
+	REVIEW_ORIGIN_TYPE: 2,
+	REVIEW_SKIP_TYPE: 1,
+	REVIEW_NOT_AVAILABLE: 0,
+};
+
+export type ReviewStateType =
+	typeof ReviewStateType[keyof typeof ReviewStateType];
+
+export const ReviewResponseStatusType = {
+	REVIEW_STATUS_FAIL: 'fail',
+	REVIEW_STATUS_SUCCESS: 'success',
+};
+
+export type ReviewResponseStatusType =
+	typeof ReviewResponseStatusType[keyof typeof ReviewResponseStatusType];

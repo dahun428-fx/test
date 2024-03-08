@@ -2,13 +2,22 @@ import { useTranslation } from 'react-i18next';
 import styles from './ReviewOrder.module.scss';
 import { Button } from '@/components/pc/ui/buttons';
 import { SearchReviewRequest } from '@/models/api/review/SearchReviewRequest';
-import { ReviewSortType } from '@/models/api/review/SearchReviewResponse';
-import { getPageSize } from '@/utils/domain/review';
+import {
+	ReviewSortType,
+	ReviewStateType,
+} from '@/models/api/review/SearchReviewResponse';
 import { useSelector } from '@/store/hooks';
 import { selectAuth } from '@/store/modules/auth';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { openSubWindow } from '@/utils/window';
+import { url } from '@/utils/url';
+import { searchMyReviewCountInSeries } from '@/api/services/review/review';
+import { first } from '@/utils/collection';
+import { assertNotEmpty } from '@/utils/assertions';
+import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
+import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 
 type Props = {
 	seriesCode: string;
@@ -29,7 +38,7 @@ export const ReviewOrder: React.VFC<Props> = ({
 }) => {
 	const auth = useSelector(selectAuth);
 	const showLoginModal = useLoginModal();
-
+	const { showMessage } = useMessageModal();
 	const [sortActive, setSortActive] = useState<ReviewSortType>(
 		ReviewSortType.ORDER_BY_RATE
 	);
@@ -64,9 +73,59 @@ export const ReviewOrder: React.VFC<Props> = ({
 		setSortActive(sortType);
 	};
 
-	const onClickReviewWriteHandler = useCallback(() => {
-		console.log('onClickReviewWriteHandler', seriesCode);
-	}, [seriesCode]);
+	const onClickReviewWriteHandler = useCallback(async () => {
+		if (!authenticated) {
+			const result = await showLoginModal();
+			if (result !== 'LOGGED_IN') {
+				return;
+			}
+		}
+		if (!auth.userCode) {
+			return;
+		}
+		const { data } = await searchMyReviewCountInSeries(
+			auth.userCode,
+			seriesCode
+		);
+
+		assertNotEmpty(data);
+
+		const { count, maxReviewRecCnt } = first(data);
+		if (Number(count) >= Number(maxReviewRecCnt)) {
+			showMessage({
+				message: t(
+					'pages.productDetail.review.reviewOrder.message.reviewMaxCount'
+				),
+				button: (
+					<Button>
+						{t('pages.productDetail.review.reviewOrder.message.close')}
+					</Button>
+				),
+			});
+			return;
+		}
+
+		let option = {
+			width: 700,
+			height: 600,
+			scrollbars: 'yes',
+		};
+
+		//review only display name and star
+		if (reviewState === ReviewStateType.REVIEW_SKIP_TYPE) {
+			option.height = 400;
+		}
+		openSubWindow(
+			url.reviewsInput(seriesCode, reviewState),
+			'review_input',
+			option
+		);
+		(window as any).onReviewReload = async () =>
+			await onReload({
+				order_type: ReviewSortType.ORDER_BY_RATE,
+				page_no: 1,
+			});
+	}, [seriesCode, authenticated, auth, onReload, openSubWindow]);
 
 	return (
 		<div className={styles.containerWrap}>
