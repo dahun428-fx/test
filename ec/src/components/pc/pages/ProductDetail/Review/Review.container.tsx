@@ -84,13 +84,10 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 
 	const rate = reviewResponse.reviewInfo?.score ?? 0;
 
-	const totalCount = useMemo(() => {
-		if (searchReviewRequest.order_type === ReviewSortType.MY_REVIEW) {
-			return reviewResponse.reviewData?.length ?? 0;
-		} else {
-			return reviewResponse.reviewInfo?.reviewCnt ?? 0;
-		}
-	}, [reviewResponse, searchReviewRequest]);
+	const totalCount =
+		searchReviewRequest.order_type === ReviewSortType.MY_REVIEW
+			? reviewResponse.reviewData?.length
+			: reviewResponse.reviewInfo?.reviewCnt;
 
 	const reviewState = reviewResponse.reviewConfig?.reviewState ?? 0;
 
@@ -107,7 +104,7 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 				searchReviewRequest.page_length ?? getReviewPageSize(reviewState)
 			}
 			rate={rate}
-			totalCount={totalCount} //info count --> total review count in seriesCode.
+			totalCount={totalCount ?? 0} //info count --> total review count in seriesCode.
 			reviewState={reviewState}
 			reviewDetails={reviewDetails}
 		/>
