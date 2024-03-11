@@ -33,10 +33,6 @@ export const ReviewList: React.VFC<Props> = ({
 	pageSize,
 	totalCount,
 }) => {
-	// if (reviewDetails.length < 1) {
-	// 	return null;
-	// }
-
 	const [t] = useTranslation();
 
 	const pagination = useCallback(

@@ -1,7 +1,7 @@
 import { useSelector } from '@/store/hooks';
 import { ReviewReport as Presenter } from './ReviewReport';
 import { selectAuth } from '@/store/modules/auth';
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';

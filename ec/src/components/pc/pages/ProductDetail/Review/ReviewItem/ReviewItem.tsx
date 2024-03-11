@@ -21,7 +21,6 @@ import { addReviewLike, removeReview } from '@/api/services/review/review';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 import { htmlDecode } from '@/utils/string';
 import { assertNotNull } from '@/utils/assertions';
-import { Anchor } from '@/components/pc/ui/links';
 import classNames from 'classnames';
 
 type Props = {
@@ -100,8 +99,6 @@ export const ReviewItem: React.VFC<Props> = ({
 			});
 			console.log(error);
 		}
-
-		//todo : api action
 	}, [
 		auth,
 		addReviewLike,
@@ -128,8 +125,6 @@ export const ReviewItem: React.VFC<Props> = ({
 			scrollbars: 'yes',
 		};
 		openSubWindow(url.reviewsReportInput(reviewId), 'review_rep_input', option);
-		//todo : open window
-		console.log('reportClickHandler');
 	};
 
 	const onClickModifyHandler = useCallback(async () => {

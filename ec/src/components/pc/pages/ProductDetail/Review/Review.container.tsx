@@ -9,7 +9,7 @@ import {
 	getReviewPageSize,
 	isAvailaleReviewState,
 } from '@/utils/domain/review';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useBoolState } from '@/hooks/state/useBoolState';
 import { SearchReviewRequest } from '@/models/api/review/SearchReviewRequest';
 import { selectAuth } from '@/store/modules/auth';
