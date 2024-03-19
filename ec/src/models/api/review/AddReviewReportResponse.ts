@@ -1,3 +1,3 @@
-import { MsmApiResponse } from '@/models/api/msm/MsmApiResponse';
+import { ReviewApiResponse } from '@/models/api/review/ReviewApiResponse';
 
-export interface AddReviewReportResponse extends MsmApiResponse {}
+export interface AddReviewReportResponse extends ReviewApiResponse {}

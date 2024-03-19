@@ -230,6 +230,21 @@ export const url = {
 		return `http://localhost:3000/vona2/review/confirm/${seriesCode}?TYPE=${reviewState}&CODE=${reviewId}`;
 	},
 
+	qnasReportInput: (qnaId: number) => {
+		// return `${config.web.ec.origin}/vona2/qna/rep_input/?CODE=${qnaId}`;
+		return `http://localhost:3000/vona2/qna/rep_input/?CODE=${qnaId}`;
+	},
+
+	qnasInput: (seriesCode: string, qnaState: number) => {
+		// return `${config.web.ec.origin}/vona2/qna/input/${seriesCode}?TYPE=${qnaState}`
+		return `http://localhost:3000/vona2/qna/input/${seriesCode}?TYPE=${qnaState}`;
+	},
+
+	qnasConfirm: (seriesCode: string, qnaState: number, qnaId: number) => {
+		// return `${config.web.ec.origin}/vona2/qna/confirm/${seriesCode}?TYPE=${qnaState}&CODE=${qnaId}`
+		return `http://localhost:3000/vona2/qna/confirm/${seriesCode}?TYPE=${qnaState}&CODE=${qnaId}`;
+	},
+
 	/** Product detail page from search results */
 	productDetail: (seriesCode: string) => {
 		const baseUrl = pagesPath.vona2.detail._seriesCode(seriesCode);

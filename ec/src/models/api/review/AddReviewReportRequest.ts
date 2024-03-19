@@ -1,6 +1,6 @@
-import { MsmApiRequest } from '@/models/api/msm/MsmApiRequest';
+import { ReviewApiRequest } from '@/models/api/review/ReviewApiRequest';
 
-export interface AddReviewReportRequest extends MsmApiRequest {
+export interface AddReviewReportRequest extends ReviewApiRequest {
 	review_id: number;
 	reg_id: string;
 	reg_name: string;

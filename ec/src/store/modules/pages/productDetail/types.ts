@@ -14,6 +14,7 @@ import {
 	Series,
 } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { SearchUnitLibraryResponse } from '@/models/api/msm/ect/unitLibrary/SearchUnitLibraryResponse';
+import { QnaResponse } from '@/models/api/qna/SearchQnaResponse';
 import { ReviewResponse } from '@/models/api/review/SearchReviewResponse';
 
 export type ProductDetailState = {
@@ -63,6 +64,8 @@ export type ProductDetailState = {
 
 	/** User review */
 	reviewResponse?: ReviewResponse;
+	/** User Qna */
+	qnaResponse?: QnaResponse;
 } & ComplexState &
 	MobileState;
 

@@ -1,6 +1,6 @@
-import { MsmApiResponse } from '@/models/api/msm/MsmApiResponse';
+import { ReviewApiResponse } from '@/models/api/review/ReviewApiResponse';
 
-export interface AddReviewResponse extends MsmApiResponse {
+export interface AddReviewResponse extends ReviewApiResponse {
 	status: string;
 	slang?: string[];
 }

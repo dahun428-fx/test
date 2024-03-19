@@ -189,18 +189,14 @@ export const ReviewInput: React.VFC<Props> = ({
 						)}
 						<div className={styles.termsBox}>
 							<Checkbox
-								className={styles.reviewTermsChk}
+								className={styles.termsChk}
 								checked={termsCheck}
 								onChange={() => onChangeTermsCheck(termsCheck)}
 							>
 								{t('pages.productDetail.review.reviewInput.termsArgree')}
 							</Checkbox>
 
-							<Anchor
-								href={url.terms}
-								target="_blank"
-								className={styles.reviewTerms}
-							>
+							<Anchor href={url.terms} target="_blank">
 								<strong>
 									{t('pages.productDetail.review.reviewInput.terms')}
 								</strong>

@@ -81,7 +81,7 @@ export const ReviewList: React.VFC<Props> = ({
 					</ul>
 				</div>
 			)}
-			{reviewDetails && pagination()}
+			{reviewDetails && reviewDetails.length > 0 && pagination()}
 		</div>
 	);
 };

@@ -40,6 +40,10 @@ const site: Site = {
 			//for local development
 			origin: 'https://review-kr.misumi-ec.com:3000',
 		},
+		qna: {
+			//for local development
+			origin: 'https://qna-kr.misumi-ec.com:3000',
+		},
 	},
 	web: {
 		ec: {

@@ -47,12 +47,25 @@ import {
 	searchReviewConfig,
 	searchReviewInfo,
 } from '@/api/services/review/review';
-import { isAvailaleReviewState } from '@/utils/domain/review';
+import {
+	getPageSize as getReviewPageSize,
+	isAvailaleReviewState,
+} from '@/utils/domain/review';
 import { first } from '@/utils/collection';
 import {
 	ReviewConfig,
 	ReviewSortType,
 } from '@/models/api/review/SearchReviewResponse';
+import { QnaConfig, QnaSortType } from '@/models/api/qna/SearchQnaResponse';
+import {
+	searchProductQnas,
+	searchQnaConfig,
+	searchQnaInfo,
+} from '@/api/services/qna/qna';
+import {
+	isAvailaleQnaState,
+	getPageSize as getQnaPageSize,
+} from '@/utils/domain/qna';
 
 type LoadPayload = {
 	seriesCode: string;
@@ -132,7 +145,7 @@ export function loadOperation(dispatch: Dispatch) {
 			//review data
 			searchProductReviews({
 				order_type: ReviewSortType.ORDER_BY_RATE,
-				page_length: reviewConfig.reviewState > 1 ? 3 : 9,
+				page_length: getReviewPageSize(reviewConfig.reviewState),
 				page_no: 1,
 				reg_id: user?.userCode ?? '',
 				series_code: seriesCode,
@@ -145,6 +158,39 @@ export function loadOperation(dispatch: Dispatch) {
 				.then(reviewResponse => {
 					const reviewInfo = first(reviewResponse?.data);
 					dispatch(actions.updateReview({ reviewInfo: reviewInfo }));
+				})
+				.catch(noop);
+		}
+
+		const qnaConfig: QnaConfig = await searchQnaConfig()
+			.then(qnaResponse => {
+				const config = first(qnaResponse?.data);
+				dispatch(
+					actions.updateQna({
+						qnaConfig: config,
+					})
+				);
+				return config;
+			})
+			.catch(noop);
+
+		if (isAvailaleQnaState(qnaConfig)) {
+			const regId = user?.userCode ?? '';
+			searchProductQnas({
+				series_code: seriesCode,
+				order_type: QnaSortType.ORDER_BY_DEFAULT,
+				page_length: getQnaPageSize(qnaConfig.qnaState),
+				page_no: 1,
+				reg_id: regId,
+			})
+				.then(qnaResponse => {
+					dispatch(actions.updateQna({ qnaData: qnaResponse.data }));
+				})
+				.catch(noop);
+			searchQnaInfo(seriesCode, regId)
+				.then(qnaResponse => {
+					const qnaInfo = first(qnaResponse?.data);
+					dispatch(actions.updateQna({ qnaInfo: qnaInfo }));
 				})
 				.catch(noop);
 		}

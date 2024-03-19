@@ -5,16 +5,14 @@ import {
 	selectReviewResponse,
 	selectSeries,
 } from '@/store/modules/pages/productDetail';
-import {
-	getReviewPageSize,
-	isAvailaleReviewState,
-} from '@/utils/domain/review';
-import { useCallback, useState } from 'react';
+import { getPageSize, isAvailaleReviewState } from '@/utils/domain/review';
+import { useCallback, useEffect, useState } from 'react';
 import { useBoolState } from '@/hooks/state/useBoolState';
 import { SearchReviewRequest } from '@/models/api/review/SearchReviewRequest';
 import { selectAuth } from '@/store/modules/auth';
 import { ReviewSortType } from '@/models/api/review/SearchReviewResponse';
 import {
+	searchMyReviewCountInSeries,
 	searchProductReviews,
 	searchReviewInfo,
 } from '@/api/services/review/review';
@@ -33,11 +31,15 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 	const [searchReviewRequest, setSearchReviewRequest] =
 		useState<SearchReviewRequest>({
 			order_type: ReviewSortType.ORDER_BY_RATE,
-			page_length: getReviewPageSize(reviewResponse?.reviewConfig?.reviewState),
+			page_length: getPageSize(reviewResponse?.reviewConfig?.reviewState),
 			page_no: page,
 			reg_id: auth.userCode ?? '',
 			series_code: seriesCode,
 		});
+
+	const [totalCount, setTotalCount] = useState<number>(
+		reviewResponse?.reviewInfo?.reviewCnt ?? 0
+	);
 
 	const {
 		bool: loading,
@@ -59,23 +61,39 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 				const reviewInfoResponse = await searchReviewInfo(seriesCode);
 
 				dispatch(
-					actions.updateReview({ reviewData: productReviewResponse.data })
-				);
-				dispatch(
-					actions.updateReview({ reviewInfo: first(reviewInfoResponse.data) })
+					actions.updateReview({
+						reviewData: productReviewResponse.data,
+						reviewInfo: first(reviewInfoResponse.data),
+					})
 				);
 				setSearchReviewRequest(prev => ({
 					...prev,
 					page_no: page,
 					...request,
 				}));
+
+				//myreview
+				if (
+					request.order_type === ReviewSortType.MY_REVIEW &&
+					auth.authenticated &&
+					auth.userCode
+				) {
+					const { data } = await searchMyReviewCountInSeries(
+						auth.userCode,
+						seriesCode
+					);
+					const { count } = first(data);
+					setTotalCount(Number(count) ?? 0);
+				} else if (request.order_type !== ReviewSortType.MY_REVIEW) {
+					setTotalCount(reviewResponse?.reviewInfo?.reviewCnt ?? 0);
+				}
 			} catch (error) {
 				//Noop
 			} finally {
 				hideLoading();
 			}
 		},
-		[dispatch, hideLoading, page, searchReviewRequest, showLoading]
+		[dispatch, hideLoading, page, searchReviewRequest, showLoading, auth]
 	);
 
 	if (!reviewResponse || !isAvailaleReviewState(reviewResponse?.reviewConfig)) {
@@ -83,11 +101,6 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 	}
 
 	const rate = reviewResponse.reviewInfo?.score ?? 0;
-
-	const totalCount =
-		searchReviewRequest.order_type === ReviewSortType.MY_REVIEW
-			? reviewResponse.reviewData?.length
-			: reviewResponse.reviewInfo?.reviewCnt;
 
 	const reviewState = reviewResponse.reviewConfig?.reviewState ?? 0;
 
@@ -100,13 +113,12 @@ export const Review: React.VFC<Props> = ({ page = 1 }) => {
 			authenticated={auth.authenticated}
 			onReload={reload}
 			page={searchReviewRequest.page_no ?? page}
-			pageSize={
-				searchReviewRequest.page_length ?? getReviewPageSize(reviewState)
-			}
+			pageSize={searchReviewRequest.page_length ?? getPageSize(reviewState)}
 			rate={rate}
-			totalCount={totalCount ?? 0} //info count --> total review count in seriesCode.
+			totalCount={totalCount ?? 0} //review total count for order_type : my_review or others
 			reviewState={reviewState}
 			reviewDetails={reviewDetails}
+			reviewCount={reviewResponse.reviewInfo?.reviewCnt ?? 0} // show total review count from api data
 		/>
 	);
 };

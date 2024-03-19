@@ -20,6 +20,7 @@ import { RelatedToProductContents } from '@/components/pc/pages/ProductDetail/Re
 import { SeriesInfoText } from '@/components/pc/pages/ProductDetail/SeriesInfoText';
 import { StandardSpecList } from '@/components/pc/pages/ProductDetail/StandardSpecList';
 import { Review } from '@/components/pc/pages/ProductDetail/Review';
+import { Qna } from '@/components/pc/pages/ProductDetail/Qna';
 
 export type Props = {
 	seriesCode: string;
@@ -106,6 +107,7 @@ export const Complex: React.VFC<Props> = ({ seriesCode }) => {
 					<div>
 						<ProductNotice />
 						<Review />
+						<Qna />
 					</div>
 
 					<RelatedToProductContents seriesCode={seriesCode} faqRef={faqRef} />

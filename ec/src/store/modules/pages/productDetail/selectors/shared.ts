@@ -12,6 +12,10 @@ import { getSpecAttributes } from '@/utils/domain/spec';
 import { fromEntries, pick } from '@/utils/object';
 import { notEmpty } from '@/utils/predicate';
 
+export function selectQnaResponse(state: AppState) {
+	return state.productDetail.qnaResponse;
+}
+
 /** product review response */
 export function selectReviewResponse(state: AppState) {
 	return state.productDetail.reviewResponse;

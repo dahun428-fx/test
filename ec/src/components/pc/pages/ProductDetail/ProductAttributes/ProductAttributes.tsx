@@ -18,6 +18,7 @@ import { EconomyLabel } from '@/components/pc/pages/ProductDetail/EconomyLabel';
 import { SeriesDiscount } from '@/components/pc/pages/ProductDetail/SeriesDiscount';
 import { BasicInformation } from '@/components/pc/pages/ProductDetail/BasicInformation';
 import { ReviewProductRating } from '@/components/pc/pages/ProductDetail/Review/ReviewProductRating';
+import { QnaProductTop } from '../Qna/QnaProductTop';
 
 export type BasicInfoType = {
 	basicInfoType?: 'full' | 'summary';
@@ -82,6 +83,7 @@ export const ProductAttributes: React.VFC<Props> = ({
 
 				<div className={styles.containerNavigation}>
 					<ReviewProductRating />
+					<QnaProductTop />
 					{/* <FaqLink faqCount={faqCount} faqRef={faqRef} /> */}
 				</div>
 				{(templateType === TemplateType.PU ||

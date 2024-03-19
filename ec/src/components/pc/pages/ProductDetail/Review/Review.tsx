@@ -23,6 +23,7 @@ type Props = {
 	totalCount: number;
 	reviewState: ReviewStateType;
 	reviewDetails: ReviewDetail[];
+	reviewCount: number;
 	onReload: (
 		request: Omit<SearchReviewRequest, 'series_code'>
 	) => Promise<void>;
@@ -38,6 +39,7 @@ export const Review: React.VFC<Props> = ({
 	totalCount,
 	reviewState,
 	reviewDetails,
+	reviewCount,
 	onReload,
 }) => {
 	const [t] = useTranslation();
@@ -65,8 +67,8 @@ export const Review: React.VFC<Props> = ({
 							<>
 								<span className={styles.totalCountRating}>{rate}</span>
 								<span className={styles.ratingText}>
-									{t('pages.productDetail.review.totalCount', {
-										totalCount,
+									{t('pages.productDetail.review.reviewCount', {
+										reviewCount,
 									})}
 								</span>
 							</>

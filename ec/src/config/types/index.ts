@@ -148,6 +148,7 @@ export type Site = {
 		};
 		/** review-api */
 		review: Api;
+		qna: Api;
 	};
 	web: {
 		/**

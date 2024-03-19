@@ -32,6 +32,7 @@ import { pu } from './templates/PU/PU.i18n.ko'; //change to ko
 import { divisionBannerBox } from './DivisionBannerBox/DivisionBannerBox.i18n.ko'; //change to ko
 import { socialShare } from './SocialShare/SocialShare.i18n.ko'; //change to ko
 import { review } from './Review/Review.i18n.ko';
+import { qna } from './Qna/Qna.i18n.ko';
 import { Translation } from '@/i18n/types';
 
 export const productDetail: Translation = {
@@ -84,4 +85,5 @@ export const productDetail: Translation = {
 	divisionBannerBox,
 	socialShare,
 	review,
+	qna,
 };

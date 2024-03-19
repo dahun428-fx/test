@@ -68,3 +68,9 @@ export function htmlDecode(input?: string) {
 		.replace(/&quot;/g, '"')
 		.replace(/&#39;/g, "'");
 }
+
+/** remove korean language */
+export function removeKor(input: string) {
+	const kor = /[ㄱ-ㅎㅏ-ㅣ가-힣]/gi;
+	return input.replace(kor, '');
+}

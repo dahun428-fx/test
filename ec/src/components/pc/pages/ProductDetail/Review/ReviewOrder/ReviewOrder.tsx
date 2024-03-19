@@ -17,7 +17,6 @@ import { searchMyReviewCountInSeries } from '@/api/services/review/review';
 import { first } from '@/utils/collection';
 import { assertNotEmpty } from '@/utils/assertions';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
-import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 
 type Props = {
 	seriesCode: string;
@@ -74,7 +73,7 @@ export const ReviewOrder: React.VFC<Props> = ({
 	};
 
 	const onClickReviewWriteHandler = useCallback(async () => {
-		if (!authenticated) {
+		if (!auth.authenticated) {
 			const result = await showLoginModal();
 			if (result !== 'LOGGED_IN') {
 				return;

@@ -1,0 +1,28 @@
+.containerWrap {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+}
+
+.sort {
+	padding-right: 30px;
+
+	span {
+		padding: 10px;
+		color: #333;
+		font-size: 12px;
+		line-height: 1em;
+		text-decoration: none;
+		cursor: pointer;
+
+		&.active {
+			text-decoration: underline;
+			font-weight: bold;
+		}
+	}
+}
+
+.writeButton {
+	display: inline-block;
+	width: 100px;
+}

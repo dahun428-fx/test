@@ -120,9 +120,7 @@ export const ReviewReport: React.VFC<Props> = ({
 					'pages.productDetail.review.reviewReport.message.systemError'
 				),
 				button: (
-					<Button>
-						{t('pages.productDetail.review.reviewReport.message.close')}
-					</Button>
+					<Button>{t('pages.productDetail.review.reviewReport.close')}</Button>
 				),
 			});
 			console.log(error);

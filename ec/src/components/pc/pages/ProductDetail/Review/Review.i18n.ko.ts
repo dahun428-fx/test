@@ -9,7 +9,7 @@ import { reviewReport } from './ReviewReport/ReviewReport.i18n.ko';
 
 export const review: Translation = {
 	title: '상품리뷰',
-	totalCount: '| {{totalCount}}건',
+	reviewCount: '| {{reviewCount}}건',
 	reviewProductRating,
 	reviewOrder,
 	reviewItem,

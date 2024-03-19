@@ -1,0 +1,1 @@
+export { QnaProductTop } from './QnaProductTop';

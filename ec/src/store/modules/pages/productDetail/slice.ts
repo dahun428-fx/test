@@ -6,6 +6,7 @@ import { SearchPartNumberResponse$search } from '@/models/api/msm/ect/partNumber
 import { Price } from '@/models/api/msm/ect/price/CheckPriceResponse';
 import { SearchSeriesResponse$detail } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { ReviewResponse } from '@/models/api/review/SearchReviewResponse';
+import { QnaResponse } from '@/models/api/qna/SearchQnaResponse';
 
 const initialState: ProductDetailState = {
 	templateType: null,
@@ -56,6 +57,15 @@ const slice = createSlice({
 				...state,
 				reviewResponse: {
 					...state.reviewResponse,
+					...action.payload,
+				},
+			};
+		},
+		updateQna(state, action: PayloadAction<QnaResponse>) {
+			return {
+				...state,
+				qnaResponse: {
+					...state.qnaResponse,
 					...action.payload,
 				},
 			};

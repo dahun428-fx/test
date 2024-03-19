@@ -2,12 +2,7 @@ import { GetCustomerInfoResponse } from '@/models/api/msm/ect/customerInfo/GetCu
 import { Series } from '@/models/api/msm/ect/series/SearchSeriesResponse$detail';
 import { GetUserInfoResponse } from '@/models/api/msm/ect/userInfo/GetUserInfoResponse';
 import { AddReviewRequest } from '@/models/api/review/AddReviewRequest';
-import {
-	ReviewDetail,
-	ReviewInfo,
-	ReviewSortType,
-	ReviewStateType,
-} from '@/models/api/review/SearchReviewResponse';
+import { ReviewStateType } from '@/models/api/review/SearchReviewResponse';
 import { assertNotNull } from '../assertions';
 import { UpdateReviewRequest } from '@/models/api/review/UpdateReviewRequest';
 import { AddReviewReportRequest } from '@/models/api/review/AddReviewReportRequest';
@@ -21,10 +16,6 @@ export function isAvailaleReviewState(reviewConfig: any | undefined): boolean {
 		return true;
 	}
 	return false;
-}
-
-export function getPageSize(reviewState: number): number {
-	return reviewState && reviewState === 1 ? 9 : 3;
 }
 
 /**
@@ -45,9 +36,7 @@ export function modUserId(
 	return `${regName.substring(0, 2)}******`;
 }
 
-export function getReviewPageSize(
-	reviewState: ReviewStateType | undefined
-): number {
+export function getPageSize(reviewState: ReviewStateType | undefined): number {
 	if (reviewState === ReviewStateType.REVIEW_ORIGIN_TYPE) {
 		return 3;
 	} else {

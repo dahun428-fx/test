@@ -1,0 +1,17 @@
+.qnaItemWrap {
+	&:first-child {
+		padding-top: 0;
+	}
+	padding: 30px 0;
+	border-bottom: dashed 1px #dcdcdc;
+}
+.pagination {
+	margin: 20px 0;
+	text-align: right;
+}
+.noList {
+	padding: 70px 0;
+	color: #888;
+	font-size: 14px;
+	text-align: center;
+}

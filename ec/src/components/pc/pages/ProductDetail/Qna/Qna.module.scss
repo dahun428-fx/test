@@ -1,0 +1,44 @@
+.headerWrap {
+	position: relative;
+	box-sizing: border-box;
+	margin: 40px 0 20px;
+	padding: 0 0 8px 0;
+	border-bottom: solid 1px #888;
+}
+
+.title {
+	display: inline-block;
+	padding: 0 10px 5px 15px;
+	border: 0;
+	vertical-align: middle;
+	position: relative;
+	box-sizing: border-box;
+	line-height: 1.8;
+	font-weight: 700;
+	font-size: 22px;
+	color: #333;
+	margin-top: 8px;
+}
+
+.count {
+	color: #888;
+	margin-top: 5px;
+	border-left: solid 1px #c3c3c3;
+	line-height: 0.85em;
+	margin: 0 10px;
+	padding-left: 10px;
+	vertical-align: middle;
+}
+
+.alertBox {
+	margin-bottom: 30px;
+	background-color: #f3f3f3;
+	padding: 10px;
+	ul {
+		list-style: inside;
+		margin-left: 15px;
+		li {
+			list-style: inside;
+		}
+	}
+}
