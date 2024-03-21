@@ -1,7 +1,7 @@
 import { Translation } from '@/i18n/types';
 
 export const qnaReport: Translation = {
-	title: '상품리뷰 신고',
+	title: '상품 기술 사양 문의 신고',
 	dangerList: {
 		first: '신고 하신 글은 관리자 확인 후 노출이 제한 됩니다.',
 		second:

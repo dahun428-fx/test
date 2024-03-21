@@ -10,14 +10,18 @@ import { htmlDecode } from '@/utils/string';
 import { Button } from '@/components/pc/ui/buttons';
 import { dateTime } from '@/utils/date';
 import { config } from '@/config';
-import { modUserId } from '@/utils/domain/qna';
+import { createLikeParams, modUserId } from '@/utils/domain/qna';
 import { useLoginModal } from '@/components/pc/modals/LoginModal';
 import { useMessageModal } from '@/components/pc/ui/modals/MessageModal';
 import { useConfirmModal } from '@/components/pc/ui/modals/ConfirmModal';
 import { assertNotNull } from '@/utils/assertions';
 import { url } from '@/utils/url';
 import { openSubWindow } from '@/utils/window';
-import { removeQna, searchMyQnaCount } from '@/api/services/qna/qna';
+import {
+	addQnaLike,
+	removeQna,
+	searchMyQnaCount,
+} from '@/api/services/qna/qna';
 import { first } from '@/utils/collection';
 
 type Props = {
@@ -64,8 +68,6 @@ export const QnaItem: React.VFC<Props> = ({
 	}, [qna]);
 
 	const onClickRecommendHandler = useCallback(async () => {
-		console.log('onClickRecommendHandler');
-
 		if (!auth.authenticated) {
 			const result = await showLoginModal();
 			if (result !== 'LOGGED_IN') {
@@ -75,6 +77,15 @@ export const QnaItem: React.VFC<Props> = ({
 
 		try {
 			assertNotNull(auth.user);
+
+			const request = createLikeParams(qnaId, auth.user, auth.customer);
+
+			const response = await addQnaLike(request);
+
+			if (response.status === 'success') {
+				setRecommendActionClick(true);
+				setRecommendCount(recommendCount + 1);
+			}
 		} catch (error) {
 			showMessage({
 				message: t('pages.productDetail.qna.qnaItem.message.systemError'),
@@ -84,9 +95,6 @@ export const QnaItem: React.VFC<Props> = ({
 			});
 			console.log(error);
 		}
-
-		setRecommendActionClick(true);
-		setRecommendCount(recommendCnt + 1);
 	}, [
 		auth,
 		recommendActionClick,
@@ -124,6 +132,13 @@ export const QnaItem: React.VFC<Props> = ({
 				});
 				return;
 			}
+
+			let option = {
+				width: 700,
+				height: 600,
+				scrollbars: 'yes',
+			};
+			openSubWindow(url.qnasReportInput(qnaId), 'qna_rep_input', option);
 		}
 	}, [showLoginModal, searchMyQnaCount, showMessage, t, auth]);
 

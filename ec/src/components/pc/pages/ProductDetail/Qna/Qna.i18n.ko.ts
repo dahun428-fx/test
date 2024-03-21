@@ -4,6 +4,7 @@ import { qnaItem } from './QnaItem/QnaItem.i18n.ko';
 import { qnaList } from './QnaList/QnaList.i18n.ko';
 import { qnaInput } from './QnaInput/QnaInput.i18n.ko';
 import { qnaConfirm } from './QnaConfirm/QnaConfirm.i18n.ko';
+import { qnaReport } from './QnaReport/QnaReport.i18n.ko';
 
 export const qna: Translation = {
 	qnaTop: '지금 보는 상품의 기술 사양 문의하기',
@@ -23,4 +24,5 @@ export const qna: Translation = {
 	qnaItem,
 	qnaInput,
 	qnaConfirm,
+	qnaReport,
 };

@@ -1,6 +1,7 @@
 import { qnaApi } from '@/api/clients/qnaApi';
 import { AddQnaLikeRequest } from '@/models/api/qna/AddQnaLikeRequest';
 import { AddQnaLikeResponse } from '@/models/api/qna/AddQnaLikeResponse';
+import { AddQnaReportRequest } from '@/models/api/qna/AddQnaReportRequest';
 import { AddQnaReportResponse } from '@/models/api/qna/AddQnaReportResponse';
 import { AddQnaRequest } from '@/models/api/qna/AddQnaRequest';
 import { AddQnaResponse } from '@/models/api/qna/AddQnaResponse';
@@ -157,8 +158,19 @@ export function searchMyQnaCount(
  * @returns AddQnaReportResponse
  */
 export function addQnaReport(
-	request: AddQnaRequest,
+	request: AddQnaReportRequest,
 	cancelToken?: CancelToken
 ): Promise<AddQnaReportResponse> {
 	return qnaApi.post(`/api/ec-qna-report`, request, { cancelToken });
+}
+
+/**
+ * search QnaReportData
+ * @param cancelToken
+ * @returns SearchQnaResponse
+ */
+export function searchQnaReportData(
+	cancelToken?: CancelToken
+): Promise<SearchQnaResponse> {
+	return qnaApi.get(`/api/ec-code/RT`, {}, { cancelToken });
 }

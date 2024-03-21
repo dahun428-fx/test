@@ -1,13 +1,30 @@
-import { useCallback, useRef } from 'react';
+import { ChangeEvent, useCallback, useRef } from 'react';
 import styles from './QnaReport.module.scss';
 import { useOnMounted } from '@/hooks/lifecycle/useOnMounted';
 import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Button } from '@/components/pc/ui/buttons';
+import { ReportDeclareDetail } from '@/models/api/qna/SearchQnaResponse';
 
-type Props = {};
+type Props = {
+	declareData: ReportDeclareDetail[];
+	selectedDeclareCode: string;
+	setSelectedDeclareCode: (selectedDeclareCode: string) => void;
+	declareText: string;
+	declareTextAvailable: boolean;
+	onChangeTextArea: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+	onClickReportExcuteHandler: () => void;
+};
 
-export const QnaReport: React.VFC<Props> = () => {
+export const QnaReport: React.VFC<Props> = ({
+	declareData,
+	declareText,
+	declareTextAvailable,
+	onChangeTextArea,
+	onClickReportExcuteHandler,
+	selectedDeclareCode,
+	setSelectedDeclareCode,
+}) => {
 	const [t] = useTranslation();
 	const ref = useRef<HTMLDivElement | null>(null);
 
@@ -67,7 +84,8 @@ export const QnaReport: React.VFC<Props> = () => {
 								</dt>
 								<dd>
 									<ul className={styles.declareList}>
-										{declareData.length > 0 &&
+										{declareData &&
+											declareData.length > 0 &&
 											declareData.map(item => {
 												return (
 													<li key={item.code}>

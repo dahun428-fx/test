@@ -102,6 +102,24 @@ export function createReportParams(
 	};
 }
 
+export function createLikeParams(
+	qnaId: number,
+	user: GetUserInfoResponse,
+	customer?: GetCustomerInfoResponse
+) {
+	assertNotNull(user.userCode);
+	assertNotNull(user.userName);
+
+	return {
+		qna_id: qnaId,
+		reg_id: user.userCode,
+		reg_name: user.userName,
+		reg_code: user.customerCode ?? '',
+		reg_company: user.customerName ?? '',
+		reg_tel: customer?.tel ?? '',
+	};
+}
+
 export const QNA_USE_PURPOSE_MAX = 30;
 export const QNA_PART_NO_MAX = 100;
 export const QNA_QUESTION_MIN = 10;

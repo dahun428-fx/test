@@ -85,7 +85,8 @@ export const ReviewReport: React.VFC<Props> = ({
 								</dt>
 								<dd>
 									<ul className={styles.declareList}>
-										{declareData.length > 0 &&
+										{declareData &&
+											declareData.length > 0 &&
 											declareData.map(item => {
 												return (
 													<li key={item.code}>
